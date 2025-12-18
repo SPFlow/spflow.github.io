@@ -208,6 +208,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../api/sums.html">Sum Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/products.html">Product Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/conv.html">Convolutional Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/einsum.html">Einsum Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/leaves.html">Leaf Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/operations.html">Operations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/rat_spn.html">RAT-SPN Architecture</a></li>
@@ -360,13 +361,13 @@ Dataset successfully created.
 Shape of dataset: torch.Size([1200, 2])
 Shape of labels: torch.Size([1200])
 First 5 samples:
-tensor([[-2.0261, -2.2803],
-        [-4.7649, -2.1736],
-        [-0.5831,  3.8058],
-        [ 3.2500, -2.6952],
-        [ 2.6123, -1.9226]])
+tensor([[ 2.9289, -1.9926],
+        [ 3.2597, -2.6442],
+        [ 3.5580, -1.7720],
+        [-2.5605, -2.1389],
+        [ 2.9257, -1.9961]])
 Corresponding labels:
-tensor([1, 1, 0, 2, 2])
+tensor([2, 2, 2, 1, 2])
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -474,16 +475,16 @@ Sum(
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-2025-12-18 13:30:25,444 [INFO] spflow.learn.gradient_descent: Epoch [0/10]: Loss: 3.971142530441284
-2025-12-18 13:30:25,547 [INFO] spflow.learn.gradient_descent: Epoch [1/10]: Loss: 3.839600086212158
-2025-12-18 13:30:25,650 [INFO] spflow.learn.gradient_descent: Epoch [2/10]: Loss: 3.563178300857544
-2025-12-18 13:30:25,752 [INFO] spflow.learn.gradient_descent: Epoch [3/10]: Loss: 3.2050788402557373
-2025-12-18 13:30:25,854 [INFO] spflow.learn.gradient_descent: Epoch [4/10]: Loss: 3.1953024864196777
-2025-12-18 13:30:25,957 [INFO] spflow.learn.gradient_descent: Epoch [5/10]: Loss: 2.9795565605163574
-2025-12-18 13:30:26,060 [INFO] spflow.learn.gradient_descent: Epoch [6/10]: Loss: 2.9962849617004395
-2025-12-18 13:30:26,162 [INFO] spflow.learn.gradient_descent: Epoch [7/10]: Loss: 2.9776194095611572
-2025-12-18 13:30:26,264 [INFO] spflow.learn.gradient_descent: Epoch [8/10]: Loss: 2.9723124504089355
-2025-12-18 13:30:26,366 [INFO] spflow.learn.gradient_descent: Epoch [9/10]: Loss: 2.9685778617858887
+2025-12-18 16:41:48,948 [INFO] spflow.learn.gradient_descent: Epoch [0/10]: Loss: 3.120023012161255
+2025-12-18 16:41:49,054 [INFO] spflow.learn.gradient_descent: Epoch [1/10]: Loss: 3.0563225746154785
+2025-12-18 16:41:49,160 [INFO] spflow.learn.gradient_descent: Epoch [2/10]: Loss: 3.0573697090148926
+2025-12-18 16:41:49,267 [INFO] spflow.learn.gradient_descent: Epoch [3/10]: Loss: 3.0508475303649902
+2025-12-18 16:41:49,372 [INFO] spflow.learn.gradient_descent: Epoch [4/10]: Loss: 3.067436695098877
+2025-12-18 16:41:49,478 [INFO] spflow.learn.gradient_descent: Epoch [5/10]: Loss: 2.7803423404693604
+2025-12-18 16:41:49,583 [INFO] spflow.learn.gradient_descent: Epoch [6/10]: Loss: 2.773916244506836
+2025-12-18 16:41:49,689 [INFO] spflow.learn.gradient_descent: Epoch [7/10]: Loss: 2.7774205207824707
+2025-12-18 16:41:49,794 [INFO] spflow.learn.gradient_descent: Epoch [8/10]: Loss: 2.782325267791748
+2025-12-18 16:41:49,899 [INFO] spflow.learn.gradient_descent: Epoch [9/10]: Loss: 2.785247325897217
 </pre></div></div>
 </div>
 <p>Once the SPN is trained, we can perform queries such as inference and sampling. SPFlow uses internal dispatching so that a single query function can work across all module types. For example, the log_likelihood method shown below can be used for every SPN model encountered throughout this guide.</p>
@@ -502,25 +503,25 @@ Sum(
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-tensor([[[[-2.8426]]],
+tensor([[[[-1.5718]]],
 
 
-        [[[-4.0432]]],
+        [[[-2.0338]]],
 
 
-        [[[-3.9744]]],
+        [[[-2.2070]]],
 
 
         ...,
 
 
-        [[[-3.6855]]],
+        [[[-3.4913]]],
 
 
-        [[[-2.5913]]],
+        [[[-1.9942]]],
 
 
-        [[[-1.8801]]]], grad_fn=&lt;ViewBackward0&gt;)
+        [[[-1.9175]]]], grad_fn=&lt;ViewBackward0&gt;)
 </pre></div></div>
 </div>
 <p>Finally, we can visualize the training results on our toy dataset.</p>
@@ -737,25 +738,25 @@ RatSPN [D=1, C=1, R=2] → scope: 0-1
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-tensor([[[[ -4.5956]]],
+tensor([[[[-12.0205]]],
 
 
-        [[[-20.6139]]],
+        [[[-15.2723]]],
 
 
-        [[[ -4.6520]]],
+        [[[-10.2460]]],
 
 
         ...,
 
 
-        [[[-20.7213]]],
+        [[[ -4.3033]]],
 
 
-        [[[-12.7615]]],
+        [[[-10.9112]]],
 
 
-        [[[ -8.7230]]]], grad_fn=&lt;ViewBackward0&gt;)
+        [[[-10.0798]]]], grad_fn=&lt;ViewBackward0&gt;)
 </pre></div></div>
 </div>
 <p>We can again train this model using the provided gradient descent method.</p>
@@ -875,106 +876,106 @@ tensor([[[[ -4.5956]]],
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-2025-12-18 13:30:29,687 [INFO] spflow.learn.gradient_descent: Epoch [0/100]: Loss: 2.26509690284729
-2025-12-18 13:30:29,965 [INFO] spflow.learn.gradient_descent: Epoch [1/100]: Loss: 2.234729766845703
-2025-12-18 13:30:30,244 [INFO] spflow.learn.gradient_descent: Epoch [2/100]: Loss: 2.1856095790863037
-2025-12-18 13:30:30,527 [INFO] spflow.learn.gradient_descent: Epoch [3/100]: Loss: 2.1518678665161133
-2025-12-18 13:30:30,806 [INFO] spflow.learn.gradient_descent: Epoch [4/100]: Loss: 2.13285231590271
-2025-12-18 13:30:31,085 [INFO] spflow.learn.gradient_descent: Epoch [5/100]: Loss: 2.1204564571380615
-2025-12-18 13:30:31,364 [INFO] spflow.learn.gradient_descent: Epoch [6/100]: Loss: 2.1118838787078857
-2025-12-18 13:30:31,644 [INFO] spflow.learn.gradient_descent: Epoch [7/100]: Loss: 2.105738401412964
-2025-12-18 13:30:31,922 [INFO] spflow.learn.gradient_descent: Epoch [8/100]: Loss: 2.101308822631836
-2025-12-18 13:30:32,206 [INFO] spflow.learn.gradient_descent: Epoch [9/100]: Loss: 2.0981428623199463
-2025-12-18 13:30:32,485 [INFO] spflow.learn.gradient_descent: Epoch [10/100]: Loss: 2.0959129333496094
-2025-12-18 13:30:32,763 [INFO] spflow.learn.gradient_descent: Epoch [11/100]: Loss: 2.094369411468506
-2025-12-18 13:30:33,045 [INFO] spflow.learn.gradient_descent: Epoch [12/100]: Loss: 2.09332013130188
-2025-12-18 13:30:33,323 [INFO] spflow.learn.gradient_descent: Epoch [13/100]: Loss: 2.0926170349121094
-2025-12-18 13:30:33,601 [INFO] spflow.learn.gradient_descent: Epoch [14/100]: Loss: 2.0921525955200195
-2025-12-18 13:30:33,881 [INFO] spflow.learn.gradient_descent: Epoch [15/100]: Loss: 2.0918450355529785
-2025-12-18 13:30:34,161 [INFO] spflow.learn.gradient_descent: Epoch [16/100]: Loss: 2.0916404724121094
-2025-12-18 13:30:34,440 [INFO] spflow.learn.gradient_descent: Epoch [17/100]: Loss: 2.091498374938965
-2025-12-18 13:30:34,719 [INFO] spflow.learn.gradient_descent: Epoch [18/100]: Loss: 2.09139347076416
-2025-12-18 13:30:35,005 [INFO] spflow.learn.gradient_descent: Epoch [19/100]: Loss: 2.0913095474243164
-2025-12-18 13:30:35,287 [INFO] spflow.learn.gradient_descent: Epoch [20/100]: Loss: 2.091235399246216
-2025-12-18 13:30:35,569 [INFO] spflow.learn.gradient_descent: Epoch [21/100]: Loss: 2.091167449951172
-2025-12-18 13:30:35,849 [INFO] spflow.learn.gradient_descent: Epoch [22/100]: Loss: 2.091099739074707
-2025-12-18 13:30:36,130 [INFO] spflow.learn.gradient_descent: Epoch [23/100]: Loss: 2.091033458709717
-2025-12-18 13:30:36,411 [INFO] spflow.learn.gradient_descent: Epoch [24/100]: Loss: 2.0909676551818848
-2025-12-18 13:30:36,692 [INFO] spflow.learn.gradient_descent: Epoch [25/100]: Loss: 2.090902805328369
-2025-12-18 13:30:36,978 [INFO] spflow.learn.gradient_descent: Epoch [26/100]: Loss: 2.090839385986328
-2025-12-18 13:30:37,259 [INFO] spflow.learn.gradient_descent: Epoch [27/100]: Loss: 2.0907771587371826
-2025-12-18 13:30:37,540 [INFO] spflow.learn.gradient_descent: Epoch [28/100]: Loss: 2.0907182693481445
-2025-12-18 13:30:37,821 [INFO] spflow.learn.gradient_descent: Epoch [29/100]: Loss: 2.0906620025634766
-2025-12-18 13:30:38,102 [INFO] spflow.learn.gradient_descent: Epoch [30/100]: Loss: 2.090609073638916
-2025-12-18 13:30:38,382 [INFO] spflow.learn.gradient_descent: Epoch [31/100]: Loss: 2.090559482574463
-2025-12-18 13:30:38,662 [INFO] spflow.learn.gradient_descent: Epoch [32/100]: Loss: 2.0905134677886963
-2025-12-18 13:30:38,943 [INFO] spflow.learn.gradient_descent: Epoch [33/100]: Loss: 2.090470790863037
-2025-12-18 13:30:39,223 [INFO] spflow.learn.gradient_descent: Epoch [34/100]: Loss: 2.0904314517974854
-2025-12-18 13:30:39,503 [INFO] spflow.learn.gradient_descent: Epoch [35/100]: Loss: 2.090395927429199
-2025-12-18 13:30:39,784 [INFO] spflow.learn.gradient_descent: Epoch [36/100]: Loss: 2.090363025665283
-2025-12-18 13:30:40,065 [INFO] spflow.learn.gradient_descent: Epoch [37/100]: Loss: 2.0903329849243164
-2025-12-18 13:30:40,346 [INFO] spflow.learn.gradient_descent: Epoch [38/100]: Loss: 2.090305805206299
-2025-12-18 13:30:40,625 [INFO] spflow.learn.gradient_descent: Epoch [39/100]: Loss: 2.0902810096740723
-2025-12-18 13:30:40,921 [INFO] spflow.learn.gradient_descent: Epoch [40/100]: Loss: 2.090259075164795
-2025-12-18 13:30:41,207 [INFO] spflow.learn.gradient_descent: Epoch [41/100]: Loss: 2.0902388095855713
-2025-12-18 13:30:41,492 [INFO] spflow.learn.gradient_descent: Epoch [42/100]: Loss: 2.0902206897735596
-2025-12-18 13:30:41,779 [INFO] spflow.learn.gradient_descent: Epoch [43/100]: Loss: 2.0902042388916016
-2025-12-18 13:30:42,066 [INFO] spflow.learn.gradient_descent: Epoch [44/100]: Loss: 2.0901894569396973
-2025-12-18 13:30:42,352 [INFO] spflow.learn.gradient_descent: Epoch [45/100]: Loss: 2.0901761054992676
-2025-12-18 13:30:42,639 [INFO] spflow.learn.gradient_descent: Epoch [46/100]: Loss: 2.0901639461517334
-2025-12-18 13:30:42,921 [INFO] spflow.learn.gradient_descent: Epoch [47/100]: Loss: 2.090153694152832
-2025-12-18 13:30:43,200 [INFO] spflow.learn.gradient_descent: Epoch [48/100]: Loss: 2.090143918991089
-2025-12-18 13:30:43,480 [INFO] spflow.learn.gradient_descent: Epoch [49/100]: Loss: 2.090134620666504
-2025-12-18 13:30:43,760 [INFO] spflow.learn.gradient_descent: Epoch [50/100]: Loss: 2.002915859222412
-2025-12-18 13:30:44,042 [INFO] spflow.learn.gradient_descent: Epoch [51/100]: Loss: 2.006199598312378
-2025-12-18 13:30:44,321 [INFO] spflow.learn.gradient_descent: Epoch [52/100]: Loss: 2.0049049854278564
-2025-12-18 13:30:44,610 [INFO] spflow.learn.gradient_descent: Epoch [53/100]: Loss: 2.0037522315979004
-2025-12-18 13:30:44,891 [INFO] spflow.learn.gradient_descent: Epoch [54/100]: Loss: 2.002890110015869
-2025-12-18 13:30:45,171 [INFO] spflow.learn.gradient_descent: Epoch [55/100]: Loss: 2.0022358894348145
-2025-12-18 13:30:45,451 [INFO] spflow.learn.gradient_descent: Epoch [56/100]: Loss: 2.001723289489746
-2025-12-18 13:30:45,734 [INFO] spflow.learn.gradient_descent: Epoch [57/100]: Loss: 2.001309394836426
-2025-12-18 13:30:46,013 [INFO] spflow.learn.gradient_descent: Epoch [58/100]: Loss: 2.0009686946868896
-2025-12-18 13:30:46,294 [INFO] spflow.learn.gradient_descent: Epoch [59/100]: Loss: 2.0006814002990723
-2025-12-18 13:30:46,574 [INFO] spflow.learn.gradient_descent: Epoch [60/100]: Loss: 2.0004372596740723
-2025-12-18 13:30:46,854 [INFO] spflow.learn.gradient_descent: Epoch [61/100]: Loss: 2.0002236366271973
-2025-12-18 13:30:47,135 [INFO] spflow.learn.gradient_descent: Epoch [62/100]: Loss: 2.000037908554077
-2025-12-18 13:30:47,414 [INFO] spflow.learn.gradient_descent: Epoch [63/100]: Loss: 1.9998724460601807
-2025-12-18 13:30:47,694 [INFO] spflow.learn.gradient_descent: Epoch [64/100]: Loss: 1.9997270107269287
-2025-12-18 13:30:47,978 [INFO] spflow.learn.gradient_descent: Epoch [65/100]: Loss: 1.9995949268341064
-2025-12-18 13:30:48,264 [INFO] spflow.learn.gradient_descent: Epoch [66/100]: Loss: 1.9994781017303467
-2025-12-18 13:30:48,548 [INFO] spflow.learn.gradient_descent: Epoch [67/100]: Loss: 1.9993747472763062
-2025-12-18 13:30:48,831 [INFO] spflow.learn.gradient_descent: Epoch [68/100]: Loss: 1.9992848634719849
-2025-12-18 13:30:49,114 [INFO] spflow.learn.gradient_descent: Epoch [69/100]: Loss: 1.9992083311080933
-2025-12-18 13:30:49,400 [INFO] spflow.learn.gradient_descent: Epoch [70/100]: Loss: 1.9991456270217896
-2025-12-18 13:30:49,685 [INFO] spflow.learn.gradient_descent: Epoch [71/100]: Loss: 1.9991018772125244
-2025-12-18 13:30:49,970 [INFO] spflow.learn.gradient_descent: Epoch [72/100]: Loss: 1.9990772008895874
-2025-12-18 13:30:50,260 [INFO] spflow.learn.gradient_descent: Epoch [73/100]: Loss: 1.9990800619125366
-2025-12-18 13:30:50,545 [INFO] spflow.learn.gradient_descent: Epoch [74/100]: Loss: 1.9991142749786377
-2025-12-18 13:30:50,827 [INFO] spflow.learn.gradient_descent: Epoch [75/100]: Loss: 1.980578899383545
-2025-12-18 13:30:51,111 [INFO] spflow.learn.gradient_descent: Epoch [76/100]: Loss: 1.975726842880249
-2025-12-18 13:30:51,396 [INFO] spflow.learn.gradient_descent: Epoch [77/100]: Loss: 1.9721531867980957
-2025-12-18 13:30:51,680 [INFO] spflow.learn.gradient_descent: Epoch [78/100]: Loss: 1.969496250152588
-2025-12-18 13:30:51,964 [INFO] spflow.learn.gradient_descent: Epoch [79/100]: Loss: 1.9675085544586182
-2025-12-18 13:30:52,248 [INFO] spflow.learn.gradient_descent: Epoch [80/100]: Loss: 1.9660136699676514
-2025-12-18 13:30:52,530 [INFO] spflow.learn.gradient_descent: Epoch [81/100]: Loss: 1.9648855924606323
-2025-12-18 13:30:52,815 [INFO] spflow.learn.gradient_descent: Epoch [82/100]: Loss: 1.964032530784607
-2025-12-18 13:30:53,096 [INFO] spflow.learn.gradient_descent: Epoch [83/100]: Loss: 1.963389277458191
-2025-12-18 13:30:53,376 [INFO] spflow.learn.gradient_descent: Epoch [84/100]: Loss: 1.9629045724868774
-2025-12-18 13:30:53,656 [INFO] spflow.learn.gradient_descent: Epoch [85/100]: Loss: 1.9625385999679565
-2025-12-18 13:30:53,937 [INFO] spflow.learn.gradient_descent: Epoch [86/100]: Loss: 1.9622646570205688
-2025-12-18 13:30:54,218 [INFO] spflow.learn.gradient_descent: Epoch [87/100]: Loss: 1.962060570716858
-2025-12-18 13:30:54,498 [INFO] spflow.learn.gradient_descent: Epoch [88/100]: Loss: 1.9619091749191284
-2025-12-18 13:30:54,779 [INFO] spflow.learn.gradient_descent: Epoch [89/100]: Loss: 1.9617968797683716
-2025-12-18 13:30:55,061 [INFO] spflow.learn.gradient_descent: Epoch [90/100]: Loss: 1.9617170095443726
-2025-12-18 13:30:55,347 [INFO] spflow.learn.gradient_descent: Epoch [91/100]: Loss: 1.9616600275039673
-2025-12-18 13:30:55,631 [INFO] spflow.learn.gradient_descent: Epoch [92/100]: Loss: 1.9616199731826782
-2025-12-18 13:30:55,912 [INFO] spflow.learn.gradient_descent: Epoch [93/100]: Loss: 1.9615973234176636
-2025-12-18 13:30:56,196 [INFO] spflow.learn.gradient_descent: Epoch [94/100]: Loss: 1.9615827798843384
-2025-12-18 13:30:56,475 [INFO] spflow.learn.gradient_descent: Epoch [95/100]: Loss: 1.9615780115127563
-2025-12-18 13:30:56,755 [INFO] spflow.learn.gradient_descent: Epoch [96/100]: Loss: 1.9615789651870728
-2025-12-18 13:30:57,036 [INFO] spflow.learn.gradient_descent: Epoch [97/100]: Loss: 1.961586594581604
-2025-12-18 13:30:57,318 [INFO] spflow.learn.gradient_descent: Epoch [98/100]: Loss: 1.9615960121154785
-2025-12-18 13:30:57,598 [INFO] spflow.learn.gradient_descent: Epoch [99/100]: Loss: 1.9616103172302246
+2025-12-18 16:41:53,335 [INFO] spflow.learn.gradient_descent: Epoch [0/100]: Loss: 2.293896198272705
+2025-12-18 16:41:53,623 [INFO] spflow.learn.gradient_descent: Epoch [1/100]: Loss: 2.170534610748291
+2025-12-18 16:41:53,912 [INFO] spflow.learn.gradient_descent: Epoch [2/100]: Loss: 2.129934549331665
+2025-12-18 16:41:54,202 [INFO] spflow.learn.gradient_descent: Epoch [3/100]: Loss: 2.110428810119629
+2025-12-18 16:41:54,491 [INFO] spflow.learn.gradient_descent: Epoch [4/100]: Loss: 2.1031334400177
+2025-12-18 16:41:54,780 [INFO] spflow.learn.gradient_descent: Epoch [5/100]: Loss: 2.097365379333496
+2025-12-18 16:41:55,069 [INFO] spflow.learn.gradient_descent: Epoch [6/100]: Loss: 2.0918350219726562
+2025-12-18 16:41:55,359 [INFO] spflow.learn.gradient_descent: Epoch [7/100]: Loss: 2.086604595184326
+2025-12-18 16:41:55,648 [INFO] spflow.learn.gradient_descent: Epoch [8/100]: Loss: 2.081794023513794
+2025-12-18 16:41:55,937 [INFO] spflow.learn.gradient_descent: Epoch [9/100]: Loss: 2.0774552822113037
+2025-12-18 16:41:56,227 [INFO] spflow.learn.gradient_descent: Epoch [10/100]: Loss: 2.0735867023468018
+2025-12-18 16:41:56,517 [INFO] spflow.learn.gradient_descent: Epoch [11/100]: Loss: 2.0701584815979004
+2025-12-18 16:41:56,806 [INFO] spflow.learn.gradient_descent: Epoch [12/100]: Loss: 2.067131280899048
+2025-12-18 16:41:57,095 [INFO] spflow.learn.gradient_descent: Epoch [13/100]: Loss: 2.0644612312316895
+2025-12-18 16:41:57,390 [INFO] spflow.learn.gradient_descent: Epoch [14/100]: Loss: 2.0621085166931152
+2025-12-18 16:41:57,709 [INFO] spflow.learn.gradient_descent: Epoch [15/100]: Loss: 2.0600333213806152
+2025-12-18 16:41:58,008 [INFO] spflow.learn.gradient_descent: Epoch [16/100]: Loss: 2.0582010746002197
+2025-12-18 16:41:58,306 [INFO] spflow.learn.gradient_descent: Epoch [17/100]: Loss: 2.0565810203552246
+2025-12-18 16:41:58,604 [INFO] spflow.learn.gradient_descent: Epoch [18/100]: Loss: 2.055145502090454
+2025-12-18 16:41:58,901 [INFO] spflow.learn.gradient_descent: Epoch [19/100]: Loss: 2.053870916366577
+2025-12-18 16:41:59,194 [INFO] spflow.learn.gradient_descent: Epoch [20/100]: Loss: 2.0527353286743164
+2025-12-18 16:41:59,482 [INFO] spflow.learn.gradient_descent: Epoch [21/100]: Loss: 2.051723003387451
+2025-12-18 16:41:59,770 [INFO] spflow.learn.gradient_descent: Epoch [22/100]: Loss: 2.0508151054382324
+2025-12-18 16:42:00,058 [INFO] spflow.learn.gradient_descent: Epoch [23/100]: Loss: 2.0500006675720215
+2025-12-18 16:42:00,348 [INFO] spflow.learn.gradient_descent: Epoch [24/100]: Loss: 2.0492658615112305
+2025-12-18 16:42:00,638 [INFO] spflow.learn.gradient_descent: Epoch [25/100]: Loss: 2.048602342605591
+2025-12-18 16:42:00,929 [INFO] spflow.learn.gradient_descent: Epoch [26/100]: Loss: 2.0480008125305176
+2025-12-18 16:42:01,219 [INFO] spflow.learn.gradient_descent: Epoch [27/100]: Loss: 2.0474531650543213
+2025-12-18 16:42:01,510 [INFO] spflow.learn.gradient_descent: Epoch [28/100]: Loss: 2.0469539165496826
+2025-12-18 16:42:01,800 [INFO] spflow.learn.gradient_descent: Epoch [29/100]: Loss: 2.0464954376220703
+2025-12-18 16:42:02,091 [INFO] spflow.learn.gradient_descent: Epoch [30/100]: Loss: 2.0460753440856934
+2025-12-18 16:42:02,382 [INFO] spflow.learn.gradient_descent: Epoch [31/100]: Loss: 2.045686960220337
+2025-12-18 16:42:02,671 [INFO] spflow.learn.gradient_descent: Epoch [32/100]: Loss: 2.04532790184021
+2025-12-18 16:42:02,960 [INFO] spflow.learn.gradient_descent: Epoch [33/100]: Loss: 2.0449955463409424
+2025-12-18 16:42:03,251 [INFO] spflow.learn.gradient_descent: Epoch [34/100]: Loss: 2.0446853637695312
+2025-12-18 16:42:03,541 [INFO] spflow.learn.gradient_descent: Epoch [35/100]: Loss: 2.044396162033081
+2025-12-18 16:42:03,830 [INFO] spflow.learn.gradient_descent: Epoch [36/100]: Loss: 2.044125556945801
+2025-12-18 16:42:04,127 [INFO] spflow.learn.gradient_descent: Epoch [37/100]: Loss: 2.043870449066162
+2025-12-18 16:42:04,417 [INFO] spflow.learn.gradient_descent: Epoch [38/100]: Loss: 2.0436317920684814
+2025-12-18 16:42:04,706 [INFO] spflow.learn.gradient_descent: Epoch [39/100]: Loss: 2.043405532836914
+2025-12-18 16:42:04,996 [INFO] spflow.learn.gradient_descent: Epoch [40/100]: Loss: 2.0431923866271973
+2025-12-18 16:42:05,286 [INFO] spflow.learn.gradient_descent: Epoch [41/100]: Loss: 2.0429892539978027
+2025-12-18 16:42:05,575 [INFO] spflow.learn.gradient_descent: Epoch [42/100]: Loss: 2.0427966117858887
+2025-12-18 16:42:05,864 [INFO] spflow.learn.gradient_descent: Epoch [43/100]: Loss: 2.042613983154297
+2025-12-18 16:42:06,154 [INFO] spflow.learn.gradient_descent: Epoch [44/100]: Loss: 2.0424394607543945
+2025-12-18 16:42:06,444 [INFO] spflow.learn.gradient_descent: Epoch [45/100]: Loss: 2.042271852493286
+2025-12-18 16:42:06,732 [INFO] spflow.learn.gradient_descent: Epoch [46/100]: Loss: 2.042112350463867
+2025-12-18 16:42:07,021 [INFO] spflow.learn.gradient_descent: Epoch [47/100]: Loss: 2.041959285736084
+2025-12-18 16:42:07,312 [INFO] spflow.learn.gradient_descent: Epoch [48/100]: Loss: 2.041811227798462
+2025-12-18 16:42:07,600 [INFO] spflow.learn.gradient_descent: Epoch [49/100]: Loss: 2.0416698455810547
+2025-12-18 16:42:07,889 [INFO] spflow.learn.gradient_descent: Epoch [50/100]: Loss: 1.767592191696167
+2025-12-18 16:42:08,178 [INFO] spflow.learn.gradient_descent: Epoch [51/100]: Loss: 1.7626986503601074
+2025-12-18 16:42:08,468 [INFO] spflow.learn.gradient_descent: Epoch [52/100]: Loss: 1.762424349784851
+2025-12-18 16:42:08,758 [INFO] spflow.learn.gradient_descent: Epoch [53/100]: Loss: 1.762312889099121
+2025-12-18 16:42:09,051 [INFO] spflow.learn.gradient_descent: Epoch [54/100]: Loss: 1.7622346878051758
+2025-12-18 16:42:09,344 [INFO] spflow.learn.gradient_descent: Epoch [55/100]: Loss: 1.7621805667877197
+2025-12-18 16:42:09,633 [INFO] spflow.learn.gradient_descent: Epoch [56/100]: Loss: 1.762143611907959
+2025-12-18 16:42:09,922 [INFO] spflow.learn.gradient_descent: Epoch [57/100]: Loss: 1.7621209621429443
+2025-12-18 16:42:10,211 [INFO] spflow.learn.gradient_descent: Epoch [58/100]: Loss: 1.76210618019104
+2025-12-18 16:42:10,503 [INFO] spflow.learn.gradient_descent: Epoch [59/100]: Loss: 1.7620973587036133
+2025-12-18 16:42:10,794 [INFO] spflow.learn.gradient_descent: Epoch [60/100]: Loss: 1.7620935440063477
+2025-12-18 16:42:11,084 [INFO] spflow.learn.gradient_descent: Epoch [61/100]: Loss: 1.762091040611267
+2025-12-18 16:42:11,374 [INFO] spflow.learn.gradient_descent: Epoch [62/100]: Loss: 1.762091875076294
+2025-12-18 16:42:11,663 [INFO] spflow.learn.gradient_descent: Epoch [63/100]: Loss: 1.7620933055877686
+2025-12-18 16:42:11,952 [INFO] spflow.learn.gradient_descent: Epoch [64/100]: Loss: 1.762094497680664
+2025-12-18 16:42:12,242 [INFO] spflow.learn.gradient_descent: Epoch [65/100]: Loss: 1.7620964050292969
+2025-12-18 16:42:12,532 [INFO] spflow.learn.gradient_descent: Epoch [66/100]: Loss: 1.7620983123779297
+2025-12-18 16:42:12,822 [INFO] spflow.learn.gradient_descent: Epoch [67/100]: Loss: 1.7621004581451416
+2025-12-18 16:42:13,111 [INFO] spflow.learn.gradient_descent: Epoch [68/100]: Loss: 1.7621021270751953
+2025-12-18 16:42:13,401 [INFO] spflow.learn.gradient_descent: Epoch [69/100]: Loss: 1.7621026039123535
+2025-12-18 16:42:13,690 [INFO] spflow.learn.gradient_descent: Epoch [70/100]: Loss: 1.7621033191680908
+2025-12-18 16:42:13,981 [INFO] spflow.learn.gradient_descent: Epoch [71/100]: Loss: 1.7621028423309326
+2025-12-18 16:42:14,272 [INFO] spflow.learn.gradient_descent: Epoch [72/100]: Loss: 1.762102484703064
+2025-12-18 16:42:14,561 [INFO] spflow.learn.gradient_descent: Epoch [73/100]: Loss: 1.7621022462844849
+2025-12-18 16:42:14,850 [INFO] spflow.learn.gradient_descent: Epoch [74/100]: Loss: 1.762101173400879
+2025-12-18 16:42:15,140 [INFO] spflow.learn.gradient_descent: Epoch [75/100]: Loss: 1.7680410146713257
+2025-12-18 16:42:15,430 [INFO] spflow.learn.gradient_descent: Epoch [76/100]: Loss: 1.774309515953064
+2025-12-18 16:42:15,720 [INFO] spflow.learn.gradient_descent: Epoch [77/100]: Loss: 1.7778210639953613
+2025-12-18 16:42:16,009 [INFO] spflow.learn.gradient_descent: Epoch [78/100]: Loss: 1.7796258926391602
+2025-12-18 16:42:16,304 [INFO] spflow.learn.gradient_descent: Epoch [79/100]: Loss: 1.78043794631958
+2025-12-18 16:42:16,596 [INFO] spflow.learn.gradient_descent: Epoch [80/100]: Loss: 1.7807056903839111
+2025-12-18 16:42:16,885 [INFO] spflow.learn.gradient_descent: Epoch [81/100]: Loss: 1.7806966304779053
+2025-12-18 16:42:17,173 [INFO] spflow.learn.gradient_descent: Epoch [82/100]: Loss: 1.7805633544921875
+2025-12-18 16:42:17,465 [INFO] spflow.learn.gradient_descent: Epoch [83/100]: Loss: 1.7803890705108643
+2025-12-18 16:42:17,755 [INFO] spflow.learn.gradient_descent: Epoch [84/100]: Loss: 1.7802150249481201
+2025-12-18 16:42:18,046 [INFO] spflow.learn.gradient_descent: Epoch [85/100]: Loss: 1.780059814453125
+2025-12-18 16:42:18,336 [INFO] spflow.learn.gradient_descent: Epoch [86/100]: Loss: 1.7799278497695923
+2025-12-18 16:42:18,630 [INFO] spflow.learn.gradient_descent: Epoch [87/100]: Loss: 1.7798198461532593
+2025-12-18 16:42:18,920 [INFO] spflow.learn.gradient_descent: Epoch [88/100]: Loss: 1.7797361612319946
+2025-12-18 16:42:19,210 [INFO] spflow.learn.gradient_descent: Epoch [89/100]: Loss: 1.7796729803085327
+2025-12-18 16:42:19,500 [INFO] spflow.learn.gradient_descent: Epoch [90/100]: Loss: 1.7796231508255005
+2025-12-18 16:42:19,793 [INFO] spflow.learn.gradient_descent: Epoch [91/100]: Loss: 1.7795854806900024
+2025-12-18 16:42:20,084 [INFO] spflow.learn.gradient_descent: Epoch [92/100]: Loss: 1.779556155204773
+2025-12-18 16:42:20,377 [INFO] spflow.learn.gradient_descent: Epoch [93/100]: Loss: 1.7795358896255493
+2025-12-18 16:42:20,668 [INFO] spflow.learn.gradient_descent: Epoch [94/100]: Loss: 1.7795230150222778
+2025-12-18 16:42:20,959 [INFO] spflow.learn.gradient_descent: Epoch [95/100]: Loss: 1.7795132398605347
+2025-12-18 16:42:21,251 [INFO] spflow.learn.gradient_descent: Epoch [96/100]: Loss: 1.7795032262802124
+2025-12-18 16:42:21,546 [INFO] spflow.learn.gradient_descent: Epoch [97/100]: Loss: 1.779496431350708
+2025-12-18 16:42:21,842 [INFO] spflow.learn.gradient_descent: Epoch [98/100]: Loss: 1.779491901397705
+2025-12-18 16:42:22,132 [INFO] spflow.learn.gradient_descent: Epoch [99/100]: Loss: 1.7794890403747559
 </pre></div></div>
 </div>
 <p>With this SPN, we can now draw samples based on its labels. Therefore, we use a sampling context. This sampling context can be passed to any sampling method. With the context, you can explicitly define from which output channel you want to sample or, for example, provide evidence. This allows advanced control over the sampling routine. In this case, the root layer has three output channels which correspond to the three classes. So being able to define from which output channel we want to sample
@@ -1089,8 +1090,8 @@ means being able to choose from which class we want to sample.</p>
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-2025-12-18 13:30:58,117 [INFO] matplotlib.font_manager: Failed to extract font properties from /usr/share/fonts/truetype/noto/NotoColorEmoji.ttf: Can not load face (unknown file format; error code 0x2)
-2025-12-18 13:30:58,136 [INFO] matplotlib.font_manager: generated new fontManager
+2025-12-18 16:42:22,638 [INFO] matplotlib.font_manager: Failed to extract font properties from /usr/share/fonts/truetype/noto/NotoColorEmoji.ttf: Can not load face (unknown file format; error code 0x2)
+2025-12-18 16:42:22,669 [INFO] matplotlib.font_manager: generated new fontManager
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -1130,7 +1131,7 @@ means being able to choose from which class we want to sample.</p>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 used 3 iterations (0.0007s) to cluster 1200 items into 2 clusters
-used 4 iterations (0.0007s) to cluster 799 items into 2 clusters
+used 3 iterations (0.0006s) to cluster 599 items into 2 clusters
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -1138,7 +1139,7 @@ used 4 iterations (0.0007s) to cluster 799 items into 2 clusters
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-/tmp/ipykernel_2465/568267606.py:6: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.detach().clone() or sourceTensor.detach().clone().requires_grad_(True), rather than torch.tensor(sourceTensor).
+/tmp/ipykernel_2525/568267606.py:6: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.detach().clone() or sourceTensor.detach().clone().requires_grad_(True), rather than torch.tensor(sourceTensor).
   torch.tensor(dataset, dtype=torch.float32),
 </pre></div></div>
 </div>
@@ -1153,7 +1154,16 @@ Sum(
   (inputs): Cat(
     D=1, C=5, R=1, dim=2
     (inputs): ModuleList(
-      (0): Sum(
+      (0): Product(
+        D=1, C=4, R=1
+        (inputs): Cat(
+          D=2, C=4, R=1, dim=1
+          (inputs): ModuleList(
+            (0-1): 2 x Normal(D=1, C=4, R=1)
+          )
+        )
+      )
+      (1): Sum(
         D=1, C=1, R=1, weights=(1, 8, 1, 1)
         (inputs): Cat(
           D=1, C=8, R=1, dim=2
@@ -1167,15 +1177,6 @@ Sum(
                 )
               )
             )
-          )
-        )
-      )
-      (1): Product(
-        D=1, C=4, R=1
-        (inputs): Cat(
-          D=2, C=4, R=1, dim=1
-          (inputs): ModuleList(
-            (0-1): 2 x Normal(D=1, C=4, R=1)
           )
         )
       )

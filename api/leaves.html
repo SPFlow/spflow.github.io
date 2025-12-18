@@ -3,7 +3,7 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Operations" href="operations.html"><link rel="prev" title="Convolutional Modules" href="conv.html">
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Operations" href="operations.html"><link rel="prev" title="Einsum Modules" href="einsum.html">
 
     <!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
         <title>Leaf Modules - SPFlow 1.0.0</title>
@@ -207,6 +207,7 @@
 <li class="toctree-l2"><a class="reference internal" href="sums.html">Sum Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="products.html">Product Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="conv.html">Convolutional Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="einsum.html">Einsum Modules</a></li>
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Leaf Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operations.html">Operations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rat_spn.html">RAT-SPN Architecture</a></li>
@@ -950,6 +951,168 @@ Success probability p is stored in logit-space for numerical stability.</p>
 
 </section>
 </section>
+<section id="non-parametric-distributions">
+<h2>Non-Parametric Distributions<a class="headerlink" href="#non-parametric-distributions" title="Link to this heading">¶</a></h2>
+<section id="piecewiselinear">
+<h3>PiecewiseLinear<a class="headerlink" href="#piecewiselinear" title="Link to this heading">¶</a></h3>
+<p>Non-parametric distribution that approximates data using piecewise linear functions from histograms. Can handle both continuous and discrete data.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="spflow.modules.leaves.PiecewiseLinear">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">spflow.modules.leaves.</span></span><span class="sig-name descname"><span class="pre">PiecewiseLinear</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scope</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_channels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_repetitions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/leaves/piecewise_linear.html#PiecewiseLinear"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.leaves.PiecewiseLinear" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="base_modules.html#spflow.modules.leaves.leaf.LeafModule" title="spflow.modules.leaves.leaf.LeafModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">LeafModule</span></code></a></p>
+<p>Piecewise linear leaf distribution module.</p>
+<p>First constructs histograms from the data using K-means clustering,
+then approximates the histograms with piecewise linear functions.</p>
+<p>This leaf requires initialization with data via the <cite>initialize()</cite> method
+before it can be used for inference or sampling.</p>
+<dl class="field-list simple">
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spflow.modules.leaves.PiecewiseLinear.alpha">
+<span class="sig-name descname"><span class="pre">alpha</span></span><a class="headerlink" href="#spflow.modules.leaves.PiecewiseLinear.alpha" title="Link to this definition">¶</a></dt>
+<dd><p>Laplace smoothing parameter.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spflow.modules.leaves.PiecewiseLinear.xs">
+<span class="sig-name descname"><span class="pre">xs</span></span><a class="headerlink" href="#spflow.modules.leaves.PiecewiseLinear.xs" title="Link to this definition">¶</a></dt>
+<dd><p>Nested list of x-coordinates for piecewise linear functions.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spflow.modules.leaves.PiecewiseLinear.ys">
+<span class="sig-name descname"><span class="pre">ys</span></span><a class="headerlink" href="#spflow.modules.leaves.PiecewiseLinear.ys" title="Link to this definition">¶</a></dt>
+<dd><p>Nested list of y-coordinates (densities) for piecewise linear functions.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spflow.modules.leaves.PiecewiseLinear.domains">
+<span class="sig-name descname"><span class="pre">domains</span></span><a class="headerlink" href="#spflow.modules.leaves.PiecewiseLinear.domains" title="Link to this definition">¶</a></dt>
+<dd><p>List of Domain objects describing each feature.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spflow.modules.leaves.PiecewiseLinear.is_initialized">
+<span class="sig-name descname"><span class="pre">is_initialized</span></span><a class="headerlink" href="#spflow.modules.leaves.PiecewiseLinear.is_initialized" title="Link to this definition">¶</a></dt>
+<dd><p>Whether the distribution has been initialized with data.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="spflow.modules.leaves.PiecewiseLinear.distribution">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">distribution</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">PiecewiseLinearDist</span></em><a class="headerlink" href="#spflow.modules.leaves.PiecewiseLinear.distribution" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the underlying PiecewiseLinearDist object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.14)"><strong>ValueError</strong></a> – If the distribution has not been initialized.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="spflow.modules.leaves.PiecewiseLinear.mode">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mode</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><span class="pre">Tensor</span></a></em><a class="headerlink" href="#spflow.modules.leaves.PiecewiseLinear.mode" title="Link to this definition">¶</a></dt>
+<dd><p>Return distribution mode.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Mode of the distribution.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.modules.leaves.PiecewiseLinear.params">
+<span class="sig-name descname"><span class="pre">params</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/leaves/piecewise_linear.html#PiecewiseLinear.params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.leaves.PiecewiseLinear.params" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the parameters of the distribution.</p>
+<p>For PiecewiseLinear, returns xs and ys nested lists.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.modules.leaves.PiecewiseLinear.initialize">
+<span class="sig-name descname"><span class="pre">initialize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">domains</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/leaves/piecewise_linear.html#PiecewiseLinear.initialize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.leaves.PiecewiseLinear.initialize" title="Link to this definition">¶</a></dt>
+<dd><p>Initialize the piecewise linear distribution with data.</p>
+<p>Uses K-means clustering to create multiple distributions per leaf,
+then constructs histograms and approximates them with piecewise
+linear functions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Training data tensor of shape (N, F) where N is batch size
+and F is the number of features.</p></li>
+<li><p><strong>domains</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Domain</span></code>]</span>) – List of Domain objects, one per feature.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.14)"><strong>ValueError</strong></a> – If data shape doesn’t match scope.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.modules.leaves.PiecewiseLinear.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/leaves/piecewise_linear.html#PiecewiseLinear.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.leaves.PiecewiseLinear.reset" title="Link to this definition">¶</a></dt>
+<dd><p>Reset the distribution to uninitialized state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.modules.leaves.PiecewiseLinear.log_likelihood">
+<span class="sig-name descname"><span class="pre">log_likelihood</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/leaves/piecewise_linear.html#PiecewiseLinear.log_likelihood"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.leaves.PiecewiseLinear.log_likelihood" title="Link to this definition">¶</a></dt>
+<dd><p>Compute log-likelihoods for input data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Input data tensor of shape (N, F).</p></li>
+<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional cache dictionary.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Log-likelihood tensor.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.modules.leaves.PiecewiseLinear.sample">
+<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_mpe</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampling_ctx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/leaves/piecewise_linear.html#PiecewiseLinear.sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.leaves.PiecewiseLinear.sample" title="Link to this definition">¶</a></dt>
+<dd><p>Sample from the piecewise linear distribution.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>num_samples</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Number of samples to generate.</p></li>
+<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional evidence tensor.</p></li>
+<li><p><strong>is_mpe</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Perform MPE (mode) instead of sampling.</p></li>
+<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional cache dictionary.</p></li>
+<li><p><strong>sampling_ctx</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<code class="xref py py-class docutils literal notranslate"><span class="pre">SamplingContext</span></code>]</span>) – Optional sampling context.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Sampled data tensor.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
 </section>
 
         </article>
@@ -966,14 +1129,14 @@ Success probability p is stored in logit-space for numerical stability.</p>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="conv.html">
+          <a class="prev-page" href="einsum.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Convolutional Modules</div>
+                <div class="title">Einsum Modules</div>
                 
               </div>
             </a>
@@ -1149,6 +1312,27 @@ Success probability p is stored in logit-space for numerical stability.</p>
 <li><a class="reference internal" href="#spflow.modules.leaves.Hypergeometric.check_inputs"><code class="docutils literal notranslate"><span class="pre">Hypergeometric.check_inputs()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.leaves.Hypergeometric.params"><code class="docutils literal notranslate"><span class="pre">Hypergeometric.params()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.leaves.Hypergeometric.check_support"><code class="docutils literal notranslate"><span class="pre">Hypergeometric.check_support()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#non-parametric-distributions">Non-Parametric Distributions</a><ul>
+<li><a class="reference internal" href="#piecewiselinear">PiecewiseLinear</a><ul>
+<li><a class="reference internal" href="#spflow.modules.leaves.PiecewiseLinear"><code class="docutils literal notranslate"><span class="pre">PiecewiseLinear</span></code></a><ul>
+<li><a class="reference internal" href="#spflow.modules.leaves.PiecewiseLinear.alpha"><code class="docutils literal notranslate"><span class="pre">PiecewiseLinear.alpha</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.leaves.PiecewiseLinear.xs"><code class="docutils literal notranslate"><span class="pre">PiecewiseLinear.xs</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.leaves.PiecewiseLinear.ys"><code class="docutils literal notranslate"><span class="pre">PiecewiseLinear.ys</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.leaves.PiecewiseLinear.domains"><code class="docutils literal notranslate"><span class="pre">PiecewiseLinear.domains</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.leaves.PiecewiseLinear.is_initialized"><code class="docutils literal notranslate"><span class="pre">PiecewiseLinear.is_initialized</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.leaves.PiecewiseLinear.distribution"><code class="docutils literal notranslate"><span class="pre">PiecewiseLinear.distribution</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.leaves.PiecewiseLinear.mode"><code class="docutils literal notranslate"><span class="pre">PiecewiseLinear.mode</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.leaves.PiecewiseLinear.params"><code class="docutils literal notranslate"><span class="pre">PiecewiseLinear.params()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.leaves.PiecewiseLinear.initialize"><code class="docutils literal notranslate"><span class="pre">PiecewiseLinear.initialize()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.leaves.PiecewiseLinear.reset"><code class="docutils literal notranslate"><span class="pre">PiecewiseLinear.reset()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.leaves.PiecewiseLinear.log_likelihood"><code class="docutils literal notranslate"><span class="pre">PiecewiseLinear.log_likelihood()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.leaves.PiecewiseLinear.sample"><code class="docutils literal notranslate"><span class="pre">PiecewiseLinear.sample()</span></code></a></li>
 </ul>
 </li>
 </ul>

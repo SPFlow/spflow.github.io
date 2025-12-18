@@ -205,6 +205,7 @@
 <li class="toctree-l2"><a class="reference internal" href="api/sums.html">Sum Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/products.html">Product Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/conv.html">Convolutional Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/einsum.html">Einsum Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/leaves.html">Leaf Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/operations.html">Operations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/rat_spn.html">RAT-SPN Architecture</a></li>
@@ -252,7 +253,7 @@
           
 <section class="genindex-section">
   <h1 id="index">Index</h1>
-  <div class="genindex-jumpbox"><a href="#A"><strong>A</strong></a> | <a href="#B"><strong>B</strong></a> | <a href="#C"><strong>C</strong></a> | <a href="#D"><strong>D</strong></a> | <a href="#E"><strong>E</strong></a> | <a href="#F"><strong>F</strong></a> | <a href="#G"><strong>G</strong></a> | <a href="#H"><strong>H</strong></a> | <a href="#I"><strong>I</strong></a> | <a href="#J"><strong>J</strong></a> | <a href="#K"><strong>K</strong></a> | <a href="#L"><strong>L</strong></a> | <a href="#M"><strong>M</strong></a> | <a href="#N"><strong>N</strong></a> | <a href="#O"><strong>O</strong></a> | <a href="#P"><strong>P</strong></a> | <a href="#Q"><strong>Q</strong></a> | <a href="#R"><strong>R</strong></a> | <a href="#S"><strong>S</strong></a> | <a href="#T"><strong>T</strong></a> | <a href="#U"><strong>U</strong></a> | <a href="#V"><strong>V</strong></a> | <a href="#W"><strong>W</strong></a></div>
+  <div class="genindex-jumpbox"><a href="#A"><strong>A</strong></a> | <a href="#B"><strong>B</strong></a> | <a href="#C"><strong>C</strong></a> | <a href="#D"><strong>D</strong></a> | <a href="#E"><strong>E</strong></a> | <a href="#F"><strong>F</strong></a> | <a href="#G"><strong>G</strong></a> | <a href="#H"><strong>H</strong></a> | <a href="#I"><strong>I</strong></a> | <a href="#J"><strong>J</strong></a> | <a href="#K"><strong>K</strong></a> | <a href="#L"><strong>L</strong></a> | <a href="#M"><strong>M</strong></a> | <a href="#N"><strong>N</strong></a> | <a href="#O"><strong>O</strong></a> | <a href="#P"><strong>P</strong></a> | <a href="#Q"><strong>Q</strong></a> | <a href="#R"><strong>R</strong></a> | <a href="#S"><strong>S</strong></a> | <a href="#T"><strong>T</strong></a> | <a href="#U"><strong>U</strong></a> | <a href="#V"><strong>V</strong></a> | <a href="#W"><strong>W</strong></a> | <a href="#X"><strong>X</strong></a> | <a href="#Y"><strong>Y</strong></a></div>
 </section>
 <section id="A" class="genindex-section">
   <h2>A</h2>
@@ -260,12 +261,16 @@
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/scope.html#spflow.meta.data.scope.Scope.all_equal">all_equal() (spflow.meta.data.scope.Scope static method)</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/scope.html#spflow.meta.data.scope.Scope.all_pairwise_disjoint">all_pairwise_disjoint() (spflow.meta.data.scope.Scope static method)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/leaves.html#spflow.modules.leaves.Gamma.alpha">alpha (spflow.modules.leaves.Gamma attribute)</a>
+
+        <ul>
+          <li><a href="api/leaves.html#spflow.modules.leaves.PiecewiseLinear.alpha">(spflow.modules.leaves.PiecewiseLinear attribute)</a>
 </li>
+        </ul></li>
     </ul></td>
   </tr></table>
 </section>
@@ -336,8 +341,12 @@
   <h2>D</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/rat_spn.html#spflow.modules.rat.RatSPN.depth">depth (spflow.modules.rat.RatSPN attribute)</a>
+        <li><a href="api/einsum.html#spflow.modules.einsum.Einet.depth">depth (spflow.modules.einsum.Einet attribute)</a>
+
+        <ul>
+          <li><a href="api/rat_spn.html#spflow.modules.rat.RatSPN.depth">(spflow.modules.rat.RatSPN attribute)</a>
 </li>
+        </ul></li>
         <li><a href="api/base_modules.html#spflow.modules.leaves.leaf.LeafModule.device">device (spflow.modules.leaves.leaf.LeafModule property)</a>
 
         <ul>
@@ -369,11 +378,17 @@
 </li>
           <li><a href="api/leaves.html#spflow.modules.leaves.NegativeBinomial.distribution">(spflow.modules.leaves.NegativeBinomial attribute)</a>
 </li>
+          <li><a href="api/leaves.html#spflow.modules.leaves.PiecewiseLinear.distribution">(spflow.modules.leaves.PiecewiseLinear property)</a>
+</li>
           <li><a href="api/leaves.html#spflow.modules.leaves.Poisson.distribution">(spflow.modules.leaves.Poisson attribute)</a>
 </li>
           <li><a href="api/leaves.html#spflow.modules.leaves.Uniform.distribution">(spflow.modules.leaves.Uniform attribute)</a>
 </li>
         </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/leaves.html#spflow.modules.leaves.PiecewiseLinear.domains">domains (spflow.modules.leaves.PiecewiseLinear attribute)</a>
+</li>
     </ul></td>
   </tr></table>
 </section>
@@ -382,6 +397,10 @@
   <h2>E</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/einsum.html#spflow.modules.einsum.Einet">Einet (class in spflow.modules.einsum)</a>
+</li>
+        <li><a href="api/einsum.html#spflow.modules.einsum.EinsumLayer">EinsumLayer (class in spflow.modules.einsum)</a>
+</li>
         <li><a href="api/products.html#spflow.modules.products.ElementwiseProduct">ElementwiseProduct (class in spflow.modules.products)</a>
 </li>
         <li><a href="api/sums.html#spflow.modules.sums.ElementwiseSum">ElementwiseSum (class in spflow.modules.sums)</a>
@@ -408,6 +427,12 @@
           <li><a href="api/conv.html#spflow.modules.conv.ProdConv.expectation_maximization">(spflow.modules.conv.ProdConv method)</a>
 </li>
           <li><a href="api/conv.html#spflow.modules.conv.SumConv.expectation_maximization">(spflow.modules.conv.SumConv method)</a>
+</li>
+          <li><a href="api/einsum.html#spflow.modules.einsum.Einet.expectation_maximization">(spflow.modules.einsum.Einet method)</a>
+</li>
+          <li><a href="api/einsum.html#spflow.modules.einsum.EinsumLayer.expectation_maximization">(spflow.modules.einsum.EinsumLayer method)</a>
+</li>
+          <li><a href="api/einsum.html#spflow.modules.einsum.LinsumLayer.expectation_maximization">(spflow.modules.einsum.LinsumLayer method)</a>
 </li>
           <li><a href="api/base_modules.html#spflow.modules.leaves.leaf.LeafModule.expectation_maximization">(spflow.modules.leaves.leaf.LeafModule method)</a>
 </li>
@@ -446,6 +471,12 @@
           <li><a href="api/conv.html#spflow.modules.conv.ProdConv.feature_to_scope">(spflow.modules.conv.ProdConv property)</a>
 </li>
           <li><a href="api/conv.html#spflow.modules.conv.SumConv.feature_to_scope">(spflow.modules.conv.SumConv property)</a>
+</li>
+          <li><a href="api/einsum.html#spflow.modules.einsum.Einet.feature_to_scope">(spflow.modules.einsum.Einet property)</a>
+</li>
+          <li><a href="api/einsum.html#spflow.modules.einsum.EinsumLayer.feature_to_scope">(spflow.modules.einsum.EinsumLayer property)</a>
+</li>
+          <li><a href="api/einsum.html#spflow.modules.einsum.LinsumLayer.feature_to_scope">(spflow.modules.einsum.LinsumLayer property)</a>
 </li>
           <li><a href="api/base_modules.html#spflow.modules.leaves.leaf.LeafModule.feature_to_scope">(spflow.modules.leaves.leaf.LeafModule property)</a>
 </li>
@@ -534,6 +565,8 @@
 </li>
         <li><a href="api/base_modules.html#spflow.modules.module.Module.in_shape">in_shape (spflow.modules.module.Module property)</a>
 </li>
+        <li><a href="api/leaves.html#spflow.modules.leaves.PiecewiseLinear.initialize">initialize() (spflow.modules.leaves.PiecewiseLinear method)</a>
+</li>
         <li><a href="api/conv.html#spflow.modules.conv.ProdConv.inputs">inputs (spflow.modules.conv.ProdConv attribute)</a>
 
         <ul>
@@ -561,6 +594,8 @@
         <li><a href="api/base_modules.html#spflow.modules.leaves.leaf.LeafModule.is_conditional">is_conditional (spflow.modules.leaves.leaf.LeafModule property)</a>
 </li>
         <li><a href="api/scope.html#spflow.meta.data.scope.Scope.is_conditional">is_conditional() (spflow.meta.data.scope.Scope method)</a>
+</li>
+        <li><a href="api/leaves.html#spflow.modules.leaves.PiecewiseLinear.is_initialized">is_initialized (spflow.modules.leaves.PiecewiseLinear attribute)</a>
 </li>
         <li><a href="api/scope.html#spflow.meta.data.scope.Scope.isdisjoint">isdisjoint() (spflow.meta.data.scope.Scope method)</a>
 </li>
@@ -608,13 +643,21 @@
   <h2>L</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/einsum.html#spflow.modules.einsum.Einet.layer_type">layer_type (spflow.modules.einsum.Einet attribute)</a>
+</li>
         <li><a href="api/conv.html#spflow.modules.conv.ConvPc.leaf">leaf (spflow.modules.conv.ConvPc attribute)</a>
 </li>
-        <li><a href="api/rat_spn.html#spflow.modules.rat.RatSPN.leaf_modules">leaf_modules (spflow.modules.rat.RatSPN attribute)</a>
+        <li><a href="api/einsum.html#spflow.modules.einsum.Einet.leaf_modules">leaf_modules (spflow.modules.einsum.Einet attribute)</a>
+
+        <ul>
+          <li><a href="api/rat_spn.html#spflow.modules.rat.RatSPN.leaf_modules">(spflow.modules.rat.RatSPN attribute)</a>
 </li>
+        </ul></li>
         <li><a href="api/base_modules.html#spflow.modules.leaves.leaf.LeafModule">LeafModule (class in spflow.modules.leaves.leaf)</a>
 </li>
         <li><a href="api/learning.html#spflow.learn.learn_spn.learn_spn">learn_spn() (in module spflow.learn.learn_spn)</a>
+</li>
+        <li><a href="api/einsum.html#spflow.modules.einsum.LinsumLayer">LinsumLayer (class in spflow.modules.einsum)</a>
 </li>
         <li><a href="api/utilities.html#spflow.utils.model_manager.load_model">load_model() (in module spflow.utils.model_manager)</a>
 </li>
@@ -627,7 +670,15 @@
 </li>
           <li><a href="api/conv.html#spflow.modules.conv.SumConv.log_likelihood">(spflow.modules.conv.SumConv method)</a>
 </li>
+          <li><a href="api/einsum.html#spflow.modules.einsum.Einet.log_likelihood">(spflow.modules.einsum.Einet method)</a>
+</li>
+          <li><a href="api/einsum.html#spflow.modules.einsum.EinsumLayer.log_likelihood">(spflow.modules.einsum.EinsumLayer method)</a>
+</li>
+          <li><a href="api/einsum.html#spflow.modules.einsum.LinsumLayer.log_likelihood">(spflow.modules.einsum.LinsumLayer method)</a>
+</li>
           <li><a href="api/base_modules.html#spflow.modules.leaves.leaf.LeafModule.log_likelihood">(spflow.modules.leaves.leaf.LeafModule method)</a>
+</li>
+          <li><a href="api/leaves.html#spflow.modules.leaves.PiecewiseLinear.log_likelihood">(spflow.modules.leaves.PiecewiseLinear method)</a>
 </li>
           <li><a href="api/base_modules.html#spflow.modules.module.Module.log_likelihood">(spflow.modules.module.Module method)</a>
 </li>
@@ -656,11 +707,19 @@
         </ul></li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/rat_spn.html#spflow.modules.rat.RatSPN.log_posterior">log_posterior() (spflow.modules.rat.RatSPN method)</a>
+        <li><a href="api/einsum.html#spflow.modules.einsum.Einet.log_posterior">log_posterior() (spflow.modules.einsum.Einet method)</a>
+
+        <ul>
+          <li><a href="api/rat_spn.html#spflow.modules.rat.RatSPN.log_posterior">(spflow.modules.rat.RatSPN method)</a>
 </li>
+        </ul></li>
         <li><a href="api/conv.html#spflow.modules.conv.SumConv.log_weights">log_weights (spflow.modules.conv.SumConv property)</a>
 
         <ul>
+          <li><a href="api/einsum.html#spflow.modules.einsum.EinsumLayer.log_weights">(spflow.modules.einsum.EinsumLayer property)</a>
+</li>
+          <li><a href="api/einsum.html#spflow.modules.einsum.LinsumLayer.log_weights">(spflow.modules.einsum.LinsumLayer property)</a>
+</li>
           <li><a href="api/sums.html#spflow.modules.sums.ElementwiseSum.log_weights">(spflow.modules.sums.ElementwiseSum property)</a>
 </li>
           <li><a href="api/sums.html#spflow.modules.sums.Sum.log_weights">(spflow.modules.sums.Sum property)</a>
@@ -669,6 +728,10 @@
         <li><a href="api/conv.html#spflow.modules.conv.SumConv.logits">logits (spflow.modules.conv.SumConv attribute)</a>
 
         <ul>
+          <li><a href="api/einsum.html#spflow.modules.einsum.EinsumLayer.logits">(spflow.modules.einsum.EinsumLayer attribute)</a>
+</li>
+          <li><a href="api/einsum.html#spflow.modules.einsum.LinsumLayer.logits">(spflow.modules.einsum.LinsumLayer attribute)</a>
+</li>
           <li><a href="api/leaves.html#spflow.modules.leaves.Bernoulli.logits">(spflow.modules.leaves.Bernoulli property)</a>
 </li>
           <li><a href="api/leaves.html#spflow.modules.leaves.Binomial.logits">(spflow.modules.leaves.Binomial property)</a>
@@ -715,6 +778,12 @@
 </li>
           <li><a href="api/conv.html#spflow.modules.conv.SumConv.marginalize">(spflow.modules.conv.SumConv method)</a>
 </li>
+          <li><a href="api/einsum.html#spflow.modules.einsum.Einet.marginalize">(spflow.modules.einsum.Einet method)</a>
+</li>
+          <li><a href="api/einsum.html#spflow.modules.einsum.EinsumLayer.marginalize">(spflow.modules.einsum.EinsumLayer method)</a>
+</li>
+          <li><a href="api/einsum.html#spflow.modules.einsum.LinsumLayer.marginalize">(spflow.modules.einsum.LinsumLayer method)</a>
+</li>
           <li><a href="api/base_modules.html#spflow.modules.leaves.leaf.LeafModule.marginalize">(spflow.modules.leaves.leaf.LeafModule method)</a>
 </li>
           <li><a href="api/base_modules.html#spflow.modules.module.Module.marginalize">(spflow.modules.module.Module method)</a>
@@ -738,9 +807,15 @@
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/base_modules.html#spflow.modules.leaves.leaf.LeafModule.marginalized_params">marginalized_params() (spflow.modules.leaves.leaf.LeafModule method)</a>
 </li>
-        <li><a href="api/base_modules.html#spflow.modules.leaves.leaf.LeafModule.maximum_likelihood_estimation">maximum_likelihood_estimation() (spflow.modules.leaves.leaf.LeafModule method)</a>
+        <li><a href="api/einsum.html#spflow.modules.einsum.Einet.maximum_likelihood_estimation">maximum_likelihood_estimation() (spflow.modules.einsum.Einet method)</a>
 
         <ul>
+          <li><a href="api/einsum.html#spflow.modules.einsum.EinsumLayer.maximum_likelihood_estimation">(spflow.modules.einsum.EinsumLayer method)</a>
+</li>
+          <li><a href="api/einsum.html#spflow.modules.einsum.LinsumLayer.maximum_likelihood_estimation">(spflow.modules.einsum.LinsumLayer method)</a>
+</li>
+          <li><a href="api/base_modules.html#spflow.modules.leaves.leaf.LeafModule.maximum_likelihood_estimation">(spflow.modules.leaves.leaf.LeafModule method)</a>
+</li>
           <li><a href="api/base_modules.html#spflow.modules.module.Module.maximum_likelihood_estimation">(spflow.modules.module.Module method)</a>
 </li>
           <li><a href="api/products.html#spflow.modules.products.Product.maximum_likelihood_estimation">(spflow.modules.products.Product method)</a>
@@ -759,6 +834,8 @@
         <li><a href="api/base_modules.html#spflow.modules.leaves.leaf.LeafModule.mode">mode (spflow.modules.leaves.leaf.LeafModule property)</a>
 
         <ul>
+          <li><a href="api/leaves.html#spflow.modules.leaves.PiecewiseLinear.mode">(spflow.modules.leaves.PiecewiseLinear property)</a>
+</li>
           <li><a href="api/leaves.html#spflow.modules.leaves.Uniform.mode">(spflow.modules.leaves.Uniform property)</a>
 </li>
         </ul></li>
@@ -792,23 +869,37 @@
           <li><a href="api/leaves.html#spflow.modules.leaves.NegativeBinomial.n">(spflow.modules.leaves.NegativeBinomial attribute)</a>
 </li>
         </ul></li>
-        <li><a href="api/rat_spn.html#spflow.modules.rat.RatSPN.n_out">n_out (spflow.modules.rat.RatSPN property)</a>
+        <li><a href="api/einsum.html#spflow.modules.einsum.Einet.n_out">n_out (spflow.modules.einsum.Einet property)</a>
+
+        <ul>
+          <li><a href="api/rat_spn.html#spflow.modules.rat.RatSPN.n_out">(spflow.modules.rat.RatSPN property)</a>
 </li>
+        </ul></li>
         <li><a href="api/rat_spn.html#spflow.modules.rat.RatSPN.n_region_nodes">n_region_nodes (spflow.modules.rat.RatSPN attribute)</a>
+</li>
+        <li><a href="api/rat_spn.html#spflow.modules.rat.RatSPN.n_root_nodes">n_root_nodes (spflow.modules.rat.RatSPN attribute)</a>
 </li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/rat_spn.html#spflow.modules.rat.RatSPN.n_root_nodes">n_root_nodes (spflow.modules.rat.RatSPN attribute)</a>
-</li>
         <li><a href="api/leaves.html#spflow.modules.leaves.NegativeBinomial">NegativeBinomial (class in spflow.modules.leaves)</a>
 </li>
         <li><a href="api/leaves.html#spflow.modules.leaves.Normal">Normal (class in spflow.modules.leaves)</a>
 </li>
         <li><a href="api/wrappers.html#spflow.modules.wrapper.image_wrapper.ImageWrapper.num_channel">num_channel (spflow.modules.wrapper.image_wrapper.ImageWrapper attribute)</a>
 </li>
-        <li><a href="api/rat_spn.html#spflow.modules.rat.RatSPN.num_repetitions">num_repetitions (spflow.modules.rat.RatSPN attribute)</a>
+        <li><a href="api/einsum.html#spflow.modules.einsum.Einet.num_classes">num_classes (spflow.modules.einsum.Einet attribute)</a>
 </li>
+        <li><a href="api/einsum.html#spflow.modules.einsum.Einet.num_leaves">num_leaves (spflow.modules.einsum.Einet attribute)</a>
+</li>
+        <li><a href="api/einsum.html#spflow.modules.einsum.Einet.num_repetitions">num_repetitions (spflow.modules.einsum.Einet attribute)</a>
+
+        <ul>
+          <li><a href="api/rat_spn.html#spflow.modules.rat.RatSPN.num_repetitions">(spflow.modules.rat.RatSPN attribute)</a>
+</li>
+        </ul></li>
         <li><a href="api/operations.html#spflow.modules.ops.split.Split.num_splits">num_splits (spflow.modules.ops.split.Split attribute)</a>
+</li>
+        <li><a href="api/einsum.html#spflow.modules.einsum.Einet.num_sums">num_sums (spflow.modules.einsum.Einet attribute)</a>
 </li>
     </ul></td>
   </tr></table>
@@ -873,6 +964,8 @@
 </li>
           <li><a href="api/leaves.html#spflow.modules.leaves.Normal.params">(spflow.modules.leaves.Normal method)</a>
 </li>
+          <li><a href="api/leaves.html#spflow.modules.leaves.PiecewiseLinear.params">(spflow.modules.leaves.PiecewiseLinear method)</a>
+</li>
           <li><a href="api/leaves.html#spflow.modules.leaves.Poisson.params">(spflow.modules.leaves.Poisson method)</a>
 </li>
           <li><a href="api/leaves.html#spflow.modules.leaves.Uniform.params">(spflow.modules.leaves.Uniform method)</a>
@@ -880,6 +973,8 @@
         </ul></li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/leaves.html#spflow.modules.leaves.PiecewiseLinear">PiecewiseLinear (class in spflow.modules.leaves)</a>
+</li>
         <li><a href="api/leaves.html#spflow.modules.leaves.Poisson">Poisson (class in spflow.modules.leaves)</a>
 </li>
         <li><a href="api/interfaces.html#spflow.interfaces.classifier.Classifier.predict">predict() (spflow.interfaces.classifier.Classifier method)</a>
@@ -887,6 +982,8 @@
         <li><a href="api/interfaces.html#spflow.interfaces.classifier.Classifier.predict_proba">predict_proba() (spflow.interfaces.classifier.Classifier method)</a>
 
         <ul>
+          <li><a href="api/einsum.html#spflow.modules.einsum.Einet.predict_proba">(spflow.modules.einsum.Einet method)</a>
+</li>
           <li><a href="api/rat_spn.html#spflow.modules.rat.RatSPN.predict_proba">(spflow.modules.rat.RatSPN method)</a>
 </li>
         </ul></li>
@@ -938,10 +1035,10 @@
           <li><a href="api/leaves.html#id1">(spflow.modules.leaves.Poisson property)</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/rat_spn.html#spflow.modules.rat.RatSPN">RatSPN (class in spflow.modules.rat)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/scope.html#spflow.meta.data.scope.Scope.remove_from_query">remove_from_query() (spflow.meta.data.scope.Scope method)</a>
 </li>
         <li><a href="api/rat_spn.html#spflow.modules.sums.RepetitionMixingLayer">RepetitionMixingLayer (class in spflow.modules.sums)</a>
@@ -949,6 +1046,8 @@
         <li><a href="api/module_shape.html#id2">repetitions (spflow.modules.module_shape.ModuleShape attribute)</a>, <a href="api/module_shape.html#spflow.modules.module_shape.ModuleShape.repetitions">[1]</a>
 </li>
         <li><a href="api/utilities.html#spflow.utils.replace.replace">replace() (in module spflow.utils.replace)</a>
+</li>
+        <li><a href="api/leaves.html#spflow.modules.leaves.PiecewiseLinear.reset">reset() (spflow.modules.leaves.PiecewiseLinear method)</a>
 </li>
         <li><a href="api/conv.html#spflow.modules.conv.ConvPc.root">root (spflow.modules.conv.ConvPc attribute)</a>
 </li>
@@ -967,7 +1066,15 @@
 </li>
           <li><a href="api/conv.html#spflow.modules.conv.SumConv.sample">(spflow.modules.conv.SumConv method)</a>
 </li>
+          <li><a href="api/einsum.html#spflow.modules.einsum.Einet.sample">(spflow.modules.einsum.Einet method)</a>
+</li>
+          <li><a href="api/einsum.html#spflow.modules.einsum.EinsumLayer.sample">(spflow.modules.einsum.EinsumLayer method)</a>
+</li>
+          <li><a href="api/einsum.html#spflow.modules.einsum.LinsumLayer.sample">(spflow.modules.einsum.LinsumLayer method)</a>
+</li>
           <li><a href="api/base_modules.html#spflow.modules.leaves.leaf.LeafModule.sample">(spflow.modules.leaves.leaf.LeafModule method)</a>
+</li>
+          <li><a href="api/leaves.html#spflow.modules.leaves.PiecewiseLinear.sample">(spflow.modules.leaves.PiecewiseLinear method)</a>
 </li>
           <li><a href="api/base_modules.html#spflow.modules.module.Module.sample">(spflow.modules.module.Module method)</a>
 </li>
@@ -1000,6 +1107,8 @@
         </ul></li>
         <li><a href="api/scope.html#spflow.meta.data.scope.Scope">Scope (class in spflow.meta.data.scope)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/base_modules.html#spflow.modules.module.Module.scope">scope (spflow.modules.module.Module attribute)</a>
 
         <ul>
@@ -1012,12 +1121,14 @@
           <li><a href="api/wrappers.html#spflow.modules.wrapper.base.Wrapper.scope">(spflow.modules.wrapper.base.Wrapper attribute)</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/exceptions.html#spflow.exceptions.ScopeError">ScopeError</a>
 </li>
-        <li><a href="api/rat_spn.html#spflow.modules.rat.RatSPN.scopes_out">scopes_out (spflow.modules.rat.RatSPN property)</a>
+        <li><a href="api/einsum.html#spflow.modules.einsum.Einet.scopes_out">scopes_out (spflow.modules.einsum.Einet property)</a>
+
+        <ul>
+          <li><a href="api/rat_spn.html#spflow.modules.rat.RatSPN.scopes_out">(spflow.modules.rat.RatSPN property)</a>
 </li>
+        </ul></li>
         <li><a href="api/utilities.html#spflow.utils.cache.Cache.set">set() (spflow.utils.cache.Cache method)</a>
 </li>
         <li><a href="api/exceptions.html#spflow.exceptions.ShapeError">ShapeError</a>
@@ -1038,6 +1149,8 @@
           <li><a href="api/leaves.html#spflow.modules.leaves.Normal.std">(spflow.modules.leaves.Normal attribute)</a>
 </li>
         </ul></li>
+        <li><a href="api/einsum.html#spflow.modules.einsum.Einet.structure">structure (spflow.modules.einsum.Einet attribute)</a>
+</li>
         <li><a href="api/exceptions.html#spflow.exceptions.StructureError">StructureError</a>
 </li>
         <li><a href="api/sums.html#spflow.modules.sums.Sum">Sum (class in spflow.modules.sums)</a>
@@ -1080,11 +1193,11 @@
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/leaves.html#spflow.modules.leaves.Uniform">Uniform (class in spflow.modules.leaves)</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/products.html#spflow.modules.products.OuterProduct.unraveled_channel_indices">unraveled_channel_indices (spflow.modules.products.OuterProduct attribute)</a>
+        <li><a href="api/einsum.html#spflow.modules.einsum.EinsumLayer.unraveled_channel_indices">unraveled_channel_indices (spflow.modules.einsum.EinsumLayer attribute)</a>
 
         <ul>
+          <li><a href="api/products.html#spflow.modules.products.OuterProduct.unraveled_channel_indices">(spflow.modules.products.OuterProduct attribute)</a>
+</li>
           <li><a href="api/sums.html#spflow.modules.sums.ElementwiseSum.unraveled_channel_indices">(spflow.modules.sums.ElementwiseSum attribute)</a>
 </li>
         </ul></li>
@@ -1111,6 +1224,10 @@
         <li><a href="api/conv.html#spflow.modules.conv.SumConv.weights">weights (spflow.modules.conv.SumConv property)</a>
 
         <ul>
+          <li><a href="api/einsum.html#spflow.modules.einsum.EinsumLayer.weights">(spflow.modules.einsum.EinsumLayer property)</a>
+</li>
+          <li><a href="api/einsum.html#spflow.modules.einsum.LinsumLayer.weights">(spflow.modules.einsum.LinsumLayer property)</a>
+</li>
           <li><a href="api/sums.html#spflow.modules.sums.ElementwiseSum.weights">(spflow.modules.sums.ElementwiseSum property)</a>
 </li>
           <li><a href="api/sums.html#spflow.modules.sums.Sum.weights">(spflow.modules.sums.Sum attribute)</a>
@@ -1123,6 +1240,26 @@
         <li><a href="api/wrappers.html#spflow.modules.wrapper.image_wrapper.ImageWrapper.width">width (spflow.modules.wrapper.image_wrapper.ImageWrapper attribute)</a>
 </li>
         <li><a href="api/wrappers.html#spflow.modules.wrapper.base.Wrapper">Wrapper (class in spflow.modules.wrapper.base)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="X" class="genindex-section">
+  <h2>X</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/leaves.html#spflow.modules.leaves.PiecewiseLinear.xs">xs (spflow.modules.leaves.PiecewiseLinear attribute)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="Y" class="genindex-section">
+  <h2>Y</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/leaves.html#spflow.modules.leaves.PiecewiseLinear.ys">ys (spflow.modules.leaves.PiecewiseLinear attribute)</a>
 </li>
     </ul></td>
   </tr></table>

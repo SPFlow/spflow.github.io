@@ -208,6 +208,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../api/sums.html">Sum Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/products.html">Product Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/conv.html">Convolutional Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/einsum.html">Einsum Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/leaves.html">Leaf Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/operations.html">Operations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/rat_spn.html">RAT-SPN Architecture</a></li>
@@ -335,6 +336,84 @@
 </table>
 </div>
 </section>
+<section id="1.4-Sampling-Architecture:-Top-Down-Index-Propagation">
+<h3>1.4 Sampling Architecture: Top-Down Index Propagation<a class="headerlink" href="#1.4-Sampling-Architecture:-Top-Down-Index-Propagation" title="Link to this heading">¶</a></h3>
+<p>SPFlow uses <strong>ancestral sampling</strong> with a unique top-down index propagation strategy. Understanding this is crucial for implementing custom modules correctly.</p>
+<p><strong>Key insight:</strong> Internal nodes (Sum, Product) <strong>don’t generate samples</strong>—they only update routing indices. Only <strong>leaf nodes</strong> actually sample from distributions and write values to the output tensor.</p>
+<p>The sampling process works as follows:</p>
+<ol class="arabic simple">
+<li><p>A <code class="docutils literal notranslate"><span class="pre">data</span></code> tensor filled with <code class="docutils literal notranslate"><span class="pre">NaN</span></code> is passed through the entire circuit</p></li>
+<li><p>A <code class="docutils literal notranslate"><span class="pre">SamplingContext</span></code> tracks which path to follow through the DAG</p></li>
+<li><p>Sum nodes <strong>select which child channel</strong> to sample via their weights</p></li>
+<li><p>Product nodes <strong>expand the context</strong> to cover all input features</p></li>
+<li><p>Leaf nodes <strong>generate samples</strong> and write them in-place to <code class="docutils literal notranslate"><span class="pre">data</span></code></p></li>
+</ol>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Sampling Flow Example:
+
+Root (Sum)
+    ├── samples from Categorical(weights) to pick child index
+    └── updates sampling_ctx.channel_index with selected child
+           ↓
+Product
+    ├── expands channel_index from (batch, 1) to (batch, num_features)
+    └── passes expanded context to child
+           ↓
+Leaf (Normal)
+    ├── uses channel_index to select which channel&#39;s parameters
+    ├── uses repetition_idx to select which repetition&#39;s parameters
+    └── writes samples to data[:, self.scope.query] in-place
+</pre></div>
+</div>
+<p>This design is efficient (no intermediate tensor allocation) and correct (consistent paths through the circuit).</p>
+</section>
+<section id="1.5-The-SamplingContext-Class">
+<h3>1.5 The <code class="docutils literal notranslate"><span class="pre">SamplingContext</span></code> Class<a class="headerlink" href="#1.5-The-SamplingContext-Class" title="Link to this heading">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">SamplingContext</span></code> class manages routing state during sampling. It contains:</p>
+<div class="table-wrapper docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Shape</p></th>
+<th class="head"><p>Purpose</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">channel_index</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(batch,</span> <span class="pre">features)</span></code></p></td>
+<td><p>Which output channel to use at each position</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">mask</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(batch,</span> <span class="pre">features)</span></code></p></td>
+<td><p>Boolean mask—which positions need sampling</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">repetition_idx</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(batch,)</span></code></p></td>
+<td><p>Which repetition to use (for multi-repetition circuits)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Why ``channel_index``?</strong></p>
+<ul class="simple">
+<li><p>Sum modules have multiple output channels (mixture components)</p></li>
+<li><p>During sampling, we must pick exactly one path through the DAG</p></li>
+<li><p>Parent Sum nodes set <code class="docutils literal notranslate"><span class="pre">channel_index[sample_i,</span> <span class="pre">feature_j]</span></code> = index of selected child</p></li>
+<li><p>Children use this to gather the correct logits/parameters</p></li>
+</ul>
+<p><strong>Why ``repetition_idx``?</strong></p>
+<ul class="simple">
+<li><p>Circuits with <code class="docutils literal notranslate"><span class="pre">num_repetitions</span> <span class="pre">&gt;</span> <span class="pre">1</span></code> have parallel independent copies</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">RepetitionMixingLayer</span></code> selects which repetition to use per-sample</p></li>
+<li><p>Leaves use it to index their 3D parameter tensors <code class="docutils literal notranslate"><span class="pre">(features,</span> <span class="pre">channels,</span> <span class="pre">repetitions)</span></code></p></li>
+</ul>
+<p>When implementing a custom module’s <code class="docutils literal notranslate"><span class="pre">sample()</span></code> method, you typically:</p>
+<ol class="arabic simple">
+<li><p>Initialize context: <code class="docutils literal notranslate"><span class="pre">sampling_ctx</span> <span class="pre">=</span> <span class="pre">init_default_sampling_context(sampling_ctx,</span> <span class="pre">batch_size,</span> <span class="pre">device)</span></code></p></li>
+<li><p>Use current indices to select parameters/weights</p></li>
+<li><p>Update <code class="docutils literal notranslate"><span class="pre">channel_index</span></code> and/or <code class="docutils literal notranslate"><span class="pre">mask</span></code> for children</p></li>
+<li><p>Call <code class="docutils literal notranslate"><span class="pre">self.inputs.sample(data=data,</span> <span class="pre">sampling_ctx=sampling_ctx,</span> <span class="pre">...)</span></code></p></li>
+</ol>
+</section>
 </section>
 <section id="2.-Implementing-a-Leaf-Module">
 <h2>2. Implementing a Leaf Module<a class="headerlink" href="#2.-Implementing-a-Leaf-Module" title="Link to this heading">¶</a></h2>
@@ -460,6 +539,15 @@ Eval: outputs identical = True
 <li><p><code class="docutils literal notranslate"><span class="pre">init_parameter()</span></code> handles shape inference from <code class="docutils literal notranslate"><span class="pre">out_channels</span></code></p></li>
 <li><p>Override <code class="docutils literal notranslate"><span class="pre">log_likelihood()</span></code> to add custom behavior while calling <code class="docutils literal notranslate"><span class="pre">super()</span></code></p></li>
 </ul>
+<p><strong>How Leaf Sampling Works:</strong></p>
+<p>Leaves are the <strong>only</strong> modules that actually generate samples. The sampling flow is:</p>
+<ol class="arabic simple">
+<li><p>Receive <code class="docutils literal notranslate"><span class="pre">data</span></code> tensor with <code class="docutils literal notranslate"><span class="pre">NaN</span></code> at positions to sample</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">sampling_ctx.channel_index</span></code> to select which channel’s parameters</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">sampling_ctx.repetition_idx</span></code> to select which repetition’s parameters</p></li>
+<li><p>Sample from the distribution (or take mode for MPE)</p></li>
+<li><p>Write samples <strong>in-place</strong> to <code class="docutils literal notranslate"><span class="pre">data[:,</span> <span class="pre">self.scope.query]</span></code></p></li>
+</ol>
 </section>
 </section>
 <section id="3.-Implementing-a-Sum-Module">
@@ -614,9 +702,8 @@ Eval: outputs identical = True
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Test NoisySum</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.leaves</span><span class="w"> </span><span class="kn">import</span> <span class="n">Normal</span>
 
-<span class="n">leaf</span> <span class="o">=</span> <span class="n">Normal</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="n">Scope</span><span class="p">([</span><span class="mi">0</span><span class="p">]),</span> <span class="n">out_channels</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">leaf</span> <span class="o">=</span> <span class="n">NoisyNormal</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="n">Scope</span><span class="p">([</span><span class="mi">0</span><span class="p">]),</span> <span class="n">out_channels</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
 <span class="n">noisy_sum</span> <span class="o">=</span> <span class="n">NoisySum</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">leaf</span><span class="p">,</span> <span class="n">out_channels</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">noise_std</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
 
 <span class="n">data</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
@@ -650,6 +737,27 @@ Eval: outputs identical = True
 <li><p>Weights have shape <code class="docutils literal notranslate"><span class="pre">(features,</span> <span class="pre">in_channels,</span> <span class="pre">out_channels,</span> <span class="pre">repetitions)</span></code></p></li>
 <li><p>Use <code class="docutils literal notranslate"><span class="pre">proj_convex_to_real()</span></code> to convert probabilities to unconstrained logits</p></li>
 </ul>
+<p><strong>How Sum Sampling Works:</strong></p>
+<p>Sum modules <strong>select paths</strong> through the DAG—they don’t generate samples.</p>
+<ol class="arabic simple">
+<li><p>Receive current <code class="docutils literal notranslate"><span class="pre">sampling_ctx.channel_index</span></code> from parent</p></li>
+<li><p>Gather logits for those specific output channels</p></li>
+<li><p>Sample from <code class="docutils literal notranslate"><span class="pre">Categorical(logits)</span></code> (or <code class="docutils literal notranslate"><span class="pre">argmax</span></code> for MPE)</p></li>
+<li><p><strong>Update</strong> <code class="docutils literal notranslate"><span class="pre">sampling_ctx.channel_index</span></code> with selected child indices</p></li>
+<li><p>Call <code class="docutils literal notranslate"><span class="pre">self.inputs.sample(...)</span></code> to continue traversal</p></li>
+</ol>
+<p>The key code pattern:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Select which input channel to use for each sample</span>
+<span class="k">if</span> <span class="n">is_mpe</span><span class="p">:</span>
+    <span class="n">new_channel_index</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">new_channel_index</span> <span class="o">=</span> <span class="n">Categorical</span><span class="p">(</span><span class="n">logits</span><span class="o">=</span><span class="n">logits</span><span class="p">)</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span>
+
+<span class="c1"># Update context and delegate to children</span>
+<span class="n">sampling_ctx</span><span class="o">.</span><span class="n">channel_index</span> <span class="o">=</span> <span class="n">new_channel_index</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">sampling_ctx</span><span class="o">=</span><span class="n">sampling_ctx</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
 </section>
 </section>
 <section id="4.-Implementing-a-Product-Module">
@@ -762,6 +870,8 @@ Eval: outputs identical = True
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Test NoisyProduct</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.leaves</span><span class="w"> </span><span class="kn">import</span> <span class="n">Normal</span>
+
 <span class="n">leaf1</span> <span class="o">=</span> <span class="n">Normal</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="n">Scope</span><span class="p">([</span><span class="mi">0</span><span class="p">]),</span> <span class="n">out_channels</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">leaf2</span> <span class="o">=</span> <span class="n">Normal</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="n">Scope</span><span class="p">([</span><span class="mi">1</span><span class="p">]),</span> <span class="n">out_channels</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">noisy_prod</span> <span class="o">=</span> <span class="n">NoisyProduct</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="p">[</span><span class="n">leaf1</span><span class="p">,</span> <span class="n">leaf2</span><span class="p">],</span> <span class="n">noise_std</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
@@ -808,6 +918,25 @@ Samples shape: torch.Size([100, 2])
 <li><p><code class="docutils literal notranslate"><span class="pre">Cat(inputs,</span> <span class="pre">dim=1)</span></code> concatenates inputs along the feature dimension</p></li>
 <li><p>Use <code class="docutils literal notranslate"><span class="pre">self.training</span></code> to differentiate train/eval behavior</p></li>
 </ul>
+<p><strong>How Product Sampling Works:</strong></p>
+<p>Products represent factorization: <span class="math notranslate nohighlight">\(p(X_1, X_2) = p(X_1) \cdot p(X_2)\)</span>. They <strong>expand</strong> the sampling context but don’t select paths.</p>
+<ol class="arabic simple">
+<li><p>Inputs have <strong>disjoint scopes</strong> (different random variables)</p></li>
+<li><p>Expand <code class="docutils literal notranslate"><span class="pre">channel_index</span></code> from <code class="docutils literal notranslate"><span class="pre">(batch,</span> <span class="pre">1)</span></code> to <code class="docutils literal notranslate"><span class="pre">(batch,</span> <span class="pre">num_input_features)</span></code></p></li>
+<li><p>Expand <code class="docutils literal notranslate"><span class="pre">mask</span></code> similarly</p></li>
+<li><p>Pass expanded context to children—no selection happens</p></li>
+</ol>
+<p>The key code pattern:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Expand context to match number of input features</span>
+<span class="n">channel_index</span> <span class="o">=</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">channel_index</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">features</span><span class="p">)</span>
+<span class="n">mask</span> <span class="o">=</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">mask</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">features</span><span class="p">)</span>
+<span class="n">sampling_ctx</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">channel_index</span><span class="o">=</span><span class="n">channel_index</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">mask</span><span class="p">)</span>
+
+<span class="c1"># Delegate to children</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">sampling_ctx</span><span class="o">=</span><span class="n">sampling_ctx</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Products have <strong>no learnable parameters</strong>—they are purely structural.</p>
 </section>
 </section>
 <section id="5.-Implementing-a-Split-Module">
@@ -866,7 +995,7 @@ Samples shape: torch.Size([100, 2])
 
 <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ll</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">lls</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Split </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2"> shape: </span><span class="si">{</span><span class="n">ll</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<br/></pre></div>
+<br/><br/></pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -1019,6 +1148,8 @@ All tests passed!
 <li><a class="reference internal" href="#1.1-Module-Hierarchy">1.1 Module Hierarchy</a></li>
 <li><a class="reference internal" href="#1.2-Shape-System">1.2 Shape System</a></li>
 <li><a class="reference internal" href="#1.3-Required-Interface">1.3 Required Interface</a></li>
+<li><a class="reference internal" href="#1.4-Sampling-Architecture:-Top-Down-Index-Propagation">1.4 Sampling Architecture: Top-Down Index Propagation</a></li>
+<li><a class="reference internal" href="#1.5-The-SamplingContext-Class">1.5 The <code class="docutils literal notranslate"><span class="pre">SamplingContext</span></code> Class</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#2.-Implementing-a-Leaf-Module">2. Implementing a Leaf Module</a><ul>
