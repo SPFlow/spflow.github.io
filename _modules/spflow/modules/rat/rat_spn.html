@@ -272,8 +272,9 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.meta.data.scope</span><span class="w"> </span><span class="kn">import</span> <span class="n">Scope</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.module</span><span class="w"> </span><span class="kn">import</span> <span class="n">Module</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.leaves.leaf</span><span class="w"> </span><span class="kn">import</span> <span class="n">LeafModule</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.ops.split_alternate</span><span class="w"> </span><span class="kn">import</span> <span class="n">SplitAlternate</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.ops.split_halves</span><span class="w"> </span><span class="kn">import</span> <span class="n">SplitHalves</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.ops.split</span><span class="w"> </span><span class="kn">import</span> <span class="n">Split</span><span class="p">,</span> <span class="n">SplitMode</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.ops.split_consecutive</span><span class="w"> </span><span class="kn">import</span> <span class="n">SplitConsecutive</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.ops.split_interleaved</span><span class="w"> </span><span class="kn">import</span> <span class="n">SplitInterleaved</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.products.elementwise_product</span><span class="w"> </span><span class="kn">import</span> <span class="n">ElementwiseProduct</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.products.outer_product</span><span class="w"> </span><span class="kn">import</span> <span class="n">OuterProduct</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.rat.factorize</span><span class="w"> </span><span class="kn">import</span> <span class="n">Factorize</span>
@@ -315,7 +316,7 @@
         <span class="n">num_repetitions</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
         <span class="n">depth</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
         <span class="n">outer_product</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-        <span class="n">split_halves</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">split_mode</span><span class="p">:</span> <span class="n">SplitMode</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">num_splits</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize RAT-SPN with specified architecture parameters.</span>
@@ -331,8 +332,9 @@
 <span class="sd">            depth (int): Number of partition/region layers.</span>
 <span class="sd">            outer_product (bool | None, optional): Use outer product instead of</span>
 <span class="sd">                elementwise product for partitions. Defaults to False.</span>
-<span class="sd">            split_halves (bool | None, optional): Use SplitHalves instead of</span>
-<span class="sd">                SplitAlternate for splitting. Defaults to True.</span>
+<span class="sd">            split_mode (SplitMode | None, optional): Split configuration.</span>
+<span class="sd">                Use SplitMode.consecutive() or SplitMode.interleaved().</span>
+<span class="sd">                Defaults to SplitMode.consecutive(num_splits) if not specified.</span>
 <span class="sd">            num_splits (int | None, optional): Number of splits in each partition.</span>
 <span class="sd">                Must be at least 2. Defaults to 2.</span>
 
@@ -348,7 +350,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">num_repetitions</span> <span class="o">=</span> <span class="n">num_repetitions</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">outer_product</span> <span class="o">=</span> <span class="n">outer_product</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">num_splits</span> <span class="o">=</span> <span class="n">num_splits</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">split_halves</span> <span class="o">=</span> <span class="n">split_halves</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">split_mode</span> <span class="o">=</span> <span class="n">split_mode</span> <span class="k">if</span> <span class="n">split_mode</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">SplitMode</span><span class="o">.</span><span class="n">consecutive</span><span class="p">(</span><span class="n">num_splits</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">scope</span> <span class="o">=</span> <span class="n">Scope</span><span class="o">.</span><span class="n">join_all</span><span class="p">([</span><span class="n">leaf</span><span class="o">.</span><span class="n">scope</span> <span class="k">for</span> <span class="n">leaf</span> <span class="ow">in</span> <span class="n">leaf_modules</span><span class="p">])</span>
 
         <span class="k">if</span> <span class="n">n_root_nodes</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
@@ -394,16 +396,11 @@
         <span class="p">)</span>
         <span class="n">depth</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">depth</span>
         <span class="n">root</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">split_halves</span><span class="p">:</span>
-            <span class="n">Split</span> <span class="o">=</span> <span class="n">SplitHalves</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">Split</span> <span class="o">=</span> <span class="n">SplitAlternate</span>
 
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">depth</span><span class="p">):</span>
             <span class="c1"># Create the lowest layer with the factorized leaves modules as input</span>
-            <span class="c1"># if i == 0 and depth &gt; 1:</span>
             <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">out_prod</span> <span class="o">=</span> <span class="n">product_layer</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">Split</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">fac_layer</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_splits</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_splits</span><span class="p">))</span>
+                <span class="n">out_prod</span> <span class="o">=</span> <span class="n">product_layer</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">split_mode</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">fac_layer</span><span class="p">))</span>
                 <span class="k">if</span> <span class="n">depth</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
                     <span class="n">sum_layer</span> <span class="o">=</span> <span class="n">Sum</span><span class="p">(</span>
                         <span class="n">inputs</span><span class="o">=</span><span class="n">out_prod</span><span class="p">,</span> <span class="n">out_channels</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_root_nodes</span><span class="p">,</span> <span class="n">num_repetitions</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_repetitions</span>
@@ -416,17 +413,16 @@
                     <span class="p">)</span>
                 <span class="n">root</span> <span class="o">=</span> <span class="n">sum_layer</span>
 
-            <span class="c1"># Special case for the last intermediate layer: sum layer has to have the same number of output channels</span>
-            <span class="c1"># as the root node</span>
+            <span class="c1"># Special case for the last intermediate layer</span>
             <span class="k">elif</span> <span class="n">i</span> <span class="o">==</span> <span class="n">depth</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="n">out_prod</span> <span class="o">=</span> <span class="n">product_layer</span><span class="p">(</span><span class="n">Split</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">root</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_splits</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_splits</span><span class="p">))</span>
+                <span class="n">out_prod</span> <span class="o">=</span> <span class="n">product_layer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">split_mode</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">root</span><span class="p">))</span>
                 <span class="n">sum_layer</span> <span class="o">=</span> <span class="n">Sum</span><span class="p">(</span>
                     <span class="n">inputs</span><span class="o">=</span><span class="n">out_prod</span><span class="p">,</span> <span class="n">out_channels</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_root_nodes</span><span class="p">,</span> <span class="n">num_repetitions</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_repetitions</span>
                 <span class="p">)</span>
                 <span class="n">root</span> <span class="o">=</span> <span class="n">sum_layer</span>
             <span class="c1"># Create the intermediate layers</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">out_prod</span> <span class="o">=</span> <span class="n">product_layer</span><span class="p">(</span><span class="n">Split</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">root</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_splits</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_splits</span><span class="p">))</span>
+                <span class="n">out_prod</span> <span class="o">=</span> <span class="n">product_layer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">split_mode</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">root</span><span class="p">))</span>
                 <span class="n">sum_layer</span> <span class="o">=</span> <span class="n">Sum</span><span class="p">(</span>
                     <span class="n">inputs</span><span class="o">=</span><span class="n">out_prod</span><span class="p">,</span> <span class="n">out_channels</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_region_nodes</span><span class="p">,</span> <span class="n">num_repetitions</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_repetitions</span>
                 <span class="p">)</span>

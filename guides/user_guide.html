@@ -270,6 +270,8 @@
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
 <span class="c1"># --- 1. Define the parameters for our dataset ---</span>
 
@@ -361,36 +363,24 @@ Dataset successfully created.
 Shape of dataset: torch.Size([1200, 2])
 Shape of labels: torch.Size([1200])
 First 5 samples:
-tensor([[ 2.9289, -1.9926],
-        [ 3.2597, -2.6442],
-        [ 3.5580, -1.7720],
-        [-2.5605, -2.1389],
-        [ 2.9257, -1.9961]])
+tensor([[ 3.1630, -1.6146],
+        [ 3.6128, -2.3914],
+        [ 3.2432, -1.4900],
+        [ 0.9142,  2.9919],
+        [-3.9800, -2.0385]])
 Corresponding labels:
-tensor([2, 2, 2, 1, 2])
+tensor([2, 2, 2, 0, 1])
+1
+(1200, 2)
+Toy Data
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<div class="highlight"><pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-<span class="ansi-cyan-fg">Cell</span><span class="ansi-cyan-fg"> </span><span class="ansi-green-fg">In[1]</span><span class="ansi-green-fg">, line 80</span>
-<span class="ansi-green-fg">     75</span>     <span style="color: rgb(95,135,135)">#plt.colorbar(label=&#39;Cluster Label&#39;)</span>
-<span class="ansi-green-fg">     77</span>     plt.show()
-<span class="ansi-green-fg">---&gt; </span><span class="ansi-green-fg">80</span> <span class="ansi-yellow-bg">plot_scatter</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">[</span><span class="ansi-yellow-bg">data_np</span><span class="ansi-yellow-bg">]</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">title</span><span class="ansi-yellow-bg">=</span><span class="ansi-yellow-fg ansi-yellow-bg">&#39;</span><span class="ansi-yellow-fg ansi-yellow-bg">Generated 2D Toy Dataset (with Labels)</span><span class="ansi-yellow-fg ansi-yellow-bg">&#39;</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">labels</span><span class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">labels_np</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">label_list</span><span class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">[</span><span class="ansi-yellow-fg ansi-yellow-bg">&#39;</span><span class="ansi-yellow-fg ansi-yellow-bg">Toy Data</span><span class="ansi-yellow-fg ansi-yellow-bg">&#39;</span><span class="ansi-yellow-bg">]</span><span class="ansi-yellow-bg">)</span>
-
-<span class="ansi-cyan-fg">Cell</span><span class="ansi-cyan-fg"> </span><span class="ansi-green-fg">In[1]</span><span class="ansi-green-fg">, line 58</span>, in <span class="ansi-cyan-fg">plot_scatter</span><span class="ansi-blue-fg">(data_list, title, labels, label_list)</span>
-<span class="ansi-green-fg">     56</span> <span class="ansi-bold" style="color: rgb(0,135,0)">def</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-fg">plot_scatter</span>(data_list, title=<span class="ansi-bold" style="color: rgb(0,135,0)">None</span>, labels=<span class="ansi-bold" style="color: rgb(0,135,0)">None</span>, label_list=<span class="ansi-bold" style="color: rgb(0,135,0)">None</span>):
-<span class="ansi-green-fg">     57</span>     colors = [<span class="ansi-yellow-fg">&#34;</span><span class="ansi-yellow-fg">blue</span><span class="ansi-yellow-fg">&#34;</span>, <span class="ansi-yellow-fg">&#34;</span><span class="ansi-yellow-fg">red</span><span class="ansi-yellow-fg">&#34;</span>, <span class="ansi-yellow-fg">&#34;</span><span class="ansi-yellow-fg">yellow</span><span class="ansi-yellow-fg">&#34;</span>, <span class="ansi-yellow-fg">&#34;</span><span class="ansi-yellow-fg">green</span><span class="ansi-yellow-fg">&#34;</span>]
-<span class="ansi-green-fg">---&gt; </span><span class="ansi-green-fg">58</span>     <span class="ansi-yellow-bg">plt</span>.figure(figsize=(<span class="ansi-green-fg">8</span>, <span class="ansi-green-fg">6</span>))
-<span class="ansi-green-fg">     59</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">for</span> idx, data <span class="ansi-bold" style="color: rgb(175,0,255)">in</span> <span style="color: rgb(0,135,0)">enumerate</span>(data_list):
-<span class="ansi-green-fg">     60</span>         <span style="color: rgb(0,135,0)">print</span>(<span style="color: rgb(0,135,0)">len</span>(data_list))
-
-<span class="ansi-red-fg">NameError</span>: name &#39;plt&#39; is not defined
-</pre></div></div>
+<img alt="../_images/guides_user_guide_2_1.png" src="../_images/guides_user_guide_2_1.png" />
+</div>
 </div>
 </section>
 <section id="Model-Configuration">
@@ -475,16 +465,16 @@ Sum(
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-2025-12-18 16:41:48,948 [INFO] spflow.learn.gradient_descent: Epoch [0/10]: Loss: 3.120023012161255
-2025-12-18 16:41:49,054 [INFO] spflow.learn.gradient_descent: Epoch [1/10]: Loss: 3.0563225746154785
-2025-12-18 16:41:49,160 [INFO] spflow.learn.gradient_descent: Epoch [2/10]: Loss: 3.0573697090148926
-2025-12-18 16:41:49,267 [INFO] spflow.learn.gradient_descent: Epoch [3/10]: Loss: 3.0508475303649902
-2025-12-18 16:41:49,372 [INFO] spflow.learn.gradient_descent: Epoch [4/10]: Loss: 3.067436695098877
-2025-12-18 16:41:49,478 [INFO] spflow.learn.gradient_descent: Epoch [5/10]: Loss: 2.7803423404693604
-2025-12-18 16:41:49,583 [INFO] spflow.learn.gradient_descent: Epoch [6/10]: Loss: 2.773916244506836
-2025-12-18 16:41:49,689 [INFO] spflow.learn.gradient_descent: Epoch [7/10]: Loss: 2.7774205207824707
-2025-12-18 16:41:49,794 [INFO] spflow.learn.gradient_descent: Epoch [8/10]: Loss: 2.782325267791748
-2025-12-18 16:41:49,899 [INFO] spflow.learn.gradient_descent: Epoch [9/10]: Loss: 2.785247325897217
+2025-12-19 11:22:55,043 [INFO] spflow.learn.gradient_descent: Epoch [0/10]: Loss: 3.0307717323303223
+2025-12-19 11:22:55,150 [INFO] spflow.learn.gradient_descent: Epoch [1/10]: Loss: 3.342463970184326
+2025-12-19 11:22:55,255 [INFO] spflow.learn.gradient_descent: Epoch [2/10]: Loss: 3.2680160999298096
+2025-12-19 11:22:55,361 [INFO] spflow.learn.gradient_descent: Epoch [3/10]: Loss: 3.2792248725891113
+2025-12-19 11:22:55,467 [INFO] spflow.learn.gradient_descent: Epoch [4/10]: Loss: 3.2797374725341797
+2025-12-19 11:22:55,572 [INFO] spflow.learn.gradient_descent: Epoch [5/10]: Loss: 3.1080164909362793
+2025-12-19 11:22:55,677 [INFO] spflow.learn.gradient_descent: Epoch [6/10]: Loss: 3.1049885749816895
+2025-12-19 11:22:55,782 [INFO] spflow.learn.gradient_descent: Epoch [7/10]: Loss: 3.101966142654419
+2025-12-19 11:22:55,888 [INFO] spflow.learn.gradient_descent: Epoch [8/10]: Loss: 3.1019978523254395
+2025-12-19 11:22:55,993 [INFO] spflow.learn.gradient_descent: Epoch [9/10]: Loss: 3.102231740951538
 </pre></div></div>
 </div>
 <p>Once the SPN is trained, we can perform queries such as inference and sampling. SPFlow uses internal dispatching so that a single query function can work across all module types. For example, the log_likelihood method shown below can be used for every SPN model encountered throughout this guide.</p>
@@ -503,25 +493,25 @@ Sum(
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-tensor([[[[-1.5718]]],
+tensor([[[[-1.7012]]],
 
 
-        [[[-2.0338]]],
+        [[[-2.3791]]],
 
 
-        [[[-2.2070]]],
+        [[[-1.8911]]],
 
 
         ...,
 
 
-        [[[-3.4913]]],
+        [[[-3.5793]]],
 
 
-        [[[-1.9942]]],
+        [[[-2.1358]]],
 
 
-        [[[-1.9175]]]], grad_fn=&lt;ViewBackward0&gt;)
+        [[[-3.1054]]]], grad_fn=&lt;ViewBackward0&gt;)
 </pre></div></div>
 </div>
 <p>Finally, we can visualize the training results on our toy dataset.</p>
@@ -580,24 +570,8 @@ tensor([[[[-1.5718]]],
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<div class="highlight"><pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-<span class="ansi-cyan-fg">Cell</span><span class="ansi-cyan-fg"> </span><span class="ansi-green-fg">In[6]</span><span class="ansi-green-fg">, line 44</span>
-<span class="ansi-green-fg">     40</span>     plt.axis(<span class="ansi-yellow-fg">&#39;</span><span class="ansi-yellow-fg">equal</span><span class="ansi-yellow-fg">&#39;</span>)  <span style="color: rgb(95,135,135)"># Ensures the scaling is the same on both axes</span>
-<span class="ansi-green-fg">     41</span>     plt.show()
-<span class="ansi-green-fg">---&gt; </span><span class="ansi-green-fg">44</span> <span class="ansi-yellow-bg">plot_contour</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">data_np</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">spn</span><span class="ansi-yellow-bg">)</span>
-
-<span class="ansi-cyan-fg">Cell</span><span class="ansi-cyan-fg"> </span><span class="ansi-green-fg">In[6]</span><span class="ansi-green-fg">, line 11</span>, in <span class="ansi-cyan-fg">plot_contour</span><span class="ansi-blue-fg">(data, spn)</span>
-<span class="ansi-green-fg">      9</span> <span style="color: rgb(95,135,135)"># Create a grid of points</span>
-<span class="ansi-green-fg">     10</span> grid_resolution = <span class="ansi-green-fg">200</span>
-<span class="ansi-green-fg">---&gt; </span><span class="ansi-green-fg">11</span> xx, yy = <span class="ansi-yellow-bg">np</span>.meshgrid(np.linspace(x_min, x_max, grid_resolution),
-<span class="ansi-green-fg">     12</span>                      np.linspace(y_min, y_max, grid_resolution))
-<span class="ansi-green-fg">     14</span> <span style="color: rgb(95,135,135)"># Stack the grid points into a format our function can accept: [n_points, 2]</span>
-<span class="ansi-green-fg">     15</span> grid_points = torch.tensor(np.c_[xx.ravel(), yy.ravel()], dtype=torch.float32)
-
-<span class="ansi-red-fg">NameError</span>: name &#39;np&#39; is not defined
-</pre></div></div>
+<img alt="../_images/guides_user_guide_12_0.png" src="../_images/guides_user_guide_12_0.png" />
+</div>
 </div>
 </section>
 <section id="Temporary-Method-Replacement">
@@ -687,7 +661,7 @@ Restored log-likelihood: tensor([-1.2842, -2.8750, -7.2442], grad_fn=&lt;ViewBac
     <span class="n">num_repetitions</span><span class="o">=</span><span class="n">num_repetitions</span><span class="p">,</span>
     <span class="n">depth</span><span class="o">=</span><span class="n">depth</span><span class="p">,</span>
     <span class="n">outer_product</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">split_halves</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">split_mode</span><span class="o">=</span><span class="n">SplitMode</span><span class="o">.</span><span class="n">consecutive</span><span class="p">(),</span>
 <span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">rat</span><span class="o">.</span><span class="n">to_str</span><span class="p">())</span>
 </pre></div>
@@ -698,13 +672,23 @@ Restored log-likelihood: tensor([-1.2842, -2.8750, -7.2442], grad_fn=&lt;ViewBac
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-RatSPN [D=1, C=1, R=2] → scope: 0-1
-└─ RepetitionMixingLayer [D=1, C=1] [weights: (1, 1, 2)] → scope: 0-1
-   └─ Sum [D=1, C=1] [weights: (1, 4, 1, 2)] → scope: 0-1
-      └─ OuterProduct [D=1, C=4] → scope: 0-1
-         └─ SplitHalves [D=2, C=2] → scope: 0-1
-            └─ Factorize [D=2, C=2] → scope: 0-1
-               └─ Normal [D=2, C=2] → scope: 0-1
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+<span class="ansi-cyan-fg">Cell</span><span class="ansi-cyan-fg"> </span><span class="ansi-green-fg">In[8]</span><span class="ansi-green-fg">, line 20</span>
+<span class="ansi-green-fg">     10</span> scope = Scope(<span style="color: rgb(0,135,0)">list</span>(<span style="color: rgb(0,135,0)">range</span>(<span class="ansi-green-fg">0</span>, num_feature)))
+<span class="ansi-green-fg">     12</span> rat_leaf_layer = Normal(scope=scope, out_channels=num_leaves, num_repetitions=num_repetitions)
+<span class="ansi-green-fg">     13</span> rat = RatSPN(
+<span class="ansi-green-fg">     14</span>     leaf_modules=[rat_leaf_layer],
+<span class="ansi-green-fg">     15</span>     n_root_nodes=n_root_nodes,
+<span class="ansi-green-fg">     16</span>     n_region_nodes=n_region_nodes,
+<span class="ansi-green-fg">     17</span>     num_repetitions=num_repetitions,
+<span class="ansi-green-fg">     18</span>     depth=depth,
+<span class="ansi-green-fg">     19</span>     outer_product=<span class="ansi-bold" style="color: rgb(0,135,0)">True</span>,
+<span class="ansi-green-fg">---&gt; </span><span class="ansi-green-fg">20</span>     split_mode=<span class="ansi-yellow-bg">SplitMode</span>.consecutive(),
+<span class="ansi-green-fg">     21</span> )
+<span class="ansi-green-fg">     22</span> <span style="color: rgb(0,135,0)">print</span>(rat.to_str())
+
+<span class="ansi-red-fg">NameError</span>: name &#39;SplitMode&#39; is not defined
 </pre></div></div>
 </div>
 <p>Here is a visualization of the architecture we just created.</p>
@@ -733,40 +717,40 @@ RatSPN [D=1, C=1, R=2] → scope: 0-1
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-tensor([[[[-12.0205]]],
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+<span class="ansi-cyan-fg">Cell</span><span class="ansi-cyan-fg"> </span><span class="ansi-green-fg">In[10]</span><span class="ansi-green-fg">, line 1</span>
+<span class="ansi-green-fg">----&gt; </span><span class="ansi-green-fg">1</span> ll = <span class="ansi-yellow-bg">rat</span>.log_likelihood(dataset)
+<span class="ansi-green-fg">      2</span> ll
 
-
-        [[[-15.2723]]],
-
-
-        [[[-10.2460]]],
-
-
-        ...,
-
-
-        [[[ -4.3033]]],
-
-
-        [[[-10.9112]]],
-
-
-        [[[-10.0798]]]], grad_fn=&lt;ViewBackward0&gt;)
+<span class="ansi-red-fg">NameError</span>: name &#39;rat&#39; is not defined
 </pre></div></div>
 </div>
 <p>We can again train this model using the provided gradient descent method.</p>
-<div class="nbinput nblast docutils container">
+<div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_gradient_descent</span><span class="p">(</span><span class="n">rat</span><span class="p">,</span> <span class="n">dataloader</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+<span class="ansi-cyan-fg">Cell</span><span class="ansi-cyan-fg"> </span><span class="ansi-green-fg">In[11]</span><span class="ansi-green-fg">, line 1</span>
+<span class="ansi-green-fg">----&gt; </span><span class="ansi-green-fg">1</span> train_gradient_descent(<span class="ansi-yellow-bg">rat</span>, dataloader, epochs=<span class="ansi-green-fg">20</span>, lr=<span class="ansi-green-fg">0.1</span>)
+
+<span class="ansi-red-fg">NameError</span>: name &#39;rat&#39; is not defined
+</pre></div></div>
 </div>
 <p>To verify that the training worked properly, we can visualize the log-likelihoods of the trained model.</p>
 <div class="nbinput docutils container">
@@ -787,17 +771,9 @@ tensor([[[[-12.0205]]],
 <span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
 <span class="ansi-cyan-fg">Cell</span><span class="ansi-cyan-fg"> </span><span class="ansi-green-fg">In[12]</span><span class="ansi-green-fg">, line 2</span>
 <span class="ansi-green-fg">      1</span> data_np = dataset.cpu().numpy()
-<span class="ansi-green-fg">----&gt; </span><span class="ansi-green-fg">2</span> <span class="ansi-yellow-bg">plot_contour</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">data_np</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">rat</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-fg">----&gt; </span><span class="ansi-green-fg">2</span> plot_contour(data_np, <span class="ansi-yellow-bg">rat</span>)
 
-<span class="ansi-cyan-fg">Cell</span><span class="ansi-cyan-fg"> </span><span class="ansi-green-fg">In[6]</span><span class="ansi-green-fg">, line 11</span>, in <span class="ansi-cyan-fg">plot_contour</span><span class="ansi-blue-fg">(data, spn)</span>
-<span class="ansi-green-fg">      9</span> <span style="color: rgb(95,135,135)"># Create a grid of points</span>
-<span class="ansi-green-fg">     10</span> grid_resolution = <span class="ansi-green-fg">200</span>
-<span class="ansi-green-fg">---&gt; </span><span class="ansi-green-fg">11</span> xx, yy = <span class="ansi-yellow-bg">np</span>.meshgrid(np.linspace(x_min, x_max, grid_resolution),
-<span class="ansi-green-fg">     12</span>                      np.linspace(y_min, y_max, grid_resolution))
-<span class="ansi-green-fg">     14</span> <span style="color: rgb(95,135,135)"># Stack the grid points into a format our function can accept: [n_points, 2]</span>
-<span class="ansi-green-fg">     15</span> grid_points = torch.tensor(np.c_[xx.ravel(), yy.ravel()], dtype=torch.float32)
-
-<span class="ansi-red-fg">NameError</span>: name &#39;np&#39; is not defined
+<span class="ansi-red-fg">NameError</span>: name &#39;rat&#39; is not defined
 </pre></div></div>
 </div>
 <p>Of course, computing log-likelihoods is not the only thing the model can do. Below is a visualization of samples drawn from the trained Rat-SPN.</p>
@@ -810,26 +786,25 @@ tensor([[[[-12.0205]]],
 <br/></pre></div>
 </div>
 </div>
-<div class="nboutput nblast docutils container">
+<div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-<span class="ansi-cyan-fg">Cell</span><span class="ansi-cyan-fg"> </span><span class="ansi-green-fg">In[13]</span><span class="ansi-green-fg">, line 2</span>
-<span class="ansi-green-fg">      1</span> samples = spn.sample(num_samples=<span class="ansi-green-fg">1500</span>)
-<span class="ansi-green-fg">----&gt; </span><span class="ansi-green-fg">2</span> <span class="ansi-yellow-bg">plot_scatter</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">[</span><span class="ansi-yellow-bg">data_np</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">samples</span><span class="ansi-yellow-bg">]</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">title</span><span class="ansi-yellow-bg">=</span><span class="ansi-yellow-fg ansi-yellow-bg">&#39;</span><span class="ansi-yellow-fg ansi-yellow-bg">Generated 2D Toy Dataset</span><span class="ansi-yellow-fg ansi-yellow-bg">&#39;</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">label_list</span><span class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">[</span><span class="ansi-yellow-fg ansi-yellow-bg">&#39;</span><span class="ansi-yellow-fg ansi-yellow-bg">Original Data</span><span class="ansi-yellow-fg ansi-yellow-bg">&#39;</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-fg ansi-yellow-bg">&#39;</span><span class="ansi-yellow-fg ansi-yellow-bg">Samples</span><span class="ansi-yellow-fg ansi-yellow-bg">&#39;</span><span class="ansi-yellow-bg">]</span><span class="ansi-yellow-bg">)</span>
-
-<span class="ansi-cyan-fg">Cell</span><span class="ansi-cyan-fg"> </span><span class="ansi-green-fg">In[1]</span><span class="ansi-green-fg">, line 58</span>, in <span class="ansi-cyan-fg">plot_scatter</span><span class="ansi-blue-fg">(data_list, title, labels, label_list)</span>
-<span class="ansi-green-fg">     56</span> <span class="ansi-bold" style="color: rgb(0,135,0)">def</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-fg">plot_scatter</span>(data_list, title=<span class="ansi-bold" style="color: rgb(0,135,0)">None</span>, labels=<span class="ansi-bold" style="color: rgb(0,135,0)">None</span>, label_list=<span class="ansi-bold" style="color: rgb(0,135,0)">None</span>):
-<span class="ansi-green-fg">     57</span>     colors = [<span class="ansi-yellow-fg">&#34;</span><span class="ansi-yellow-fg">blue</span><span class="ansi-yellow-fg">&#34;</span>, <span class="ansi-yellow-fg">&#34;</span><span class="ansi-yellow-fg">red</span><span class="ansi-yellow-fg">&#34;</span>, <span class="ansi-yellow-fg">&#34;</span><span class="ansi-yellow-fg">yellow</span><span class="ansi-yellow-fg">&#34;</span>, <span class="ansi-yellow-fg">&#34;</span><span class="ansi-yellow-fg">green</span><span class="ansi-yellow-fg">&#34;</span>]
-<span class="ansi-green-fg">---&gt; </span><span class="ansi-green-fg">58</span>     <span class="ansi-yellow-bg">plt</span>.figure(figsize=(<span class="ansi-green-fg">8</span>, <span class="ansi-green-fg">6</span>))
-<span class="ansi-green-fg">     59</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">for</span> idx, data <span class="ansi-bold" style="color: rgb(175,0,255)">in</span> <span style="color: rgb(0,135,0)">enumerate</span>(data_list):
-<span class="ansi-green-fg">     60</span>         <span style="color: rgb(0,135,0)">print</span>(<span style="color: rgb(0,135,0)">len</span>(data_list))
-
-<span class="ansi-red-fg">NameError</span>: name &#39;plt&#39; is not defined
+2
+(1200, 2)
+Original Data
+2
+torch.Size([1500, 2])
+Samples
 </pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/guides_user_guide_26_1.png" src="../_images/guides_user_guide_26_1.png" />
+</div>
 </div>
 <p>Up to now, we have focused only on generation, without considering the labels of the training instances. Next, we will train a second Rat-SPN for classification.</p>
 <div class="nbinput docutils container">
@@ -860,7 +835,7 @@ tensor([[[[-12.0205]]],
     <span class="n">num_repetitions</span><span class="o">=</span><span class="n">num_repetitions</span><span class="p">,</span>
     <span class="n">depth</span><span class="o">=</span><span class="n">depth</span><span class="p">,</span>
     <span class="n">outer_product</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">split_halves</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">split_mode</span><span class="o">=</span><span class="n">SplitMode</span><span class="o">.</span><span class="n">consecutive</span><span class="p">(),</span>
 <span class="p">)</span>
 <span class="n">train_dataset</span> <span class="o">=</span> <span class="n">TensorDataset</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">clone</span><span class="p">(),</span> <span class="n">labels</span><span class="o">.</span><span class="n">clone</span><span class="p">())</span>
 
@@ -874,108 +849,26 @@ tensor([[[[-12.0205]]],
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="output_area stderr docutils container">
+<div class="output_area docutils container">
 <div class="highlight"><pre>
-2025-12-18 16:41:53,335 [INFO] spflow.learn.gradient_descent: Epoch [0/100]: Loss: 2.293896198272705
-2025-12-18 16:41:53,623 [INFO] spflow.learn.gradient_descent: Epoch [1/100]: Loss: 2.170534610748291
-2025-12-18 16:41:53,912 [INFO] spflow.learn.gradient_descent: Epoch [2/100]: Loss: 2.129934549331665
-2025-12-18 16:41:54,202 [INFO] spflow.learn.gradient_descent: Epoch [3/100]: Loss: 2.110428810119629
-2025-12-18 16:41:54,491 [INFO] spflow.learn.gradient_descent: Epoch [4/100]: Loss: 2.1031334400177
-2025-12-18 16:41:54,780 [INFO] spflow.learn.gradient_descent: Epoch [5/100]: Loss: 2.097365379333496
-2025-12-18 16:41:55,069 [INFO] spflow.learn.gradient_descent: Epoch [6/100]: Loss: 2.0918350219726562
-2025-12-18 16:41:55,359 [INFO] spflow.learn.gradient_descent: Epoch [7/100]: Loss: 2.086604595184326
-2025-12-18 16:41:55,648 [INFO] spflow.learn.gradient_descent: Epoch [8/100]: Loss: 2.081794023513794
-2025-12-18 16:41:55,937 [INFO] spflow.learn.gradient_descent: Epoch [9/100]: Loss: 2.0774552822113037
-2025-12-18 16:41:56,227 [INFO] spflow.learn.gradient_descent: Epoch [10/100]: Loss: 2.0735867023468018
-2025-12-18 16:41:56,517 [INFO] spflow.learn.gradient_descent: Epoch [11/100]: Loss: 2.0701584815979004
-2025-12-18 16:41:56,806 [INFO] spflow.learn.gradient_descent: Epoch [12/100]: Loss: 2.067131280899048
-2025-12-18 16:41:57,095 [INFO] spflow.learn.gradient_descent: Epoch [13/100]: Loss: 2.0644612312316895
-2025-12-18 16:41:57,390 [INFO] spflow.learn.gradient_descent: Epoch [14/100]: Loss: 2.0621085166931152
-2025-12-18 16:41:57,709 [INFO] spflow.learn.gradient_descent: Epoch [15/100]: Loss: 2.0600333213806152
-2025-12-18 16:41:58,008 [INFO] spflow.learn.gradient_descent: Epoch [16/100]: Loss: 2.0582010746002197
-2025-12-18 16:41:58,306 [INFO] spflow.learn.gradient_descent: Epoch [17/100]: Loss: 2.0565810203552246
-2025-12-18 16:41:58,604 [INFO] spflow.learn.gradient_descent: Epoch [18/100]: Loss: 2.055145502090454
-2025-12-18 16:41:58,901 [INFO] spflow.learn.gradient_descent: Epoch [19/100]: Loss: 2.053870916366577
-2025-12-18 16:41:59,194 [INFO] spflow.learn.gradient_descent: Epoch [20/100]: Loss: 2.0527353286743164
-2025-12-18 16:41:59,482 [INFO] spflow.learn.gradient_descent: Epoch [21/100]: Loss: 2.051723003387451
-2025-12-18 16:41:59,770 [INFO] spflow.learn.gradient_descent: Epoch [22/100]: Loss: 2.0508151054382324
-2025-12-18 16:42:00,058 [INFO] spflow.learn.gradient_descent: Epoch [23/100]: Loss: 2.0500006675720215
-2025-12-18 16:42:00,348 [INFO] spflow.learn.gradient_descent: Epoch [24/100]: Loss: 2.0492658615112305
-2025-12-18 16:42:00,638 [INFO] spflow.learn.gradient_descent: Epoch [25/100]: Loss: 2.048602342605591
-2025-12-18 16:42:00,929 [INFO] spflow.learn.gradient_descent: Epoch [26/100]: Loss: 2.0480008125305176
-2025-12-18 16:42:01,219 [INFO] spflow.learn.gradient_descent: Epoch [27/100]: Loss: 2.0474531650543213
-2025-12-18 16:42:01,510 [INFO] spflow.learn.gradient_descent: Epoch [28/100]: Loss: 2.0469539165496826
-2025-12-18 16:42:01,800 [INFO] spflow.learn.gradient_descent: Epoch [29/100]: Loss: 2.0464954376220703
-2025-12-18 16:42:02,091 [INFO] spflow.learn.gradient_descent: Epoch [30/100]: Loss: 2.0460753440856934
-2025-12-18 16:42:02,382 [INFO] spflow.learn.gradient_descent: Epoch [31/100]: Loss: 2.045686960220337
-2025-12-18 16:42:02,671 [INFO] spflow.learn.gradient_descent: Epoch [32/100]: Loss: 2.04532790184021
-2025-12-18 16:42:02,960 [INFO] spflow.learn.gradient_descent: Epoch [33/100]: Loss: 2.0449955463409424
-2025-12-18 16:42:03,251 [INFO] spflow.learn.gradient_descent: Epoch [34/100]: Loss: 2.0446853637695312
-2025-12-18 16:42:03,541 [INFO] spflow.learn.gradient_descent: Epoch [35/100]: Loss: 2.044396162033081
-2025-12-18 16:42:03,830 [INFO] spflow.learn.gradient_descent: Epoch [36/100]: Loss: 2.044125556945801
-2025-12-18 16:42:04,127 [INFO] spflow.learn.gradient_descent: Epoch [37/100]: Loss: 2.043870449066162
-2025-12-18 16:42:04,417 [INFO] spflow.learn.gradient_descent: Epoch [38/100]: Loss: 2.0436317920684814
-2025-12-18 16:42:04,706 [INFO] spflow.learn.gradient_descent: Epoch [39/100]: Loss: 2.043405532836914
-2025-12-18 16:42:04,996 [INFO] spflow.learn.gradient_descent: Epoch [40/100]: Loss: 2.0431923866271973
-2025-12-18 16:42:05,286 [INFO] spflow.learn.gradient_descent: Epoch [41/100]: Loss: 2.0429892539978027
-2025-12-18 16:42:05,575 [INFO] spflow.learn.gradient_descent: Epoch [42/100]: Loss: 2.0427966117858887
-2025-12-18 16:42:05,864 [INFO] spflow.learn.gradient_descent: Epoch [43/100]: Loss: 2.042613983154297
-2025-12-18 16:42:06,154 [INFO] spflow.learn.gradient_descent: Epoch [44/100]: Loss: 2.0424394607543945
-2025-12-18 16:42:06,444 [INFO] spflow.learn.gradient_descent: Epoch [45/100]: Loss: 2.042271852493286
-2025-12-18 16:42:06,732 [INFO] spflow.learn.gradient_descent: Epoch [46/100]: Loss: 2.042112350463867
-2025-12-18 16:42:07,021 [INFO] spflow.learn.gradient_descent: Epoch [47/100]: Loss: 2.041959285736084
-2025-12-18 16:42:07,312 [INFO] spflow.learn.gradient_descent: Epoch [48/100]: Loss: 2.041811227798462
-2025-12-18 16:42:07,600 [INFO] spflow.learn.gradient_descent: Epoch [49/100]: Loss: 2.0416698455810547
-2025-12-18 16:42:07,889 [INFO] spflow.learn.gradient_descent: Epoch [50/100]: Loss: 1.767592191696167
-2025-12-18 16:42:08,178 [INFO] spflow.learn.gradient_descent: Epoch [51/100]: Loss: 1.7626986503601074
-2025-12-18 16:42:08,468 [INFO] spflow.learn.gradient_descent: Epoch [52/100]: Loss: 1.762424349784851
-2025-12-18 16:42:08,758 [INFO] spflow.learn.gradient_descent: Epoch [53/100]: Loss: 1.762312889099121
-2025-12-18 16:42:09,051 [INFO] spflow.learn.gradient_descent: Epoch [54/100]: Loss: 1.7622346878051758
-2025-12-18 16:42:09,344 [INFO] spflow.learn.gradient_descent: Epoch [55/100]: Loss: 1.7621805667877197
-2025-12-18 16:42:09,633 [INFO] spflow.learn.gradient_descent: Epoch [56/100]: Loss: 1.762143611907959
-2025-12-18 16:42:09,922 [INFO] spflow.learn.gradient_descent: Epoch [57/100]: Loss: 1.7621209621429443
-2025-12-18 16:42:10,211 [INFO] spflow.learn.gradient_descent: Epoch [58/100]: Loss: 1.76210618019104
-2025-12-18 16:42:10,503 [INFO] spflow.learn.gradient_descent: Epoch [59/100]: Loss: 1.7620973587036133
-2025-12-18 16:42:10,794 [INFO] spflow.learn.gradient_descent: Epoch [60/100]: Loss: 1.7620935440063477
-2025-12-18 16:42:11,084 [INFO] spflow.learn.gradient_descent: Epoch [61/100]: Loss: 1.762091040611267
-2025-12-18 16:42:11,374 [INFO] spflow.learn.gradient_descent: Epoch [62/100]: Loss: 1.762091875076294
-2025-12-18 16:42:11,663 [INFO] spflow.learn.gradient_descent: Epoch [63/100]: Loss: 1.7620933055877686
-2025-12-18 16:42:11,952 [INFO] spflow.learn.gradient_descent: Epoch [64/100]: Loss: 1.762094497680664
-2025-12-18 16:42:12,242 [INFO] spflow.learn.gradient_descent: Epoch [65/100]: Loss: 1.7620964050292969
-2025-12-18 16:42:12,532 [INFO] spflow.learn.gradient_descent: Epoch [66/100]: Loss: 1.7620983123779297
-2025-12-18 16:42:12,822 [INFO] spflow.learn.gradient_descent: Epoch [67/100]: Loss: 1.7621004581451416
-2025-12-18 16:42:13,111 [INFO] spflow.learn.gradient_descent: Epoch [68/100]: Loss: 1.7621021270751953
-2025-12-18 16:42:13,401 [INFO] spflow.learn.gradient_descent: Epoch [69/100]: Loss: 1.7621026039123535
-2025-12-18 16:42:13,690 [INFO] spflow.learn.gradient_descent: Epoch [70/100]: Loss: 1.7621033191680908
-2025-12-18 16:42:13,981 [INFO] spflow.learn.gradient_descent: Epoch [71/100]: Loss: 1.7621028423309326
-2025-12-18 16:42:14,272 [INFO] spflow.learn.gradient_descent: Epoch [72/100]: Loss: 1.762102484703064
-2025-12-18 16:42:14,561 [INFO] spflow.learn.gradient_descent: Epoch [73/100]: Loss: 1.7621022462844849
-2025-12-18 16:42:14,850 [INFO] spflow.learn.gradient_descent: Epoch [74/100]: Loss: 1.762101173400879
-2025-12-18 16:42:15,140 [INFO] spflow.learn.gradient_descent: Epoch [75/100]: Loss: 1.7680410146713257
-2025-12-18 16:42:15,430 [INFO] spflow.learn.gradient_descent: Epoch [76/100]: Loss: 1.774309515953064
-2025-12-18 16:42:15,720 [INFO] spflow.learn.gradient_descent: Epoch [77/100]: Loss: 1.7778210639953613
-2025-12-18 16:42:16,009 [INFO] spflow.learn.gradient_descent: Epoch [78/100]: Loss: 1.7796258926391602
-2025-12-18 16:42:16,304 [INFO] spflow.learn.gradient_descent: Epoch [79/100]: Loss: 1.78043794631958
-2025-12-18 16:42:16,596 [INFO] spflow.learn.gradient_descent: Epoch [80/100]: Loss: 1.7807056903839111
-2025-12-18 16:42:16,885 [INFO] spflow.learn.gradient_descent: Epoch [81/100]: Loss: 1.7806966304779053
-2025-12-18 16:42:17,173 [INFO] spflow.learn.gradient_descent: Epoch [82/100]: Loss: 1.7805633544921875
-2025-12-18 16:42:17,465 [INFO] spflow.learn.gradient_descent: Epoch [83/100]: Loss: 1.7803890705108643
-2025-12-18 16:42:17,755 [INFO] spflow.learn.gradient_descent: Epoch [84/100]: Loss: 1.7802150249481201
-2025-12-18 16:42:18,046 [INFO] spflow.learn.gradient_descent: Epoch [85/100]: Loss: 1.780059814453125
-2025-12-18 16:42:18,336 [INFO] spflow.learn.gradient_descent: Epoch [86/100]: Loss: 1.7799278497695923
-2025-12-18 16:42:18,630 [INFO] spflow.learn.gradient_descent: Epoch [87/100]: Loss: 1.7798198461532593
-2025-12-18 16:42:18,920 [INFO] spflow.learn.gradient_descent: Epoch [88/100]: Loss: 1.7797361612319946
-2025-12-18 16:42:19,210 [INFO] spflow.learn.gradient_descent: Epoch [89/100]: Loss: 1.7796729803085327
-2025-12-18 16:42:19,500 [INFO] spflow.learn.gradient_descent: Epoch [90/100]: Loss: 1.7796231508255005
-2025-12-18 16:42:19,793 [INFO] spflow.learn.gradient_descent: Epoch [91/100]: Loss: 1.7795854806900024
-2025-12-18 16:42:20,084 [INFO] spflow.learn.gradient_descent: Epoch [92/100]: Loss: 1.779556155204773
-2025-12-18 16:42:20,377 [INFO] spflow.learn.gradient_descent: Epoch [93/100]: Loss: 1.7795358896255493
-2025-12-18 16:42:20,668 [INFO] spflow.learn.gradient_descent: Epoch [94/100]: Loss: 1.7795230150222778
-2025-12-18 16:42:20,959 [INFO] spflow.learn.gradient_descent: Epoch [95/100]: Loss: 1.7795132398605347
-2025-12-18 16:42:21,251 [INFO] spflow.learn.gradient_descent: Epoch [96/100]: Loss: 1.7795032262802124
-2025-12-18 16:42:21,546 [INFO] spflow.learn.gradient_descent: Epoch [97/100]: Loss: 1.779496431350708
-2025-12-18 16:42:21,842 [INFO] spflow.learn.gradient_descent: Epoch [98/100]: Loss: 1.779491901397705
-2025-12-18 16:42:22,132 [INFO] spflow.learn.gradient_descent: Epoch [99/100]: Loss: 1.7794890403747559
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+<span class="ansi-cyan-fg">Cell</span><span class="ansi-cyan-fg"> </span><span class="ansi-green-fg">In[14]</span><span class="ansi-green-fg">, line 25</span>
+<span class="ansi-green-fg">     15</span> scope = Scope(<span style="color: rgb(0,135,0)">list</span>(<span style="color: rgb(0,135,0)">range</span>(<span class="ansi-green-fg">0</span>, num_feature)))
+<span class="ansi-green-fg">     17</span> rat_leaf_layer = Normal(scope=scope, out_channels=num_leaves, num_repetitions=num_repetitions)
+<span class="ansi-green-fg">     18</span> rat_class = RatSPN(
+<span class="ansi-green-fg">     19</span>     leaf_modules=[rat_leaf_layer],
+<span class="ansi-green-fg">     20</span>     n_root_nodes=n_root_nodes,
+<span class="ansi-green-fg">     21</span>     n_region_nodes=n_region_nodes,
+<span class="ansi-green-fg">     22</span>     num_repetitions=num_repetitions,
+<span class="ansi-green-fg">     23</span>     depth=depth,
+<span class="ansi-green-fg">     24</span>     outer_product=<span class="ansi-bold" style="color: rgb(0,135,0)">True</span>,
+<span class="ansi-green-fg">---&gt; </span><span class="ansi-green-fg">25</span>     split_mode=<span class="ansi-yellow-bg">SplitMode</span>.consecutive(),
+<span class="ansi-green-fg">     26</span> )
+<span class="ansi-green-fg">     27</span> train_dataset = TensorDataset(dataset.clone(), labels.clone())
+<span class="ansi-green-fg">     29</span> dataloader_with_labels = DataLoader(train_dataset, batch_size=<span class="ansi-green-fg">10</span>)
+
+<span class="ansi-red-fg">NameError</span>: name &#39;SplitMode&#39; is not defined
 </pre></div></div>
 </div>
 <p>With this SPN, we can now draw samples based on its labels. Therefore, we use a sampling context. This sampling context can be passed to any sampling method. With the context, you can explicitly define from which output channel you want to sample or, for example, provide evidence. This allows advanced control over the sampling routine. In this case, the root layer has three output channels which correspond to the three classes. So being able to define from which output channel we want to sample
@@ -986,7 +879,7 @@ means being able to choose from which class we want to sample.</p>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">spflow.utils.sampling_context</span><span class="w"> </span><span class="kn">import</span> <span class="n">SamplingContext</span>
 
-<span class="n">out_features</span> <span class="o">=</span> <span class="n">rat</span><span class="o">.</span><span class="n">out_features</span>
+<span class="n">out_features</span> <span class="o">=</span> <span class="n">rat</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">features</span>
 <span class="n">num_features</span> <span class="o">=</span> <span class="mi">2</span>
 
 <span class="n">evidence</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="mi">200</span><span class="p">,</span> <span class="n">num_features</span><span class="p">),</span> <span class="n">torch</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
@@ -1018,21 +911,14 @@ means being able to choose from which class we want to sample.</p>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 <span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">AttributeError</span>                            Traceback (most recent call last)
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
 <span class="ansi-cyan-fg">Cell</span><span class="ansi-cyan-fg"> </span><span class="ansi-green-fg">In[15]</span><span class="ansi-green-fg">, line 3</span>
 <span class="ansi-green-fg">      1</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-intense-fg ansi-bold">spflow</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">utils</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">sampling_context</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,135,0)">import</span> SamplingContext
-<span class="ansi-green-fg">----&gt; </span><span class="ansi-green-fg">3</span> out_features = <span class="ansi-yellow-bg">rat</span><span class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">out_features</span>
+<span class="ansi-green-fg">----&gt; </span><span class="ansi-green-fg">3</span> out_features = <span class="ansi-yellow-bg">rat</span>.out_shape.features
 <span class="ansi-green-fg">      4</span> num_features = <span class="ansi-green-fg">2</span>
 <span class="ansi-green-fg">      6</span> evidence = torch.full((<span class="ansi-green-fg">200</span>, num_features), torch.nan)
 
-<span class="ansi-cyan-fg">File </span><span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/torch/nn/modules/module.py:1964</span>, in <span class="ansi-cyan-fg">Module.__getattr__</span><span class="ansi-blue-fg">(self, name)</span>
-<span class="ansi-green-fg">   1962</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> name <span class="ansi-bold" style="color: rgb(175,0,255)">in</span> modules:
-<span class="ansi-green-fg">   1963</span>         <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> modules[name]
-<span class="ansi-green-fg">-&gt; </span><span class="ansi-green-fg">1964</span> <span class="ansi-bold" style="color: rgb(0,135,0)">raise</span> <span class="ansi-bold" style="color: rgb(215,95,95)">AttributeError</span>(
-<span class="ansi-green-fg">   1965</span>     <span class="ansi-yellow-fg">f</span><span class="ansi-yellow-fg">&#34;</span><span class="ansi-yellow-fg">&#39;</span><span class="ansi-bold" style="color: rgb(175,95,135)">{</span><span style="color: rgb(0,135,0)">type</span>(<span style="color: rgb(0,135,0)">self</span>).<span class="ansi-blue-fg">__name__</span><span class="ansi-bold" style="color: rgb(175,95,135)">}</span><span class="ansi-yellow-fg">&#39;</span><span class="ansi-yellow-fg"> object has no attribute </span><span class="ansi-yellow-fg">&#39;</span><span class="ansi-bold" style="color: rgb(175,95,135)">{</span>name<span class="ansi-bold" style="color: rgb(175,95,135)">}</span><span class="ansi-yellow-fg">&#39;</span><span class="ansi-yellow-fg">&#34;</span>
-<span class="ansi-green-fg">   1966</span> )
-
-<span class="ansi-red-fg">AttributeError</span>: &#39;RatSPN&#39; object has no attribute &#39;out_features&#39;
+<span class="ansi-red-fg">NameError</span>: name &#39;rat&#39; is not defined
 </pre></div></div>
 </div>
 <p>However, the model can of course also be used for classification. As an example, we visualize the trained decision boundaries of our model</p>
@@ -1085,21 +971,23 @@ means being able to choose from which class we want to sample.</p>
 <br/></pre></div>
 </div>
 </div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-2025-12-18 16:42:22,638 [INFO] matplotlib.font_manager: Failed to extract font properties from /usr/share/fonts/truetype/noto/NotoColorEmoji.ttf: Can not load face (unknown file format; error code 0x2)
-2025-12-18 16:42:22,669 [INFO] matplotlib.font_manager: generated new fontManager
-</pre></div></div>
-</div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/guides_user_guide_32_1.png" src="../_images/guides_user_guide_32_1.png" />
-</div>
+<div class="highlight"><pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+<span class="ansi-cyan-fg">Cell</span><span class="ansi-cyan-fg"> </span><span class="ansi-green-fg">In[16]</span><span class="ansi-green-fg">, line 26</span>
+<span class="ansi-green-fg">     23</span> <span style="color: rgb(95,135,135)"># --- 2. Get SPN predictions (probabilities or class scores) ---</span>
+<span class="ansi-green-fg">     24</span> <span style="color: rgb(95,135,135)"># Example: if your SPN returns class probabilities</span>
+<span class="ansi-green-fg">     25</span> <span class="ansi-bold" style="color: rgb(0,135,0)">with</span> torch.no_grad():
+<span class="ansi-green-fg">---&gt; </span><span class="ansi-green-fg">26</span>     probs = <span class="ansi-yellow-bg">rat_class</span>.log_posterior(grid_points)  <span style="color: rgb(95,135,135)"># shape: [N_grid, num_classes]</span>
+<span class="ansi-green-fg">     27</span>     preds = probs.argmax(dim=-<span class="ansi-green-fg">1</span>)
+<span class="ansi-green-fg">     29</span> <span style="color: rgb(95,135,135)"># --- 3. Reshape predictions to match the grid ---</span>
+
+<span class="ansi-red-fg">NameError</span>: name &#39;rat_class&#39; is not defined
+</pre></div></div>
 </div>
 </section>
 </section>
@@ -1130,8 +1018,8 @@ means being able to choose from which class we want to sample.</p>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-used 3 iterations (0.0007s) to cluster 1200 items into 2 clusters
-used 3 iterations (0.0006s) to cluster 599 items into 2 clusters
+used 3 iterations (0.0008s) to cluster 1200 items into 2 clusters
+used 2 iterations (0.0004s) to cluster 600 items into 2 clusters
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -1139,7 +1027,7 @@ used 3 iterations (0.0006s) to cluster 599 items into 2 clusters
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-/tmp/ipykernel_2525/568267606.py:6: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.detach().clone() or sourceTensor.detach().clone().requires_grad_(True), rather than torch.tensor(sourceTensor).
+/tmp/ipykernel_3203/568267606.py:6: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.detach().clone() or sourceTensor.detach().clone().requires_grad_(True), rather than torch.tensor(sourceTensor).
   torch.tensor(dataset, dtype=torch.float32),
 </pre></div></div>
 </div>
@@ -1291,7 +1179,7 @@ tensor(0.) tensor(16.)
     <span class="n">num_repetitions</span><span class="o">=</span><span class="n">num_repetitions</span><span class="p">,</span>
     <span class="n">depth</span><span class="o">=</span><span class="n">depth</span><span class="p">,</span>
     <span class="n">outer_product</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">split_halves</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">split_mode</span><span class="o">=</span><span class="n">SplitMode</span><span class="o">.</span><span class="n">consecutive</span><span class="p">(),</span>
 <span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">rat</span><span class="o">.</span><span class="n">to_str</span><span class="p">())</span>
 </pre></div>
@@ -1302,28 +1190,45 @@ tensor(0.) tensor(16.)
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-RatSPN [D=1, C=1, R=2] → scope: 0-63
-└─ RepetitionMixingLayer [D=1, C=1] [weights: (1, 1, 2)] → scope: 0-63
-   └─ Sum [D=1, C=1] [weights: (1, 25, 1, 2)] → scope: 0-63
-      └─ OuterProduct [D=1, C=25] → scope: 0-63
-         └─ SplitHalves [D=2, C=5] → scope: 0-63
-            └─ Sum [D=2, C=5] [weights: (2, 25, 5, 2)] → scope: 0-63
-               └─ OuterProduct [D=2, C=25] → scope: 0-63
-                  └─ SplitHalves [D=4, C=5] → scope: 0-63
-                     └─ Sum [D=4, C=5] [weights: (4, 25, 5, 2)] → scope: 0-63
-                        └─ OuterProduct [D=4, C=25] → scope: 0-63
-                           └─ SplitHalves [D=8, C=5] → scope: 0-63
-                              └─ Factorize [D=8, C=5] → scope: 0-63
-                                 └─ Binomial [D=64, C=5] → scope: 0-63
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+<span class="ansi-cyan-fg">Cell</span><span class="ansi-cyan-fg"> </span><span class="ansi-green-fg">In[20]</span><span class="ansi-green-fg">, line 21</span>
+<span class="ansi-green-fg">     11</span> scope = Scope(<span style="color: rgb(0,135,0)">list</span>(<span style="color: rgb(0,135,0)">range</span>(<span class="ansi-green-fg">0</span>, num_feature)))
+<span class="ansi-green-fg">     13</span> rat_leaf_layer = Binomial(scope=scope, total_count=n, out_channels=num_leaves, num_repetitions=num_repetitions)
+<span class="ansi-green-fg">     14</span> rat = RatSPN(
+<span class="ansi-green-fg">     15</span>     leaf_modules=[rat_leaf_layer],
+<span class="ansi-green-fg">     16</span>     n_root_nodes=n_root_nodes,
+<span class="ansi-green-fg">     17</span>     n_region_nodes=n_region_nodes,
+<span class="ansi-green-fg">     18</span>     num_repetitions=num_repetitions,
+<span class="ansi-green-fg">     19</span>     depth=depth,
+<span class="ansi-green-fg">     20</span>     outer_product=<span class="ansi-bold" style="color: rgb(0,135,0)">True</span>,
+<span class="ansi-green-fg">---&gt; </span><span class="ansi-green-fg">21</span>     split_mode=<span class="ansi-yellow-bg">SplitMode</span>.consecutive(),
+<span class="ansi-green-fg">     22</span> )
+<span class="ansi-green-fg">     23</span> <span style="color: rgb(0,135,0)">print</span>(rat.to_str())
+
+<span class="ansi-red-fg">NameError</span>: name &#39;SplitMode&#39; is not defined
 </pre></div></div>
 </div>
-<div class="nbinput nblast docutils container">
+<div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_gradient_descent</span><span class="p">(</span><span class="n">rat</span><span class="p">,</span> <span class="n">dataloader</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+<span class="ansi-cyan-fg">Cell</span><span class="ansi-cyan-fg"> </span><span class="ansi-green-fg">In[21]</span><span class="ansi-green-fg">, line 1</span>
+<span class="ansi-green-fg">----&gt; </span><span class="ansi-green-fg">1</span> train_gradient_descent(<span class="ansi-yellow-bg">rat</span>, dataloader, epochs=<span class="ansi-green-fg">20</span>, lr=<span class="ansi-green-fg">0.1</span>)
+
+<span class="ansi-red-fg">NameError</span>: name &#39;rat&#39; is not defined
+</pre></div></div>
 </div>
 <p>Below is a visualization of some samples drawn from the Spn</p>
 <div class="nbinput docutils container">
@@ -1342,20 +1247,20 @@ RatSPN [D=1, C=1, R=2] → scope: 0-63
 </pre></div>
 </div>
 </div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-torch.Size([5, 64])
-</pre></div></div>
-</div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/guides_user_guide_44_1.png" src="../_images/guides_user_guide_44_1.png" />
-</div>
+<div class="highlight"><pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+<span class="ansi-cyan-fg">Cell</span><span class="ansi-cyan-fg"> </span><span class="ansi-green-fg">In[22]</span><span class="ansi-green-fg">, line 1</span>
+<span class="ansi-green-fg">----&gt; </span><span class="ansi-green-fg">1</span> samples = <span class="ansi-yellow-bg">rat</span>.sample(num_samples=<span class="ansi-green-fg">5</span>)
+<span class="ansi-green-fg">      2</span> <span style="color: rgb(0,135,0)">print</span>(samples.shape)
+<span class="ansi-green-fg">      4</span> <span class="ansi-bold" style="color: rgb(0,135,0)">for</span> i <span class="ansi-bold" style="color: rgb(175,0,255)">in</span> <span style="color: rgb(0,135,0)">range</span>(<span class="ansi-green-fg">5</span>):
+
+<span class="ansi-red-fg">NameError</span>: name &#39;rat&#39; is not defined
+</pre></div></div>
 </div>
 <p>Now can show some more advanced queries. One of them is getting the MPE. It returns the most probable state of the probabilistic circuit. This is often helpful to generate more clear samples and a good indicator whether the model could learn the data or not, which is not always evident with regular samples.</p>
 <div class="nbinput docutils container">
@@ -1372,8 +1277,16 @@ torch.Size([5, 64])
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/guides_user_guide_46_0.png" src="../_images/guides_user_guide_46_0.png" />
-</div>
+<div class="highlight"><pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+<span class="ansi-cyan-fg">Cell</span><span class="ansi-cyan-fg"> </span><span class="ansi-green-fg">In[23]</span><span class="ansi-green-fg">, line 1</span>
+<span class="ansi-green-fg">----&gt; </span><span class="ansi-green-fg">1</span> mpe = <span class="ansi-yellow-bg">rat</span>.sample(num_samples=<span class="ansi-green-fg">1</span>, is_mpe=<span class="ansi-bold" style="color: rgb(0,135,0)">True</span>)
+<span class="ansi-green-fg">      2</span> plt.imshow(mpe.reshape(<span class="ansi-green-fg">8</span>, <span class="ansi-green-fg">8</span>), cmap=<span class="ansi-yellow-fg">&#34;</span><span class="ansi-yellow-fg">gray</span><span class="ansi-yellow-fg">&#34;</span>)
+<span class="ansi-green-fg">      3</span> plt.show()
+
+<span class="ansi-red-fg">NameError</span>: name &#39;rat&#39; is not defined
+</pre></div></div>
 </div>
 <p>And at last we want to sample, given some evidence. In this example, the lower half of the image is given, and we want to sample the upper half given the lower half. This time, instead of explicitly defining a sampling context, we use the sample_with_evidence method. The method allows the user to just input the evidence and let the library internally handle the creation of the sampling context. This becomes handy if you have evidence but not multiple channel to sample from.</p>
 <div class="nbinput docutils container">
@@ -1411,8 +1324,18 @@ torch.Size([1, 64])
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/guides_user_guide_48_2.png" src="../_images/guides_user_guide_48_2.png" />
-</div>
+<div class="highlight"><pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+<span class="ansi-cyan-fg">Cell</span><span class="ansi-cyan-fg"> </span><span class="ansi-green-fg">In[24]</span><span class="ansi-green-fg">, line 7</span>
+<span class="ansi-green-fg">      5</span> evidence = evidence.unsqueeze(<span class="ansi-green-fg">0</span>)
+<span class="ansi-green-fg">      6</span> <span style="color: rgb(0,135,0)">print</span>(evidence.shape)
+<span class="ansi-green-fg">----&gt; </span><span class="ansi-green-fg">7</span> samples = <span class="ansi-yellow-bg">rat</span>.sample_with_evidence(evidence=evidence)
+<span class="ansi-green-fg">      8</span> plt.imshow(samples.reshape(<span class="ansi-green-fg">8</span>, <span class="ansi-green-fg">8</span>), cmap=<span class="ansi-yellow-fg">&#34;</span><span class="ansi-yellow-fg">gray</span><span class="ansi-yellow-fg">&#34;</span>)
+<span class="ansi-green-fg">      9</span> plt.show()
+
+<span class="ansi-red-fg">NameError</span>: name &#39;rat&#39; is not defined
+</pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:

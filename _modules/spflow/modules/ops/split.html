@@ -276,6 +276,142 @@
 <span class="p">)</span>
 
 
+<div class="viewcode-block" id="SplitMode">
+<a class="viewcode-back" href="../../../../api/operations.html#spflow.modules.ops.split.SplitMode">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">SplitMode</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Configuration for split operations.</span>
+
+<span class="sd">    Factory class for creating split configurations. Use the class methods</span>
+<span class="sd">    to create split configurations that can be passed to modules.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; layer = EinsumLayer(inputs=leaf, split_mode=SplitMode.interleaved(num_splits=3))</span>
+<span class="sd">        &gt;&gt;&gt; layer = LinsumLayer(inputs=leaf, split_mode=SplitMode.consecutive(num_splits=2))</span>
+<span class="sd">        &gt;&gt;&gt; layer = LinsumLayer(inputs=leaf, split_mode=SplitMode.by_index(indices=[[0,1], [2,3]]))</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">split_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">num_splits</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">indices</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize split mode configuration.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            split_type: Type of split (&#39;consecutive&#39;, &#39;interleaved&#39;, or &#39;by_index&#39;).</span>
+<span class="sd">            num_splits: Number of parts to split into.</span>
+<span class="sd">            indices: For &#39;by_index&#39; type, the feature indices for each split.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">split_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;consecutive&#39;</span><span class="p">,</span> <span class="s1">&#39;interleaved&#39;</span><span class="p">,</span> <span class="s1">&#39;by_index&#39;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;split_type must be &#39;consecutive&#39;, &#39;interleaved&#39;, or &#39;by_index&#39;, got &#39;</span><span class="si">{</span><span class="n">split_type</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">split_type</span> <span class="o">!=</span> <span class="s1">&#39;by_index&#39;</span> <span class="ow">and</span> <span class="n">num_splits</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;num_splits must be at least 2, got </span><span class="si">{</span><span class="n">num_splits</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">split_type</span> <span class="o">==</span> <span class="s1">&#39;by_index&#39;</span> <span class="ow">and</span> <span class="n">indices</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;indices must be provided for &#39;by_index&#39; split type&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_split_type</span> <span class="o">=</span> <span class="n">split_type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_num_splits</span> <span class="o">=</span> <span class="n">num_splits</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_indices</span> <span class="o">=</span> <span class="n">indices</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">num_splits</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Number of splits.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_num_splits</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">split_type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Type of split (&#39;consecutive&#39;, &#39;interleaved&#39;, or &#39;by_index&#39;).&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_split_type</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">indices</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Feature indices for &#39;by_index&#39; split type.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_indices</span>
+
+<div class="viewcode-block" id="SplitMode.consecutive">
+<a class="viewcode-back" href="../../../../api/operations.html#spflow.modules.ops.split.SplitMode.consecutive">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">consecutive</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">num_splits</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;SplitMode&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a consecutive split configuration.</span>
+
+<span class="sd">        Splits features into consecutive chunks: [0,1,2,3] -&gt; [0,1], [2,3].</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            num_splits: Number of parts to split into.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            SplitMode configuration for consecutive splitting.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="s1">&#39;consecutive&#39;</span><span class="p">,</span> <span class="n">num_splits</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SplitMode.interleaved">
+<a class="viewcode-back" href="../../../../api/operations.html#spflow.modules.ops.split.SplitMode.interleaved">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">interleaved</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">num_splits</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;SplitMode&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create an interleaved split configuration.</span>
+
+<span class="sd">        Splits features using modulo: [0,1,2,3] -&gt; [0,2], [1,3].</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            num_splits: Number of parts to split into.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            SplitMode configuration for interleaved splitting.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="s1">&#39;interleaved&#39;</span><span class="p">,</span> <span class="n">num_splits</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SplitMode.by_index">
+<a class="viewcode-back" href="../../../../api/operations.html#spflow.modules.ops.split.SplitMode.by_index">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">by_index</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">indices</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="s2">&quot;SplitMode&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a split configuration with explicit feature indices.</span>
+
+<span class="sd">        Splits features according to specified indices. Each inner list</span>
+<span class="sd">        contains the feature indices for that split.</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            &gt;&gt;&gt; SplitMode.by_index([[0, 1, 4], [2, 3, 5, 6, 7]])</span>
+<span class="sd">            # Creates 2 splits: features [0,1,4] and features [2,3,5,6,7]</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            indices: List of lists specifying feature indices for each split.</span>
+<span class="sd">                All features must be covered exactly once.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            SplitMode configuration for index-based splitting.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="s1">&#39;by_index&#39;</span><span class="p">,</span> <span class="n">num_splits</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">indices</span><span class="p">),</span> <span class="n">indices</span><span class="o">=</span><span class="n">indices</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SplitMode.create">
+<a class="viewcode-back" href="../../../../api/operations.html#spflow.modules.ops.split.SplitMode.create">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">:</span> <span class="n">Module</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Split&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a Split module with this configuration.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            inputs: Input module to split.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Split module configured according to this SplitMode.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Import here to avoid circular imports</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.ops.split_consecutive</span><span class="w"> </span><span class="kn">import</span> <span class="n">SplitConsecutive</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.ops.split_interleaved</span><span class="w"> </span><span class="kn">import</span> <span class="n">SplitInterleaved</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.ops.split_by_index</span><span class="w"> </span><span class="kn">import</span> <span class="n">SplitByIndex</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_split_type</span> <span class="o">==</span> <span class="s1">&#39;consecutive&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">SplitConsecutive</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">num_splits</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_num_splits</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_split_type</span> <span class="o">==</span> <span class="s1">&#39;interleaved&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">SplitInterleaved</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">num_splits</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_num_splits</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># by_index</span>
+            <span class="k">return</span> <span class="n">SplitByIndex</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">indices</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_indices</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_split_type</span> <span class="o">==</span> <span class="s1">&#39;by_index&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;SplitMode.by_index(indices=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_indices</span><span class="si">}</span><span class="s2">)&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;SplitMode.</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_split_type</span><span class="si">}</span><span class="s2">(num_splits=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_num_splits</span><span class="si">}</span><span class="s2">)&quot;</span></div>
+
+
+
 <div class="viewcode-block" id="Split">
 <a class="viewcode-back" href="../../../../api/operations.html#spflow.modules.ops.split.Split">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Split</span><span class="p">(</span><span class="n">Module</span><span class="p">,</span> <span class="n">ABC</span><span class="p">):</span>
@@ -349,6 +485,25 @@
     <span class="nd">@abstractmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">feature_to_scope</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
         <span class="k">pass</span>
+
+<div class="viewcode-block" id="Split.merge_split_indices">
+<a class="viewcode-back" href="../../../../api/operations.html#spflow.modules.ops.split.Split.merge_split_indices">[docs]</a>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">merge_split_indices</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">split_indices</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Merge per-split channel indices back to original feature layout.</span>
+
+<span class="sd">        This method takes channel indices for each split and combines them into</span>
+<span class="sd">        indices matching the original (unsplit) feature layout. Used by parent</span>
+<span class="sd">        modules (like EinsumLayer) during sampling.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            *split_indices: Channel index tensors for each split, shape (batch, features_per_split).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Merged indices matching the input module&#39;s feature layout, shape (batch, total_features).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
 
 <div class="viewcode-block" id="Split.sample">
 <a class="viewcode-back" href="../../../../api/operations.html#spflow.modules.ops.split.Split.sample">[docs]</a>

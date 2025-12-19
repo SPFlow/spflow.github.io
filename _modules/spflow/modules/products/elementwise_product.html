@@ -261,8 +261,9 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.meta.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">Scope</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.module</span><span class="w"> </span><span class="kn">import</span> <span class="n">Module</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.module_shape</span><span class="w"> </span><span class="kn">import</span> <span class="n">ModuleShape</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.ops.split_alternate</span><span class="w"> </span><span class="kn">import</span> <span class="n">SplitAlternate</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.ops.split_halves</span><span class="w"> </span><span class="kn">import</span> <span class="n">SplitHalves</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.ops.split</span><span class="w"> </span><span class="kn">import</span> <span class="n">Split</span><span class="p">,</span> <span class="n">SplitMode</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.ops.split_consecutive</span><span class="w"> </span><span class="kn">import</span> <span class="n">SplitConsecutive</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.ops.split_interleaved</span><span class="w"> </span><span class="kn">import</span> <span class="n">SplitInterleaved</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.products.base_product</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseProduct</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.utils.cache</span><span class="w"> </span><span class="kn">import</span> <span class="n">Cache</span><span class="p">,</span> <span class="n">cached</span>
 
@@ -280,6 +281,7 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">inputs</span><span class="p">:</span> <span class="n">Module</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Module</span><span class="p">,</span> <span class="n">Module</span><span class="p">]</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="n">Module</span><span class="p">],</span>
         <span class="n">num_splits</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="n">split_mode</span><span class="p">:</span> <span class="n">SplitMode</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize elementwise product.</span>
 
@@ -303,10 +305,21 @@
 <span class="sd">                    inputs = ((3, 1), (1, 4))</span>
 <span class="sd">                    output = (3, 4)  # broadcasted</span>
 
+<span class="sd">            num_splits: Number of splits when wrapping single input in Split.</span>
+<span class="sd">            split_mode: Optional split configuration for single input mode.</span>
+<span class="sd">                Use SplitMode.consecutive() or SplitMode.interleaved().</span>
+<span class="sd">                Defaults to SplitMode.consecutive(num_splits=num_splits) if not specified.</span>
 
 <span class="sd">        Raises:</span>
 <span class="sd">            ValueError: Invalid arguments.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Handle single non-Split input: wrap with split_mode</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">Module</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">,</span> <span class="n">Split</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">split_mode</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">inputs</span> <span class="o">=</span> <span class="n">split_mode</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">inputs</span> <span class="o">=</span> <span class="n">SplitConsecutive</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">num_splits</span><span class="o">=</span><span class="n">num_splits</span><span class="p">)</span>
+
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">inputs</span><span class="p">)</span>
 
         <span class="c1"># Check if all inputs either have equal number of out_channels or 1 (using in_shape.channels set by BaseProduct)</span>
@@ -314,8 +327,6 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;Inputs must have equal number of channels or one of them must be &#39;1&#39;, but were </span><span class="si">{</span><span class="p">[</span><span class="n">inp</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">channels</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">inp</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
             <span class="p">)</span>
-
-
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_splits</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">num_splits</span> <span class="o">=</span> <span class="n">num_splits</span>
@@ -422,9 +433,9 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_is_split</span><span class="p">:</span>
             <span class="n">num_splits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_splits</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">SplitHalves</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">SplitConsecutive</span><span class="p">):</span>
                 <span class="k">return</span> <span class="n">output_ids</span><span class="o">.</span><span class="n">repeat</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_splits</span><span class="p">))</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">SplitAlternate</span><span class="p">):</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">SplitInterleaved</span><span class="p">):</span>
                 <span class="k">return</span> <span class="n">output_ids</span><span class="o">.</span><span class="n">repeat_interleave</span><span class="p">(</span><span class="n">num_splits</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Other Split types are not implemented yet.&quot;</span><span class="p">)</span>
@@ -446,9 +457,9 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_is_split</span><span class="p">:</span>
             <span class="n">num_splits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_splits</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">SplitHalves</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">SplitConsecutive</span><span class="p">):</span>
                 <span class="k">return</span> <span class="n">mask</span><span class="o">.</span><span class="n">repeat</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_splits</span><span class="p">))</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">SplitAlternate</span><span class="p">):</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">SplitInterleaved</span><span class="p">):</span>
                 <span class="k">return</span> <span class="n">mask</span><span class="o">.</span><span class="n">repeat_interleave</span><span class="p">(</span><span class="n">num_splits</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Other Split types are not implemented yet.&quot;</span><span class="p">)</span>

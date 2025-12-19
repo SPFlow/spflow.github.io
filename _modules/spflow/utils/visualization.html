@@ -287,8 +287,9 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.leaves.leaf</span><span class="w"> </span><span class="kn">import</span> <span class="n">LeafModule</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.ops.cat</span><span class="w"> </span><span class="kn">import</span> <span class="n">Cat</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.ops.split</span><span class="w"> </span><span class="kn">import</span> <span class="n">Split</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.ops.split_alternate</span><span class="w"> </span><span class="kn">import</span> <span class="n">SplitAlternate</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.ops.split_halves</span><span class="w"> </span><span class="kn">import</span> <span class="n">SplitHalves</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.ops.split_by_index</span><span class="w"> </span><span class="kn">import</span> <span class="n">SplitByIndex</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.ops.split_consecutive</span><span class="w"> </span><span class="kn">import</span> <span class="n">SplitConsecutive</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.ops.split_interleaved</span><span class="w"> </span><span class="kn">import</span> <span class="n">SplitInterleaved</span>
 
 
 <span class="k">class</span><span class="w"> </span><span class="nc">Color</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
@@ -312,7 +313,7 @@
 <span class="c1"># Ops modules to skip in visualization (pass-through/helper modules)</span>
 <span class="c1"># When these modules are encountered, they are bypassed and their inputs are connected</span>
 <span class="c1"># directly to the parent module</span>
-<span class="n">SKIP_OPS</span> <span class="o">=</span> <span class="p">{</span><span class="n">Cat</span><span class="p">,</span> <span class="n">Split</span><span class="p">,</span> <span class="n">SplitHalves</span><span class="p">,</span> <span class="n">SplitAlternate</span><span class="p">}</span>
+<span class="n">SKIP_OPS</span> <span class="o">=</span> <span class="p">{</span><span class="n">Cat</span><span class="p">,</span> <span class="n">Split</span><span class="p">,</span> <span class="n">SplitByIndex</span><span class="p">,</span> <span class="n">SplitConsecutive</span><span class="p">,</span> <span class="n">SplitInterleaved</span><span class="p">}</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_format_param_count</span><span class="p">(</span><span class="n">count</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
@@ -396,7 +397,7 @@
 <span class="sd">            - &#39;RL&#39;: Right to left</span>
 <span class="sd">        node_shape: Shape of nodes. Common options: &#39;box&#39; (default), &#39;circle&#39;, &#39;ellipse&#39;,</span>
 <span class="sd">            &#39;diamond&#39;, &#39;triangle&#39;, &#39;plaintext&#39;, &#39;record&#39;, &#39;Mrecord&#39;.</span>
-<span class="sd">        skip_ops: Whether to skip ops modules in visualization (Cat, Split, SplitHalves, SplitAlternate).</span>
+<span class="sd">        skip_ops: Whether to skip ops modules in visualization (Cat, Split, SplitConsecutive, SplitInterleaved).</span>
 <span class="sd">            These are pass-through modules that are bypassed and their inputs connected directly to parent.</span>
 <span class="sd">            Defaults to True.</span>
 
@@ -829,8 +830,9 @@
         <span class="s2">&quot;Cat&quot;</span><span class="p">:</span> <span class="n">Color</span><span class="o">.</span><span class="n">PINK</span><span class="p">,</span>
         <span class="c1"># Operations - Split</span>
         <span class="s2">&quot;Split&quot;</span><span class="p">:</span> <span class="n">Color</span><span class="o">.</span><span class="n">PURPLE</span><span class="p">,</span>
-        <span class="s2">&quot;SplitHalves&quot;</span><span class="p">:</span> <span class="n">Color</span><span class="o">.</span><span class="n">PURPLE</span><span class="p">,</span>
-        <span class="s2">&quot;SplitAlternate&quot;</span><span class="p">:</span> <span class="n">Color</span><span class="o">.</span><span class="n">PURPLE</span><span class="p">,</span>
+        <span class="s2">&quot;SplitByIndex&quot;</span><span class="p">:</span> <span class="n">Color</span><span class="o">.</span><span class="n">PURPLE</span><span class="p">,</span>
+        <span class="s2">&quot;SplitConsecutive&quot;</span><span class="p">:</span> <span class="n">Color</span><span class="o">.</span><span class="n">PURPLE</span><span class="p">,</span>
+        <span class="s2">&quot;SplitInterleaved&quot;</span><span class="p">:</span> <span class="n">Color</span><span class="o">.</span><span class="n">PURPLE</span><span class="p">,</span>
         <span class="c1"># Operations - Factorize</span>
         <span class="s2">&quot;Factorize&quot;</span><span class="p">:</span> <span class="n">Color</span><span class="o">.</span><span class="n">BROWN</span><span class="p">,</span>
         <span class="c1"># RAT-SPN</span>

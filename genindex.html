@@ -281,11 +281,13 @@
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/leaves.html#spflow.modules.leaves.Bernoulli">Bernoulli (class in spflow.modules.leaves)</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/leaves.html#spflow.modules.leaves.Gamma.beta">beta (spflow.modules.leaves.Gamma attribute)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/leaves.html#spflow.modules.leaves.Binomial">Binomial (class in spflow.modules.leaves)</a>
+</li>
+        <li><a href="api/operations.html#spflow.modules.ops.split.SplitMode.by_index">by_index() (spflow.modules.ops.split.SplitMode class method)</a>
 </li>
     </ul></td>
   </tr></table>
@@ -313,10 +315,10 @@
           <li><a href="api/products.html#spflow.modules.products.OuterProduct.check_shapes">(spflow.modules.products.OuterProduct method)</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/leaves.html#spflow.modules.leaves.Hypergeometric.check_support">check_support() (spflow.modules.leaves.Hypergeometric method)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/interfaces.html#spflow.interfaces.classifier.Classifier">Classifier (class in spflow.interfaces.classifier)</a>
 </li>
         <li><a href="api/leaves.html#spflow.modules.leaves.Gamma.concentration">concentration (spflow.modules.leaves.Gamma property)</a>
@@ -327,9 +329,13 @@
           <li><a href="api/base_modules.html#spflow.modules.leaves.leaf.LeafModule.conditional_distribution">(spflow.modules.leaves.leaf.LeafModule method)</a>
 </li>
         </ul></li>
+        <li><a href="api/operations.html#spflow.modules.ops.split.SplitMode.consecutive">consecutive() (spflow.modules.ops.split.SplitMode class method)</a>
+</li>
         <li><a href="api/conv.html#spflow.modules.conv.ConvPc">ConvPc (class in spflow.modules.conv)</a>
 </li>
         <li><a href="api/scope.html#spflow.meta.data.scope.Scope.copy">copy() (spflow.meta.data.scope.Scope method)</a>
+</li>
+        <li><a href="api/operations.html#spflow.modules.ops.split.SplitMode.create">create() (spflow.modules.ops.split.SplitMode method)</a>
 </li>
         <li><a href="api/rat_spn.html#spflow.modules.rat.RatSPN.create_spn">create_spn() (spflow.modules.rat.RatSPN method)</a>
 </li>
@@ -486,9 +492,11 @@
 </li>
           <li><a href="api/operations.html#spflow.modules.ops.split.Split.feature_to_scope">(spflow.modules.ops.split.Split property)</a>
 </li>
-          <li><a href="api/operations.html#spflow.modules.ops.SplitAlternate.feature_to_scope">(spflow.modules.ops.SplitAlternate property)</a>
+          <li><a href="api/operations.html#spflow.modules.ops.SplitByIndex.feature_to_scope">(spflow.modules.ops.SplitByIndex property)</a>
 </li>
-          <li><a href="api/operations.html#spflow.modules.ops.SplitHalves.feature_to_scope">(spflow.modules.ops.SplitHalves property)</a>
+          <li><a href="api/operations.html#spflow.modules.ops.SplitConsecutive.feature_to_scope">(spflow.modules.ops.SplitConsecutive property)</a>
+</li>
+          <li><a href="api/operations.html#spflow.modules.ops.SplitInterleaved.feature_to_scope">(spflow.modules.ops.SplitInterleaved property)</a>
 </li>
           <li><a href="api/products.html#spflow.modules.products.ElementwiseProduct.feature_to_scope">(spflow.modules.products.ElementwiseProduct property)</a>
 </li>
@@ -565,6 +573,14 @@
 </li>
         <li><a href="api/base_modules.html#spflow.modules.module.Module.in_shape">in_shape (spflow.modules.module.Module property)</a>
 </li>
+        <li><a href="api/operations.html#spflow.modules.ops.split.SplitMode.indices">indices (spflow.modules.ops.split.SplitMode property)</a>
+
+        <ul>
+          <li><a href="api/operations.html#spflow.modules.ops.SplitByIndex.indices">(spflow.modules.ops.SplitByIndex attribute)</a>
+</li>
+          <li><a href="api/operations.html#id0">(spflow.modules.ops.SplitByIndex property)</a>
+</li>
+        </ul></li>
         <li><a href="api/leaves.html#spflow.modules.leaves.PiecewiseLinear.initialize">initialize() (spflow.modules.leaves.PiecewiseLinear method)</a>
 </li>
         <li><a href="api/conv.html#spflow.modules.conv.ProdConv.inputs">inputs (spflow.modules.conv.ProdConv attribute)</a>
@@ -589,7 +605,11 @@
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/exceptions.html#spflow.exceptions.GraphvizError.INSTALL_INSTRUCTIONS">INSTALL_INSTRUCTIONS (spflow.exceptions.GraphvizError attribute)</a>
 </li>
+        <li><a href="api/operations.html#spflow.modules.ops.split.SplitMode.interleaved">interleaved() (spflow.modules.ops.split.SplitMode class method)</a>
+</li>
         <li><a href="api/exceptions.html#spflow.exceptions.InvalidParameterCombinationError">InvalidParameterCombinationError</a>
+</li>
+        <li><a href="api/operations.html#spflow.modules.ops.SplitByIndex.inverse_indices">inverse_indices (spflow.modules.ops.SplitByIndex attribute)</a>
 </li>
         <li><a href="api/base_modules.html#spflow.modules.leaves.leaf.LeafModule.is_conditional">is_conditional (spflow.modules.leaves.leaf.LeafModule property)</a>
 </li>
@@ -684,9 +704,11 @@
 </li>
           <li><a href="api/operations.html#spflow.modules.ops.Cat.log_likelihood">(spflow.modules.ops.Cat method)</a>
 </li>
-          <li><a href="api/operations.html#spflow.modules.ops.SplitAlternate.log_likelihood">(spflow.modules.ops.SplitAlternate method)</a>
+          <li><a href="api/operations.html#spflow.modules.ops.SplitByIndex.log_likelihood">(spflow.modules.ops.SplitByIndex method)</a>
 </li>
-          <li><a href="api/operations.html#spflow.modules.ops.SplitHalves.log_likelihood">(spflow.modules.ops.SplitHalves method)</a>
+          <li><a href="api/operations.html#spflow.modules.ops.SplitConsecutive.log_likelihood">(spflow.modules.ops.SplitConsecutive method)</a>
+</li>
+          <li><a href="api/operations.html#spflow.modules.ops.SplitInterleaved.log_likelihood">(spflow.modules.ops.SplitInterleaved method)</a>
 </li>
           <li><a href="api/products.html#spflow.modules.products.ElementwiseProduct.log_likelihood">(spflow.modules.products.ElementwiseProduct method)</a>
 </li>
@@ -803,8 +825,6 @@
           <li><a href="api/wrappers.html#spflow.modules.wrapper.image_wrapper.ImageWrapper.marginalize">(spflow.modules.wrapper.image_wrapper.ImageWrapper method)</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/base_modules.html#spflow.modules.leaves.leaf.LeafModule.marginalized_params">marginalized_params() (spflow.modules.leaves.leaf.LeafModule method)</a>
 </li>
         <li><a href="api/einsum.html#spflow.modules.einsum.Einet.maximum_likelihood_estimation">maximum_likelihood_estimation() (spflow.modules.einsum.Einet method)</a>
@@ -829,8 +849,20 @@
           <li><a href="api/wrappers.html#spflow.modules.wrapper.image_wrapper.ImageWrapper.maximum_likelihood_estimation">(spflow.modules.wrapper.image_wrapper.ImageWrapper method)</a>
 </li>
         </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/leaves.html#spflow.modules.leaves.LogNormal.mean">mean (spflow.modules.leaves.LogNormal attribute)</a>
 </li>
+        <li><a href="api/operations.html#spflow.modules.ops.split.Split.merge_split_indices">merge_split_indices() (spflow.modules.ops.split.Split method)</a>
+
+        <ul>
+          <li><a href="api/operations.html#spflow.modules.ops.SplitByIndex.merge_split_indices">(spflow.modules.ops.SplitByIndex method)</a>
+</li>
+          <li><a href="api/operations.html#spflow.modules.ops.SplitConsecutive.merge_split_indices">(spflow.modules.ops.SplitConsecutive method)</a>
+</li>
+          <li><a href="api/operations.html#spflow.modules.ops.SplitInterleaved.merge_split_indices">(spflow.modules.ops.SplitInterleaved method)</a>
+</li>
+        </ul></li>
         <li><a href="api/base_modules.html#spflow.modules.leaves.leaf.LeafModule.mode">mode (spflow.modules.leaves.leaf.LeafModule property)</a>
 
         <ul>
@@ -879,10 +911,10 @@
 </li>
         <li><a href="api/rat_spn.html#spflow.modules.rat.RatSPN.n_root_nodes">n_root_nodes (spflow.modules.rat.RatSPN attribute)</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/leaves.html#spflow.modules.leaves.NegativeBinomial">NegativeBinomial (class in spflow.modules.leaves)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/leaves.html#spflow.modules.leaves.Normal">Normal (class in spflow.modules.leaves)</a>
 </li>
         <li><a href="api/wrappers.html#spflow.modules.wrapper.image_wrapper.ImageWrapper.num_channel">num_channel (spflow.modules.wrapper.image_wrapper.ImageWrapper attribute)</a>
@@ -898,7 +930,11 @@
 </li>
         </ul></li>
         <li><a href="api/operations.html#spflow.modules.ops.split.Split.num_splits">num_splits (spflow.modules.ops.split.Split attribute)</a>
+
+        <ul>
+          <li><a href="api/operations.html#spflow.modules.ops.split.SplitMode.num_splits">(spflow.modules.ops.split.SplitMode property)</a>
 </li>
+        </ul></li>
         <li><a href="api/einsum.html#spflow.modules.einsum.Einet.num_sums">num_sums (spflow.modules.einsum.Einet attribute)</a>
 </li>
     </ul></td>
@@ -1082,6 +1118,10 @@
 </li>
           <li><a href="api/operations.html#spflow.modules.ops.split.Split.sample">(spflow.modules.ops.split.Split method)</a>
 </li>
+          <li><a href="api/operations.html#spflow.modules.ops.SplitByIndex.sample">(spflow.modules.ops.SplitByIndex method)</a>
+</li>
+          <li><a href="api/operations.html#spflow.modules.ops.SplitConsecutive.sample">(spflow.modules.ops.SplitConsecutive method)</a>
+</li>
           <li><a href="api/products.html#spflow.modules.products.Product.sample">(spflow.modules.products.Product method)</a>
 </li>
           <li><a href="api/rat_spn.html#spflow.modules.rat.RatSPN.sample">(spflow.modules.rat.RatSPN method)</a>
@@ -1107,8 +1147,6 @@
         </ul></li>
         <li><a href="api/scope.html#spflow.meta.data.scope.Scope">Scope (class in spflow.meta.data.scope)</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/base_modules.html#spflow.modules.module.Module.scope">scope (spflow.modules.module.Module attribute)</a>
 
         <ul>
@@ -1121,6 +1159,8 @@
           <li><a href="api/wrappers.html#spflow.modules.wrapper.base.Wrapper.scope">(spflow.modules.wrapper.base.Wrapper attribute)</a>
 </li>
         </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/exceptions.html#spflow.exceptions.ScopeError">ScopeError</a>
 </li>
         <li><a href="api/einsum.html#spflow.modules.einsum.Einet.scopes_out">scopes_out (spflow.modules.einsum.Einet property)</a>
@@ -1135,11 +1175,17 @@
 </li>
         <li><a href="api/operations.html#spflow.modules.ops.split.Split">Split (class in spflow.modules.ops.split)</a>
 </li>
-        <li><a href="api/operations.html#spflow.modules.ops.SplitAlternate.split_masks">split_masks (spflow.modules.ops.SplitAlternate attribute)</a>
+        <li><a href="api/operations.html#spflow.modules.ops.SplitInterleaved.split_masks">split_masks (spflow.modules.ops.SplitInterleaved attribute)</a>
 </li>
-        <li><a href="api/operations.html#spflow.modules.ops.SplitAlternate">SplitAlternate (class in spflow.modules.ops)</a>
+        <li><a href="api/operations.html#spflow.modules.ops.split.SplitMode.split_type">split_type (spflow.modules.ops.split.SplitMode property)</a>
 </li>
-        <li><a href="api/operations.html#spflow.modules.ops.SplitHalves">SplitHalves (class in spflow.modules.ops)</a>
+        <li><a href="api/operations.html#spflow.modules.ops.SplitByIndex">SplitByIndex (class in spflow.modules.ops)</a>
+</li>
+        <li><a href="api/operations.html#spflow.modules.ops.SplitConsecutive">SplitConsecutive (class in spflow.modules.ops)</a>
+</li>
+        <li><a href="api/operations.html#spflow.modules.ops.SplitInterleaved">SplitInterleaved (class in spflow.modules.ops)</a>
+</li>
+        <li><a href="api/operations.html#spflow.modules.ops.split.SplitMode">SplitMode (class in spflow.modules.ops.split)</a>
 </li>
         <li><a href="api/leaves.html#spflow.modules.leaves.Uniform.start">start (spflow.modules.leaves.Uniform attribute)</a>
 </li>

@@ -346,14 +346,14 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.products</span><span class="w"> </span><span class="kn">import</span> <span class="n">OuterProduct</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.sums</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sum</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.leaves</span><span class="w"> </span><span class="kn">import</span> <span class="n">Normal</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.ops</span><span class="w"> </span><span class="kn">import</span> <span class="n">SplitHalves</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.ops</span><span class="w"> </span><span class="kn">import</span> <span class="n">SplitConsecutive</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.utils.visualization</span><span class="w"> </span><span class="kn">import</span> <span class="n">visualize</span>
 
 <span class="c1"># Create a single Normal layer covering both variables</span>
 <span class="n">x_layered</span> <span class="o">=</span> <span class="n">Normal</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">out_channels</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
-<span class="c1"># Use SplitHalves to automatically partition outputs, then OuterProduct to combine</span>
-<span class="n">prod_layered</span> <span class="o">=</span> <span class="n">OuterProduct</span><span class="p">(</span><span class="n">SplitHalves</span><span class="p">(</span><span class="n">x_layered</span><span class="p">),</span> <span class="n">num_splits</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="c1"># Use SplitConsecutive to automatically partition outputs, then OuterProduct to combine</span>
+<span class="n">prod_layered</span> <span class="o">=</span> <span class="n">OuterProduct</span><span class="p">(</span><span class="n">SplitConsecutive</span><span class="p">(</span><span class="n">x_layered</span><span class="p">),</span> <span class="n">num_splits</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
 <span class="c1"># Create a sum node over the outer products</span>
 <span class="n">pc_layered</span> <span class="o">=</span> <span class="n">Sum</span><span class="p">(</span><span class="n">prod_layered</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="p">[</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">])</span>
