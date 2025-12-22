@@ -967,6 +967,9 @@ Samples shape: torch.Size([100, 2])
         <span class="c1"># Create boolean masks for each split</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">split_masks</span> <span class="o">=</span> <span class="p">[</span><span class="n">assignments</span> <span class="o">==</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_splits</span><span class="p">)]</span>
 
+        <span class="c1"># Store assignments for merge_split_indices</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">register_buffer</span><span class="p">(</span><span class="s2">&quot;_assignments&quot;</span><span class="p">,</span> <span class="n">assignments</span><span class="p">)</span>
+
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">feature_to_scope</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">scopes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">feature_to_scope</span>
@@ -979,6 +982,22 @@ Samples shape: torch.Size([100, 2])
     <span class="k">def</span><span class="w"> </span><span class="nf">log_likelihood</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">lls</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">log_likelihood</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">lls</span><span class="p">[:,</span> <span class="n">mask</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="k">for</span> <span class="n">mask</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">split_masks</span><span class="p">]</span>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">merge_split_indices</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">split_indices</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+        <span class="n">batch_size</span> <span class="o">=</span> <span class="n">split_indices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">num_features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">features</span>
+        <span class="c1"># Create output tensor</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">num_features</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">split_indices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">split_indices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+        <span class="c1"># Track position within each split</span>
+        <span class="n">split_positions</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_splits</span>
+        <span class="c1"># Scatter indices back to original positions</span>
+        <span class="k">for</span> <span class="n">feature_idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_features</span><span class="p">):</span>
+            <span class="n">split_idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_assignments</span><span class="p">[</span><span class="n">feature_idx</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+            <span class="n">pos</span> <span class="o">=</span> <span class="n">split_positions</span><span class="p">[</span><span class="n">split_idx</span><span class="p">]</span>
+            <span class="n">result</span><span class="p">[:,</span> <span class="n">feature_idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">split_indices</span><span class="p">[</span><span class="n">split_idx</span><span class="p">][:,</span> <span class="n">pos</span><span class="p">]</span>
+            <span class="n">split_positions</span><span class="p">[</span><span class="n">split_idx</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">result</span>
 </pre></div>
 </div>
 </div>
@@ -1003,16 +1022,8 @@ Samples shape: torch.Size([100, 2])
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">TypeError</span>                                 Traceback (most recent call last)
-<span class="ansi-cyan-fg">Cell</span><span class="ansi-cyan-fg"> </span><span class="ansi-green-fg">In[8]</span><span class="ansi-green-fg">, line 3</span>
-<span class="ansi-green-fg">      1</span> <span style="color: rgb(95,135,135)"># Test RandomSplit</span>
-<span class="ansi-green-fg">      2</span> leaf = Normal(scope=Scope(<span style="color: rgb(0,135,0)">list</span>(<span style="color: rgb(0,135,0)">range</span>(<span class="ansi-green-fg">6</span>))), out_channels=<span class="ansi-green-fg">2</span>)
-<span class="ansi-green-fg">----&gt; </span><span class="ansi-green-fg">3</span> split = <span class="ansi-yellow-bg">RandomSplit</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">inputs</span><span class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">leaf</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">num_splits</span><span class="ansi-yellow-bg">=</span><span class="ansi-green-fg ansi-yellow-bg">2</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">seed</span><span class="ansi-yellow-bg">=</span><span class="ansi-green-fg ansi-yellow-bg">123</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-fg">      5</span> data = torch.randn(<span class="ansi-green-fg">5</span>, <span class="ansi-green-fg">6</span>)
-<span class="ansi-green-fg">      6</span> lls = split.log_likelihood(data)
-
-<span class="ansi-red-fg">TypeError</span>: Can&#39;t instantiate abstract class RandomSplit with abstract method merge_split_indices
+Split 0 shape: torch.Size([5, 5, 2, 1])
+Split 1 shape: torch.Size([5, 1, 2, 1])
 </pre></div></div>
 </div>
 <p><strong>Key points:</strong></p>
