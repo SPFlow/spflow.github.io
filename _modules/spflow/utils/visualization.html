@@ -703,19 +703,112 @@
     <span class="k">return</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 
 
+<span class="k">def</span><span class="w"> </span><span class="nf">_build_vis_label</span><span class="p">(</span>
+    <span class="n">module</span><span class="p">:</span> <span class="n">Module</span><span class="p">,</span>
+    <span class="n">show_shape</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">show_params</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">show_scope</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Build a visualization label for a module showing shape, params, and scope.</span>
+
+<span class="sd">    All labels (Out, In, Scope, Params) are right-aligned to the same width</span>
+<span class="sd">    for consistent display with monospace font.</span>
+
+<span class="sd">    Order: Out, In, Scope, Params</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        module: The module to generate a label for.</span>
+<span class="sd">        show_shape: Whether to include shape info (Out/In with D, C, R values).</span>
+<span class="sd">        show_params: Whether to include parameter count.</span>
+<span class="sd">        show_scope: Whether to include scope information.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A multi-line label string with properly aligned information.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Collect all labels we&#39;ll display to calculate max width</span>
+    <span class="n">all_labels</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># Shape labels (Out first, then In)</span>
+    <span class="n">shapes</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">shape_labels</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="n">show_shape</span><span class="p">:</span>
+        <span class="c1"># Out shape first</span>
+        <span class="n">shapes</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">module</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">features</span><span class="p">,</span> <span class="n">module</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">channels</span><span class="p">,</span> <span class="n">module</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">repetitions</span><span class="p">))</span>
+        <span class="n">shape_labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Out&quot;</span><span class="p">)</span>
+        <span class="n">all_labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Out&quot;</span><span class="p">)</span>
+        <span class="c1"># In shape second (if available)</span>
+        <span class="k">if</span> <span class="n">module</span><span class="o">.</span><span class="n">in_shape</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">shapes</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">module</span><span class="o">.</span><span class="n">in_shape</span><span class="o">.</span><span class="n">features</span><span class="p">,</span> <span class="n">module</span><span class="o">.</span><span class="n">in_shape</span><span class="o">.</span><span class="n">channels</span><span class="p">,</span> <span class="n">module</span><span class="o">.</span><span class="n">in_shape</span><span class="o">.</span><span class="n">repetitions</span><span class="p">))</span>
+            <span class="n">shape_labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;In&quot;</span><span class="p">)</span>
+            <span class="n">all_labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;In&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Check scope (before params in the new order)</span>
+    <span class="n">scope_str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">show_scope</span><span class="p">:</span>
+        <span class="n">scope_str</span> <span class="o">=</span> <span class="n">_format_scope_string</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">module</span><span class="o">.</span><span class="n">scope</span><span class="o">.</span><span class="n">query</span><span class="p">))</span>
+        <span class="n">all_labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Scope&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Check params (last in the new order)</span>
+    <span class="n">param_count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">if</span> <span class="n">show_params</span><span class="p">:</span>
+        <span class="n">param_count</span> <span class="o">=</span> <span class="n">_count_parameters</span><span class="p">(</span><span class="n">module</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">param_count</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">all_labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Params&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Calculate max label width across all labels</span>
+    <span class="n">max_label_width</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">label</span><span class="p">)</span> <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">all_labels</span><span class="p">)</span> <span class="k">if</span> <span class="n">all_labels</span> <span class="k">else</span> <span class="mi">0</span>
+
+    <span class="n">lines</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># Shape information (Out/In)</span>
+    <span class="k">if</span> <span class="n">show_shape</span> <span class="ow">and</span> <span class="n">shapes</span><span class="p">:</span>
+        <span class="c1"># Calculate max width for each parameter value across all shapes</span>
+        <span class="n">max_d_width</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">shapes</span><span class="p">)</span>
+        <span class="n">max_c_width</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">shapes</span><span class="p">)</span>
+        <span class="n">max_r_width</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">shapes</span><span class="p">)</span>
+
+        <span class="c1"># Build aligned shape lines</span>
+        <span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">shape_labels</span><span class="p">,</span> <span class="n">shapes</span><span class="p">):</span>
+            <span class="c1"># Right-align the label</span>
+            <span class="n">padded_label</span> <span class="o">=</span> <span class="n">label</span><span class="o">.</span><span class="n">rjust</span><span class="p">(</span><span class="n">max_label_width</span><span class="p">)</span>
+            <span class="c1"># Left-pad each parameter value to align with the widest</span>
+            <span class="n">d_str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">d</span><span class="p">)</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="n">max_d_width</span><span class="p">)</span>
+            <span class="n">c_str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">c</span><span class="p">)</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="n">max_c_width</span><span class="p">)</span>
+            <span class="n">r_str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">r</span><span class="p">)</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="n">max_r_width</span><span class="p">)</span>
+            <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">padded_label</span><span class="si">}</span><span class="s2">: D=</span><span class="si">{</span><span class="n">d_str</span><span class="si">}</span><span class="s2"> C=</span><span class="si">{</span><span class="n">c_str</span><span class="si">}</span><span class="s2"> R=</span><span class="si">{</span><span class="n">r_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Scope information (before params)</span>
+    <span class="k">if</span> <span class="n">show_scope</span><span class="p">:</span>
+        <span class="n">padded_label</span> <span class="o">=</span> <span class="s2">&quot;Scope&quot;</span><span class="o">.</span><span class="n">rjust</span><span class="p">(</span><span class="n">max_label_width</span><span class="p">)</span>
+        <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">padded_label</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">scope_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Parameter count (last)</span>
+    <span class="k">if</span> <span class="n">show_params</span> <span class="ow">and</span> <span class="n">param_count</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">formatted_count</span> <span class="o">=</span> <span class="n">_format_param_count</span><span class="p">(</span><span class="n">param_count</span><span class="p">)</span>
+        <span class="n">padded_label</span> <span class="o">=</span> <span class="s2">&quot;Params&quot;</span><span class="o">.</span><span class="n">rjust</span><span class="p">(</span><span class="n">max_label_width</span><span class="p">)</span>
+        <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">padded_label</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">formatted_count</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Check for extra visualization info from the module</span>
+    <span class="n">extra_info</span> <span class="o">=</span> <span class="n">module</span><span class="o">.</span><span class="n">_extra_vis_info</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">extra_info</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">extra_info</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span>
+
+
 <span class="k">def</span><span class="w"> </span><span class="nf">_get_module_label</span><span class="p">(</span>
     <span class="n">module</span><span class="p">:</span> <span class="n">Module</span><span class="p">,</span> <span class="n">show_scope</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">show_shape</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">show_params</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate a label for a module node.</span>
 
-<span class="sd">    Uses HTML labels with bold module names for better visibility.</span>
-<span class="sd">    Delegates shape label generation to the module&#39;s get_vis_label() method,</span>
-<span class="sd">    allowing modules to customize their visualization labels.</span>
+<span class="sd">    Uses HTML labels with bold module names and monospace font for</span>
+<span class="sd">    proper alignment of shape, params, and scope information.</span>
+<span class="sd">    Uses HTML table with left-aligned cells to preserve alignment.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        module: The module to generate a label for.</span>
 <span class="sd">        show_scope: Whether to include scope information.</span>
-<span class="sd">        show_shape: Whether to include shape information (delegates to module.get_vis_label()).</span>
+<span class="sd">        show_shape: Whether to include shape information.</span>
 <span class="sd">        show_params: Whether to include parameter count.</span>
 
 <span class="sd">    Returns:</span>
@@ -724,30 +817,31 @@
     <span class="c1"># Get the class name</span>
     <span class="n">class_name</span> <span class="o">=</span> <span class="n">module</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
 
-    <span class="c1"># Start with bold module name using HTML label</span>
-    <span class="n">label_parts</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;&lt;B&gt;</span><span class="si">{</span><span class="n">class_name</span><span class="si">}</span><span class="s2">&lt;/B&gt;&quot;</span><span class="p">]</span>
+    <span class="c1"># Build HTML table with left-aligned cells for proper alignment</span>
+    <span class="c1"># Using a table structure ensures the text is left-aligned within the node</span>
+    <span class="n">rows</span> <span class="o">=</span> <span class="p">[]</span>
 
-    <span class="c1"># Add shape information if requested (delegates to module)</span>
-    <span class="k">if</span> <span class="n">show_shape</span><span class="p">:</span>
-        <span class="n">vis_label</span> <span class="o">=</span> <span class="n">module</span><span class="o">.</span><span class="n">_get_vis_label</span><span class="p">()</span>
-        <span class="c1"># Convert newlines to HTML line breaks for graphviz</span>
-        <span class="n">vis_label</span> <span class="o">=</span> <span class="n">vis_label</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&lt;br/&gt;&quot;</span><span class="p">)</span>
-        <span class="n">label_parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">vis_label</span><span class="p">)</span>
+    <span class="c1"># Module name row (bold, centered as header)</span>
+    <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;&lt;TR&gt;&lt;TD ALIGN=&quot;CENTER&quot;&gt;&lt;font face=&quot;Courier&quot;&gt;&lt;B&gt;</span><span class="si">{</span><span class="n">class_name</span><span class="si">}</span><span class="s1">&lt;/B&gt;&lt;/font&gt;&lt;/TD&gt;&lt;/TR&gt;&#39;</span><span class="p">)</span>
 
-    <span class="c1"># Add parameter count if requested (only if &gt; 0 to avoid clutter for modules like Product)</span>
-    <span class="k">if</span> <span class="n">show_params</span><span class="p">:</span>
-        <span class="n">param_count</span> <span class="o">=</span> <span class="n">_count_parameters</span><span class="p">(</span><span class="n">module</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">param_count</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">formatted_count</span> <span class="o">=</span> <span class="n">_format_param_count</span><span class="p">(</span><span class="n">param_count</span><span class="p">)</span>
-            <span class="n">label_parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Params: </span><span class="si">{</span><span class="n">formatted_count</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="c1"># Build visualization label</span>
+    <span class="k">if</span> <span class="n">show_shape</span> <span class="ow">or</span> <span class="n">show_params</span> <span class="ow">or</span> <span class="n">show_scope</span><span class="p">:</span>
+        <span class="n">vis_label</span> <span class="o">=</span> <span class="n">_build_vis_label</span><span class="p">(</span>
+            <span class="n">module</span><span class="p">,</span>
+            <span class="n">show_shape</span><span class="o">=</span><span class="n">show_shape</span><span class="p">,</span>
+            <span class="n">show_params</span><span class="o">=</span><span class="n">show_params</span><span class="p">,</span>
+            <span class="n">show_scope</span><span class="o">=</span><span class="n">show_scope</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">vis_label</span><span class="p">:</span>
+            <span class="c1"># Each line becomes a left-aligned table row</span>
+            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">vis_label</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">):</span>
+                <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;font face=&quot;Courier&quot;&gt;</span><span class="si">{</span><span class="n">line</span><span class="si">}</span><span class="s1">&lt;/font&gt;&lt;/TD&gt;&lt;/TR&gt;&#39;</span><span class="p">)</span>
 
-    <span class="c1"># Add scope information if requested</span>
-    <span class="k">if</span> <span class="n">show_scope</span><span class="p">:</span>
-        <span class="n">scope_str</span> <span class="o">=</span> <span class="n">_format_scope_string</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">module</span><span class="o">.</span><span class="n">scope</span><span class="o">.</span><span class="n">query</span><span class="p">))</span>
-        <span class="n">label_parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Scope: </span><span class="si">{</span><span class="n">scope_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="c1"># Build table structure with no borders and minimal spacing</span>
+    <span class="n">table</span> <span class="o">=</span> <span class="s1">&#39;&lt;TABLE BORDER=&quot;0&quot; CELLBORDER=&quot;0&quot; CELLSPACING=&quot;0&quot; CELLPADDING=&quot;0&quot;&gt;&#39;</span> <span class="o">+</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;&lt;/TABLE&gt;&quot;</span>
 
-    <span class="c1"># Use &lt;br/&gt; for line breaks in HTML labels, and wrap entire label in angle brackets</span>
-    <span class="k">return</span> <span class="s2">&quot;&lt;&quot;</span> <span class="o">+</span> <span class="s2">&quot;&lt;br/&gt;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">label_parts</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;&gt;&quot;</span>
+    <span class="c1"># Wrap in angle brackets for HTML label</span>
+    <span class="k">return</span> <span class="s2">&quot;&lt;&quot;</span> <span class="o">+</span> <span class="n">table</span> <span class="o">+</span> <span class="s2">&quot;&gt;&quot;</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_get_module_color</span><span class="p">(</span><span class="n">module</span><span class="p">:</span> <span class="n">Module</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
