@@ -687,6 +687,43 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">extra_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;D=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">features</span><span class="si">}</span><span class="s2">, C=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">channels</span><span class="si">}</span><span class="s2">, R=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">repetitions</span><span class="si">}</span><span class="s2">&quot;</span>
 
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_vis_label</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate a visualization label showing shape information.</span>
+
+<span class="sd">        This method creates a label string for graph visualization that displays</span>
+<span class="sd">        the module&#39;s input and output shape information on two lines. Subclasses</span>
+<span class="sd">        can override this method to provide custom visualization labels.</span>
+
+<span class="sd">        The default implementation shows two lines:</span>
+<span class="sd">        - In: D={features}, C={channels}, R={repetitions} (if in_shape available)</span>
+<span class="sd">        - Out: D={features}, C={channels}, R={repetitions}</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: A two-line label string with input and output shape information.</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; leaf = Normal(scope=Scope([0, 1]), out_channels=2)</span>
+<span class="sd">            &gt;&gt;&gt; leaf.get_vis_label()</span>
+<span class="sd">            &#39;In: D=2, C=1, R=1\\nOut: D=2, C=2, R=1&#39;</span>
+<span class="sd">            &gt;&gt;&gt; sum_node = Sum(inputs=leaf, out_channels=3)</span>
+<span class="sd">            &gt;&gt;&gt; sum_node.get_vis_label()</span>
+<span class="sd">            &#39;In: D=2, C=2, R=1\\nOut: D=2, C=3, R=1&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># Input shape line</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_shape</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;In: D=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">in_shape</span><span class="o">.</span><span class="n">features</span><span class="si">}</span><span class="s2">, C=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">in_shape</span><span class="o">.</span><span class="n">channels</span><span class="si">}</span><span class="s2">, R=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">in_shape</span><span class="o">.</span><span class="n">repetitions</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Output shape line</span>
+        <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Out: D=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">features</span><span class="si">}</span><span class="s2">, C=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">channels</span><span class="si">}</span><span class="s2">, R=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">repetitions</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span>
+
 <div class="viewcode-block" id="Module.to_str">
 <a class="viewcode-back" href="../../../api/base_modules.html#spflow.modules.module.Module.to_str">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">to_str</span><span class="p">(</span>

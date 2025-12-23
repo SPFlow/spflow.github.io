@@ -709,11 +709,13 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate a label for a module node.</span>
 
 <span class="sd">    Uses HTML labels with bold module names for better visibility.</span>
+<span class="sd">    Delegates shape label generation to the module&#39;s get_vis_label() method,</span>
+<span class="sd">    allowing modules to customize their visualization labels.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        module: The module to generate a label for.</span>
 <span class="sd">        show_scope: Whether to include scope information.</span>
-<span class="sd">        show_shape: Whether to include shape information (for Sum nodes: C-in and C-out, for others: F and C).</span>
+<span class="sd">        show_shape: Whether to include shape information (delegates to module.get_vis_label()).</span>
 <span class="sd">        show_params: Whether to include parameter count.</span>
 
 <span class="sd">    Returns:</span>
@@ -725,46 +727,12 @@
     <span class="c1"># Start with bold module name using HTML label</span>
     <span class="n">label_parts</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;&lt;B&gt;</span><span class="si">{</span><span class="n">class_name</span><span class="si">}</span><span class="s2">&lt;/B&gt;&quot;</span><span class="p">]</span>
 
-    <span class="c1"># Add shape information if requested</span>
+    <span class="c1"># Add shape information if requested (delegates to module)</span>
     <span class="k">if</span> <span class="n">show_shape</span><span class="p">:</span>
-        <span class="c1"># Specialized labels for different module types</span>
-        <span class="k">if</span> <span class="n">class_name</span> <span class="o">==</span> <span class="s2">&quot;Sum&quot;</span><span class="p">:</span>
-            <span class="n">c_in</span> <span class="o">=</span> <span class="n">module</span><span class="o">.</span><span class="n">in_shape</span><span class="o">.</span><span class="n">channels</span>
-            <span class="n">c_out</span> <span class="o">=</span> <span class="n">module</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">channels</span>
-            <span class="n">d</span> <span class="o">=</span> <span class="n">module</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">features</span>
-            <span class="n">label</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;D: </span><span class="si">{</span><span class="n">d</span><span class="si">}</span><span class="s2">, C-in: </span><span class="si">{</span><span class="n">c_in</span><span class="si">}</span><span class="s2">, C-out: </span><span class="si">{</span><span class="n">c_out</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="s2">&quot;num_repetitions&quot;</span><span class="p">):</span>
-                <span class="n">label</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;, R: </span><span class="si">{</span><span class="n">module</span><span class="o">.</span><span class="n">num_repetitions</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="n">label_parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">class_name</span> <span class="o">==</span> <span class="s2">&quot;ElementwiseSum&quot;</span><span class="p">:</span>
-            <span class="n">c_per_in</span> <span class="o">=</span> <span class="n">module</span><span class="o">.</span><span class="n">_in_channels_per_input</span>
-            <span class="n">c_out</span> <span class="o">=</span> <span class="n">module</span><span class="o">.</span><span class="n">_num_sums</span>
-            <span class="n">d</span> <span class="o">=</span> <span class="n">module</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">features</span>
-            <span class="n">label</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;D: </span><span class="si">{</span><span class="n">d</span><span class="si">}</span><span class="s2">, C-per-in: </span><span class="si">{</span><span class="n">c_per_in</span><span class="si">}</span><span class="s2">, C-out: </span><span class="si">{</span><span class="n">c_out</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="s2">&quot;num_repetitions&quot;</span><span class="p">):</span>
-                <span class="n">label</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;, R: </span><span class="si">{</span><span class="n">module</span><span class="o">.</span><span class="n">num_repetitions</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="n">label_parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">class_name</span> <span class="o">==</span> <span class="s2">&quot;MixingLayer&quot;</span><span class="p">:</span>
-            <span class="n">c_in</span> <span class="o">=</span> <span class="n">module</span><span class="o">.</span><span class="n">_in_channels</span>
-            <span class="n">c_out</span> <span class="o">=</span> <span class="n">module</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">channels</span>
-            <span class="n">label_parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;C-in: </span><span class="si">{</span><span class="n">c_in</span><span class="si">}</span><span class="s2"> (reps), C-out: </span><span class="si">{</span><span class="n">c_out</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">class_name</span> <span class="o">==</span> <span class="s2">&quot;Product&quot;</span><span class="p">:</span>
-            <span class="n">d</span> <span class="o">=</span> <span class="n">module</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">features</span>
-            <span class="n">c</span> <span class="o">=</span> <span class="n">module</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">channels</span>
-            <span class="n">label_parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;D: </span><span class="si">{</span><span class="n">d</span><span class="si">}</span><span class="s2">, C: </span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">class_name</span> <span class="o">==</span> <span class="s2">&quot;ElementwiseProduct&quot;</span><span class="p">:</span>
-            <span class="n">f</span> <span class="o">=</span> <span class="n">module</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">features</span>
-            <span class="n">c</span> <span class="o">=</span> <span class="n">module</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">channels</span>
-            <span class="n">label_parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;D: </span><span class="si">{</span><span class="n">f</span><span class="si">}</span><span class="s2">, C: </span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">class_name</span> <span class="o">==</span> <span class="s2">&quot;OuterProduct&quot;</span><span class="p">:</span>
-            <span class="n">c_in</span> <span class="o">=</span> <span class="n">module</span><span class="o">.</span><span class="n">_max_out_channels</span>
-            <span class="n">c_out</span> <span class="o">=</span> <span class="n">module</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">channels</span>
-            <span class="n">label_parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;C-in: </span><span class="si">{</span><span class="n">c_in</span><span class="si">}</span><span class="s2">, C-out: </span><span class="si">{</span><span class="n">c_out</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="c1"># For other modules, show out_features and out_channels</span>
-            <span class="n">out_features</span> <span class="o">=</span> <span class="n">module</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">features</span>
-            <span class="n">out_channels</span> <span class="o">=</span> <span class="n">module</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">channels</span>
-            <span class="n">label_parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;D: </span><span class="si">{</span><span class="n">out_features</span><span class="si">}</span><span class="s2">, C: </span><span class="si">{</span><span class="n">out_channels</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">vis_label</span> <span class="o">=</span> <span class="n">module</span><span class="o">.</span><span class="n">_get_vis_label</span><span class="p">()</span>
+        <span class="c1"># Convert newlines to HTML line breaks for graphviz</span>
+        <span class="n">vis_label</span> <span class="o">=</span> <span class="n">vis_label</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&lt;br/&gt;&quot;</span><span class="p">)</span>
+        <span class="n">label_parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">vis_label</span><span class="p">)</span>
 
     <span class="c1"># Add parameter count if requested (only if &gt; 0 to avoid clutter for modules like Product)</span>
     <span class="k">if</span> <span class="n">show_params</span><span class="p">:</span>
