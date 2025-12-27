@@ -285,9 +285,9 @@
 <span class="sd">    to create split configurations that can be passed to modules.</span>
 
 <span class="sd">    Example:</span>
-<span class="sd">        &gt;&gt;&gt; layer = EinsumLayer(inputs=leaf, split_mode=SplitMode.interleaved(num_splits=3))</span>
-<span class="sd">        &gt;&gt;&gt; layer = LinsumLayer(inputs=leaf, split_mode=SplitMode.consecutive(num_splits=2))</span>
-<span class="sd">        &gt;&gt;&gt; layer = LinsumLayer(inputs=leaf, split_mode=SplitMode.by_index(indices=[[0,1], [2,3]]))</span>
+<span class="sd">        &gt;&gt;&gt; layer = EinsumLayer(inputs=leaf, num_repetitions=3, out_channels=10, split_mode=SplitMode.interleaved(num_splits=3))</span>
+<span class="sd">        &gt;&gt;&gt; layer = LinsumLayer(inputs=leaf, out_channels=10, split_mode=SplitMode.consecutive(num_splits=2))</span>
+<span class="sd">        &gt;&gt;&gt; layer = LinsumLayer(inputs=leaf, out_channels=10, split_mode=SplitMode.by_index(indices=[[0,1], [2,3]]))</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">split_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">num_splits</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">indices</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
@@ -369,8 +369,8 @@
 
 <span class="sd">        Example:</span>
 <span class="sd">            &gt;&gt;&gt; SplitMode.by_index([[0, 1, 4], [2, 3, 5, 6, 7]])</span>
-<span class="sd">            # Creates 2 splits: features [0,1,4] and features [2,3,5,6,7]</span>
-
+<span class="sd">            SplitMode.by_index(indices=[[0, 1, 4], [2, 3, 5, 6, 7]])</span>
+<span class="sd">    </span>
 <span class="sd">        Args:</span>
 <span class="sd">            indices: List of lists specifying feature indices for each split.</span>
 <span class="sd">                All features must be covered exactly once.</span>

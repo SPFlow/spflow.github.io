@@ -396,8 +396,7 @@
         <span class="c1"># Handle edge cases (NaN or invalid probabilities) before broadcasting</span>
         <span class="c1"># For categorical, we ensure probabilities sum to 1 and are non-negative</span>
         <span class="n">p_est</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="n">p_est</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mf">1e-10</span><span class="p">)</span>  <span class="c1"># Avoid zero probabilities</span>
-        <span class="n">p_est</span> <span class="o">=</span> <span class="n">p_est</span> <span class="o">/</span> <span class="n">p_est</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># Renormalize</span>
-        <span class="c1"># TODO: check if this is the correct dim ^</span>
+        <span class="n">p_est</span> <span class="o">=</span> <span class="n">p_est</span> <span class="o">/</span> <span class="n">p_est</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># Renormalize across categories</span>
 
         <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;probs&quot;</span><span class="p">:</span> <span class="n">p_est</span><span class="p">}</span>
 

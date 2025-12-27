@@ -604,8 +604,16 @@ marginalization. Defaults to True.</p></li>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">leaves</span> <span class="o">=</span> <span class="n">Normal</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="n">Scope</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]),</span> <span class="n">out_channels</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">Sum</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">leaves</span><span class="p">,</span> <span class="n">out_channels</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">to_str</span><span class="p">())</span>  <span class="c1"># Tree view (default)</span>
+<span class="go">Sum [D=2, C=3] [weights: (2, 2, 3, 1)] → scope: 0-1</span>
+<span class="go">└─ Normal [D=2, C=2] → scope: 0-1</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">to_str</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="s2">&quot;pytorch&quot;</span><span class="p">))</span>  <span class="c1"># PyTorch format</span>
+<span class="go">Sum(</span>
+<span class="go">  D=2, C=3, R=1, weights=(2, 2, 3, 1)</span>
+<span class="go">  (inputs): Normal(D=2, C=2, R=1)</span>
+<span class="go">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">to_str</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>  <span class="c1"># Limit depth</span>
+<span class="go">Sum [D=2, C=3] [weights: (2, 2, 3, 1)] → scope: 0-1</span>
+<span class="go">└─ Normal [D=2, C=2] → scope: 0-1</span>
 </pre></div>
 </div>
 </dd></dl>
