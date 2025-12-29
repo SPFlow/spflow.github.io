@@ -373,11 +373,10 @@
             <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">create_spn</span><span class="p">()</span>
-        
+
         <span class="c1"># Shape computation: delegate to root node</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">in_shape</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_node</span><span class="o">.</span><span class="n">in_shape</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_node</span><span class="o">.</span><span class="n">out_shape</span>
-
 
 <div class="viewcode-block" id="RatSPN.create_spn">
 <a class="viewcode-back" href="../../../../api/rat_spn.html#spflow.modules.rat.RatSPN.create_spn">[docs]</a>
@@ -509,7 +508,9 @@
             <span class="n">data</span><span class="p">,</span>
             <span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">,</span>
         <span class="p">)</span>  <span class="c1"># shape: (batch_size,1 , n_root_nodes)</span>
-        <span class="n">ll</span> <span class="o">=</span> <span class="n">ll</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># remove repetition and feature dimensions -&gt; shape: (batch_size, n_root_nodes)</span>
+        <span class="n">ll</span> <span class="o">=</span> <span class="n">ll</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span>
+            <span class="mi">1</span>
+        <span class="p">)</span>  <span class="c1"># remove repetition and feature dimensions -&gt; shape: (batch_size, n_root_nodes)</span>
         <span class="k">return</span> <span class="n">log_posterior</span><span class="p">(</span><span class="n">log_likelihood</span><span class="o">=</span><span class="n">ll</span><span class="p">,</span> <span class="n">log_prior</span><span class="o">=</span><span class="n">ll_y</span><span class="p">)</span></div>
 
 

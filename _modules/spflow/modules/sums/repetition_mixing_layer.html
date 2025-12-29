@@ -457,7 +457,9 @@
 
         <span class="c1"># Since modules always have R as last dimension, we need to set it to 1 as Mixing mixes over it</span>
         <span class="n">num_repetitions_after_mixing</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="k">return</span> <span class="n">output</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">features</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">channels</span><span class="p">,</span> <span class="n">num_repetitions_after_mixing</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">output</span><span class="o">.</span><span class="n">view</span><span class="p">(</span>
+            <span class="n">batch_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">features</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">channels</span><span class="p">,</span> <span class="n">num_repetitions_after_mixing</span>
+        <span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="RepetitionMixingLayer.expectation_maximization">
@@ -485,12 +487,16 @@
             <span class="c1"># Get input LLs from cache</span>
             <span class="n">input_lls</span> <span class="o">=</span> <span class="n">cache</span><span class="p">[</span><span class="s2">&quot;log_likelihood&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">input_lls</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="n">MissingCacheError</span><span class="p">(</span><span class="s2">&quot;Input log-likelihoods not found in cache. Call log_likelihood first.&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="n">MissingCacheError</span><span class="p">(</span>
+                    <span class="s2">&quot;Input log-likelihoods not found in cache. Call log_likelihood first.&quot;</span>
+                <span class="p">)</span>
 
             <span class="c1"># Get module lls from cache</span>
             <span class="n">module_lls</span> <span class="o">=</span> <span class="n">cache</span><span class="p">[</span><span class="s2">&quot;log_likelihood&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">module_lls</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="n">MissingCacheError</span><span class="p">(</span><span class="s2">&quot;Module log-likelihoods not found in cache. Call log_likelihood first.&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="n">MissingCacheError</span><span class="p">(</span>
+                    <span class="s2">&quot;Module log-likelihoods not found in cache. Call log_likelihood first.&quot;</span>
+                <span class="p">)</span>
 
             <span class="n">log_weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_weights</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
             <span class="n">log_grads</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">module_lls</span><span class="o">.</span><span class="n">grad</span><span class="p">)</span>

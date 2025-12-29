@@ -422,11 +422,13 @@
 
             <span class="c1"># Create placeholder input with correct shape for layer construction</span>
             <span class="c1"># We&#39;ll connect them properly after building all layers</span>
-            <span class="n">layers</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
-                <span class="s2">&quot;in_features&quot;</span><span class="p">:</span> <span class="n">in_features</span><span class="p">,</span>
-                <span class="s2">&quot;in_channels&quot;</span><span class="p">:</span> <span class="n">in_channels</span><span class="p">,</span>
-                <span class="s2">&quot;out_channels&quot;</span><span class="p">:</span> <span class="n">out_channels</span><span class="p">,</span>
-            <span class="p">})</span>
+            <span class="n">layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;in_features&quot;</span><span class="p">:</span> <span class="n">in_features</span><span class="p">,</span>
+                    <span class="s2">&quot;in_channels&quot;</span><span class="p">:</span> <span class="n">in_channels</span><span class="p">,</span>
+                    <span class="s2">&quot;out_channels&quot;</span><span class="p">:</span> <span class="n">out_channels</span><span class="p">,</span>
+                <span class="p">}</span>
+            <span class="p">)</span>
 
         <span class="c1"># Handle depth=0 case: single sum layer</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">depth</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
@@ -498,9 +500,7 @@
         <span class="p">)</span>
 
         <span class="c1"># Generate random permutations for each repetition</span>
-        <span class="n">permutations</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span>
-            <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_repetitions</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_features</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span>
-        <span class="p">)</span>
+        <span class="n">permutations</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">num_repetitions</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_features</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_repetitions</span><span class="p">):</span>
             <span class="n">permutations</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randperm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_features</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">register_buffer</span><span class="p">(</span><span class="s2">&quot;permutation&quot;</span><span class="p">,</span> <span class="n">permutations</span><span class="p">)</span>
@@ -683,9 +683,7 @@
         <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">num_samples</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">num_samples</span> <span class="o">=</span> <span class="mi">1</span>
-            <span class="n">data</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">full</span><span class="p">(</span>
-                <span class="p">(</span><span class="n">num_samples</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_features</span><span class="p">),</span> <span class="n">torch</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span>
-            <span class="p">)</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="n">num_samples</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_features</span><span class="p">),</span> <span class="n">torch</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
 
         <span class="n">batch_size</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
@@ -697,9 +695,7 @@
         <span class="k">if</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">repetition_idx</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_repetitions</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
                 <span class="c1"># Single repetition: use index 0 for all samples</span>
-                <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">repetition_idx</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
-                    <span class="n">batch_size</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">device</span>
-                <span class="p">)</span>
+                <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">repetition_idx</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
             <span class="c1"># For num_repetitions &gt; 1, RepetitionMixingLayer will set this</span>
 
         <span class="c1"># Handle class sampling for multi-class models</span>
@@ -715,9 +711,7 @@
             <span class="k">if</span> <span class="n">is_mpe</span><span class="p">:</span>
                 <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">channel_index</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">channel_index</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">distributions</span><span class="o">.</span><span class="n">Categorical</span><span class="p">(</span>
-                    <span class="n">logits</span><span class="o">=</span><span class="n">logits</span>
-                <span class="p">)</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span>
+                <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">channel_index</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">distributions</span><span class="o">.</span><span class="n">Categorical</span><span class="p">(</span><span class="n">logits</span><span class="o">=</span><span class="n">logits</span><span class="p">)</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span>
 
         <span class="c1"># Sample from appropriate root</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_classes</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>

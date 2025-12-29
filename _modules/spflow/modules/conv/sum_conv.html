@@ -393,7 +393,7 @@
             <span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">torch</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">values</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
             <span class="k">raise</span> <span class="n">InvalidWeightsError</span><span class="p">(</span><span class="s2">&quot;Weights must be all positive.&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">torch</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">values</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sum_dim</span><span class="p">),</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">torch</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">values</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sum_dim</span><span class="p">),</span> <span class="n">values</span><span class="o">.</span><span class="n">new_tensor</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)):</span>
             <span class="k">raise</span> <span class="n">InvalidWeightsError</span><span class="p">(</span><span class="s2">&quot;Weights must sum to one over input channels.&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logits</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">proj_convex_to_real</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
 
@@ -445,7 +445,7 @@
 
         <span class="c1"># Infer spatial dimensions from num_features</span>
         <span class="c1"># Assume square spatial dimensions</span>
-        <span class="n">H</span> <span class="o">=</span> <span class="n">W</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">num_features</span> <span class="o">**</span> <span class="mf">0.5</span><span class="p">)</span>
+        <span class="n">H</span> <span class="o">=</span> <span class="n">W</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">num_features</span><span class="o">**</span><span class="mf">0.5</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">H</span> <span class="o">*</span> <span class="n">W</span> <span class="o">!=</span> <span class="n">num_features</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;SumConv requires square spatial dimensions. Got </span><span class="si">{</span><span class="n">num_features</span><span class="si">}</span><span class="s2"> features &quot;</span>
@@ -473,9 +473,7 @@
             <span class="k">return</span> <span class="n">result</span>
 
         <span class="k">if</span> <span class="n">H</span> <span class="o">%</span> <span class="n">K</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">W</span> <span class="o">%</span> <span class="n">K</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Spatial dims (</span><span class="si">{</span><span class="n">H</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">W</span><span class="si">}</span><span class="s2">) must be divisible by kernel_size </span><span class="si">{</span><span class="n">K</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Spatial dims (</span><span class="si">{</span><span class="n">H</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">W</span><span class="si">}</span><span class="s2">) must be divisible by kernel_size </span><span class="si">{</span><span class="n">K</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="c1"># Get log weights: (out_c, in_c, k, k, reps)</span>
         <span class="n">log_weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_weights</span>
@@ -512,7 +510,6 @@
         <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>  <span class="c1"># (batch, features, out_c, reps)</span>
 
         <span class="k">return</span> <span class="n">result</span></div>
-
 
 
 <div class="viewcode-block" id="SumConv.sample">
@@ -556,7 +553,7 @@
         <span class="n">num_features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_shape</span><span class="o">.</span><span class="n">features</span>
 
         <span class="c1"># Infer spatial dimensions</span>
-        <span class="n">H</span> <span class="o">=</span> <span class="n">W</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">num_features</span> <span class="o">**</span> <span class="mf">0.5</span><span class="p">)</span>
+        <span class="n">H</span> <span class="o">=</span> <span class="n">W</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">num_features</span><span class="o">**</span><span class="mf">0.5</span><span class="p">)</span>
         <span class="n">K</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel_size</span>
 
         <span class="k">if</span> <span class="n">H</span> <span class="o">*</span> <span class="n">W</span> <span class="o">!=</span> <span class="n">num_features</span><span class="p">:</span>
@@ -566,9 +563,7 @@
             <span class="p">)</span>
 
         <span class="k">if</span> <span class="n">H</span> <span class="o">%</span> <span class="n">K</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">W</span> <span class="o">%</span> <span class="n">K</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Spatial dims (</span><span class="si">{</span><span class="n">H</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">W</span><span class="si">}</span><span class="s2">) must be divisible by kernel_size </span><span class="si">{</span><span class="n">K</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Spatial dims (</span><span class="si">{</span><span class="n">H</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">W</span><span class="si">}</span><span class="s2">) must be divisible by kernel_size </span><span class="si">{</span><span class="n">K</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="c1"># Expand channel_index and mask to match input features if needed</span>
         <span class="n">current_features</span> <span class="o">=</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">channel_index</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
@@ -605,9 +600,11 @@
 
         <span class="c1"># Check for cached likelihoods (conditional sampling)</span>
         <span class="n">input_lls</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">cache</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">cache</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
             <span class="ow">and</span> <span class="s2">&quot;log_likelihood&quot;</span> <span class="ow">in</span> <span class="n">cache</span>
-            <span class="ow">and</span> <span class="n">cache</span><span class="p">[</span><span class="s2">&quot;log_likelihood&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="ow">and</span> <span class="n">cache</span><span class="p">[</span><span class="s2">&quot;log_likelihood&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+        <span class="p">):</span>
             <span class="n">input_lls</span> <span class="o">=</span> <span class="n">cache</span><span class="p">[</span><span class="s2">&quot;log_likelihood&quot;</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">]</span>  <span class="c1"># (batch, features, in_c, reps)</span>
 
             <span class="c1"># Select repetition</span>
@@ -648,7 +645,9 @@
         <span class="n">k_flat</span> <span class="o">=</span> <span class="n">k_row</span> <span class="o">*</span> <span class="n">K</span> <span class="o">+</span> <span class="n">k_col</span>  <span class="c1"># (batch, H, W)</span>
 
         <span class="c1"># Expand for gathering: (batch, H, W, out_c, in_c)</span>
-        <span class="n">k_flat_exp</span> <span class="o">=</span> <span class="n">k_flat</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">channels</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_channels</span><span class="p">)</span>
+        <span class="n">k_flat_exp</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">k_flat</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">channels</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_channels</span><span class="p">)</span>
+        <span class="p">)</span>
         <span class="n">logits_per_pos_exp</span> <span class="o">=</span> <span class="n">logits_per_pos</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
         <span class="c1"># (batch, K*K, H, W, out_c, in_c) -&gt; swap dims for gather</span>
         <span class="n">logits_per_pos_exp</span> <span class="o">=</span> <span class="n">logits_per_pos_exp</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>  <span class="c1"># (batch, H, W, K*K, out_c, in_c)</span>
@@ -727,11 +726,15 @@
             <span class="c1"># Get cached log-likelihoods</span>
             <span class="n">input_lls</span> <span class="o">=</span> <span class="n">cache</span><span class="p">[</span><span class="s2">&quot;log_likelihood&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">input_lls</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="n">MissingCacheError</span><span class="p">(</span><span class="s2">&quot;Input log-likelihoods not found in cache. Call log_likelihood first.&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="n">MissingCacheError</span><span class="p">(</span>
+                    <span class="s2">&quot;Input log-likelihoods not found in cache. Call log_likelihood first.&quot;</span>
+                <span class="p">)</span>
 
             <span class="n">module_lls</span> <span class="o">=</span> <span class="n">cache</span><span class="p">[</span><span class="s2">&quot;log_likelihood&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">module_lls</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="n">MissingCacheError</span><span class="p">(</span><span class="s2">&quot;Module log-likelihoods not found in cache. Call log_likelihood first.&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="n">MissingCacheError</span><span class="p">(</span>
+                    <span class="s2">&quot;Module log-likelihoods not found in cache. Call log_likelihood first.&quot;</span>
+                <span class="p">)</span>
 
             <span class="c1"># input_lls shape: (batch, features, in_channels, reps)</span>
             <span class="c1"># module_lls shape: (batch, features, out_channels, reps)</span>

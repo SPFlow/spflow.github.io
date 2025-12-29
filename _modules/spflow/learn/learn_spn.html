@@ -591,7 +591,9 @@
                 <span class="p">)</span>
                 <span class="n">product_inputs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sub_structure</span><span class="p">)</span>
             <span class="n">leaf_oc</span> <span class="o">=</span> <span class="p">(</span>
-                <span class="n">leaf_modules</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">channels</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">leaf_modules</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="k">else</span> <span class="n">leaf_modules</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">channels</span>
+                <span class="n">leaf_modules</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">channels</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">leaf_modules</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span>
+                <span class="k">else</span> <span class="n">leaf_modules</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">channels</span>
             <span class="p">)</span>
             <span class="n">adapted_product_inputs</span> <span class="o">=</span> <span class="n">adapt_product_inputs</span><span class="p">(</span><span class="n">product_inputs</span><span class="p">,</span> <span class="n">leaf_oc</span><span class="p">,</span> <span class="n">out_channels</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">Product</span><span class="p">(</span><span class="n">adapted_product_inputs</span><span class="p">)</span>

@@ -290,9 +290,7 @@
     <span class="k">return</span> <span class="nb">zip</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">interp</span><span class="p">(</span>
-    <span class="n">x</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">xp</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">fp</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">dim</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">extrapolate</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;constant&quot;</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">interp</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">xp</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">fp</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">dim</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">extrapolate</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;constant&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;One-dimensional linear interpolation between monotonically increasing sample points.</span>
 
 <span class="sd">    Returns the one-dimensional piecewise linear interpolant to a function with</span>
@@ -319,7 +317,7 @@
 
     <span class="n">m</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">fp</span><span class="p">)</span> <span class="o">/</span> <span class="n">torch</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">xp</span><span class="p">)</span>  <span class="c1"># slope</span>
     <span class="n">b</span> <span class="o">=</span> <span class="n">fp</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">m</span> <span class="o">*</span> <span class="n">xp</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># offset</span>
-    
+
     <span class="c1"># Ensure contiguous inputs for searchsorted</span>
     <span class="n">xp</span> <span class="o">=</span> <span class="n">xp</span><span class="o">.</span><span class="n">contiguous</span><span class="p">()</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">contiguous</span><span class="p">()</span>
@@ -327,9 +325,7 @@
 
     <span class="k">if</span> <span class="n">extrapolate</span> <span class="o">==</span> <span class="s2">&quot;constant&quot;</span><span class="p">:</span>
         <span class="c1"># Pad m and b to get constant values outside of xp range</span>
-        <span class="n">m</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span>
-            <span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">m</span><span class="p">)[</span><span class="o">...</span><span class="p">,</span> <span class="p">:</span><span class="mi">1</span><span class="p">],</span> <span class="n">m</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">m</span><span class="p">)[</span><span class="o">...</span><span class="p">,</span> <span class="p">:</span><span class="mi">1</span><span class="p">]],</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span>
-        <span class="p">)</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">torch</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">m</span><span class="p">)[</span><span class="o">...</span><span class="p">,</span> <span class="p">:</span><span class="mi">1</span><span class="p">],</span> <span class="n">m</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">m</span><span class="p">)[</span><span class="o">...</span><span class="p">,</span> <span class="p">:</span><span class="mi">1</span><span class="p">]],</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
         <span class="n">b</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">fp</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">:</span><span class="mi">1</span><span class="p">],</span> <span class="n">b</span><span class="p">,</span> <span class="n">fp</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">:]],</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>  <span class="c1"># extrapolate == &#39;linear&#39;</span>
         <span class="n">indices</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="n">indices</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
@@ -424,9 +420,7 @@
                             <span class="c1"># Sample from a categorical distribution</span>
                             <span class="n">ys_i_wo_tails</span> <span class="o">=</span> <span class="n">ys_i</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># Cut off the tail breaks</span>
                             <span class="n">dist</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">distributions</span><span class="o">.</span><span class="n">Categorical</span><span class="p">(</span><span class="n">probs</span><span class="o">=</span><span class="n">ys_i_wo_tails</span><span class="p">)</span>
-                            <span class="n">samples</span><span class="p">[</span>
-                                <span class="p">:,</span> <span class="n">i_channel</span><span class="p">,</span> <span class="n">i_feature</span><span class="p">,</span> <span class="n">i_leaf</span><span class="p">,</span> <span class="n">i_repetition</span>
-                            <span class="p">]</span> <span class="o">=</span> <span class="n">dist</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">sample_shape</span><span class="p">)</span>
+                            <span class="n">samples</span><span class="p">[:,</span> <span class="n">i_channel</span><span class="p">,</span> <span class="n">i_feature</span><span class="p">,</span> <span class="n">i_leaf</span><span class="p">,</span> <span class="n">i_repetition</span><span class="p">]</span> <span class="o">=</span> <span class="n">dist</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">sample_shape</span><span class="p">)</span>
                         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">domains</span><span class="p">[</span><span class="n">i_feature</span><span class="p">]</span><span class="o">.</span><span class="n">data_type</span> <span class="o">==</span> <span class="n">DataType</span><span class="o">.</span><span class="n">CONTINUOUS</span><span class="p">:</span>
                             <span class="c1"># Compute the CDF for this piecewise function</span>
                             <span class="n">cdf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_cdf</span><span class="p">(</span><span class="n">xs_i</span><span class="p">,</span> <span class="n">ys_i</span><span class="p">)</span>
@@ -449,13 +443,9 @@
                             <span class="n">slope</span> <span class="o">=</span> <span class="p">(</span><span class="n">x1</span> <span class="o">-</span> <span class="n">x0</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">cdf1</span> <span class="o">-</span> <span class="n">cdf0</span> <span class="o">+</span> <span class="mf">1e-8</span><span class="p">)</span>  <span class="c1"># Avoid division by zero</span>
 
                             <span class="c1"># Compute the sampled value</span>
-                            <span class="n">samples</span><span class="p">[:,</span> <span class="n">i_channel</span><span class="p">,</span> <span class="n">i_feature</span><span class="p">,</span> <span class="n">i_leaf</span><span class="p">,</span> <span class="n">i_repetition</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-                                <span class="n">x0</span> <span class="o">+</span> <span class="n">slope</span> <span class="o">*</span> <span class="p">(</span><span class="n">u</span> <span class="o">-</span> <span class="n">cdf0</span><span class="p">)</span>
-                            <span class="p">)</span>
+                            <span class="n">samples</span><span class="p">[:,</span> <span class="n">i_channel</span><span class="p">,</span> <span class="n">i_feature</span><span class="p">,</span> <span class="n">i_leaf</span><span class="p">,</span> <span class="n">i_repetition</span><span class="p">]</span> <span class="o">=</span> <span class="n">x0</span> <span class="o">+</span> <span class="n">slope</span> <span class="o">*</span> <span class="p">(</span><span class="n">u</span> <span class="o">-</span> <span class="n">cdf0</span><span class="p">)</span>
                         <span class="k">else</span><span class="p">:</span>
-                            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                                <span class="sa">f</span><span class="s2">&quot;Unknown data type: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">domains</span><span class="p">[</span><span class="n">i_feature</span><span class="p">]</span><span class="o">.</span><span class="n">data_type</span><span class="si">}</span><span class="s2">&quot;</span>
-                            <span class="p">)</span>
+                            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown data type: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">domains</span><span class="p">[</span><span class="n">i_feature</span><span class="p">]</span><span class="o">.</span><span class="n">data_type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">samples</span>
 
@@ -603,8 +593,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_initialized</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s2">&quot;PiecewiseLinear leaf has not been initialized. &quot;</span>
-                <span class="s2">&quot;Call initialize(data, domains) first.&quot;</span>
+                <span class="s2">&quot;PiecewiseLinear leaf has not been initialized. &quot;</span> <span class="s2">&quot;Call initialize(data, domains) first.&quot;</span>
             <span class="p">)</span>
         <span class="k">return</span> <span class="n">PiecewiseLinearDist</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ys</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">domains</span><span class="p">)</span>  <span class="c1"># type: ignore[arg-type]</span>
 
@@ -627,13 +616,9 @@
         <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;xs&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">xs</span><span class="p">,</span> <span class="s2">&quot;ys&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">ys</span><span class="p">}</span></div>
 
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">_compute_parameter_estimates</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">weights</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">bias_correction</span><span class="p">:</span> <span class="nb">bool</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_compute_parameter_estimates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">weights</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">bias_correction</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Not implemented for PiecewiseLinear - use initialize() instead.&quot;&quot;&quot;</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
-            <span class="s2">&quot;PiecewiseLinear does not support MLE. Use initialize() instead.&quot;</span>
-        <span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;PiecewiseLinear does not support MLE. Use initialize() instead.&quot;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="PiecewiseLinear.initialize">
 <a class="viewcode-back" href="../../../../api/leaves.html#spflow.modules.leaves.PiecewiseLinear.initialize">[docs]</a>
@@ -665,14 +650,10 @@
         <span class="c1"># Validate input</span>
         <span class="n">num_features</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scope</span><span class="o">.</span><span class="n">query</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="n">num_features</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Data has </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> features but scope has </span><span class="si">{</span><span class="n">num_features</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Data has </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> features but scope has </span><span class="si">{</span><span class="n">num_features</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">domains</span><span class="p">)</span> <span class="o">!=</span> <span class="n">num_features</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Got </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">domains</span><span class="p">)</span><span class="si">}</span><span class="s2"> domains but scope has </span><span class="si">{</span><span class="n">num_features</span><span class="si">}</span><span class="s2"> features&quot;</span>
-            <span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Got </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">domains</span><span class="p">)</span><span class="si">}</span><span class="s2"> domains but scope has </span><span class="si">{</span><span class="n">num_features</span><span class="si">}</span><span class="s2"> features&quot;</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">domains</span> <span class="o">=</span> <span class="n">domains</span>
         <span class="n">device</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">device</span>
@@ -688,9 +669,7 @@
 
             <span class="c1"># Cluster data into num_leaves clusters</span>
             <span class="k">if</span> <span class="n">num_leaves</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="n">kmeans</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span>
-                    <span class="n">n_clusters</span><span class="o">=</span><span class="n">num_leaves</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;euclidean&quot;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">init_method</span><span class="o">=</span><span class="s2">&quot;random&quot;</span>
-                <span class="p">)</span>
+                <span class="n">kmeans</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="n">num_leaves</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;euclidean&quot;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">init_method</span><span class="o">=</span><span class="s2">&quot;random&quot;</span><span class="p">)</span>
                 <span class="n">kmeans</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">float</span><span class="p">())</span>
                 <span class="n">cluster_idxs</span> <span class="o">=</span> <span class="n">kmeans</span><span class="o">.</span><span class="n">max_sim</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">float</span><span class="p">(),</span> <span class="n">b</span><span class="o">=</span><span class="n">kmeans</span><span class="o">.</span><span class="n">centroids</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
             <span class="k">else</span><span class="p">:</span>
@@ -714,14 +693,12 @@
 
                     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">domains</span><span class="p">[</span><span class="n">i_feature</span><span class="p">]</span><span class="o">.</span><span class="n">data_type</span> <span class="o">==</span> <span class="n">DataType</span><span class="o">.</span><span class="n">DISCRETE</span><span class="p">:</span>
                         <span class="c1"># Edges are the discrete values</span>
-                        <span class="n">mids</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span>
-                            <span class="bp">self</span><span class="o">.</span><span class="n">domains</span><span class="p">[</span><span class="n">i_feature</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span>
-                        <span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span>
+                        <span class="n">mids</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">as_tensor</span><span class="p">(</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">domains</span><span class="p">[</span><span class="n">i_feature</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span>
+                        <span class="p">)</span>
 
                         <span class="c1"># Add a break at the end</span>
-                        <span class="n">breaks</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span>
-                            <span class="p">[</span><span class="n">mids</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="n">mids</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)]</span>
-                        <span class="p">)</span>
+                        <span class="n">breaks</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">mids</span><span class="p">,</span> <span class="n">mids</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">1</span><span class="p">)])</span>
 
                         <span class="k">if</span> <span class="n">data_subset</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                             <span class="c1"># If no data in cluster, use uniform</span>
@@ -751,24 +728,18 @@
                                 <span class="n">data_subset</span><span class="o">.</span><span class="n">cpu</span><span class="p">(),</span> <span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="o">.</span><span class="n">cpu</span><span class="p">(),</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span>
                             <span class="p">)</span><span class="o">.</span><span class="n">hist</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
                         <span class="k">else</span><span class="p">:</span>
-                            <span class="n">densities</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">bins</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span>
-                                <span class="nb">len</span><span class="p">(</span><span class="n">bins</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
-                            <span class="p">)</span>
+                            <span class="n">densities</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">bins</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">bins</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
                         <span class="n">breaks</span> <span class="o">=</span> <span class="n">bins</span>
                         <span class="n">mids</span> <span class="o">=</span> <span class="p">((</span><span class="n">breaks</span> <span class="o">+</span> <span class="n">torch</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">breaks</span><span class="p">,</span> <span class="n">shifts</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
                     <span class="k">else</span><span class="p">:</span>
-                        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                            <span class="sa">f</span><span class="s2">&quot;Unknown data type: </span><span class="si">{</span><span class="n">domains</span><span class="p">[</span><span class="n">i_feature</span><span class="p">]</span><span class="o">.</span><span class="n">data_type</span><span class="si">}</span><span class="s2">&quot;</span>
-                        <span class="p">)</span>
+                        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown data type: </span><span class="si">{</span><span class="n">domains</span><span class="p">[</span><span class="n">i_feature</span><span class="p">]</span><span class="o">.</span><span class="n">data_type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
                     <span class="c1"># Apply optional Laplace smoothing</span>
                     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
                         <span class="n">n_samples</span> <span class="o">=</span> <span class="n">data_subset</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
                         <span class="n">n_bins</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">breaks</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
                         <span class="n">counts</span> <span class="o">=</span> <span class="n">densities</span> <span class="o">*</span> <span class="n">n_samples</span>
-                        <span class="n">densities</span> <span class="o">=</span> <span class="p">(</span><span class="n">counts</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span>
-                            <span class="n">n_samples</span> <span class="o">+</span> <span class="n">n_bins</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span>
-                        <span class="p">)</span>
+                        <span class="n">densities</span> <span class="o">=</span> <span class="p">(</span><span class="n">counts</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">n_samples</span> <span class="o">+</span> <span class="n">n_bins</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span><span class="p">)</span>
 
                     <span class="c1"># Add tail breaks to start and end</span>
                     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">domains</span><span class="p">[</span><span class="n">i_feature</span><span class="p">]</span><span class="o">.</span><span class="n">data_type</span> <span class="o">==</span> <span class="n">DataType</span><span class="o">.</span><span class="n">DISCRETE</span><span class="p">:</span>
@@ -848,14 +819,11 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_initialized</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s2">&quot;PiecewiseLinear leaf has not been initialized. &quot;</span>
-                <span class="s2">&quot;Call initialize(data, domains) first.&quot;</span>
+                <span class="s2">&quot;PiecewiseLinear leaf has not been initialized. &quot;</span> <span class="s2">&quot;Call initialize(data, domains) first.&quot;</span>
             <span class="p">)</span>
 
         <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">dim</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Data must be 2-dimensional (batch, num_features), got shape </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">.&quot;</span>
-            <span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Data must be 2-dimensional (batch, num_features), got shape </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
 
         <span class="c1"># Get scope-relevant data</span>
         <span class="n">data_q</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scope</span><span class="o">.</span><span class="n">query</span><span class="p">]</span>
@@ -909,17 +877,14 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_initialized</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s2">&quot;PiecewiseLinear leaf has not been initialized. &quot;</span>
-                <span class="s2">&quot;Call initialize(data, domains) first.&quot;</span>
+                <span class="s2">&quot;PiecewiseLinear leaf has not been initialized. &quot;</span> <span class="s2">&quot;Call initialize(data, domains) first.&quot;</span>
             <span class="p">)</span>
 
         <span class="c1"># Prepare data tensor</span>
         <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prepare_sample_data</span><span class="p">(</span><span class="n">num_samples</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
         <span class="n">sampling_ctx</span> <span class="o">=</span> <span class="n">init_default_sampling_context</span><span class="p">(</span><span class="n">sampling_ctx</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 
-        <span class="n">out_of_scope</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
-            <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">scope</span><span class="o">.</span><span class="n">query</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
-        <span class="p">)</span>
+        <span class="n">out_of_scope</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">scope</span><span class="o">.</span><span class="n">query</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])))</span>
         <span class="n">marg_mask</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
         <span class="n">marg_mask</span><span class="p">[:,</span> <span class="n">out_of_scope</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
 
@@ -937,9 +902,7 @@
                     <span class="s2">&quot;Repetition index must be provided in sampling context for leaves with multiple repetitions.&quot;</span>
                 <span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">repetition_idx</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
-                    <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">device</span>
-                <span class="p">)</span>
+                <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">repetition_idx</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
 
         <span class="n">dist</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">distribution</span>
         <span class="n">n_samples_int</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_samples</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>

@@ -255,12 +255,13 @@
 <span></span><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Iterable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">torch</span><span class="w"> </span><span class="kn">import</span> <span class="n">Tensor</span>
 
+<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">ShapeError</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.meta.data.scope</span><span class="w"> </span><span class="kn">import</span> <span class="n">Scope</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.module</span><span class="w"> </span><span class="kn">import</span> <span class="n">Module</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.module_shape</span><span class="w"> </span><span class="kn">import</span> <span class="n">ModuleShape</span>
@@ -320,12 +321,16 @@
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">inputs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Module</span> <span class="o">|</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Module</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Leaf modules do not have inputs.&quot;&quot;&quot;</span>
-        <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;LeafModule does not have &#39;input&#39; attribute -- this should not have been called.&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span>
+            <span class="s2">&quot;LeafModule does not have &#39;input&#39; attribute -- this should not have been called.&quot;</span>
+        <span class="p">)</span>
 
     <span class="nd">@inputs</span><span class="o">.</span><span class="n">setter</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">inputs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Leaf modules do not have inputs.&quot;&quot;&quot;</span>
-        <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;LeafModule does not have &#39;input&#39; attribute -- this should not have been called.&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span>
+            <span class="s2">&quot;LeafModule does not have &#39;input&#39; attribute -- this should not have been called.&quot;</span>
+        <span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">is_conditional</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -372,9 +377,75 @@
 
     <span class="nd">@property</span>
     <span class="nd">@abstractmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">_supported_value</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns a value in the support of the distribution (for NaN imputation).&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_supported_value</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a value in the support of the distribution (for NaN imputation).</span>
+
+<span class="sd">        Implementations may return either a scalar float or a tensor.</span>
+<span class="sd">        If a tensor is returned, it must either be a scalar tensor or have a</span>
+<span class="sd">        leading feature dimension that matches ``len(self.scope.query)``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_supported_value_for_imputation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scoped_data</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a tensor of supported values broadcastable to ``scoped_data``.</span>
+
+<span class="sd">        This helper normalizes leaf-specific ``_supported_value`` implementations</span>
+<span class="sd">        so that NaN imputation works for leaves whose parameters are stored with</span>
+<span class="sd">        additional channel/repetition dimensions.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            scoped_data: 2D tensor of shape (batch, features) for the leaf scope.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tensor broadcasted to the shape of ``scoped_data``.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ShapeError: If the leaf provides a tensor that cannot be aligned to features.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">scoped_data</span><span class="o">.</span><span class="n">dim</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ShapeError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Expected scoped_data to be 2D (batch, features), got shape </span><span class="si">{</span><span class="nb">tuple</span><span class="p">(</span><span class="n">scoped_data</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="n">supported_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_supported_value</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">supported_value</span><span class="p">,</span> <span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">full_like</span><span class="p">(</span><span class="n">scoped_data</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">supported_value</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">supported_value</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">._supported_value must be a float or Tensor, got </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">supported_value</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="n">supported_tensor</span> <span class="o">=</span> <span class="n">supported_value</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="o">=</span><span class="n">scoped_data</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">scoped_data</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">supported_tensor</span><span class="o">.</span><span class="n">numel</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">supported_tensor</span><span class="o">.</span><span class="n">reshape</span><span class="p">(())</span><span class="o">.</span><span class="n">expand_as</span><span class="p">(</span><span class="n">scoped_data</span><span class="p">)</span>
+
+        <span class="n">num_features</span> <span class="o">=</span> <span class="n">scoped_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">supported_tensor</span><span class="o">.</span><span class="n">dim</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">supported_tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">num_features</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">ShapeError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">._supported_value has shape </span><span class="si">{</span><span class="nb">tuple</span><span class="p">(</span><span class="n">supported_tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span><span class="si">}</span><span class="s2">; &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;expected (</span><span class="si">{</span><span class="n">num_features</span><span class="si">}</span><span class="s2">,).&quot;</span>
+                <span class="p">)</span>
+            <span class="k">return</span> <span class="n">supported_tensor</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">expand_as</span><span class="p">(</span><span class="n">scoped_data</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">supported_tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">num_features</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ShapeError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">._supported_value has shape </span><span class="si">{</span><span class="nb">tuple</span><span class="p">(</span><span class="n">supported_tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span><span class="si">}</span><span class="s2">; &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;expected first dimension to match number of features (</span><span class="si">{</span><span class="n">num_features</span><span class="si">}</span><span class="s2">).&quot;</span>
+            <span class="p">)</span>
+
+        <span class="n">feature_values</span> <span class="o">=</span> <span class="n">supported_tensor</span>
+        <span class="k">while</span> <span class="n">feature_values</span><span class="o">.</span><span class="n">dim</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">feature_values</span> <span class="o">=</span> <span class="n">feature_values</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">feature_values</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="p">(</span><span class="n">num_features</span><span class="p">,):</span>
+            <span class="k">raise</span> <span class="n">ShapeError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">._supported_value could not be reduced to per-feature values; &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;got shape </span><span class="si">{</span><span class="nb">tuple</span><span class="p">(</span><span class="n">feature_values</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">feature_values</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">expand_as</span><span class="p">(</span><span class="n">scoped_data</span><span class="p">)</span>
 
 <div class="viewcode-block" id="LeafModule.params">
 <a class="viewcode-back" href="../../../../api/base_modules.html#spflow.modules.leaves.leaf.LeafModule.params">[docs]</a>
@@ -477,7 +548,6 @@
             <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">repetitions</span><span class="p">):</span>
                 <span class="n">scopes</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">Scope</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">scope</span><span class="o">.</span><span class="n">query</span><span class="p">[</span><span class="n">i</span><span class="p">]])</span>
         <span class="k">return</span> <span class="n">scopes</span>
-
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">device</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">:</span>
@@ -585,7 +655,7 @@
         <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">dim</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Data must be 2-dimensional (batch, num_features), got shape </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
         <span class="c1"># get information relevant for the scope</span>
-        <span class="n">data_q</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scope</span><span class="o">.</span><span class="n">query</span><span class="p">]</span>
+        <span class="n">data_q</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scope</span><span class="o">.</span><span class="n">query</span><span class="p">]</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">event_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scope</span><span class="o">.</span><span class="n">query</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;event_shape mismatch for </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: event_shape=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">event_shape</span><span class="si">}</span><span class="s2">, scope_len=</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scope</span><span class="o">.</span><span class="n">query</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
@@ -598,7 +668,8 @@
         <span class="c1"># If there are any marg_ids, set them to 0.0 to ensure that log_prob call is successful</span>
         <span class="c1"># and doesn&#39;t throw errors due to NaNs</span>
         <span class="k">if</span> <span class="n">has_marginalizations</span><span class="p">:</span>
-            <span class="n">data_q</span><span class="p">[</span><span class="n">marg_mask</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_supported_value</span>
+            <span class="n">fill_values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_supported_value_for_imputation</span><span class="p">(</span><span class="n">data_q</span><span class="p">)</span>
+            <span class="n">data_q</span><span class="p">[</span><span class="n">marg_mask</span><span class="p">]</span> <span class="o">=</span> <span class="n">fill_values</span><span class="p">[</span><span class="n">marg_mask</span><span class="p">]</span>
 
         <span class="c1"># ----- log probabilities -----</span>
 
@@ -730,13 +801,17 @@
 
         <span class="n">sampling_ctx</span> <span class="o">=</span> <span class="n">init_default_sampling_context</span><span class="p">(</span><span class="n">sampling_ctx</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 
-        <span class="n">out_of_scope</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">scope</span><span class="o">.</span><span class="n">query</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])))</span>
+        <span class="n">scope_cols</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_resolve_scope_columns</span><span class="p">(</span><span class="n">num_features</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">out_of_scope</span> <span class="o">=</span> <span class="p">[</span><span class="n">idx</span> <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="k">if</span> <span class="n">idx</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">scope_cols</span><span class="p">]</span>
         <span class="n">marg_mask</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
         <span class="n">marg_mask</span><span class="p">[:,</span> <span class="n">out_of_scope</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="c1"># Mask that tells us which feature at which sample is relevant and should be sampled</span>
         <span class="n">samples_mask</span> <span class="o">=</span> <span class="n">marg_mask</span>
-        <span class="n">samples_mask</span><span class="p">[:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scope</span><span class="o">.</span><span class="n">query</span><span class="p">]</span> <span class="o">&amp;=</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">mask</span>
+        <span class="n">ctx_channel_index</span><span class="p">,</span> <span class="n">ctx_mask</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_slice_sampling_context</span><span class="p">(</span>
+            <span class="n">sampling_ctx</span><span class="o">=</span><span class="n">sampling_ctx</span><span class="p">,</span> <span class="n">num_features</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">scope_cols</span><span class="o">=</span><span class="n">scope_cols</span>
+        <span class="p">)</span>
+        <span class="n">samples_mask</span><span class="p">[:,</span> <span class="n">scope_cols</span><span class="p">]</span> <span class="o">&amp;=</span> <span class="n">ctx_mask</span>
 
         <span class="c1"># Count number of samples to draw</span>
         <span class="n">instance_mask</span> <span class="o">=</span> <span class="n">samples_mask</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
@@ -749,7 +824,6 @@
                 <span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">repetition_idx</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
-
 
         <span class="k">if</span> <span class="n">is_mpe</span><span class="p">:</span>
             <span class="c1"># Get mode of distribution as MPE</span>
@@ -788,7 +862,6 @@
                 <span class="c1"># Sample n_samples from distribution</span>
                 <span class="n">samples</span> <span class="o">=</span> <span class="n">dist</span><span class="o">.</span><span class="n">sample</span><span class="p">((</span><span class="n">n_samples</span><span class="p">,))</span>
 
-
             <span class="k">if</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">repetition_idx</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">samples</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
                 <span class="c1"># repetition_idx shape: (n_samples,)</span>
                 <span class="n">repetition_idx</span> <span class="o">=</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">repetition_idx</span><span class="p">[</span><span class="n">instance_mask</span><span class="p">]</span>
@@ -817,8 +890,9 @@
             <span class="c1"># If the output of the input module has a single channel, set the output_ids to zero since</span>
             <span class="c1"># this input was broadcasted to match the channel dimension of the other inputs</span>
             <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">channel_index</span><span class="o">.</span><span class="n">zero_</span><span class="p">()</span>
+            <span class="n">ctx_channel_index</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">ctx_channel_index</span><span class="p">)</span>
 
-        <span class="n">c_idxs</span> <span class="o">=</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">channel_index</span><span class="p">[</span><span class="n">instance_mask</span><span class="p">]</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">c_idxs</span> <span class="o">=</span> <span class="n">ctx_channel_index</span><span class="p">[</span><span class="n">instance_mask</span><span class="p">]</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 
         <span class="c1"># Index the channel_index to get the correct samples for each scope</span>
         <span class="n">samples</span> <span class="o">=</span> <span class="n">samples</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">c_idxs</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
@@ -830,27 +904,90 @@
         <span class="c1"># Update data inplace - place samples at correct scope positions (vectorized)</span>
         <span class="c1"># samples[:, feat_idx] should go to data[:, scope.query[feat_idx]]</span>
         <span class="c1"># Only write where the mask is True for that specific position</span>
-        
+
         <span class="c1"># Get row indices for instances that need sampling</span>
         <span class="n">row_indices</span> <span class="o">=</span> <span class="n">instance_mask</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="n">as_tuple</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># (n_instances,)</span>
-        
+
         <span class="c1"># Create scope indices tensor</span>
-        <span class="n">scope_idx</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scope</span><span class="o">.</span><span class="n">query</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
-        
+        <span class="n">scope_idx</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">scope_cols</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+
         <span class="c1"># Expand to create all (row, col) index pairs</span>
         <span class="c1"># rows: (n_instances, out_features) - row index repeated for each feature</span>
         <span class="c1"># cols: (n_instances, out_features) - scope indices repeated for each instance</span>
         <span class="n">rows</span> <span class="o">=</span> <span class="n">row_indices</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">scope_idx</span><span class="p">))</span>
         <span class="n">cols</span> <span class="o">=</span> <span class="n">scope_idx</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-        
+
         <span class="c1"># Get mask subset for scope positions only</span>
-        <span class="n">mask_subset</span> <span class="o">=</span> <span class="n">samples_mask</span><span class="p">[</span><span class="n">instance_mask</span><span class="p">][:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scope</span><span class="o">.</span><span class="n">query</span><span class="p">]</span>  <span class="c1"># (n_instances, out_features)</span>
-        
+        <span class="n">mask_subset</span> <span class="o">=</span> <span class="n">samples_mask</span><span class="p">[</span><span class="n">instance_mask</span><span class="p">][:,</span> <span class="n">scope_cols</span><span class="p">]</span>  <span class="c1"># (n_instances, out_features)</span>
+
         <span class="c1"># Apply mask and flatten for single vectorized assignment</span>
         <span class="n">data</span><span class="p">[</span><span class="n">rows</span><span class="p">[</span><span class="n">mask_subset</span><span class="p">],</span> <span class="n">cols</span><span class="p">[</span><span class="n">mask_subset</span><span class="p">]]</span> <span class="o">=</span> <span class="n">samples</span><span class="p">[</span><span class="n">mask_subset</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">data</span></div>
 
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_resolve_scope_columns</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_features</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Resolve the column indices in `data` that correspond to this leaf&#39;s scope.</span>
+
+<span class="sd">        The sampling API can operate on either:</span>
+<span class="sd">        - &quot;Global&quot; feature tensors where columns are indexed by RV id.</span>
+<span class="sd">        - &quot;Scoped&quot; feature tensors where columns correspond exactly to this module&#39;s scope ordering.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            num_features: Number of feature columns in the provided data tensor.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List of column indices into the provided data tensor that correspond to `self.scope.query`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scope</span><span class="o">.</span><span class="n">query</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">query</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span>
+
+        <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">rv</span> <span class="o">&lt;</span> <span class="n">num_features</span> <span class="k">for</span> <span class="n">rv</span> <span class="ow">in</span> <span class="n">query</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">query</span>
+
+        <span class="k">if</span> <span class="n">num_features</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">features</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">num_features</span><span class="p">))</span>
+
+        <span class="k">raise</span> <span class="n">ShapeError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Cannot map scope </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">scope</span><span class="si">}</span><span class="s2"> to data with </span><span class="si">{</span><span class="n">num_features</span><span class="si">}</span><span class="s2"> features; &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;expected either all RV ids &lt; </span><span class="si">{</span><span class="n">num_features</span><span class="si">}</span><span class="s2"> or a scoped tensor with </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">features</span><span class="si">}</span><span class="s2"> features.&quot;</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_slice_sampling_context</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">sampling_ctx</span><span class="p">:</span> <span class="n">SamplingContext</span><span class="p">,</span> <span class="n">num_features</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">scope_cols</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Slice/expand sampling context tensors to align with this leaf&#39;s feature axis.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            sampling_ctx: Sampling context provided to sampling.</span>
+<span class="sd">            num_features: Number of feature columns in the provided data tensor.</span>
+<span class="sd">            scope_cols: Column indices (into data) that correspond to this leaf&#39;s scope.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tuple of (channel_index, mask), both shaped (num_samples, len(scope_cols)).</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ShapeError: If the context tensors cannot be aligned to the leaf scope.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ctx_features</span> <span class="o">=</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">mask</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">scope_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">scope_cols</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">ctx_features</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">channel_index</span> <span class="o">=</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">channel_index</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">scope_size</span><span class="p">)</span>
+            <span class="n">mask</span> <span class="o">=</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">mask</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">scope_size</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">channel_index</span><span class="p">,</span> <span class="n">mask</span>
+
+        <span class="k">if</span> <span class="n">ctx_features</span> <span class="o">==</span> <span class="n">scope_size</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">channel_index</span><span class="p">,</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">mask</span>
+
+        <span class="k">if</span> <span class="n">ctx_features</span> <span class="o">==</span> <span class="n">num_features</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">channel_index</span><span class="p">[:,</span> <span class="n">scope_cols</span><span class="p">],</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">mask</span><span class="p">[:,</span> <span class="n">scope_cols</span><span class="p">]</span>
+
+        <span class="k">raise</span> <span class="n">ShapeError</span><span class="p">(</span>
+            <span class="s2">&quot;SamplingContext feature dimension mismatch: &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;got </span><span class="si">{</span><span class="n">ctx_features</span><span class="si">}</span><span class="s2">, expected 1, </span><span class="si">{</span><span class="n">scope_size</span><span class="si">}</span><span class="s2">, or </span><span class="si">{</span><span class="n">num_features</span><span class="si">}</span><span class="s2">.&quot;</span>
+        <span class="p">)</span>
 
 <div class="viewcode-block" id="LeafModule.marginalize">
 <a class="viewcode-back" href="../../../../api/base_modules.html#spflow.modules.leaves.leaf.LeafModule.marginalize">[docs]</a>

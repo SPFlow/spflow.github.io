@@ -560,9 +560,7 @@
         <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">num_samples</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">num_samples</span> <span class="o">=</span> <span class="mi">1</span>
-            <span class="n">data</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">full</span><span class="p">(</span>
-                <span class="p">(</span><span class="n">num_samples</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scope</span><span class="o">.</span><span class="n">query</span><span class="p">)),</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;nan&quot;</span><span class="p">)</span>
-            <span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="n">num_samples</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scope</span><span class="o">.</span><span class="n">query</span><span class="p">)),</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;nan&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
 
         <span class="c1"># Delegate to root (RepetitionMixingLayer or Sum)</span>
         <span class="c1"># which handles channel/repetition sampling internally</span>
@@ -574,7 +572,6 @@
         <span class="p">)</span>
 
         <span class="k">return</span> <span class="n">data</span></div>
-
 
 
 <div class="viewcode-block" id="ConvPc.expectation_maximization">
@@ -621,7 +618,6 @@
         <span class="c1"># Delegate to root which handles it recursively</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">marginalize</span><span class="p">(</span><span class="n">marg_rvs</span><span class="p">,</span> <span class="n">prune</span><span class="o">=</span><span class="n">prune</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span></div>
 </div>
-
 
 </pre></div>
         </article>

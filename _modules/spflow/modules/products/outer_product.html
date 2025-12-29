@@ -325,7 +325,7 @@
             <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">register_buffer</span><span class="p">(</span>
             <span class="n">name</span><span class="o">=</span><span class="s2">&quot;unraveled_channel_indices&quot;</span><span class="p">,</span>
-            <span class="n">tensor</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">unraveled_channel_indices</span><span class="p">),</span>
+            <span class="n">tensor</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">unraveled_channel_indices</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">),</span>
         <span class="p">)</span>
 
         <span class="c1"># Shape computation: compute out_shape based on outer product of channels</span>

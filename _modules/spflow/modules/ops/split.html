@@ -341,7 +341,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            SplitMode configuration for consecutive splitting.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="s1">&#39;consecutive&#39;</span><span class="p">,</span> <span class="n">num_splits</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="s2">&quot;consecutive&quot;</span><span class="p">,</span> <span class="n">num_splits</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="SplitMode.interleaved">
@@ -358,7 +358,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            SplitMode configuration for interleaved splitting.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="s1">&#39;interleaved&#39;</span><span class="p">,</span> <span class="n">num_splits</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="s2">&quot;interleaved&quot;</span><span class="p">,</span> <span class="n">num_splits</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="SplitMode.by_index">
@@ -373,7 +373,7 @@
 <span class="sd">        Example:</span>
 <span class="sd">            &gt;&gt;&gt; SplitMode.by_index([[0, 1, 4], [2, 3, 5, 6, 7]])</span>
 <span class="sd">            SplitMode.by_index(indices=[[0, 1, 4], [2, 3, 5, 6, 7]])</span>
-<span class="sd">    </span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            indices: List of lists specifying feature indices for each split.</span>
 <span class="sd">                All features must be covered exactly once.</span>
@@ -381,7 +381,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            SplitMode configuration for index-based splitting.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="s1">&#39;by_index&#39;</span><span class="p">,</span> <span class="n">num_splits</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">indices</span><span class="p">),</span> <span class="n">indices</span><span class="o">=</span><span class="n">indices</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="s2">&quot;by_index&quot;</span><span class="p">,</span> <span class="n">num_splits</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">indices</span><span class="p">),</span> <span class="n">indices</span><span class="o">=</span><span class="n">indices</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="SplitMode.create">
@@ -400,16 +400,16 @@
         <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.ops.split_interleaved</span><span class="w"> </span><span class="kn">import</span> <span class="n">SplitInterleaved</span>
         <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.ops.split_by_index</span><span class="w"> </span><span class="kn">import</span> <span class="n">SplitByIndex</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_split_type</span> <span class="o">==</span> <span class="s1">&#39;consecutive&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_split_type</span> <span class="o">==</span> <span class="s2">&quot;consecutive&quot;</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">SplitConsecutive</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">num_splits</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_num_splits</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_split_type</span> <span class="o">==</span> <span class="s1">&#39;interleaved&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_split_type</span> <span class="o">==</span> <span class="s2">&quot;interleaved&quot;</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">SplitInterleaved</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">num_splits</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_num_splits</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>  <span class="c1"># by_index</span>
             <span class="k">return</span> <span class="n">SplitByIndex</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">indices</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_indices</span><span class="p">)</span></div>
 
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_split_type</span> <span class="o">==</span> <span class="s1">&#39;by_index&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_split_type</span> <span class="o">==</span> <span class="s2">&quot;by_index&quot;</span><span class="p">:</span>
             <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;SplitMode.by_index(indices=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_indices</span><span class="si">}</span><span class="s2">)&quot;</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;SplitMode.</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_split_type</span><span class="si">}</span><span class="s2">(num_splits=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_num_splits</span><span class="si">}</span><span class="s2">)&quot;</span></div>
 
@@ -452,10 +452,7 @@
         <span class="c1"># Shape computation</span>
         <span class="n">in_shape</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">out_shape</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">in_shape</span> <span class="o">=</span> <span class="n">in_shape</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span> <span class="o">=</span> <span class="n">ModuleShape</span><span class="p">(</span>
-            <span class="n">in_shape</span><span class="o">.</span><span class="n">features</span><span class="p">,</span> <span class="n">in_shape</span><span class="o">.</span><span class="n">channels</span><span class="p">,</span> <span class="n">in_shape</span><span class="o">.</span><span class="n">repetitions</span>
-        <span class="p">)</span>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span> <span class="o">=</span> <span class="n">ModuleShape</span><span class="p">(</span><span class="n">in_shape</span><span class="o">.</span><span class="n">features</span><span class="p">,</span> <span class="n">in_shape</span><span class="o">.</span><span class="n">channels</span><span class="p">,</span> <span class="n">in_shape</span><span class="o">.</span><span class="n">repetitions</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Split.get_out_shapes">
 <a class="viewcode-back" href="../../../../api/operations.html#spflow.modules.ops.split.Split.get_out_shapes">[docs]</a>
