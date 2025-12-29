@@ -276,12 +276,12 @@
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">scope</span><span class="p">:</span> <span class="n">Scope</span><span class="p">,</span>
-        <span class="n">out_channels</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">out_channels</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">num_repetitions</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
-        <span class="n">K</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="n">Tensor</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">K</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">probs</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">logits</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">parameter_fn</span><span class="p">:</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">parameter_fn</span><span class="p">:</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">validate_args</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize Categorical distribution leaf module.</span>
@@ -302,24 +302,29 @@
                 <span class="s2">&quot;Either &#39;K&#39; or one of probs/logits must be provided for Categorical distribution&quot;</span>
             <span class="p">)</span>
 
+        <span class="k">if</span> <span class="n">probs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">logits</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">InvalidParameterCombinationError</span><span class="p">(</span><span class="s2">&quot;Categorical accepts either probs or logits, not both.&quot;</span><span class="p">)</span>
+
         <span class="n">param_source</span> <span class="o">=</span> <span class="n">logits</span> <span class="k">if</span> <span class="n">logits</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">probs</span>
 
         <span class="k">if</span> <span class="n">K</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">param_source</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="c1"># Infer K from the last dimension of p</span>
-            <span class="n">K</span> <span class="o">=</span> <span class="n">param_source</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">K</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">param_source</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+        <span class="k">assert</span> <span class="n">K</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;K must be provided or inferred from params&quot;</span>
 
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
             <span class="n">scope</span><span class="o">=</span><span class="n">scope</span><span class="p">,</span>
-            <span class="n">out_channels</span><span class="o">=</span><span class="n">out_channels</span><span class="p">,</span>
+            <span class="n">out_channels</span><span class="o">=</span><span class="n">out_channels</span><span class="p">,</span>  <span class="c1"># type: ignore</span>
             <span class="n">num_repetitions</span><span class="o">=</span><span class="n">num_repetitions</span><span class="p">,</span>
             <span class="n">params</span><span class="o">=</span><span class="p">[</span><span class="n">param_source</span><span class="p">],</span>
-            <span class="n">parameter_fn</span><span class="o">=</span><span class="n">parameter_fn</span><span class="p">,</span>
+            <span class="n">parameter_fn</span><span class="o">=</span><span class="n">parameter_fn</span><span class="p">,</span>  <span class="c1"># type: ignore</span>
             <span class="n">validate_args</span><span class="o">=</span><span class="n">validate_args</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">K</span> <span class="o">=</span> <span class="n">K</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">K</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">K</span>
 
         <span class="c1"># Initialize parameter with K categories</span>
-        <span class="n">param_shape</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">event_shape</span><span class="p">,</span> <span class="n">K</span><span class="p">)</span>
+        <span class="n">param_shape</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">_event_shape</span><span class="p">,</span> <span class="n">K</span><span class="p">)</span>
         <span class="n">init_value</span> <span class="o">=</span> <span class="n">init_parameter</span><span class="p">(</span>
             <span class="n">param</span><span class="o">=</span><span class="n">param_source</span><span class="p">,</span>
             <span class="n">event_shape</span><span class="o">=</span><span class="n">param_shape</span><span class="p">,</span>

@@ -269,6 +269,7 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">torch</span><span class="w"> </span><span class="kn">import</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">nn</span>
 
+<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">OptionalDependencyError</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.meta.data.scope</span><span class="w"> </span><span class="kn">import</span> <span class="n">Scope</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.leaves.leaf</span><span class="w"> </span><span class="kn">import</span> <span class="n">LeafModule</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.utils.cache</span><span class="w"> </span><span class="kn">import</span> <span class="n">Cache</span>
@@ -653,11 +654,11 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="kn">from</span><span class="w"> </span><span class="nn">fast_pytorch_kmeans</span><span class="w"> </span><span class="kn">import</span> <span class="n">KMeans</span>
-        <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span>
+        <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">OptionalDependencyError</span><span class="p">(</span>
                 <span class="s2">&quot;fast_pytorch_kmeans required for PiecewiseLinear. &quot;</span>
                 <span class="s2">&quot;Install with: pip install fast-pytorch-kmeans&quot;</span>
-            <span class="p">)</span>
+            <span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
 
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Initializing PiecewiseLinear with data shape </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 

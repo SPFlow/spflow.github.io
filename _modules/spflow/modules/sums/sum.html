@@ -258,7 +258,12 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">torch</span><span class="w"> </span><span class="kn">import</span> <span class="n">Tensor</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">InvalidParameterCombinationError</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">InvalidParameterCombinationError</span><span class="p">,</span>
+    <span class="n">InvalidWeightsError</span><span class="p">,</span>
+    <span class="n">MissingCacheError</span><span class="p">,</span>
+    <span class="n">ShapeError</span><span class="p">,</span>
+<span class="p">)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.module</span><span class="w"> </span><span class="kn">import</span> <span class="n">Module</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.module_shape</span><span class="w"> </span><span class="kn">import</span> <span class="n">ModuleShape</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.ops.cat</span><span class="w"> </span><span class="kn">import</span> <span class="n">Cat</span>
@@ -317,16 +322,22 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">inputs</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;Sum&#39; requires at least one input to be specified.&quot;</span><span class="p">)</span>
 
-        <span class="c1"># Convert weights from list to tensor if needed</span>
         <span class="k">if</span> <span class="n">weights</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">weights</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
             <span class="n">weights</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">weights</span><span class="p">)</span>
 
-        <span class="n">weights</span><span class="p">,</span> <span class="n">out_channels</span><span class="p">,</span> <span class="n">num_repetitions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_process_weights_parameter</span><span class="p">(</span>
+        <span class="n">weights</span><span class="p">,</span> <span class="n">out_channels_inferred</span><span class="p">,</span> <span class="n">num_repetitions_inferred</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_process_weights_parameter</span><span class="p">(</span>
             <span class="n">inputs</span><span class="o">=</span><span class="n">inputs</span><span class="p">,</span>
             <span class="n">weights</span><span class="o">=</span><span class="n">weights</span><span class="p">,</span>
             <span class="n">out_channels</span><span class="o">=</span><span class="n">out_channels</span><span class="p">,</span>
             <span class="n">num_repetitions</span><span class="o">=</span><span class="n">num_repetitions</span><span class="p">,</span>
         <span class="p">)</span>
+
+        <span class="c1"># Use inferred values</span>
+        <span class="n">out_channels</span> <span class="o">=</span> <span class="n">out_channels_inferred</span>
+        <span class="k">if</span> <span class="n">num_repetitions_inferred</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">num_repetitions</span> <span class="o">=</span> <span class="n">num_repetitions_inferred</span>
+        <span class="k">if</span> <span class="n">num_repetitions</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">num_repetitions</span> <span class="o">=</span> <span class="mi">1</span>
 
         <span class="c1"># ========== 3. CONFIGURATION VALIDATION ==========</span>
         <span class="k">if</span> <span class="n">out_channels</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">out_channels</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
@@ -349,9 +360,7 @@
         <span class="c1"># ========== 5. SHAPE COMPUTATION (early, so shapes can be reused below) ==========</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">in_shape</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">out_shape</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span> <span class="o">=</span> <span class="n">ModuleShape</span><span class="p">(</span>
-            <span class="n">features</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">in_shape</span><span class="o">.</span><span class="n">features</span><span class="p">,</span>
-            <span class="n">channels</span><span class="o">=</span><span class="n">out_channels</span><span class="p">,</span>
-            <span class="n">repetitions</span><span class="o">=</span><span class="n">num_repetitions</span>
+            <span class="n">features</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">in_shape</span><span class="o">.</span><span class="n">features</span><span class="p">,</span> <span class="n">channels</span><span class="o">=</span><span class="n">out_channels</span><span class="p">,</span> <span class="n">repetitions</span><span class="o">=</span><span class="n">num_repetitions</span>
         <span class="p">)</span>
 
         <span class="c1"># ========== 6. WEIGHT INITIALIZATION &amp; PARAMETER REGISTRATION ==========</span>
@@ -364,7 +373,6 @@
 
         <span class="c1"># Set weights (converts to logits internally via property setter)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">weights</span> <span class="o">=</span> <span class="n">weights</span>
-
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_process_weights_parameter</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -391,7 +399,7 @@
         <span class="k">elif</span> <span class="n">weight_dim</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
             <span class="k">pass</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Weights for &#39;Sum&#39; must be a 1D, 2D, 3D, or 4D tensor but was </span><span class="si">{</span><span class="n">weight_dim</span><span class="si">}</span><span class="s2">D.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">ShapeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Weights for &#39;Sum&#39; must be a 1D, 2D, 3D, or 4D tensor but was </span><span class="si">{</span><span class="n">weight_dim</span><span class="si">}</span><span class="s2">D.&quot;</span><span class="p">)</span>
 
         <span class="n">inferred_num_repetitions</span> <span class="o">=</span> <span class="n">weights</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">num_repetitions</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="p">(</span>
@@ -406,7 +414,6 @@
         <span class="n">out_channels</span> <span class="o">=</span> <span class="n">weights</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
 
         <span class="k">return</span> <span class="n">weights</span><span class="p">,</span> <span class="n">out_channels</span><span class="p">,</span> <span class="n">num_repetitions</span>
-
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_get_weights_shape</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
         <span class="k">return</span> <span class="p">(</span>
@@ -457,17 +464,17 @@
 <span class="sd">            values: Tensor containing weights for each input and node.</span>
 
 <span class="sd">        Raises:</span>
-<span class="sd">            ValueError: If weights have invalid shape, contain non-positive values,</span>
-<span class="sd">                or do not sum to one.</span>
+<span class="sd">            ShapeError: If weights have invalid shape.</span>
+<span class="sd">            ValueError: If weights contain non-positive values, or do not sum to one.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">values</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">weights_shape</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="k">raise</span> <span class="n">ShapeError</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;Invalid shape for weights: Was </span><span class="si">{</span><span class="n">values</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2"> but expected </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">weights_shape</span><span class="si">}</span><span class="s2">.&quot;</span>
             <span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">torch</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">values</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Weights for &#39;Sum&#39; must be all positive.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">InvalidWeightsError</span><span class="p">(</span><span class="s2">&quot;Weights for &#39;Sum&#39; must be all positive.&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">torch</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sum_dim</span><span class="p">),</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Weights for &#39;Sum&#39; must sum up to one.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">InvalidWeightsError</span><span class="p">(</span><span class="s2">&quot;Weights for &#39;Sum&#39; must sum up to one.&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logits</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">proj_convex_to_real</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
 
     <span class="nd">@log_weights</span><span class="o">.</span><span class="n">setter</span>
@@ -481,10 +488,10 @@
 <span class="sd">            values: Tensor containing log weights for each input and node.</span>
 
 <span class="sd">        Raises:</span>
-<span class="sd">            ValueError: If log weights have invalid shape.</span>
+<span class="sd">            ShapeError: If log weights have invalid shape.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">values</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_weights</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid shape for weights: </span><span class="si">{</span><span class="n">values</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">ShapeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid shape for weights: </span><span class="si">{</span><span class="n">values</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logits</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">values</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">extra_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
@@ -532,7 +539,9 @@
         <span class="n">output</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">logsumexp</span><span class="p">(</span><span class="n">weighted_lls</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sum_dim</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
 
         <span class="n">batch_size</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">features</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">channels</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">repetitions</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">view</span><span class="p">(</span>
+            <span class="n">batch_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">features</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">channels</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">repetitions</span>
+        <span class="p">)</span>
 
         <span class="k">return</span> <span class="n">result</span></div>
 
@@ -651,7 +660,9 @@
             <span class="n">new_mask</span> <span class="o">=</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">mask</span><span class="o">.</span><span class="n">expand_as</span><span class="p">(</span><span class="n">new_channel_index</span><span class="p">)</span><span class="o">.</span><span class="n">contiguous</span><span class="p">()</span>
             <span class="k">if</span> <span class="n">new_mask</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="n">new_channel_index</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span>
                 <span class="c1"># Fall back to creating a full True mask</span>
-                <span class="n">new_mask</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">new_channel_index</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">bool</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">new_channel_index</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+                <span class="n">new_mask</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span>
+                    <span class="n">new_channel_index</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">bool</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">new_channel_index</span><span class="o">.</span><span class="n">device</span>
+                <span class="p">)</span>
             <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">new_channel_index</span><span class="p">,</span> <span class="n">new_mask</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">channel_index</span> <span class="o">=</span> <span class="n">new_channel_index</span>
@@ -683,7 +694,7 @@
 <span class="sd">            bias_correction: Whether to apply bias correction.</span>
 
 <span class="sd">        Raises:</span>
-<span class="sd">            ValueError: If required log-likelihoods are not found in cache.</span>
+<span class="sd">            MissingCacheError: If required log-likelihoods are not found in cache.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">cache</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">cache</span> <span class="o">=</span> <span class="n">Cache</span><span class="p">()</span>
@@ -694,12 +705,12 @@
             <span class="c1"># Get input LLs from cache</span>
             <span class="n">input_lls</span> <span class="o">=</span> <span class="n">cache</span><span class="p">[</span><span class="s2">&quot;log_likelihood&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">input_lls</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Input log-likelihoods not found in cache. Call log_likelihood first.&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="n">MissingCacheError</span><span class="p">(</span><span class="s2">&quot;Input log-likelihoods not found in cache. Call log_likelihood first.&quot;</span><span class="p">)</span>
 
             <span class="c1"># Get module lls from cache</span>
             <span class="n">module_lls</span> <span class="o">=</span> <span class="n">cache</span><span class="p">[</span><span class="s2">&quot;log_likelihood&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">module_lls</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Module log-likelihoods not found in cache. Call log_likelihood first.&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="n">MissingCacheError</span><span class="p">(</span><span class="s2">&quot;Module log-likelihoods not found in cache. Call log_likelihood first.&quot;</span><span class="p">)</span>
 
             <span class="n">log_weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_weights</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
             <span class="n">log_grads</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">module_lls</span><span class="o">.</span><span class="n">grad</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>

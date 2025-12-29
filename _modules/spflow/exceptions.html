@@ -270,7 +270,7 @@
 
 <div class="viewcode-block" id="ScopeError">
 <a class="viewcode-back" href="../../api/exceptions.html#spflow.exceptions.ScopeError">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">ScopeError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ScopeError</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Raised when variable scopes are invalid or incompatible.&quot;&quot;&quot;</span>
 
     <span class="k">pass</span></div>
@@ -319,6 +319,52 @@
         <span class="n">message</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">message</span><span class="si">}</span><span class="se">\n\n</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">INSTALL_INSTRUCTIONS</span><span class="si">}</span><span class="s2">&quot;</span></div>
 
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">CacheError</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Raised when required values are missing or invalid in a computation cache.&quot;&quot;&quot;</span>
+
+    <span class="k">pass</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">MissingCacheError</span><span class="p">(</span><span class="n">CacheError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Raised when required cached values are not present.</span>
+
+<span class="sd">    This typically indicates a missing prerequisite call (e.g., calling</span>
+<span class="sd">    `log_likelihood()` before an EM step).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">pass</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">InvalidWeightsError</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Raised when weights have invalid values (e.g., non-positive or not normalized).&quot;&quot;&quot;</span>
+
+    <span class="k">pass</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">OptionalDependencyError</span><span class="p">(</span><span class="ne">ImportError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Raised when an optional dependency is required but not installed.&quot;&quot;&quot;</span>
+
+    <span class="k">pass</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">UnsupportedOperationError</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Raised when an operation is not supported for the given model/configuration.&quot;&quot;&quot;</span>
+
+    <span class="k">pass</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">InvalidTypeError</span><span class="p">(</span><span class="ne">TypeError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Raised when an argument has an unexpected type.&quot;&quot;&quot;</span>
+
+    <span class="k">pass</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">InvalidParameterError</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Raised when a parameter value is invalid (range/domain/format).&quot;&quot;&quot;</span>
+
+    <span class="k">pass</span>
 </pre></div>
         </article>
       </div>

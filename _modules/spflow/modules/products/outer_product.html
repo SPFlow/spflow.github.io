@@ -260,6 +260,7 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">torch</span><span class="w"> </span><span class="kn">import</span> <span class="n">Tensor</span>
 
+<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">ShapeError</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.meta.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">Scope</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.module</span><span class="w"> </span><span class="kn">import</span> <span class="n">Module</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.module_shape</span><span class="w"> </span><span class="kn">import</span> <span class="n">ModuleShape</span>
@@ -333,7 +334,7 @@
             <span class="n">out_features</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">input_features</span> <span class="o">//</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_splits</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">out_features</span> <span class="o">=</span> <span class="n">input_features</span>
-        
+
         <span class="c1"># Compute out_channels as product of input channels</span>
         <span class="n">ocs</span> <span class="o">=</span> <span class="mi">1</span>
         <span class="k">for</span> <span class="n">inp</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">:</span>
@@ -341,9 +342,8 @@
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="n">ocs</span> <span class="o">=</span> <span class="n">ocs</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">num_splits</span>
         <span class="n">out_channels</span> <span class="o">=</span> <span class="n">ocs</span>
-        
-        <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span> <span class="o">=</span> <span class="n">ModuleShape</span><span class="p">(</span><span class="n">out_features</span><span class="p">,</span> <span class="n">out_channels</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_shape</span><span class="o">.</span><span class="n">repetitions</span><span class="p">)</span>
 
+        <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span> <span class="o">=</span> <span class="n">ModuleShape</span><span class="p">(</span><span class="n">out_features</span><span class="p">,</span> <span class="n">out_channels</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_shape</span><span class="o">.</span><span class="n">repetitions</span><span class="p">)</span>
 
 <div class="viewcode-block" id="OuterProduct.check_shapes">
 <a class="viewcode-back" href="../../../../api/products.html#spflow.modules.products.OuterProduct.check_shapes">[docs]</a>
@@ -362,7 +362,7 @@
             <span class="n">out_features</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">input_features</span> <span class="o">//</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_splits</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">out_features</span> <span class="o">=</span> <span class="n">input_features</span>
-        
+
         <span class="c1"># Compute out_channels as product of input channels</span>
         <span class="n">ocs</span> <span class="o">=</span> <span class="mi">1</span>
         <span class="k">for</span> <span class="n">inp</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">:</span>
@@ -402,7 +402,7 @@
             <span class="k">return</span> <span class="kc">True</span>
 
         <span class="c1"># If none of the conditions are satisfied</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;the shapes of the inputs </span><span class="si">{</span><span class="n">shapes</span><span class="si">}</span><span class="s2"> are not broadcastable&quot;</span><span class="p">)</span></div>
+        <span class="k">raise</span> <span class="n">ShapeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;the shapes of the inputs </span><span class="si">{</span><span class="n">shapes</span><span class="si">}</span><span class="s2"> are not broadcastable&quot;</span><span class="p">)</span></div>
 
 
     <span class="nd">@property</span>
@@ -530,7 +530,9 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">repetitions</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">output</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">features</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">channels</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">output</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">features</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">channels</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">repetitions</span><span class="p">)</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">view</span><span class="p">(</span>
+                <span class="n">output</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">features</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">channels</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">repetitions</span>
+            <span class="p">)</span>
         <span class="k">return</span> <span class="n">output</span></div>
 </div>
 

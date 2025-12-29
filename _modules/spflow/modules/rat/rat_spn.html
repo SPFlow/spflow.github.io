@@ -268,6 +268,7 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 
+<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">InvalidParameterError</span><span class="p">,</span> <span class="n">UnsupportedOperationError</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.interfaces.classifier</span><span class="w"> </span><span class="kn">import</span> <span class="n">Classifier</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.meta.data.scope</span><span class="w"> </span><span class="kn">import</span> <span class="n">Scope</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.module</span><span class="w"> </span><span class="kn">import</span> <span class="n">Module</span>
@@ -354,18 +355,20 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">scope</span> <span class="o">=</span> <span class="n">Scope</span><span class="o">.</span><span class="n">join_all</span><span class="p">([</span><span class="n">leaf</span><span class="o">.</span><span class="n">scope</span> <span class="k">for</span> <span class="n">leaf</span> <span class="ow">in</span> <span class="n">leaf_modules</span><span class="p">])</span>
 
         <span class="k">if</span> <span class="n">n_root_nodes</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Specified value of &#39;n_root_nodes&#39; must be at least 1, but is </span><span class="si">{</span><span class="n">n_root_nodes</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Specified value of &#39;n_root_nodes&#39; must be at least 1, but is </span><span class="si">{</span><span class="n">n_root_nodes</span><span class="si">}</span><span class="s2">.&quot;</span>
+            <span class="p">)</span>
         <span class="k">if</span> <span class="n">n_region_nodes</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;Specified value for &#39;n_region_nodes&#39; must be at least 1, but is </span><span class="si">{</span><span class="n">n_region_nodes</span><span class="si">}</span><span class="s2">.&quot;</span>
             <span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_leaf_nodes</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;Specified value for &#39;n_leaf_nodes&#39; must be at least 1, but is </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">n_leaf_nodes</span><span class="si">}</span><span class="s2">.&quot;</span>
             <span class="p">)</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_splits</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;Specified value for &#39;num_splits&#39; must be at least 2, but is </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">num_splits</span><span class="si">}</span><span class="s2">.&quot;</span>
             <span class="p">)</span>
 
@@ -493,10 +496,12 @@
 <span class="sd">            Log-posterior probabilities.</span>
 
 <span class="sd">        Raises:</span>
-<span class="sd">            ValueError: If model has only one root node (single class).</span>
+<span class="sd">            UnsupportedOperationError: If model has only one root node (single class).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_root_nodes</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Posterior can only be computed for models with multiple classes.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">UnsupportedOperationError</span><span class="p">(</span>
+                <span class="s2">&quot;Posterior can only be computed for models with multiple classes.&quot;</span>
+            <span class="p">)</span>
 
         <span class="n">ll_y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_node</span><span class="o">.</span><span class="n">log_weights</span>  <span class="c1"># shape: (1, n_root_nodes, 1, 1)</span>
         <span class="n">ll_y</span> <span class="o">=</span> <span class="n">ll_y</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># shape: (1, n_root_nodes)</span>
@@ -556,7 +561,9 @@
             <span class="n">sampling_ctx</span> <span class="o">=</span> <span class="n">init_default_sampling_context</span><span class="p">(</span><span class="n">sampling_ctx</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">data</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
             <span class="n">logits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_node</span><span class="o">.</span><span class="n">logits</span>
             <span class="k">if</span> <span class="n">logits</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_root_nodes</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Expected logits shape (1, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">n_root_nodes</span><span class="si">}</span><span class="s2">, 1), but got </span><span class="si">{</span><span class="n">logits</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Expected logits shape (1, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">n_root_nodes</span><span class="si">}</span><span class="s2">, 1), but got </span><span class="si">{</span><span class="n">logits</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
             <span class="n">logits</span> <span class="o">=</span> <span class="n">logits</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
             <span class="n">logits</span> <span class="o">=</span> <span class="n">logits</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># shape [b ,1, n_root_nodes]</span>
 

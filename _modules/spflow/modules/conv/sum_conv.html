@@ -265,6 +265,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">torch</span><span class="w"> </span><span class="kn">import</span> <span class="n">Tensor</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">torch.nn</span><span class="w"> </span><span class="kn">import</span> <span class="n">functional</span> <span class="k">as</span> <span class="n">F</span>
 
+<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">InvalidWeightsError</span><span class="p">,</span> <span class="n">MissingCacheError</span><span class="p">,</span> <span class="n">ShapeError</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.module</span><span class="w"> </span><span class="kn">import</span> <span class="n">Module</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.module_shape</span><span class="w"> </span><span class="kn">import</span> <span class="n">ModuleShape</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.utils.cache</span><span class="w"> </span><span class="kn">import</span> <span class="n">Cache</span><span class="p">,</span> <span class="n">cached</span>
@@ -387,13 +388,13 @@
 <span class="sd">            ValueError: If weights have invalid shape or values.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">values</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">weights_shape</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="k">raise</span> <span class="n">ShapeError</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;Invalid shape for weights: Was </span><span class="si">{</span><span class="n">values</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2"> but expected </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">weights_shape</span><span class="si">}</span><span class="s2">.&quot;</span>
             <span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">torch</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">values</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Weights must be all positive.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">InvalidWeightsError</span><span class="p">(</span><span class="s2">&quot;Weights must be all positive.&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">torch</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">values</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sum_dim</span><span class="p">),</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Weights must sum to one over input channels.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">InvalidWeightsError</span><span class="p">(</span><span class="s2">&quot;Weights must sum to one over input channels.&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logits</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">proj_convex_to_real</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">extra_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
@@ -717,7 +718,7 @@
 <span class="sd">            cache: Cache dictionary with log-likelihoods from forward pass.</span>
 
 <span class="sd">        Raises:</span>
-<span class="sd">            ValueError: If required log-likelihoods are not found in cache.</span>
+<span class="sd">            MissingCacheError: If required log-likelihoods are not found in cache.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">cache</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">cache</span> <span class="o">=</span> <span class="n">Cache</span><span class="p">()</span>
@@ -726,11 +727,11 @@
             <span class="c1"># Get cached log-likelihoods</span>
             <span class="n">input_lls</span> <span class="o">=</span> <span class="n">cache</span><span class="p">[</span><span class="s2">&quot;log_likelihood&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">input_lls</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Input log-likelihoods not found in cache. Call log_likelihood first.&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="n">MissingCacheError</span><span class="p">(</span><span class="s2">&quot;Input log-likelihoods not found in cache. Call log_likelihood first.&quot;</span><span class="p">)</span>
 
             <span class="n">module_lls</span> <span class="o">=</span> <span class="n">cache</span><span class="p">[</span><span class="s2">&quot;log_likelihood&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">module_lls</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Module log-likelihoods not found in cache. Call log_likelihood first.&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="n">MissingCacheError</span><span class="p">(</span><span class="s2">&quot;Module log-likelihoods not found in cache. Call log_likelihood first.&quot;</span><span class="p">)</span>
 
             <span class="c1"># input_lls shape: (batch, features, in_channels, reps)</span>
             <span class="c1"># module_lls shape: (batch, features, out_channels, reps)</span>
@@ -832,7 +833,6 @@
             <span class="n">num_repetitions</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">repetitions</span><span class="p">,</span>
         <span class="p">)</span></div>
 </div>
-
 
 </pre></div>
         </article>

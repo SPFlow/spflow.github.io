@@ -444,7 +444,7 @@
 
 <span class="sd">        Args:</span>
 <span class="sd">            data (Tensor): Input data of shape (batch_size, num_features).</span>
-<span class="sd">                NaN values indicate evidence for conditional computation.</span>
+<span class="sd">                NaN values indicate missing values to marginalize over.</span>
 <span class="sd">            cache (Cache | None, optional): Cache for intermediate computations. Defaults to None.</span>
 
 <span class="sd">        Returns:</span>
@@ -652,10 +652,11 @@
         <span class="n">prune</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
         <span class="n">cache</span><span class="p">:</span> <span class="n">Cache</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Module</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Marginalize out specified random variables from the module.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Structurally marginalize out specified random variables from the module.</span>
 
-<span class="sd">        Computes marginal distribution by integrating out the specified variables.</span>
-<span class="sd">        Essential for conditioning on evidence and computing marginal probabilities.</span>
+<span class="sd">        Computes a new module representing the marginal distribution by integrating out</span>
+<span class="sd">        the specified variables from the structure. For data-level marginalization,</span>
+<span class="sd">        use NaNs in ``log_likelihood`` inputs.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            marg_rvs (list[int]): Random variable indices to marginalize out.</span>

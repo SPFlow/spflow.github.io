@@ -267,6 +267,7 @@
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">torch</span><span class="w"> </span><span class="kn">import</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">nn</span>
 
+<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">InvalidParameterError</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.meta.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">Scope</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.module</span><span class="w"> </span><span class="kn">import</span> <span class="n">Module</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.module_shape</span><span class="w"> </span><span class="kn">import</span> <span class="n">ModuleShape</span>
@@ -298,12 +299,14 @@
 <span class="sd">            num_splits: Number of parts to split into.</span>
 <span class="sd">            indices: For &#39;by_index&#39; type, the feature indices for each split.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">split_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;consecutive&#39;</span><span class="p">,</span> <span class="s1">&#39;interleaved&#39;</span><span class="p">,</span> <span class="s1">&#39;by_index&#39;</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;split_type must be &#39;consecutive&#39;, &#39;interleaved&#39;, or &#39;by_index&#39;, got &#39;</span><span class="si">{</span><span class="n">split_type</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">split_type</span> <span class="o">!=</span> <span class="s1">&#39;by_index&#39;</span> <span class="ow">and</span> <span class="n">num_splits</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;num_splits must be at least 2, got </span><span class="si">{</span><span class="n">num_splits</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">split_type</span> <span class="o">==</span> <span class="s1">&#39;by_index&#39;</span> <span class="ow">and</span> <span class="n">indices</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;indices must be provided for &#39;by_index&#39; split type&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">split_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;consecutive&quot;</span><span class="p">,</span> <span class="s2">&quot;interleaved&quot;</span><span class="p">,</span> <span class="s2">&quot;by_index&quot;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;split_type must be &#39;consecutive&#39;, &#39;interleaved&#39;, or &#39;by_index&#39;, got &#39;</span><span class="si">{</span><span class="n">split_type</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">split_type</span> <span class="o">!=</span> <span class="s2">&quot;by_index&quot;</span> <span class="ow">and</span> <span class="n">num_splits</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;num_splits must be at least 2, got </span><span class="si">{</span><span class="n">num_splits</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">split_type</span> <span class="o">==</span> <span class="s2">&quot;by_index&quot;</span> <span class="ow">and</span> <span class="n">indices</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="s2">&quot;indices must be provided for &#39;by_index&#39; split type&quot;</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_split_type</span> <span class="o">=</span> <span class="n">split_type</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_num_splits</span> <span class="o">=</span> <span class="n">num_splits</span>
@@ -438,7 +441,7 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">Module</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&#39; requires a single Module as input.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&#39; requires a single Module as input.&quot;</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span> <span class="o">=</span> <span class="n">inputs</span>
 

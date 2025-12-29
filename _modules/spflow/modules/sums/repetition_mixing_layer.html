@@ -258,7 +258,7 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">torch</span><span class="w"> </span><span class="kn">import</span> <span class="n">Tensor</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">InvalidParameterCombinationError</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">InvalidParameterCombinationError</span><span class="p">,</span> <span class="n">MissingCacheError</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.module</span><span class="w"> </span><span class="kn">import</span> <span class="n">Module</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.sums.sum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sum</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.utils.cache</span><span class="w"> </span><span class="kn">import</span> <span class="n">Cache</span><span class="p">,</span> <span class="n">cached</span>
@@ -474,7 +474,7 @@
 <span class="sd">            cache: Optional cache dictionary with log-likelihoods.</span>
 
 <span class="sd">        Raises:</span>
-<span class="sd">            ValueError: If required log-likelihoods are not found in cache.</span>
+<span class="sd">            MissingCacheError: If required log-likelihoods are not found in cache.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">cache</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">cache</span> <span class="o">=</span> <span class="n">Cache</span><span class="p">()</span>
@@ -485,12 +485,12 @@
             <span class="c1"># Get input LLs from cache</span>
             <span class="n">input_lls</span> <span class="o">=</span> <span class="n">cache</span><span class="p">[</span><span class="s2">&quot;log_likelihood&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">input_lls</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Input log-likelihoods not found in cache. Call log_likelihood first.&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="n">MissingCacheError</span><span class="p">(</span><span class="s2">&quot;Input log-likelihoods not found in cache. Call log_likelihood first.&quot;</span><span class="p">)</span>
 
             <span class="c1"># Get module lls from cache</span>
             <span class="n">module_lls</span> <span class="o">=</span> <span class="n">cache</span><span class="p">[</span><span class="s2">&quot;log_likelihood&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">module_lls</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Module log-likelihoods not found in cache. Call log_likelihood first.&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="n">MissingCacheError</span><span class="p">(</span><span class="s2">&quot;Module log-likelihoods not found in cache. Call log_likelihood first.&quot;</span><span class="p">)</span>
 
             <span class="n">log_weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_weights</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
             <span class="n">log_grads</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">module_lls</span><span class="o">.</span><span class="n">grad</span><span class="p">)</span>

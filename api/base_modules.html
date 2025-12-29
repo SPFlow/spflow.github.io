@@ -397,7 +397,7 @@ Uses log-space for numerical stability. Results should be cached for efficiency.
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>data</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code>) – Input data of shape (batch_size, num_features).
-NaN values indicate evidence for conditional computation.</p></li>
+NaN values indicate missing values to marginalize over.</p></li>
 <li><p><strong>cache</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span> <span class="pre">|</span> <span class="pre">None</span></code>, <em>optional</em>) – Cache for intermediate computations. Defaults to None.</p></li>
 </ul>
 </dd>
@@ -539,9 +539,10 @@ Defaults to False.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="spflow.modules.module.Module.marginalize">
 <em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">marginalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">marg_rvs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prune</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/module.html#Module.marginalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.module.Module.marginalize" title="Link to this definition">¶</a></dt>
-<dd><p>Marginalize out specified random variables from the module.</p>
-<p>Computes marginal distribution by integrating out the specified variables.
-Essential for conditioning on evidence and computing marginal probabilities.</p>
+<dd><p>Structurally marginalize out specified random variables from the module.</p>
+<p>Computes a new module representing the marginal distribution by integrating out
+the specified variables from the structure. For data-level marginalization,
+use NaNs in <code class="docutils literal notranslate"><span class="pre">log_likelihood</span></code> inputs.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
