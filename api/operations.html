@@ -272,6 +272,20 @@
 <dl class="field-list simple">
 </dl>
 <dl class="py method">
+<dt class="sig sig-object py" id="spflow.modules.ops.Cat.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/ops/cat.html#Cat.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.ops.Cat.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Initialize concatenation operation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>inputs</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference internal" href="base_modules.html#spflow.modules.module.Module" title="spflow.modules.module.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a>]</span>) – Modules to concatenate.</p></li>
+<li><p><strong>dim</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Concatenation dimension (0=batch, 1=feature, 2=channel).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="spflow.modules.ops.Cat.log_likelihood">
 <span class="sig-name descname"><span class="pre">log_likelihood</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/ops/cat.html#Cat.log_likelihood"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.ops.Cat.log_likelihood" title="Link to this definition">¶</a></dt>
 <dd><p>Compute log likelihood by concatenating input log-likelihoods.</p>
@@ -408,6 +422,21 @@ must provide feature_to_scope property.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Scope</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.modules.ops.split.Split.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_splits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/ops/split.html#Split.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.ops.split.Split.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Initialize split operation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>inputs</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="base_modules.html#spflow.modules.module.Module" title="spflow.modules.module.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a></span>) – Input module to split.</p></li>
+<li><p><strong>dim</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Dimension along which to split (0=batch, 1=feature, 2=channel).</p></li>
+<li><p><strong>num_splits</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Number of parts to split into.</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -591,6 +620,21 @@ All features must be covered exactly once.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="spflow.modules.ops.split.SplitMode.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">split_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_splits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/ops/split.html#SplitMode.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.ops.split.SplitMode.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Initialize split mode configuration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>split_type</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – Type of split (‘consecutive’, ‘interleaved’, or ‘by_index’).</p></li>
+<li><p><strong>num_splits</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Number of parts to split into.</p></li>
+<li><p><strong>indices</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]] | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – For ‘by_index’ type, the feature indices for each split.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="spflow.modules.ops.split.SplitMode.create">
 <span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/ops/split.html#SplitMode.create"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.ops.split.SplitMode.create" title="Link to this definition">¶</a></dt>
 <dd><p>Create a Split module with this configuration.</p>
@@ -642,6 +686,21 @@ All features must be covered exactly once.</p>
 With num_splits=3: [0,1,2,3,4,5] -&gt; [0,1], [2,3], [4,5]</p>
 <dl class="field-list simple">
 </dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.modules.ops.SplitConsecutive.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_splits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/ops/split_consecutive.html#SplitConsecutive.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.ops.SplitConsecutive.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Initialize consecutive split operation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>inputs</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="base_modules.html#spflow.modules.module.Module" title="spflow.modules.module.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a></span>) – Input module to split.</p></li>
+<li><p><strong>dim</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Dimension along which to split (0=batch, 1=feature, 2=channel).</p></li>
+<li><p><strong>num_splits</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Number of splits along the given dimension.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="spflow.modules.ops.SplitConsecutive.log_likelihood">
 <span class="sig-name descname"><span class="pre">log_likelihood</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/ops/split_consecutive.html#SplitConsecutive.log_likelihood"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.ops.SplitConsecutive.log_likelihood" title="Link to this definition">¶</a></dt>
@@ -750,6 +809,21 @@ With num_splits=3: [0,1,2,3,4,5] -&gt; [0,3], [1,4], [2,5]</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="spflow.modules.ops.SplitInterleaved.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_splits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/ops/split_interleaved.html#SplitInterleaved.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.ops.SplitInterleaved.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Initialize interleaved split operation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>inputs</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="base_modules.html#spflow.modules.module.Module" title="spflow.modules.module.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a></span>) – Input module to split.</p></li>
+<li><p><strong>dim</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Dimension along which to split.</p></li>
+<li><p><strong>num_splits</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Number of parts to split into.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="spflow.modules.ops.SplitInterleaved.log_likelihood">
 <span class="sig-name descname"><span class="pre">log_likelihood</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/ops/split_interleaved.html#SplitInterleaved.log_likelihood"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.ops.SplitInterleaved.log_likelihood" title="Link to this definition">¶</a></dt>
 <dd><p>Compute log likelihoods for each split.</p>
@@ -828,6 +902,26 @@ group 1: [0, 1, 4] and group 2: [2, 3, 5, 6, 7]</p>
 <dt class="sig sig-object py" id="spflow.modules.ops.SplitByIndex.inverse_indices">
 <span class="sig-name descname"><span class="pre">inverse_indices</span></span><a class="headerlink" href="#spflow.modules.ops.SplitByIndex.inverse_indices" title="Link to this definition">¶</a></dt>
 <dd><p>Tensor mapping original positions to split outputs.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.modules.ops.SplitByIndex.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/ops/split_by_index.html#SplitByIndex.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.ops.SplitByIndex.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Initialize index-based split operation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>inputs</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="base_modules.html#spflow.modules.module.Module" title="spflow.modules.module.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a></span>) – Input module to split.</p></li>
+<li><p><strong>indices</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]]]</span>) – List of lists specifying feature indices for each split.
+Each inner list contains the feature indices for that split.
+All features must be covered exactly once (no overlap, no gaps).</p></li>
+<li><p><strong>dim</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Dimension along which to split (0=batch, 1=feature, 2=channel).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.14)"><strong>ValueError</strong></a> – If indices are invalid (overlap, gaps, out of bounds).</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -981,6 +1075,7 @@ to be expanded to the full input feature count.</p>
 <li><a class="reference internal" href="#">Operations</a><ul>
 <li><a class="reference internal" href="#cat">Cat</a><ul>
 <li><a class="reference internal" href="#spflow.modules.ops.Cat"><code class="docutils literal notranslate"><span class="pre">Cat</span></code></a><ul>
+<li><a class="reference internal" href="#spflow.modules.ops.Cat.__init__"><code class="docutils literal notranslate"><span class="pre">Cat.__init__()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.ops.Cat.log_likelihood"><code class="docutils literal notranslate"><span class="pre">Cat.log_likelihood()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.ops.Cat.marginalize"><code class="docutils literal notranslate"><span class="pre">Cat.marginalize()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.ops.Cat.sample"><code class="docutils literal notranslate"><span class="pre">Cat.sample()</span></code></a></li>
@@ -995,6 +1090,7 @@ to be expanded to the full input feature count.</p>
 <li><a class="reference internal" href="#spflow.modules.ops.split.Split.dim"><code class="docutils literal notranslate"><span class="pre">Split.dim</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.ops.split.Split.num_splits"><code class="docutils literal notranslate"><span class="pre">Split.num_splits</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.ops.split.Split.scope"><code class="docutils literal notranslate"><span class="pre">Split.scope</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.ops.split.Split.__init__"><code class="docutils literal notranslate"><span class="pre">Split.__init__()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.ops.split.Split.get_out_shapes"><code class="docutils literal notranslate"><span class="pre">Split.get_out_shapes()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.ops.split.Split.marginalize"><code class="docutils literal notranslate"><span class="pre">Split.marginalize()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.ops.split.Split.merge_split_indices"><code class="docutils literal notranslate"><span class="pre">Split.merge_split_indices()</span></code></a></li>
@@ -1009,6 +1105,7 @@ to be expanded to the full input feature count.</p>
 <li><a class="reference internal" href="#spflow.modules.ops.split.SplitMode.by_index"><code class="docutils literal notranslate"><span class="pre">SplitMode.by_index()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.ops.split.SplitMode.consecutive"><code class="docutils literal notranslate"><span class="pre">SplitMode.consecutive()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.ops.split.SplitMode.interleaved"><code class="docutils literal notranslate"><span class="pre">SplitMode.interleaved()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.ops.split.SplitMode.__init__"><code class="docutils literal notranslate"><span class="pre">SplitMode.__init__()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.ops.split.SplitMode.create"><code class="docutils literal notranslate"><span class="pre">SplitMode.create()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.ops.split.SplitMode.indices"><code class="docutils literal notranslate"><span class="pre">SplitMode.indices</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.ops.split.SplitMode.num_splits"><code class="docutils literal notranslate"><span class="pre">SplitMode.num_splits</span></code></a></li>
@@ -1019,6 +1116,7 @@ to be expanded to the full input feature count.</p>
 </li>
 <li><a class="reference internal" href="#splitconsecutive">SplitConsecutive</a><ul>
 <li><a class="reference internal" href="#spflow.modules.ops.SplitConsecutive"><code class="docutils literal notranslate"><span class="pre">SplitConsecutive</span></code></a><ul>
+<li><a class="reference internal" href="#spflow.modules.ops.SplitConsecutive.__init__"><code class="docutils literal notranslate"><span class="pre">SplitConsecutive.__init__()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.ops.SplitConsecutive.log_likelihood"><code class="docutils literal notranslate"><span class="pre">SplitConsecutive.log_likelihood()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.ops.SplitConsecutive.merge_split_indices"><code class="docutils literal notranslate"><span class="pre">SplitConsecutive.merge_split_indices()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.ops.SplitConsecutive.sample"><code class="docutils literal notranslate"><span class="pre">SplitConsecutive.sample()</span></code></a></li>
@@ -1030,6 +1128,7 @@ to be expanded to the full input feature count.</p>
 <li><a class="reference internal" href="#splitinterleaved">SplitInterleaved</a><ul>
 <li><a class="reference internal" href="#spflow.modules.ops.SplitInterleaved"><code class="docutils literal notranslate"><span class="pre">SplitInterleaved</span></code></a><ul>
 <li><a class="reference internal" href="#spflow.modules.ops.SplitInterleaved.split_masks"><code class="docutils literal notranslate"><span class="pre">SplitInterleaved.split_masks</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.ops.SplitInterleaved.__init__"><code class="docutils literal notranslate"><span class="pre">SplitInterleaved.__init__()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.ops.SplitInterleaved.log_likelihood"><code class="docutils literal notranslate"><span class="pre">SplitInterleaved.log_likelihood()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.ops.SplitInterleaved.merge_split_indices"><code class="docutils literal notranslate"><span class="pre">SplitInterleaved.merge_split_indices()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.ops.SplitInterleaved.feature_to_scope"><code class="docutils literal notranslate"><span class="pre">SplitInterleaved.feature_to_scope</span></code></a></li>
@@ -1041,6 +1140,7 @@ to be expanded to the full input feature count.</p>
 <li><a class="reference internal" href="#spflow.modules.ops.SplitByIndex"><code class="docutils literal notranslate"><span class="pre">SplitByIndex</span></code></a><ul>
 <li><a class="reference internal" href="#spflow.modules.ops.SplitByIndex.indices"><code class="docutils literal notranslate"><span class="pre">SplitByIndex.indices</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.ops.SplitByIndex.inverse_indices"><code class="docutils literal notranslate"><span class="pre">SplitByIndex.inverse_indices</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.ops.SplitByIndex.__init__"><code class="docutils literal notranslate"><span class="pre">SplitByIndex.__init__()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.ops.SplitByIndex.log_likelihood"><code class="docutils literal notranslate"><span class="pre">SplitByIndex.log_likelihood()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.ops.SplitByIndex.merge_split_indices"><code class="docutils literal notranslate"><span class="pre">SplitByIndex.merge_split_indices()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.ops.SplitByIndex.sample"><code class="docutils literal notranslate"><span class="pre">SplitByIndex.sample()</span></code></a></li>

@@ -320,6 +320,33 @@ over concatenated inputs).</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="spflow.modules.sums.Sum.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_channels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_repetitions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/sums/sum.html#Sum.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.sums.Sum.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Create a Sum module for mixture modeling.</p>
+<p>Weights are automatically normalized to sum to one using softmax.
+Multiple inputs are concatenated along dimension 2 internally.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>inputs</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span> <span class="pre">|</span> <span class="pre">list[Module]</span></code>) – Single module or list of modules to mix.</p></li>
+<li><p><strong>out_channels</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span> <span class="pre">|</span> <span class="pre">None</span></code>, <em>optional</em>) – Number of output mixture components.
+Required if weights not provided.</p></li>
+<li><p><strong>num_repetitions</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span> <span class="pre">|</span> <span class="pre">None</span></code>, <em>optional</em>) – Number of repetitions for structured
+representations. Inferred from weights if not provided.</p></li>
+<li><p><strong>weights</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span> <span class="pre">|</span> <span class="pre">list[float]</span> <span class="pre">|</span> <span class="pre">None</span></code>, <em>optional</em>) – Initial mixture weights.
+Must have compatible shape with inputs and out_channels.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.14)"><strong>ValueError</strong></a> – If inputs empty, out_channels &lt; 1, or weights have invalid shape/values.</p></li>
+<li><p><a class="reference internal" href="exceptions.html#spflow.exceptions.InvalidParameterCombinationError" title="spflow.exceptions.InvalidParameterCombinationError"><strong>InvalidParameterCombinationError</strong></a> – If both out_channels and weights are specified.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="spflow.modules.sums.Sum.expectation_maximization">
 <span class="sig-name descname"><span class="pre">expectation_maximization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bias_correction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/sums/sum.html#Sum.expectation_maximization"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.sums.Sum.expectation_maximization" title="Link to this definition">¶</a></dt>
 <dd><p>Perform expectation-maximization step.</p>
@@ -509,6 +536,24 @@ are automatically normalized to sum to one. Uses log-domain computations.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.modules.sums.ElementwiseSum.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_channels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_repetitions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/sums/elementwise_sum.html#ElementwiseSum.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.sums.ElementwiseSum.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Initialize elementwise sum module.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>inputs</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference internal" href="base_modules.html#spflow.modules.module.Module" title="spflow.modules.module.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a>]</span>) – Input modules (same features, compatible channels).</p></li>
+<li><p><strong>out_channels</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Number of output nodes per sum. Note that this results in a total of
+out_channels * in_channels (input modules) output channels since we sum over the list of
+modules.</p></li>
+<li><p><strong>weights</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Initial weights (if None, randomly initialized).</p></li>
+<li><p><strong>num_repetitions</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Number of repetitions.</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -707,6 +752,7 @@ are automatically normalized to sum to one. Uses log-domain computations.</p>
 <li><a class="reference internal" href="#spflow.modules.sums.Sum.sum_dim"><code class="docutils literal notranslate"><span class="pre">Sum.sum_dim</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.sums.Sum.weights"><code class="docutils literal notranslate"><span class="pre">Sum.weights</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.sums.Sum.logits"><code class="docutils literal notranslate"><span class="pre">Sum.logits</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.sums.Sum.__init__"><code class="docutils literal notranslate"><span class="pre">Sum.__init__()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.sums.Sum.expectation_maximization"><code class="docutils literal notranslate"><span class="pre">Sum.expectation_maximization()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.sums.Sum.log_likelihood"><code class="docutils literal notranslate"><span class="pre">Sum.log_likelihood()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.sums.Sum.marginalize"><code class="docutils literal notranslate"><span class="pre">Sum.marginalize()</span></code></a></li>
@@ -723,6 +769,7 @@ are automatically normalized to sum to one. Uses log-domain computations.</p>
 <li><a class="reference internal" href="#spflow.modules.sums.ElementwiseSum"><code class="docutils literal notranslate"><span class="pre">ElementwiseSum</span></code></a><ul>
 <li><a class="reference internal" href="#spflow.modules.sums.ElementwiseSum.logits"><code class="docutils literal notranslate"><span class="pre">ElementwiseSum.logits</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.sums.ElementwiseSum.unraveled_channel_indices"><code class="docutils literal notranslate"><span class="pre">ElementwiseSum.unraveled_channel_indices</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.sums.ElementwiseSum.__init__"><code class="docutils literal notranslate"><span class="pre">ElementwiseSum.__init__()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.sums.ElementwiseSum.expectation_maximization"><code class="docutils literal notranslate"><span class="pre">ElementwiseSum.expectation_maximization()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.sums.ElementwiseSum.log_likelihood"><code class="docutils literal notranslate"><span class="pre">ElementwiseSum.log_likelihood()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.sums.ElementwiseSum.marginalize"><code class="docutils literal notranslate"><span class="pre">ElementwiseSum.marginalize()</span></code></a></li>

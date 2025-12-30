@@ -311,6 +311,8 @@
 <span class="sd">        of Tractable Probabilistic Circuits.&quot; ICML 2020.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
+<div class="viewcode-block" id="Einet.__init__">
+<a class="viewcode-back" href="../../../../api/einsum.html#spflow.modules.einsum.Einet.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">leaf_modules</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">LeafModule</span><span class="p">],</span>
@@ -386,7 +388,8 @@
 
         <span class="c1"># Shape computation</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">in_shape</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_node</span><span class="o">.</span><span class="n">in_shape</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_node</span><span class="o">.</span><span class="n">out_shape</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_node</span><span class="o">.</span><span class="n">out_shape</span></div>
+
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_get_layer_class</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the layer class based on layer_type.&quot;&quot;&quot;</span>

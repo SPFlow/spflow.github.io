@@ -310,6 +310,8 @@
 <span class="sd">        Effective Approach to Probabilistic Deep Learning.&quot; NeurIPS 2020.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
+<div class="viewcode-block" id="RatSPN.__init__">
+<a class="viewcode-back" href="../../../../api/rat_spn.html#spflow.modules.rat.RatSPN.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">leaf_modules</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">LeafModule</span><span class="p">],</span>
@@ -377,7 +379,8 @@
 
         <span class="c1"># Shape computation: delegate to root node</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">in_shape</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_node</span><span class="o">.</span><span class="n">in_shape</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_node</span><span class="o">.</span><span class="n">out_shape</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_node</span><span class="o">.</span><span class="n">out_shape</span></div>
+
 
 <div class="viewcode-block" id="RatSPN.create_spn">
 <a class="viewcode-back" href="../../../../api/rat_spn.html#spflow.modules.rat.RatSPN.create_spn">[docs]</a>

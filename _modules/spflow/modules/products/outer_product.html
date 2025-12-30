@@ -284,6 +284,8 @@
 <span class="sd">        unraveled_channel_indices (Tensor): Mapping from output to input channel pairs.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
+<div class="viewcode-block" id="OuterProduct.__init__">
+<a class="viewcode-back" href="../../../../api/products.html#spflow.modules.products.OuterProduct.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">inputs</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Module</span><span class="p">],</span>
@@ -344,7 +346,8 @@
             <span class="n">ocs</span> <span class="o">=</span> <span class="n">ocs</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">num_splits</span>
         <span class="n">out_channels</span> <span class="o">=</span> <span class="n">ocs</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span> <span class="o">=</span> <span class="n">ModuleShape</span><span class="p">(</span><span class="n">out_features</span><span class="p">,</span> <span class="n">out_channels</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_shape</span><span class="o">.</span><span class="n">repetitions</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span> <span class="o">=</span> <span class="n">ModuleShape</span><span class="p">(</span><span class="n">out_features</span><span class="p">,</span> <span class="n">out_channels</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_shape</span><span class="o">.</span><span class="n">repetitions</span><span class="p">)</span></div>
+
 
 <div class="viewcode-block" id="OuterProduct.check_shapes">
 <a class="viewcode-back" href="../../../../api/products.html#spflow.modules.products.OuterProduct.check_shapes">[docs]</a>

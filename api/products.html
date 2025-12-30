@@ -285,6 +285,17 @@ inputs are automatically concatenated along the feature dimension.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="spflow.modules.products.Product.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/products/product.html#Product.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.products.Product.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Initialize product node.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>inputs</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="base_modules.html#spflow.modules.module.Module" title="spflow.modules.module.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference internal" href="base_modules.html#spflow.modules.module.Module" title="spflow.modules.module.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a>]</span>) – Single module or list of modules (concatenated along features).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="spflow.modules.products.Product.expectation_maximization">
 <span class="sig-name descname"><span class="pre">expectation_maximization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bias_correction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/products/product.html#Product.expectation_maximization"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.products.Product.expectation_maximization" title="Link to this definition">¶</a></dt>
 <dd><p>EM step (delegates to input, no learnable parameters).</p>
@@ -418,6 +429,42 @@ must be pairwise disjoint. Commonly used in RAT-SPN architectures.</p>
 <dl class="field-list simple">
 </dl>
 <dl class="py method">
+<dt class="sig sig-object py" id="spflow.modules.products.ElementwiseProduct.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_splits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">split_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/products/elementwise_product.html#ElementwiseProduct.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.products.ElementwiseProduct.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Initialize elementwise product.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>inputs</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="base_modules.html#spflow.modules.module.Module" title="spflow.modules.module.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference internal" href="base_modules.html#spflow.modules.module.Module" title="spflow.modules.module.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a>, <a class="reference internal" href="base_modules.html#spflow.modules.module.Module" title="spflow.modules.module.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a>] | <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference internal" href="base_modules.html#spflow.modules.module.Module" title="spflow.modules.module.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a>]</span>) – <p>List of Modules.
+The scopes for all child modules need to be pair-wise disjoint.</p>
+<ol class="arabic simple">
+<li><p>If <cite>inputs</cite> is a list of Modules, they have to be of disjoint scopes and have equal number of features or a single feature wich will the be broadcast and an equal number of channels or a single channel which will be broadcast.</p></li>
+</ol>
+<dl>
+<dt>Example shapes:</dt><dd><p>inputs = ((3, 4), (3, 4))
+output = (3, 4)</p>
+<p>inputs = ((3, 4), (3, 1))
+output = (3, 4)  # broadcasted</p>
+<p>inputs = ((3, 4), (1, 4))
+output = (3, 4)  # broadcasted</p>
+<p>inputs = ((3, 1), (1, 4))
+output = (3, 4)  # broadcasted</p>
+</dd>
+</dl>
+</p></li>
+<li><p><strong>num_splits</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Number of splits when wrapping single input in Split.</p></li>
+<li><p><strong>split_mode</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="operations.html#spflow.modules.ops.split.SplitMode" title="spflow.modules.ops.split.SplitMode"><code class="xref py py-class docutils literal notranslate"><span class="pre">SplitMode</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional split configuration for single input mode.
+Use SplitMode.consecutive() or SplitMode.interleaved().
+Defaults to SplitMode.consecutive(num_splits=num_splits) if not specified.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.14)"><strong>ValueError</strong></a> – Invalid arguments.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="spflow.modules.products.ElementwiseProduct.check_shapes">
 <span class="sig-name descname"><span class="pre">check_shapes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/products/elementwise_product.html#ElementwiseProduct.check_shapes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.products.ElementwiseProduct.check_shapes" title="Link to this definition">¶</a></dt>
 <dd><p>Check if input shapes are compatible for broadcasting.</p>
@@ -517,6 +564,23 @@ product of input channels. All input scopes must be pairwise disjoint.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.modules.products.OuterProduct.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_splits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">split_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/products/outer_product.html#OuterProduct.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.products.OuterProduct.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Initialize outer product.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>inputs</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference internal" href="base_modules.html#spflow.modules.module.Module" title="spflow.modules.module.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a>]</span>) – Modules with pairwise disjoint scopes.</p></li>
+<li><p><strong>num_splits</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Number of splits for input operations.</p></li>
+<li><p><strong>split_mode</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="operations.html#spflow.modules.ops.split.SplitMode" title="spflow.modules.ops.split.SplitMode"><code class="xref py py-class docutils literal notranslate"><span class="pre">SplitMode</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional split configuration for single input mode.
+Use SplitMode.consecutive() or SplitMode.interleaved().
+Defaults to SplitMode.consecutive(num_splits=num_splits) if not specified.</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -683,6 +747,7 @@ product of input channels. All input scopes must be pairwise disjoint.</p>
 <li><a class="reference internal" href="#product">Product</a><ul>
 <li><a class="reference internal" href="#spflow.modules.products.Product"><code class="docutils literal notranslate"><span class="pre">Product</span></code></a><ul>
 <li><a class="reference internal" href="#spflow.modules.products.Product.inputs"><code class="docutils literal notranslate"><span class="pre">Product.inputs</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.products.Product.__init__"><code class="docutils literal notranslate"><span class="pre">Product.__init__()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.products.Product.expectation_maximization"><code class="docutils literal notranslate"><span class="pre">Product.expectation_maximization()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.products.Product.log_likelihood"><code class="docutils literal notranslate"><span class="pre">Product.log_likelihood()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.products.Product.marginalize"><code class="docutils literal notranslate"><span class="pre">Product.marginalize()</span></code></a></li>
@@ -695,6 +760,7 @@ product of input channels. All input scopes must be pairwise disjoint.</p>
 </li>
 <li><a class="reference internal" href="#elementwiseproduct">ElementwiseProduct</a><ul>
 <li><a class="reference internal" href="#spflow.modules.products.ElementwiseProduct"><code class="docutils literal notranslate"><span class="pre">ElementwiseProduct</span></code></a><ul>
+<li><a class="reference internal" href="#spflow.modules.products.ElementwiseProduct.__init__"><code class="docutils literal notranslate"><span class="pre">ElementwiseProduct.__init__()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.products.ElementwiseProduct.check_shapes"><code class="docutils literal notranslate"><span class="pre">ElementwiseProduct.check_shapes()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.products.ElementwiseProduct.log_likelihood"><code class="docutils literal notranslate"><span class="pre">ElementwiseProduct.log_likelihood()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.products.ElementwiseProduct.map_out_channels_to_in_channels"><code class="docutils literal notranslate"><span class="pre">ElementwiseProduct.map_out_channels_to_in_channels()</span></code></a></li>
@@ -707,6 +773,7 @@ product of input channels. All input scopes must be pairwise disjoint.</p>
 <li><a class="reference internal" href="#outerproduct">OuterProduct</a><ul>
 <li><a class="reference internal" href="#spflow.modules.products.OuterProduct"><code class="docutils literal notranslate"><span class="pre">OuterProduct</span></code></a><ul>
 <li><a class="reference internal" href="#spflow.modules.products.OuterProduct.unraveled_channel_indices"><code class="docutils literal notranslate"><span class="pre">OuterProduct.unraveled_channel_indices</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.products.OuterProduct.__init__"><code class="docutils literal notranslate"><span class="pre">OuterProduct.__init__()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.products.OuterProduct.check_shapes"><code class="docutils literal notranslate"><span class="pre">OuterProduct.check_shapes()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.products.OuterProduct.log_likelihood"><code class="docutils literal notranslate"><span class="pre">OuterProduct.log_likelihood()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.products.OuterProduct.map_out_channels_to_in_channels"><code class="docutils literal notranslate"><span class="pre">OuterProduct.map_out_channels_to_in_channels()</span></code></a></li>

@@ -279,6 +279,8 @@
 <span class="sd">        distribution: Underlying torch.distributions.Uniform.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
+<div class="viewcode-block" id="Uniform.__init__">
+<a class="viewcode-back" href="../../../../api/leaves.html#spflow.modules.leaves.Uniform.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">scope</span><span class="p">:</span> <span class="n">Scope</span><span class="p">,</span>
@@ -325,7 +327,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">low</span> <span class="o">=</span> <span class="n">low</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">high</span> <span class="o">=</span> <span class="n">high</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">end_next</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nextafter</span><span class="p">(</span><span class="n">high</span><span class="p">,</span> <span class="n">high</span><span class="o">.</span><span class="n">new_tensor</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">)))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_support_outside</span> <span class="o">=</span> <span class="n">high</span><span class="o">.</span><span class="n">new_tensor</span><span class="p">(</span><span class="n">support_outside</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">bool</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_support_outside</span> <span class="o">=</span> <span class="n">high</span><span class="o">.</span><span class="n">new_tensor</span><span class="p">(</span><span class="n">support_outside</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">bool</span><span class="p">)</span></div>
+
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">_supported_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>

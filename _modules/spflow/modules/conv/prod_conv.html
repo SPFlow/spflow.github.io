@@ -294,6 +294,8 @@
 <span class="sd">        padding_w (int): Padding in width dimension.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
+<div class="viewcode-block" id="ProdConv.__init__">
+<a class="viewcode-back" href="../../../../api/conv.html#spflow.modules.conv.ProdConv.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">inputs</span><span class="p">:</span> <span class="n">Module</span><span class="p">,</span>
@@ -356,7 +358,8 @@
 
         <span class="c1"># Compute aggregated scope</span>
         <span class="c1"># Each output position covers a kernel_size_h x kernel_size_w patch</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_compute_scope</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_compute_scope</span><span class="p">()</span></div>
+
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_compute_scope</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute the aggregated scope for this layer.&quot;&quot;&quot;</span>

@@ -348,6 +348,35 @@ Effective Approach to Probabilistic Deep Learning.” NeurIPS 2020.</p>
 </dd>
 </dl>
 <dl class="py method">
+<dt class="sig sig-object py" id="spflow.modules.rat.RatSPN.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">leaf_modules</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_root_nodes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_region_nodes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_repetitions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">depth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outer_product</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">split_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_splits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/rat/rat_spn.html#RatSPN.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.rat.RatSPN.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Initialize RAT-SPN with specified architecture parameters.</p>
+<p>Creates a Random and Tensorized SPN by recursively constructing layers of
+sum and product nodes. Circuit structure is fixed after initialization.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>leaf_modules</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">list[LeafModule]</span></code>) – Leaf distributions forming the base layer.</p></li>
+<li><p><strong>n_root_nodes</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – Number of root sum nodes in final mixture.</p></li>
+<li><p><strong>n_region_nodes</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – Number of sum nodes in each region layer.</p></li>
+<li><p><strong>num_repetitions</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – Number of parallel circuit instances.</p></li>
+<li><p><strong>depth</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – Number of partition/region layers.</p></li>
+<li><p><strong>outer_product</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span> <span class="pre">|</span> <span class="pre">None</span></code>, <em>optional</em>) – Use outer product instead of
+elementwise product for partitions. Defaults to False.</p></li>
+<li><p><strong>split_mode</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">SplitMode</span> <span class="pre">|</span> <span class="pre">None</span></code>, <em>optional</em>) – Split configuration.
+Use SplitMode.consecutive() or SplitMode.interleaved().
+Defaults to SplitMode.consecutive(num_splits) if not specified.</p></li>
+<li><p><strong>num_splits</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span> <span class="pre">|</span> <span class="pre">None</span></code>, <em>optional</em>) – Number of splits in each partition.
+Must be at least 2. Defaults to 2.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.14)"><strong>ValueError</strong></a> – If architectural parameters are invalid.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="spflow.modules.rat.RatSPN.create_spn">
 <span class="sig-name descname"><span class="pre">create_spn</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/rat/rat_spn.html#RatSPN.create_spn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.rat.RatSPN.create_spn" title="Link to this definition">¶</a></dt>
 <dd><p>Create the RAT-SPN architecture.</p>
@@ -537,6 +566,22 @@ Extends Sum with RAT-SPN specific optimizations.</p>
 <dl class="field-list simple">
 </dl>
 <dl class="py method">
+<dt class="sig sig-object py" id="spflow.modules.sums.RepetitionMixingLayer.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_channels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_repetitions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/sums/repetition_mixing_layer.html#RepetitionMixingLayer.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.sums.RepetitionMixingLayer.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Initialize mixing layer for RAT-SPN.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>inputs</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="base_modules.html#spflow.modules.module.Module" title="spflow.modules.module.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a></span>) – Input module to mix over channels.</p></li>
+<li><p><strong>out_channels</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Number of output mixture components.</p></li>
+<li><p><strong>num_repetitions</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Number of parallel repetitions.</p></li>
+<li><p><strong>weights</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Initial mixing weights (if None, randomly initialized).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="spflow.modules.sums.RepetitionMixingLayer.expectation_maximization">
 <span class="sig-name descname"><span class="pre">expectation_maximization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/sums/repetition_mixing_layer.html#RepetitionMixingLayer.expectation_maximization"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.sums.RepetitionMixingLayer.expectation_maximization" title="Link to this definition">¶</a></dt>
 <dd><p>Perform expectation-maximization step.</p>
@@ -686,6 +731,7 @@ Extends Sum with RAT-SPN specific optimizations.</p>
 <li><a class="reference internal" href="#spflow.modules.rat.RatSPN.depth"><code class="docutils literal notranslate"><span class="pre">RatSPN.depth</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.rat.RatSPN.num_repetitions"><code class="docutils literal notranslate"><span class="pre">RatSPN.num_repetitions</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.rat.RatSPN.scope"><code class="docutils literal notranslate"><span class="pre">RatSPN.scope</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.rat.RatSPN.__init__"><code class="docutils literal notranslate"><span class="pre">RatSPN.__init__()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.rat.RatSPN.create_spn"><code class="docutils literal notranslate"><span class="pre">RatSPN.create_spn()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.rat.RatSPN.expectation_maximization"><code class="docutils literal notranslate"><span class="pre">RatSPN.expectation_maximization()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.rat.RatSPN.log_likelihood"><code class="docutils literal notranslate"><span class="pre">RatSPN.log_likelihood()</span></code></a></li>
@@ -703,6 +749,7 @@ Extends Sum with RAT-SPN specific optimizations.</p>
 </li>
 <li><a class="reference internal" href="#repetitionmixinglayer">RepetitionMixingLayer</a><ul>
 <li><a class="reference internal" href="#spflow.modules.sums.RepetitionMixingLayer"><code class="docutils literal notranslate"><span class="pre">RepetitionMixingLayer</span></code></a><ul>
+<li><a class="reference internal" href="#spflow.modules.sums.RepetitionMixingLayer.__init__"><code class="docutils literal notranslate"><span class="pre">RepetitionMixingLayer.__init__()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.sums.RepetitionMixingLayer.expectation_maximization"><code class="docutils literal notranslate"><span class="pre">RepetitionMixingLayer.expectation_maximization()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.sums.RepetitionMixingLayer.log_likelihood"><code class="docutils literal notranslate"><span class="pre">RepetitionMixingLayer.log_likelihood()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.sums.RepetitionMixingLayer.sample"><code class="docutils literal notranslate"><span class="pre">RepetitionMixingLayer.sample()</span></code></a></li>

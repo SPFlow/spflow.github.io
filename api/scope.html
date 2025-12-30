@@ -340,6 +340,27 @@ of the scope (i.e., RVs that the scope is conditioned on).</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="spflow.meta.data.scope.Scope.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">evidence</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/meta/data/scope.html#Scope.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.meta.data.scope.Scope.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Initializes Scope object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>query</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>] | <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/constants.html#Ellipsis" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">...</span></code></a>] | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – List of non-negative integers representing query RVs (may not contain duplicates).
+If a single integer is provided, it is converted to a list containing that integer.</p></li>
+<li><p><strong>evidence</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>] | <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/constants.html#Ellipsis" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">...</span></code></a>] | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional list of non-negative integers representing evidence variables
+(may not contain duplicates or RVs that are in the query). If a single integer
+is provided, it is converted to a list containing that integer. Defaults to None,
+in which case it is initialized to an empty list.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.14)"><strong>ValueError</strong></a> – Invalid arguments.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="spflow.meta.data.scope.Scope.copy">
 <span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/meta/data/scope.html#Scope.copy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.meta.data.scope.Scope.copy" title="Link to this definition">¶</a></dt>
 <dd><p>Creates a copy of the scope.</p>
@@ -556,6 +577,7 @@ of the scope (i.e., RVs that the scope is conditioned on).</p>
 <li><a class="reference internal" href="#spflow.meta.data.scope.Scope.all_equal"><code class="docutils literal notranslate"><span class="pre">Scope.all_equal()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.meta.data.scope.Scope.all_pairwise_disjoint"><code class="docutils literal notranslate"><span class="pre">Scope.all_pairwise_disjoint()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.meta.data.scope.Scope.join_all"><code class="docutils literal notranslate"><span class="pre">Scope.join_all()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.meta.data.scope.Scope.__init__"><code class="docutils literal notranslate"><span class="pre">Scope.__init__()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.meta.data.scope.Scope.copy"><code class="docutils literal notranslate"><span class="pre">Scope.copy()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.meta.data.scope.Scope.empty"><code class="docutils literal notranslate"><span class="pre">Scope.empty()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.meta.data.scope.Scope.equal_evidence"><code class="docutils literal notranslate"><span class="pre">Scope.equal_evidence()</span></code></a></li>

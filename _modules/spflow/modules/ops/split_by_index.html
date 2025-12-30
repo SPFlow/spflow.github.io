@@ -290,6 +290,8 @@
 <span class="sd">        inverse_indices: Tensor mapping original positions to split outputs.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
+<div class="viewcode-block" id="SplitByIndex.__init__">
+<a class="viewcode-back" href="../../../../api/operations.html#spflow.modules.ops.SplitByIndex.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">inputs</span><span class="p">:</span> <span class="n">Module</span><span class="p">,</span>
@@ -328,7 +330,8 @@
         <span class="c1"># Create gather indices for log_likelihood</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_gather_indices</span> <span class="o">=</span> <span class="p">[</span>
             <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">idx_group</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">inputs</span><span class="o">.</span><span class="n">device</span><span class="p">)</span> <span class="k">for</span> <span class="n">idx_group</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_indices</span>
-        <span class="p">]</span>
+        <span class="p">]</span></div>
+
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_validate_indices</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Validate that indices cover all features exactly once.&quot;&quot;&quot;</span>

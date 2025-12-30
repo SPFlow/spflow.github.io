@@ -306,6 +306,21 @@ concrete implementations should override specific methods as needed, and wrapper
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.modules.wrapper.base.Wrapper.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">module</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/wrapper/base.html#Wrapper.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.wrapper.base.Wrapper.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Initialize wrapper with specified SPFlow module.</p>
+<p>Creates a wrapper that delegates most operations to wrapped module
+while allowing specialized overrides for specific functionality. The wrapped module’s scope and structure are preserved,
+all abstract Module interface methods are delegated by default, and override specific methods to add custom wrapper functionality.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>module</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code>) – The SPFlow module to wrap. Can be any valid
+SPFlow module including complex circuit structures.</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py property">
 <dt class="sig sig-object py" id="spflow.modules.wrapper.base.Wrapper.device">
 <em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">device</span></span><a class="headerlink" href="#spflow.modules.wrapper.base.Wrapper.device" title="Link to this definition">¶</a></dt>
@@ -397,6 +412,27 @@ the spatial structure of image data and enabling the use of standard SPFlow modu
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.modules.wrapper.image_wrapper.ImageWrapper.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_channel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/wrapper/image_wrapper.html#ImageWrapper.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.wrapper.image_wrapper.ImageWrapper.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Initialize image wrapper.</p>
+<p>Creates a wrapper that adapts SPFlow modules for image data
+with automatic format conversion and validation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>module</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="base_modules.html#spflow.modules.module.Module" title="spflow.modules.module.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a></span>) – SPFlow module to wrap.</p></li>
+<li><p><strong>num_channel</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Number of channels in image.</p></li>
+<li><p><strong>height</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Height of image in pixels.</p></li>
+<li><p><strong>width</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Width of image in pixels.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="exceptions.html#spflow.exceptions.StructureError" title="spflow.exceptions.StructureError"><strong>StructureError</strong></a> – If module scope size doesn’t match image dimensions.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -601,6 +637,21 @@ with image data in probabilistic circuits.</p>
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.modules.wrapper.image_wrapper.MarginalizationContext.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">c</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">w</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/wrapper/image_wrapper.html#MarginalizationContext.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.wrapper.image_wrapper.MarginalizationContext.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Initialize marginalization context.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>c</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]</span>) – Channel indices to marginalize.</p></li>
+<li><p><strong>h</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]</span>) – Height indices to marginalize.</p></li>
+<li><p><strong>w</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]</span>) – Width indices to marginalize.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 </section>
@@ -666,6 +717,7 @@ with image data in probabilistic circuits.</p>
 <li><a class="reference internal" href="#spflow.modules.wrapper.base.Wrapper"><code class="docutils literal notranslate"><span class="pre">Wrapper</span></code></a><ul>
 <li><a class="reference internal" href="#spflow.modules.wrapper.base.Wrapper.module"><code class="docutils literal notranslate"><span class="pre">Wrapper.module</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.wrapper.base.Wrapper.scope"><code class="docutils literal notranslate"><span class="pre">Wrapper.scope</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.wrapper.base.Wrapper.__init__"><code class="docutils literal notranslate"><span class="pre">Wrapper.__init__()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.wrapper.base.Wrapper.device"><code class="docutils literal notranslate"><span class="pre">Wrapper.device</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.wrapper.base.Wrapper.feature_to_scope"><code class="docutils literal notranslate"><span class="pre">Wrapper.feature_to_scope</span></code></a></li>
 </ul>
@@ -678,6 +730,7 @@ with image data in probabilistic circuits.</p>
 <li><a class="reference internal" href="#spflow.modules.wrapper.image_wrapper.ImageWrapper.num_channel"><code class="docutils literal notranslate"><span class="pre">ImageWrapper.num_channel</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.wrapper.image_wrapper.ImageWrapper.height"><code class="docutils literal notranslate"><span class="pre">ImageWrapper.height</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.wrapper.image_wrapper.ImageWrapper.width"><code class="docutils literal notranslate"><span class="pre">ImageWrapper.width</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.wrapper.image_wrapper.ImageWrapper.__init__"><code class="docutils literal notranslate"><span class="pre">ImageWrapper.__init__()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.wrapper.image_wrapper.ImageWrapper.expectation_maximization"><code class="docutils literal notranslate"><span class="pre">ImageWrapper.expectation_maximization()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.wrapper.image_wrapper.ImageWrapper.flatten"><code class="docutils literal notranslate"><span class="pre">ImageWrapper.flatten()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.wrapper.image_wrapper.ImageWrapper.log_likelihood"><code class="docutils literal notranslate"><span class="pre">ImageWrapper.log_likelihood()</span></code></a></li>
@@ -694,6 +747,7 @@ with image data in probabilistic circuits.</p>
 <li><a class="reference internal" href="#spflow.modules.wrapper.image_wrapper.MarginalizationContext.c"><code class="docutils literal notranslate"><span class="pre">MarginalizationContext.c</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.wrapper.image_wrapper.MarginalizationContext.h"><code class="docutils literal notranslate"><span class="pre">MarginalizationContext.h</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.wrapper.image_wrapper.MarginalizationContext.w"><code class="docutils literal notranslate"><span class="pre">MarginalizationContext.w</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.wrapper.image_wrapper.MarginalizationContext.__init__"><code class="docutils literal notranslate"><span class="pre">MarginalizationContext.__init__()</span></code></a></li>
 </ul>
 </li>
 </ul>

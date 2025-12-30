@@ -273,6 +273,8 @@
 <span class="sd">        distribution: Underlying torch.distributions.Gamma.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
+<div class="viewcode-block" id="Gamma.__init__">
+<a class="viewcode-back" href="../../../../api/leaves.html#spflow.modules.leaves.Gamma.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">scope</span><span class="p">,</span>
@@ -316,7 +318,8 @@
         <span class="n">rate</span> <span class="o">=</span> <span class="n">init_parameter</span><span class="p">(</span><span class="n">param</span><span class="o">=</span><span class="n">rate</span><span class="p">,</span> <span class="n">event_shape</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_event_shape</span><span class="p">,</span> <span class="n">init</span><span class="o">=</span><span class="n">init_gamma_param</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">log_concentration</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">concentration</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">log_rate</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">rate</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_rate</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">rate</span><span class="p">))</span></div>
+
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">concentration</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
