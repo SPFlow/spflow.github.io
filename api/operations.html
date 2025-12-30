@@ -270,24 +270,6 @@
 <dd><p>Bases: <a class="reference internal" href="base_modules.html#spflow.modules.module.Module" title="spflow.modules.module.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a></p>
 <dl class="field-list simple">
 </dl>
-<dl class="py property">
-<dt class="sig sig-object py" id="spflow.modules.ops.Cat.feature_to_scope">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">feature_to_scope</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a></em><a class="headerlink" href="#spflow.modules.ops.Cat.feature_to_scope" title="Link to this definition">¶</a></dt>
-<dd><p>Mapping from output features to their respective scopes.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><dl class="simple">
-<dt>2D-array of scopes. Each row corresponds to an output feature,</dt><dd><p>each column to a repetition.</p>
-</dd>
-</dl>
-</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>np.ndarray[<a class="reference internal" href="scope.html#spflow.meta.data.scope.Scope" title="spflow.meta.data.scope.Scope">Scope</a>]</p>
-</dd>
-</dl>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="spflow.modules.ops.Cat.log_likelihood">
 <span class="sig-name descname"><span class="pre">log_likelihood</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/ops/cat.html#Cat.log_likelihood"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.ops.Cat.log_likelihood" title="Link to this definition">¶</a></dt>
@@ -304,6 +286,27 @@
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.modules.ops.Cat.marginalize">
+<span class="sig-name descname"><span class="pre">marginalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">marg_rvs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prune</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/ops/cat.html#Cat.marginalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.ops.Cat.marginalize" title="Link to this definition">¶</a></dt>
+<dd><p>Marginalize out specified random variables.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>marg_rvs</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]</span>) – List of random variable indices to marginalize.</p></li>
+<li><p><strong>prune</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether to prune unnecessary modules after marginalization.</p></li>
+<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional cache for storing intermediate results.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Marginalized module or None if fully marginalized.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Optional[<a class="reference internal" href="base_modules.html#spflow.modules.module.Module" title="spflow.modules.module.Module">Module</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -331,23 +334,20 @@
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="spflow.modules.ops.Cat.marginalize">
-<span class="sig-name descname"><span class="pre">marginalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">marg_rvs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prune</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/ops/cat.html#Cat.marginalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.ops.Cat.marginalize" title="Link to this definition">¶</a></dt>
-<dd><p>Marginalize out specified random variables.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="spflow.modules.ops.Cat.feature_to_scope">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">feature_to_scope</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a></em><a class="headerlink" href="#spflow.modules.ops.Cat.feature_to_scope" title="Link to this definition">¶</a></dt>
+<dd><p>Mapping from output features to their respective scopes.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>marg_rvs</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]</span>) – List of random variable indices to marginalize.</p></li>
-<li><p><strong>prune</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether to prune unnecessary modules after marginalization.</p></li>
-<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional cache for storing intermediate results.</p></li>
-</ul>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>2D-array of scopes. Each row corresponds to an output feature,</dt><dd><p>each column to a repetition.</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Marginalized module or None if fully marginalized.</p>
+</dl>
+</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Optional[<a class="reference internal" href="base_modules.html#spflow.modules.module.Module" title="spflow.modules.module.Module">Module</a>]</p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>np.ndarray[<a class="reference internal" href="scope.html#spflow.meta.data.scope.Scope" title="spflow.meta.data.scope.Scope">Scope</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -425,20 +425,23 @@ must provide feature_to_scope property.</p>
 </dl>
 </dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="spflow.modules.ops.split.Split.feature_to_scope">
-<em class="property"><span class="k"><span class="pre">abstract</span></span><span class="w"> </span><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">feature_to_scope</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a></em><a class="headerlink" href="#spflow.modules.ops.split.Split.feature_to_scope" title="Link to this definition">¶</a></dt>
-<dd><p>Mapping from output features to their respective scopes.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.modules.ops.split.Split.marginalize">
+<span class="sig-name descname"><span class="pre">marginalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">marg_rvs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prune</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/ops/split.html#Split.marginalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.ops.split.Split.marginalize" title="Link to this definition">¶</a></dt>
+<dd><p>Marginalize out specified random variables.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><dl class="simple">
-<dt>2D-array of scopes. Each row corresponds to an output feature,</dt><dd><p>each column to a repetition.</p>
-</dd>
-</dl>
-</p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>marg_rvs</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]</span>) – List of random variable indices to marginalize.</p></li>
+<li><p><strong>prune</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether to prune the resulting module.</p></li>
+<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]]</span>) – Cache dictionary for intermediate results.</p></li>
+</ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>np.ndarray[<a class="reference internal" href="scope.html#spflow.meta.data.scope.Scope" title="spflow.meta.data.scope.Scope">Scope</a>]</p>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a> | <a class="reference internal" href="base_modules.html#spflow.modules.module.Module" title="spflow.modules.module.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Marginalized module or None if fully marginalized.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -486,23 +489,20 @@ modules (like EinsumLayer) during sampling.</p>
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="spflow.modules.ops.split.Split.marginalize">
-<span class="sig-name descname"><span class="pre">marginalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">marg_rvs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prune</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/ops/split.html#Split.marginalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.ops.split.Split.marginalize" title="Link to this definition">¶</a></dt>
-<dd><p>Marginalize out specified random variables.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="spflow.modules.ops.split.Split.feature_to_scope">
+<em class="property"><span class="k"><span class="pre">abstract</span></span><span class="w"> </span><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">feature_to_scope</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a></em><a class="headerlink" href="#spflow.modules.ops.split.Split.feature_to_scope" title="Link to this definition">¶</a></dt>
+<dd><p>Mapping from output features to their respective scopes.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>marg_rvs</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]</span>) – List of random variable indices to marginalize.</p></li>
-<li><p><strong>prune</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether to prune the resulting module.</p></li>
-<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]]</span>) – Cache dictionary for intermediate results.</p></li>
-</ul>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>2D-array of scopes. Each row corresponds to an output feature,</dt><dd><p>each column to a repetition.</p>
+</dd>
+</dl>
+</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a> | <a class="reference internal" href="base_modules.html#spflow.modules.module.Module" title="spflow.modules.module.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a></span></p>
-</dd>
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Marginalized module or None if fully marginalized.</p>
+<dd class="field-even"><p>np.ndarray[<a class="reference internal" href="scope.html#spflow.meta.data.scope.Scope" title="spflow.meta.data.scope.Scope">Scope</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -528,22 +528,29 @@ to create split configurations that can be passed to modules.</p>
 </div>
 <dl class="field-list simple">
 </dl>
-<dl class="py property">
-<dt class="sig sig-object py" id="spflow.modules.ops.split.SplitMode.num_splits">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">num_splits</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></em><a class="headerlink" href="#spflow.modules.ops.split.SplitMode.num_splits" title="Link to this definition">¶</a></dt>
-<dd><p>Number of splits.</p>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="spflow.modules.ops.split.SplitMode.split_type">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">split_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><a class="headerlink" href="#spflow.modules.ops.split.SplitMode.split_type" title="Link to this definition">¶</a></dt>
-<dd><p>Type of split (‘consecutive’, ‘interleaved’, or ‘by_index’).</p>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="spflow.modules.ops.split.SplitMode.indices">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">indices</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></em><a class="headerlink" href="#spflow.modules.ops.split.SplitMode.indices" title="Link to this definition">¶</a></dt>
-<dd><p>Feature indices for ‘by_index’ split type.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.modules.ops.split.SplitMode.by_index">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">by_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">indices</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/ops/split.html#SplitMode.by_index"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.ops.split.SplitMode.by_index" title="Link to this definition">¶</a></dt>
+<dd><p>Create a split configuration with explicit feature indices.</p>
+<p>Splits features according to specified indices. Each inner list
+contains the feature indices for that split.</p>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">SplitMode</span><span class="o">.</span><span class="n">by_index</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">]])</span>
+<span class="go">SplitMode.by_index(indices=[[0, 1, 4], [2, 3, 5, 6, 7]])</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>indices</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]]</span>) – List of lists specifying feature indices for each split.
+All features must be covered exactly once.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#spflow.modules.ops.split.SplitMode" title="spflow.modules.ops.split.SplitMode"><code class="xref py py-class docutils literal notranslate"><span class="pre">SplitMode</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>SplitMode configuration for index-based splitting.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -583,31 +590,6 @@ to create split configurations that can be passed to modules.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="spflow.modules.ops.split.SplitMode.by_index">
-<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">by_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">indices</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/ops/split.html#SplitMode.by_index"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.ops.split.SplitMode.by_index" title="Link to this definition">¶</a></dt>
-<dd><p>Create a split configuration with explicit feature indices.</p>
-<p>Splits features according to specified indices. Each inner list
-contains the feature indices for that split.</p>
-<p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">SplitMode</span><span class="o">.</span><span class="n">by_index</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">]])</span>
-<span class="go">SplitMode.by_index(indices=[[0, 1, 4], [2, 3, 5, 6, 7]])</span>
-</pre></div>
-</div>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>indices</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]]</span>) – List of lists specifying feature indices for each split.
-All features must be covered exactly once.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#spflow.modules.ops.split.SplitMode" title="spflow.modules.ops.split.SplitMode"><code class="xref py py-class docutils literal notranslate"><span class="pre">SplitMode</span></code></a></span></p>
-</dd>
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>SplitMode configuration for index-based splitting.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="spflow.modules.ops.split.SplitMode.create">
 <span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/ops/split.html#SplitMode.create"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.ops.split.SplitMode.create" title="Link to this definition">¶</a></dt>
 <dd><p>Create a Split module with this configuration.</p>
@@ -622,6 +604,24 @@ All features must be covered exactly once.</p>
 <dd class="field-odd"><p>Split module configured according to this SplitMode.</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="spflow.modules.ops.split.SplitMode.indices">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">indices</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></em><a class="headerlink" href="#spflow.modules.ops.split.SplitMode.indices" title="Link to this definition">¶</a></dt>
+<dd><p>Feature indices for ‘by_index’ split type.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="spflow.modules.ops.split.SplitMode.num_splits">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">num_splits</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></em><a class="headerlink" href="#spflow.modules.ops.split.SplitMode.num_splits" title="Link to this definition">¶</a></dt>
+<dd><p>Number of splits.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="spflow.modules.ops.split.SplitMode.split_type">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">split_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><a class="headerlink" href="#spflow.modules.ops.split.SplitMode.split_type" title="Link to this definition">¶</a></dt>
+<dd><p>Type of split (‘consecutive’, ‘interleaved’, or ‘by_index’).</p>
 </dd></dl>
 
 </dd></dl>
@@ -641,24 +641,6 @@ All features must be covered exactly once.</p>
 With num_splits=3: [0,1,2,3,4,5] -&gt; [0,1], [2,3], [4,5]</p>
 <dl class="field-list simple">
 </dl>
-<dl class="py property">
-<dt class="sig sig-object py" id="spflow.modules.ops.SplitConsecutive.feature_to_scope">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">feature_to_scope</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a></em><a class="headerlink" href="#spflow.modules.ops.SplitConsecutive.feature_to_scope" title="Link to this definition">¶</a></dt>
-<dd><p>Mapping from output features to their respective scopes.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><dl class="simple">
-<dt>2D-array of scopes. Each row corresponds to an output feature,</dt><dd><p>each column to a repetition.</p>
-</dd>
-</dl>
-</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>np.ndarray[<a class="reference internal" href="scope.html#spflow.meta.data.scope.Scope" title="spflow.meta.data.scope.Scope">Scope</a>]</p>
-</dd>
-</dl>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="spflow.modules.ops.SplitConsecutive.log_likelihood">
 <span class="sig-name descname"><span class="pre">log_likelihood</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/ops/split_consecutive.html#SplitConsecutive.log_likelihood"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.ops.SplitConsecutive.log_likelihood" title="Link to this definition">¶</a></dt>
@@ -719,6 +701,24 @@ a parent that operates on the split output features.</p>
 </dl>
 </dd></dl>
 
+<dl class="py property">
+<dt class="sig sig-object py" id="spflow.modules.ops.SplitConsecutive.feature_to_scope">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">feature_to_scope</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a></em><a class="headerlink" href="#spflow.modules.ops.SplitConsecutive.feature_to_scope" title="Link to this definition">¶</a></dt>
+<dd><p>Mapping from output features to their respective scopes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>2D-array of scopes. Each row corresponds to an output feature,</dt><dd><p>each column to a repetition.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>np.ndarray[<a class="reference internal" href="scope.html#spflow.meta.data.scope.Scope" title="spflow.meta.data.scope.Scope">Scope</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 </section>
@@ -744,24 +744,6 @@ With num_splits=3: [0,1,2,3,4,5] -&gt; [0,3], [1,4], [2,5]</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">list[Tensor]</span></code></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="spflow.modules.ops.SplitInterleaved.feature_to_scope">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">feature_to_scope</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a></em><a class="headerlink" href="#spflow.modules.ops.SplitInterleaved.feature_to_scope" title="Link to this definition">¶</a></dt>
-<dd><p>Get feature-to-scope mapping for each split.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><dl class="simple">
-<dt>Array mapping features to scopes for each split.</dt><dd><p>Shape: (num_features_per_split, num_splits, num_repetitions)</p>
-</dd>
-</dl>
-</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>np.ndarray</p>
 </dd>
 </dl>
 </dd></dl>
@@ -799,6 +781,24 @@ So we interleave: [left[0], right[0], left[1], right[1], …].</p>
 </dl>
 </dd></dl>
 
+<dl class="py property">
+<dt class="sig sig-object py" id="spflow.modules.ops.SplitInterleaved.feature_to_scope">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">feature_to_scope</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a></em><a class="headerlink" href="#spflow.modules.ops.SplitInterleaved.feature_to_scope" title="Link to this definition">¶</a></dt>
+<dd><p>Get feature-to-scope mapping for each split.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>Array mapping features to scopes for each split.</dt><dd><p>Shape: (num_features_per_split, num_splits, num_repetitions)</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 </section>
@@ -827,30 +827,6 @@ group 1: [0, 1, 4] and group 2: [2, 3, 5, 6, 7]</p>
 <dt class="sig sig-object py" id="spflow.modules.ops.SplitByIndex.inverse_indices">
 <span class="sig-name descname"><span class="pre">inverse_indices</span></span><a class="headerlink" href="#spflow.modules.ops.SplitByIndex.inverse_indices" title="Link to this definition">¶</a></dt>
 <dd><p>Tensor mapping original positions to split outputs.</p>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="id0">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">indices</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#id0" title="Link to this definition">¶</a></dt>
-<dd><p>Get the feature indices for each split.</p>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="spflow.modules.ops.SplitByIndex.feature_to_scope">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">feature_to_scope</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a></em><a class="headerlink" href="#spflow.modules.ops.SplitByIndex.feature_to_scope" title="Link to this definition">¶</a></dt>
-<dd><p>Get feature-to-scope mapping for each split.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><dl class="simple">
-<dt>Array mapping features to scopes for each split.</dt><dd><p>Shape: (num_features_per_split, num_splits, num_repetitions)</p>
-</dd>
-</dl>
-</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>np.ndarray</p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -917,6 +893,30 @@ to be expanded to the full input feature count.</p>
 </dl>
 </dd></dl>
 
+<dl class="py property">
+<dt class="sig sig-object py" id="spflow.modules.ops.SplitByIndex.feature_to_scope">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">feature_to_scope</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a></em><a class="headerlink" href="#spflow.modules.ops.SplitByIndex.feature_to_scope" title="Link to this definition">¶</a></dt>
+<dd><p>Get feature-to-scope mapping for each split.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>Array mapping features to scopes for each split.</dt><dd><p>Shape: (num_features_per_split, num_splits, num_repetitions)</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id0">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">indices</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#id0" title="Link to this definition">¶</a></dt>
+<dd><p>Get the feature indices for each split.</p>
+</dd></dl>
+
 </dd></dl>
 
 </section>
@@ -980,10 +980,10 @@ to be expanded to the full input feature count.</p>
 <li><a class="reference internal" href="#">Operations</a><ul>
 <li><a class="reference internal" href="#cat">Cat</a><ul>
 <li><a class="reference internal" href="#spflow.modules.ops.Cat"><code class="docutils literal notranslate"><span class="pre">Cat</span></code></a><ul>
-<li><a class="reference internal" href="#spflow.modules.ops.Cat.feature_to_scope"><code class="docutils literal notranslate"><span class="pre">Cat.feature_to_scope</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.ops.Cat.log_likelihood"><code class="docutils literal notranslate"><span class="pre">Cat.log_likelihood()</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.ops.Cat.sample"><code class="docutils literal notranslate"><span class="pre">Cat.sample()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.ops.Cat.marginalize"><code class="docutils literal notranslate"><span class="pre">Cat.marginalize()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.ops.Cat.sample"><code class="docutils literal notranslate"><span class="pre">Cat.sample()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.ops.Cat.feature_to_scope"><code class="docutils literal notranslate"><span class="pre">Cat.feature_to_scope</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -995,33 +995,33 @@ to be expanded to the full input feature count.</p>
 <li><a class="reference internal" href="#spflow.modules.ops.split.Split.num_splits"><code class="docutils literal notranslate"><span class="pre">Split.num_splits</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.ops.split.Split.scope"><code class="docutils literal notranslate"><span class="pre">Split.scope</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.ops.split.Split.get_out_shapes"><code class="docutils literal notranslate"><span class="pre">Split.get_out_shapes()</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.ops.split.Split.feature_to_scope"><code class="docutils literal notranslate"><span class="pre">Split.feature_to_scope</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.ops.split.Split.marginalize"><code class="docutils literal notranslate"><span class="pre">Split.marginalize()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.ops.split.Split.merge_split_indices"><code class="docutils literal notranslate"><span class="pre">Split.merge_split_indices()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.ops.split.Split.sample"><code class="docutils literal notranslate"><span class="pre">Split.sample()</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.ops.split.Split.marginalize"><code class="docutils literal notranslate"><span class="pre">Split.marginalize()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.ops.split.Split.feature_to_scope"><code class="docutils literal notranslate"><span class="pre">Split.feature_to_scope</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li><a class="reference internal" href="#splitmode">SplitMode</a><ul>
 <li><a class="reference internal" href="#spflow.modules.ops.split.SplitMode"><code class="docutils literal notranslate"><span class="pre">SplitMode</span></code></a><ul>
-<li><a class="reference internal" href="#spflow.modules.ops.split.SplitMode.num_splits"><code class="docutils literal notranslate"><span class="pre">SplitMode.num_splits</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.ops.split.SplitMode.split_type"><code class="docutils literal notranslate"><span class="pre">SplitMode.split_type</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.ops.split.SplitMode.indices"><code class="docutils literal notranslate"><span class="pre">SplitMode.indices</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.ops.split.SplitMode.by_index"><code class="docutils literal notranslate"><span class="pre">SplitMode.by_index()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.ops.split.SplitMode.consecutive"><code class="docutils literal notranslate"><span class="pre">SplitMode.consecutive()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.ops.split.SplitMode.interleaved"><code class="docutils literal notranslate"><span class="pre">SplitMode.interleaved()</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.ops.split.SplitMode.by_index"><code class="docutils literal notranslate"><span class="pre">SplitMode.by_index()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.ops.split.SplitMode.create"><code class="docutils literal notranslate"><span class="pre">SplitMode.create()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.ops.split.SplitMode.indices"><code class="docutils literal notranslate"><span class="pre">SplitMode.indices</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.ops.split.SplitMode.num_splits"><code class="docutils literal notranslate"><span class="pre">SplitMode.num_splits</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.ops.split.SplitMode.split_type"><code class="docutils literal notranslate"><span class="pre">SplitMode.split_type</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li><a class="reference internal" href="#splitconsecutive">SplitConsecutive</a><ul>
 <li><a class="reference internal" href="#spflow.modules.ops.SplitConsecutive"><code class="docutils literal notranslate"><span class="pre">SplitConsecutive</span></code></a><ul>
-<li><a class="reference internal" href="#spflow.modules.ops.SplitConsecutive.feature_to_scope"><code class="docutils literal notranslate"><span class="pre">SplitConsecutive.feature_to_scope</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.ops.SplitConsecutive.log_likelihood"><code class="docutils literal notranslate"><span class="pre">SplitConsecutive.log_likelihood()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.ops.SplitConsecutive.merge_split_indices"><code class="docutils literal notranslate"><span class="pre">SplitConsecutive.merge_split_indices()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.ops.SplitConsecutive.sample"><code class="docutils literal notranslate"><span class="pre">SplitConsecutive.sample()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.ops.SplitConsecutive.feature_to_scope"><code class="docutils literal notranslate"><span class="pre">SplitConsecutive.feature_to_scope</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -1029,9 +1029,9 @@ to be expanded to the full input feature count.</p>
 <li><a class="reference internal" href="#splitinterleaved">SplitInterleaved</a><ul>
 <li><a class="reference internal" href="#spflow.modules.ops.SplitInterleaved"><code class="docutils literal notranslate"><span class="pre">SplitInterleaved</span></code></a><ul>
 <li><a class="reference internal" href="#spflow.modules.ops.SplitInterleaved.split_masks"><code class="docutils literal notranslate"><span class="pre">SplitInterleaved.split_masks</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.ops.SplitInterleaved.feature_to_scope"><code class="docutils literal notranslate"><span class="pre">SplitInterleaved.feature_to_scope</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.ops.SplitInterleaved.log_likelihood"><code class="docutils literal notranslate"><span class="pre">SplitInterleaved.log_likelihood()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.ops.SplitInterleaved.merge_split_indices"><code class="docutils literal notranslate"><span class="pre">SplitInterleaved.merge_split_indices()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.ops.SplitInterleaved.feature_to_scope"><code class="docutils literal notranslate"><span class="pre">SplitInterleaved.feature_to_scope</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -1040,11 +1040,11 @@ to be expanded to the full input feature count.</p>
 <li><a class="reference internal" href="#spflow.modules.ops.SplitByIndex"><code class="docutils literal notranslate"><span class="pre">SplitByIndex</span></code></a><ul>
 <li><a class="reference internal" href="#spflow.modules.ops.SplitByIndex.indices"><code class="docutils literal notranslate"><span class="pre">SplitByIndex.indices</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.ops.SplitByIndex.inverse_indices"><code class="docutils literal notranslate"><span class="pre">SplitByIndex.inverse_indices</span></code></a></li>
-<li><a class="reference internal" href="#id0"><code class="docutils literal notranslate"><span class="pre">SplitByIndex.indices</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.ops.SplitByIndex.feature_to_scope"><code class="docutils literal notranslate"><span class="pre">SplitByIndex.feature_to_scope</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.ops.SplitByIndex.log_likelihood"><code class="docutils literal notranslate"><span class="pre">SplitByIndex.log_likelihood()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.ops.SplitByIndex.merge_split_indices"><code class="docutils literal notranslate"><span class="pre">SplitByIndex.merge_split_indices()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.ops.SplitByIndex.sample"><code class="docutils literal notranslate"><span class="pre">SplitByIndex.sample()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.ops.SplitByIndex.feature_to_scope"><code class="docutils literal notranslate"><span class="pre">SplitByIndex.feature_to_scope</span></code></a></li>
+<li><a class="reference internal" href="#id0"><code class="docutils literal notranslate"><span class="pre">SplitByIndex.indices</span></code></a></li>
 </ul>
 </li>
 </ul>

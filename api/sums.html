@@ -318,48 +318,23 @@ over concatenated inputs).</p>
 </dl>
 </dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="spflow.modules.sums.Sum.feature_to_scope">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">feature_to_scope</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a></em><a class="headerlink" href="#spflow.modules.sums.Sum.feature_to_scope" title="Link to this definition">¶</a></dt>
-<dd><p>Mapping from output features to their respective scopes.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.modules.sums.Sum.expectation_maximization">
+<span class="sig-name descname"><span class="pre">expectation_maximization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bias_correction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/sums/sum.html#Sum.expectation_maximization"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.sums.Sum.expectation_maximization" title="Link to this definition">¶</a></dt>
+<dd><p>Perform expectation-maximization step.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><dl class="simple">
-<dt>2D-array of scopes. Each row corresponds to an output feature,</dt><dd><p>each column to a repetition.</p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Input data tensor.</p></li>
+<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional cache dictionary with log-likelihoods.</p></li>
+<li><p><strong>bias_correction</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether to apply bias correction.</p></li>
+</ul>
 </dd>
-</dl>
-</p>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>MissingCacheError</strong> – If required log-likelihoods are not found in cache.</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>np.ndarray[<a class="reference internal" href="scope.html#spflow.meta.data.scope.Scope" title="spflow.meta.data.scope.Scope">Scope</a>]</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="id0">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">weights</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><span class="pre">Tensor</span></a></em><a class="headerlink" href="#id0" title="Link to this definition">¶</a></dt>
-<dd><p>Returns the weights of all nodes as a tensor.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Weights normalized to sum to one.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>Tensor</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="spflow.modules.sums.Sum.log_weights">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">log_weights</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><span class="pre">Tensor</span></a></em><a class="headerlink" href="#spflow.modules.sums.Sum.log_weights" title="Link to this definition">¶</a></dt>
-<dd><p>Returns the log weights of all nodes as a tensor.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Log weights normalized to sum to one.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>Tensor</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
@@ -392,45 +367,22 @@ NaN values indicate evidence for conditional computation.</p></li>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="spflow.modules.sums.Sum.sample">
-<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_mpe</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampling_ctx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/sums/sum.html#Sum.sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.sums.Sum.sample" title="Link to this definition">¶</a></dt>
-<dd><p>Generate samples from sum module.</p>
+<dt class="sig sig-object py" id="spflow.modules.sums.Sum.marginalize">
+<span class="sig-name descname"><span class="pre">marginalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">marg_rvs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prune</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/sums/sum.html#Sum.marginalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.sums.Sum.marginalize" title="Link to this definition">¶</a></dt>
+<dd><p>Marginalize out specified random variables.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>num_samples</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Number of samples to generate.</p></li>
-<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Data tensor with NaN values to fill with samples.</p></li>
-<li><p><strong>is_mpe</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether to perform maximum a posteriori estimation.</p></li>
+<li><p><strong>marg_rvs</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]</span>) – List of random variables to marginalize.</p></li>
+<li><p><strong>prune</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether to prune the module.</p></li>
 <li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional cache dictionary.</p></li>
-<li><p><strong>sampling_ctx</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">SamplingContext</span></code> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional sampling context.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Sampled values.</p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#spflow.modules.sums.Sum" title="spflow.modules.sums.sum.Sum"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sum</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Tensor</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="spflow.modules.sums.Sum.expectation_maximization">
-<span class="sig-name descname"><span class="pre">expectation_maximization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bias_correction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/sums/sum.html#Sum.expectation_maximization"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.sums.Sum.expectation_maximization" title="Link to this definition">¶</a></dt>
-<dd><p>Perform expectation-maximization step.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Input data tensor.</p></li>
-<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional cache dictionary with log-likelihoods.</p></li>
-<li><p><strong>bias_correction</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether to apply bias correction.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>MissingCacheError</strong> – If required log-likelihoods are not found in cache.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Marginalized Sum module or None.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -455,22 +407,70 @@ NaN values indicate evidence for conditional computation.</p></li>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="spflow.modules.sums.Sum.marginalize">
-<span class="sig-name descname"><span class="pre">marginalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">marg_rvs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prune</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/sums/sum.html#Sum.marginalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.sums.Sum.marginalize" title="Link to this definition">¶</a></dt>
-<dd><p>Marginalize out specified random variables.</p>
+<dt class="sig sig-object py" id="spflow.modules.sums.Sum.sample">
+<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_mpe</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampling_ctx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/sums/sum.html#Sum.sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.sums.Sum.sample" title="Link to this definition">¶</a></dt>
+<dd><p>Generate samples from sum module.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>marg_rvs</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]</span>) – List of random variables to marginalize.</p></li>
-<li><p><strong>prune</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether to prune the module.</p></li>
+<li><p><strong>num_samples</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Number of samples to generate.</p></li>
+<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Data tensor with NaN values to fill with samples.</p></li>
+<li><p><strong>is_mpe</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether to perform maximum a posteriori estimation.</p></li>
 <li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional cache dictionary.</p></li>
+<li><p><strong>sampling_ctx</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">SamplingContext</span></code> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional sampling context.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#spflow.modules.sums.Sum" title="spflow.modules.sums.sum.Sum"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sum</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Sampled values.</p>
 </dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="spflow.modules.sums.Sum.feature_to_scope">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">feature_to_scope</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a></em><a class="headerlink" href="#spflow.modules.sums.Sum.feature_to_scope" title="Link to this definition">¶</a></dt>
+<dd><p>Mapping from output features to their respective scopes.</p>
+<dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Marginalized Sum module or None.</p>
+<dd class="field-odd"><p><dl class="simple">
+<dt>2D-array of scopes. Each row corresponds to an output feature,</dt><dd><p>each column to a repetition.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>np.ndarray[<a class="reference internal" href="scope.html#spflow.meta.data.scope.Scope" title="spflow.meta.data.scope.Scope">Scope</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="spflow.modules.sums.Sum.log_weights">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">log_weights</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><span class="pre">Tensor</span></a></em><a class="headerlink" href="#spflow.modules.sums.Sum.log_weights" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the log weights of all nodes as a tensor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Log weights normalized to sum to one.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id0">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">weights</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><span class="pre">Tensor</span></a></em><a class="headerlink" href="#id0" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the weights of all nodes as a tensor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Weights normalized to sum to one.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Tensor</p>
 </dd>
 </dl>
 </dd></dl>
@@ -512,33 +512,42 @@ are automatically normalized to sum to one. Uses log-domain computations.</p>
 </dl>
 </dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="spflow.modules.sums.ElementwiseSum.feature_to_scope">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">feature_to_scope</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a></em><a class="headerlink" href="#spflow.modules.sums.ElementwiseSum.feature_to_scope" title="Link to this definition">¶</a></dt>
-<dd><p>Mapping from output features to their respective scopes.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.modules.sums.ElementwiseSum.expectation_maximization">
+<span class="sig-name descname"><span class="pre">expectation_maximization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/sums/elementwise_sum.html#ElementwiseSum.expectation_maximization"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.sums.ElementwiseSum.expectation_maximization" title="Link to this definition">¶</a></dt>
+<dd><p>Perform EM step to update mixture weights.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><dl class="simple">
-<dt>2D-array of scopes. Each row corresponds to an output feature,</dt><dd><p>each column to a repetition.</p>
-</dd>
-</dl>
-</p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Training data tensor.</p></li>
+<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Cache for memoization.</p></li>
+</ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>np.ndarray[<a class="reference internal" href="scope.html#spflow.meta.data.scope.Scope" title="spflow.meta.data.scope.Scope">Scope</a>]</p>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="spflow.modules.sums.ElementwiseSum.weights">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">weights</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><span class="pre">Tensor</span></a></em><a class="headerlink" href="#spflow.modules.sums.ElementwiseSum.weights" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="spflow.modules.sums.ElementwiseSum.log_weights">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">log_weights</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><span class="pre">Tensor</span></a></em><a class="headerlink" href="#spflow.modules.sums.ElementwiseSum.log_weights" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.modules.sums.ElementwiseSum.log_likelihood">
+<span class="sig-name descname"><span class="pre">log_likelihood</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/sums/elementwise_sum.html#ElementwiseSum.log_likelihood"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.sums.ElementwiseSum.log_likelihood" title="Link to this definition">¶</a></dt>
+<dd><p>Compute log likelihood via weighted log-sum-exp.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Input data tensor.</p></li>
+<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Cache for memoization.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Computed log likelihood values.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tensor</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="spflow.modules.sums.ElementwiseSum.marginalize">
@@ -557,6 +566,24 @@ are automatically normalized to sum to one. Uses log-domain computations.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Optional[<a class="reference internal" href="#spflow.modules.sums.ElementwiseSum" title="spflow.modules.sums.ElementwiseSum">ElementwiseSum</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.modules.sums.ElementwiseSum.maximum_likelihood_estimation">
+<span class="sig-name descname"><span class="pre">maximum_likelihood_estimation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/sums/elementwise_sum.html#ElementwiseSum.maximum_likelihood_estimation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.sums.ElementwiseSum.maximum_likelihood_estimation" title="Link to this definition">¶</a></dt>
+<dd><p>MLE step (equivalent to EM for sum nodes).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Training data tensor.</p></li>
+<li><p><strong>weights</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>]</span>) – Optional weights for data points.</p></li>
+<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Cache for memoization.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
@@ -584,60 +611,33 @@ are automatically normalized to sum to one. Uses log-domain computations.</p>
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="spflow.modules.sums.ElementwiseSum.log_likelihood">
-<span class="sig-name descname"><span class="pre">log_likelihood</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/sums/elementwise_sum.html#ElementwiseSum.log_likelihood"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.sums.ElementwiseSum.log_likelihood" title="Link to this definition">¶</a></dt>
-<dd><p>Compute log likelihood via weighted log-sum-exp.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="spflow.modules.sums.ElementwiseSum.feature_to_scope">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">feature_to_scope</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a></em><a class="headerlink" href="#spflow.modules.sums.ElementwiseSum.feature_to_scope" title="Link to this definition">¶</a></dt>
+<dd><p>Mapping from output features to their respective scopes.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Input data tensor.</p></li>
-<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Cache for memoization.</p></li>
-</ul>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>2D-array of scopes. Each row corresponds to an output feature,</dt><dd><p>each column to a repetition.</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Computed log likelihood values.</p>
+</dl>
+</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Tensor</p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>np.ndarray[<a class="reference internal" href="scope.html#spflow.meta.data.scope.Scope" title="spflow.meta.data.scope.Scope">Scope</a>]</p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="spflow.modules.sums.ElementwiseSum.expectation_maximization">
-<span class="sig-name descname"><span class="pre">expectation_maximization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/sums/elementwise_sum.html#ElementwiseSum.expectation_maximization"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.sums.ElementwiseSum.expectation_maximization" title="Link to this definition">¶</a></dt>
-<dd><p>Perform EM step to update mixture weights.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Training data tensor.</p></li>
-<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Cache for memoization.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
-</dd>
-</dl>
-</dd></dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="spflow.modules.sums.ElementwiseSum.log_weights">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">log_weights</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><span class="pre">Tensor</span></a></em><a class="headerlink" href="#spflow.modules.sums.ElementwiseSum.log_weights" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="spflow.modules.sums.ElementwiseSum.maximum_likelihood_estimation">
-<span class="sig-name descname"><span class="pre">maximum_likelihood_estimation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/sums/elementwise_sum.html#ElementwiseSum.maximum_likelihood_estimation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.sums.ElementwiseSum.maximum_likelihood_estimation" title="Link to this definition">¶</a></dt>
-<dd><p>MLE step (equivalent to EM for sum nodes).</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Training data tensor.</p></li>
-<li><p><strong>weights</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>]</span>) – Optional weights for data points.</p></li>
-<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Cache for memoization.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
-</dd>
-</dl>
-</dd></dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="spflow.modules.sums.ElementwiseSum.weights">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">weights</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><span class="pre">Tensor</span></a></em><a class="headerlink" href="#spflow.modules.sums.ElementwiseSum.weights" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -706,14 +706,14 @@ are automatically normalized to sum to one. Uses log-domain computations.</p>
 <li><a class="reference internal" href="#spflow.modules.sums.Sum.sum_dim"><code class="docutils literal notranslate"><span class="pre">Sum.sum_dim</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.sums.Sum.weights"><code class="docutils literal notranslate"><span class="pre">Sum.weights</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.sums.Sum.logits"><code class="docutils literal notranslate"><span class="pre">Sum.logits</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.sums.Sum.feature_to_scope"><code class="docutils literal notranslate"><span class="pre">Sum.feature_to_scope</span></code></a></li>
-<li><a class="reference internal" href="#id0"><code class="docutils literal notranslate"><span class="pre">Sum.weights</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.sums.Sum.log_weights"><code class="docutils literal notranslate"><span class="pre">Sum.log_weights</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.sums.Sum.log_likelihood"><code class="docutils literal notranslate"><span class="pre">Sum.log_likelihood()</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.sums.Sum.sample"><code class="docutils literal notranslate"><span class="pre">Sum.sample()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.sums.Sum.expectation_maximization"><code class="docutils literal notranslate"><span class="pre">Sum.expectation_maximization()</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.sums.Sum.maximum_likelihood_estimation"><code class="docutils literal notranslate"><span class="pre">Sum.maximum_likelihood_estimation()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.sums.Sum.log_likelihood"><code class="docutils literal notranslate"><span class="pre">Sum.log_likelihood()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.sums.Sum.marginalize"><code class="docutils literal notranslate"><span class="pre">Sum.marginalize()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.sums.Sum.maximum_likelihood_estimation"><code class="docutils literal notranslate"><span class="pre">Sum.maximum_likelihood_estimation()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.sums.Sum.sample"><code class="docutils literal notranslate"><span class="pre">Sum.sample()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.sums.Sum.feature_to_scope"><code class="docutils literal notranslate"><span class="pre">Sum.feature_to_scope</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.sums.Sum.log_weights"><code class="docutils literal notranslate"><span class="pre">Sum.log_weights</span></code></a></li>
+<li><a class="reference internal" href="#id0"><code class="docutils literal notranslate"><span class="pre">Sum.weights</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -722,14 +722,14 @@ are automatically normalized to sum to one. Uses log-domain computations.</p>
 <li><a class="reference internal" href="#spflow.modules.sums.ElementwiseSum"><code class="docutils literal notranslate"><span class="pre">ElementwiseSum</span></code></a><ul>
 <li><a class="reference internal" href="#spflow.modules.sums.ElementwiseSum.logits"><code class="docutils literal notranslate"><span class="pre">ElementwiseSum.logits</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.sums.ElementwiseSum.unraveled_channel_indices"><code class="docutils literal notranslate"><span class="pre">ElementwiseSum.unraveled_channel_indices</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.sums.ElementwiseSum.feature_to_scope"><code class="docutils literal notranslate"><span class="pre">ElementwiseSum.feature_to_scope</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.sums.ElementwiseSum.weights"><code class="docutils literal notranslate"><span class="pre">ElementwiseSum.weights</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.sums.ElementwiseSum.log_weights"><code class="docutils literal notranslate"><span class="pre">ElementwiseSum.log_weights</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.sums.ElementwiseSum.marginalize"><code class="docutils literal notranslate"><span class="pre">ElementwiseSum.marginalize()</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.sums.ElementwiseSum.sample"><code class="docutils literal notranslate"><span class="pre">ElementwiseSum.sample()</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.sums.ElementwiseSum.log_likelihood"><code class="docutils literal notranslate"><span class="pre">ElementwiseSum.log_likelihood()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.sums.ElementwiseSum.expectation_maximization"><code class="docutils literal notranslate"><span class="pre">ElementwiseSum.expectation_maximization()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.sums.ElementwiseSum.log_likelihood"><code class="docutils literal notranslate"><span class="pre">ElementwiseSum.log_likelihood()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.sums.ElementwiseSum.marginalize"><code class="docutils literal notranslate"><span class="pre">ElementwiseSum.marginalize()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.sums.ElementwiseSum.maximum_likelihood_estimation"><code class="docutils literal notranslate"><span class="pre">ElementwiseSum.maximum_likelihood_estimation()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.sums.ElementwiseSum.sample"><code class="docutils literal notranslate"><span class="pre">ElementwiseSum.sample()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.sums.ElementwiseSum.feature_to_scope"><code class="docutils literal notranslate"><span class="pre">ElementwiseSum.feature_to_scope</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.sums.ElementwiseSum.log_weights"><code class="docutils literal notranslate"><span class="pre">ElementwiseSum.log_weights</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.sums.ElementwiseSum.weights"><code class="docutils literal notranslate"><span class="pre">ElementwiseSum.weights</span></code></a></li>
 </ul>
 </li>
 </ul>

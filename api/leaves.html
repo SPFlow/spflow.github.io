@@ -286,16 +286,16 @@
 <dd><p>Standard deviation (accessed via property, stored as log_std).</p>
 </dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="spflow.modules.leaves.Normal.scale">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">scale</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><span class="pre">Tensor</span></a></em><a class="headerlink" href="#spflow.modules.leaves.Normal.scale" title="Link to this definition">¶</a></dt>
-<dd><p>Standard deviation in natural space (read via exp of log_std).</p>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="spflow.modules.leaves.Normal.params">
 <span class="sig-name descname"><span class="pre">params</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/leaves/normal.html#Normal.params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.leaves.Normal.params" title="Link to this definition">¶</a></dt>
 <dd><p>Returns the parameters of the distribution.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="spflow.modules.leaves.Normal.scale">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">scale</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><span class="pre">Tensor</span></a></em><a class="headerlink" href="#spflow.modules.leaves.Normal.scale" title="Link to this definition">¶</a></dt>
+<dd><p>Standard deviation in natural space (read via exp of log_std).</p>
 </dd></dl>
 
 </dd></dl>
@@ -331,12 +331,6 @@ Standard deviation σ is stored in log-space for numerical stability.</p>
 <dd><p>Underlying torch.distributions.LogNormal.</p>
 </dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="spflow.modules.leaves.LogNormal.scale">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">scale</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><span class="pre">Tensor</span></a></em><a class="headerlink" href="#spflow.modules.leaves.LogNormal.scale" title="Link to this definition">¶</a></dt>
-<dd><p>Standard deviation in natural space (read via exp of log_scale).</p>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="spflow.modules.leaves.LogNormal.params">
 <span class="sig-name descname"><span class="pre">params</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/leaves/log_normal.html#LogNormal.params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.leaves.LogNormal.params" title="Link to this definition">¶</a></dt>
@@ -346,6 +340,12 @@ Standard deviation σ is stored in log-space for numerical stability.</p>
 <dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>]</span></p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="spflow.modules.leaves.LogNormal.scale">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">scale</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><span class="pre">Tensor</span></a></em><a class="headerlink" href="#spflow.modules.leaves.LogNormal.scale" title="Link to this definition">¶</a></dt>
+<dd><p>Standard deviation in natural space (read via exp of log_scale).</p>
 </dd></dl>
 
 </dd></dl>
@@ -374,12 +374,6 @@ Standard deviation σ is stored in log-space for numerical stability.</p>
 <dd><p>Underlying torch.distributions.Exponential.</p>
 </dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="id0">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">rate</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><span class="pre">Tensor</span></a></em><a class="headerlink" href="#id0" title="Link to this definition">¶</a></dt>
-<dd><p>Rate parameter in natural space (read via exp of log_rate).</p>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="spflow.modules.leaves.Exponential.params">
 <span class="sig-name descname"><span class="pre">params</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/leaves/exponential.html#Exponential.params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.leaves.Exponential.params" title="Link to this definition">¶</a></dt>
@@ -389,6 +383,12 @@ Standard deviation σ is stored in log-space for numerical stability.</p>
 <dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>]</span></p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id0">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">rate</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><span class="pre">Tensor</span></a></em><a class="headerlink" href="#id0" title="Link to this definition">¶</a></dt>
+<dd><p>Rate parameter in natural space (read via exp of log_rate).</p>
 </dd></dl>
 
 </dd></dl>
@@ -423,18 +423,6 @@ Standard deviation σ is stored in log-space for numerical stability.</p>
 <dd><p>Underlying torch.distributions.Gamma.</p>
 </dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="spflow.modules.leaves.Gamma.concentration">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">concentration</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><span class="pre">Tensor</span></a></em><a class="headerlink" href="#spflow.modules.leaves.Gamma.concentration" title="Link to this definition">¶</a></dt>
-<dd><p>Shape parameter in natural space (read via exp of log_alpha).</p>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="spflow.modules.leaves.Gamma.rate">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">rate</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><span class="pre">Tensor</span></a></em><a class="headerlink" href="#spflow.modules.leaves.Gamma.rate" title="Link to this definition">¶</a></dt>
-<dd><p>Rate parameter in natural space (read via exp of log_beta).</p>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="spflow.modules.leaves.Gamma.conditional_distribution">
 <span class="sig-name descname"><span class="pre">conditional_distribution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">evidence</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/leaves/gamma.html#Gamma.conditional_distribution"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.leaves.Gamma.conditional_distribution" title="Link to this definition">¶</a></dt>
@@ -461,6 +449,18 @@ Standard deviation σ is stored in log-space for numerical stability.</p>
 <dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>]</span></p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="spflow.modules.leaves.Gamma.concentration">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">concentration</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><span class="pre">Tensor</span></a></em><a class="headerlink" href="#spflow.modules.leaves.Gamma.concentration" title="Link to this definition">¶</a></dt>
+<dd><p>Shape parameter in natural space (read via exp of log_alpha).</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="spflow.modules.leaves.Gamma.rate">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">rate</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><span class="pre">Tensor</span></a></em><a class="headerlink" href="#spflow.modules.leaves.Gamma.rate" title="Link to this definition">¶</a></dt>
+<dd><p>Rate parameter in natural space (read via exp of log_beta).</p>
 </dd></dl>
 
 </dd></dl>
@@ -507,23 +507,6 @@ Standard deviation σ is stored in log-space for numerical stability.</p>
 <dd><p>Underlying torch.distributions.Uniform.</p>
 </dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="spflow.modules.leaves.Uniform.mode">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mode</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><span class="pre">Tensor</span></a></em><a class="headerlink" href="#spflow.modules.leaves.Uniform.mode" title="Link to this definition">¶</a></dt>
-<dd><p>Returns the mode (midpoint) of the distribution.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="spflow.modules.leaves.Uniform.params">
-<span class="sig-name descname"><span class="pre">params</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/leaves/uniform.html#Uniform.params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.leaves.Uniform.params" title="Link to this definition">¶</a></dt>
-<dd><p>Returns distribution parameters.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>]</span></p>
-</dd>
-</dl>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="spflow.modules.leaves.Uniform.expectation_maximization">
 <span class="sig-name descname"><span class="pre">expectation_maximization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bias_correction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/leaves/uniform.html#Uniform.expectation_maximization"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.leaves.Uniform.expectation_maximization" title="Link to this definition">¶</a></dt>
@@ -539,6 +522,23 @@ Standard deviation σ is stored in log-space for numerical stability.</p>
 <dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.modules.leaves.Uniform.params">
+<span class="sig-name descname"><span class="pre">params</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/leaves/uniform.html#Uniform.params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.leaves.Uniform.params" title="Link to this definition">¶</a></dt>
+<dd><p>Returns distribution parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="spflow.modules.leaves.Uniform.mode">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mode</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><span class="pre">Tensor</span></a></em><a class="headerlink" href="#spflow.modules.leaves.Uniform.mode" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the mode (midpoint) of the distribution.</p>
 </dd></dl>
 
 </dd></dl>
@@ -575,18 +575,6 @@ Standard deviation σ is stored in log-space for numerical stability.</p>
 <dd><p>Underlying torch.distributions.Categorical.</p>
 </dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="spflow.modules.leaves.Categorical.probs">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">probs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><span class="pre">Tensor</span></a></em><a class="headerlink" href="#spflow.modules.leaves.Categorical.probs" title="Link to this definition">¶</a></dt>
-<dd><p>Categorical probabilities in natural space (read via softmax of logits).</p>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="spflow.modules.leaves.Categorical.logits">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">logits</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><span class="pre">Tensor</span></a></em><a class="headerlink" href="#spflow.modules.leaves.Categorical.logits" title="Link to this definition">¶</a></dt>
-<dd><p>Logits directly parameterizing the categorical distribution.</p>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="spflow.modules.leaves.Categorical.params">
 <span class="sig-name descname"><span class="pre">params</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/leaves/categorical.html#Categorical.params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.leaves.Categorical.params" title="Link to this definition">¶</a></dt>
@@ -596,6 +584,18 @@ Standard deviation σ is stored in log-space for numerical stability.</p>
 <dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>]</span></p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="spflow.modules.leaves.Categorical.logits">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">logits</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><span class="pre">Tensor</span></a></em><a class="headerlink" href="#spflow.modules.leaves.Categorical.logits" title="Link to this definition">¶</a></dt>
+<dd><p>Logits directly parameterizing the categorical distribution.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="spflow.modules.leaves.Categorical.probs">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">probs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><span class="pre">Tensor</span></a></em><a class="headerlink" href="#spflow.modules.leaves.Categorical.probs" title="Link to this definition">¶</a></dt>
+<dd><p>Categorical probabilities in natural space (read via softmax of logits).</p>
 </dd></dl>
 
 </dd></dl>
@@ -625,18 +625,6 @@ Parameterized by success probability p ∈ [0, 1] (stored in logit-space for num
 <dd><p>Underlying torch.distributions.Bernoulli.</p>
 </dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="spflow.modules.leaves.Bernoulli.probs">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">probs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><span class="pre">Tensor</span></a></em><a class="headerlink" href="#spflow.modules.leaves.Bernoulli.probs" title="Link to this definition">¶</a></dt>
-<dd><p>Success probability in natural space (read via inverse projection of logits).</p>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="spflow.modules.leaves.Bernoulli.logits">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">logits</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><span class="pre">Tensor</span></a></em><a class="headerlink" href="#spflow.modules.leaves.Bernoulli.logits" title="Link to this definition">¶</a></dt>
-<dd><p>Logits of the Bernoulli distribution.</p>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="spflow.modules.leaves.Bernoulli.params">
 <span class="sig-name descname"><span class="pre">params</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/leaves/bernoulli.html#Bernoulli.params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.leaves.Bernoulli.params" title="Link to this definition">¶</a></dt>
@@ -646,6 +634,18 @@ Parameterized by success probability p ∈ [0, 1] (stored in logit-space for num
 <dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>]</span></p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="spflow.modules.leaves.Bernoulli.logits">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">logits</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><span class="pre">Tensor</span></a></em><a class="headerlink" href="#spflow.modules.leaves.Bernoulli.logits" title="Link to this definition">¶</a></dt>
+<dd><p>Logits of the Bernoulli distribution.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="spflow.modules.leaves.Bernoulli.probs">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">probs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><span class="pre">Tensor</span></a></em><a class="headerlink" href="#spflow.modules.leaves.Bernoulli.probs" title="Link to this definition">¶</a></dt>
+<dd><p>Success probability in natural space (read via inverse projection of logits).</p>
 </dd></dl>
 
 </dd></dl>
@@ -689,24 +689,6 @@ stored in logit-space for numerical stability), and k is the number of successes
 <dd><p>Underlying torch.distributions.Binomial.</p>
 </dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="spflow.modules.leaves.Binomial.total_count">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">total_count</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><span class="pre">Tensor</span></a></em><a class="headerlink" href="#spflow.modules.leaves.Binomial.total_count" title="Link to this definition">¶</a></dt>
-<dd><p>Returns the number of trials.</p>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="spflow.modules.leaves.Binomial.probs">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">probs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><span class="pre">Tensor</span></a></em><a class="headerlink" href="#spflow.modules.leaves.Binomial.probs" title="Link to this definition">¶</a></dt>
-<dd><p>Success probability in natural space (read via inverse projection of logit_p).</p>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="spflow.modules.leaves.Binomial.logits">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">logits</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><span class="pre">Tensor</span></a></em><a class="headerlink" href="#spflow.modules.leaves.Binomial.logits" title="Link to this definition">¶</a></dt>
-<dd><p>Logits for the success probability.</p>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="spflow.modules.leaves.Binomial.params">
 <span class="sig-name descname"><span class="pre">params</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/leaves/binomial.html#Binomial.params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.leaves.Binomial.params" title="Link to this definition">¶</a></dt>
@@ -716,6 +698,24 @@ stored in logit-space for numerical stability), and k is the number of successes
 <dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>]</span></p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="spflow.modules.leaves.Binomial.logits">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">logits</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><span class="pre">Tensor</span></a></em><a class="headerlink" href="#spflow.modules.leaves.Binomial.logits" title="Link to this definition">¶</a></dt>
+<dd><p>Logits for the success probability.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="spflow.modules.leaves.Binomial.probs">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">probs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><span class="pre">Tensor</span></a></em><a class="headerlink" href="#spflow.modules.leaves.Binomial.probs" title="Link to this definition">¶</a></dt>
+<dd><p>Success probability in natural space (read via inverse projection of logit_p).</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="spflow.modules.leaves.Binomial.total_count">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">total_count</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><span class="pre">Tensor</span></a></em><a class="headerlink" href="#spflow.modules.leaves.Binomial.total_count" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the number of trials.</p>
 </dd></dl>
 
 </dd></dl>
@@ -744,12 +744,6 @@ stored in logit-space for numerical stability), and k is the number of successes
 <dd><p>Underlying torch.distributions.Poisson.</p>
 </dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="id1">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">rate</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><span class="pre">Tensor</span></a></em><a class="headerlink" href="#id1" title="Link to this definition">¶</a></dt>
-<dd><p>Rate parameter in natural space (read via exp of log_rate).</p>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="spflow.modules.leaves.Poisson.params">
 <span class="sig-name descname"><span class="pre">params</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/leaves/poisson.html#Poisson.params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.leaves.Poisson.params" title="Link to this definition">¶</a></dt>
@@ -759,6 +753,12 @@ stored in logit-space for numerical stability), and k is the number of successes
 <dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>]</span></p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id1">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">rate</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><span class="pre">Tensor</span></a></em><a class="headerlink" href="#id1" title="Link to this definition">¶</a></dt>
+<dd><p>Rate parameter in natural space (read via exp of log_rate).</p>
 </dd></dl>
 
 </dd></dl>
@@ -787,18 +787,6 @@ stored in logit-space for numerical stability), and k is the number of successes
 <dd><p>Underlying torch.distributions.Geometric.</p>
 </dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="spflow.modules.leaves.Geometric.probs">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">probs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><span class="pre">Tensor</span></a></em><a class="headerlink" href="#spflow.modules.leaves.Geometric.probs" title="Link to this definition">¶</a></dt>
-<dd><p>Success probability in natural space (read via inverse projection of logits).</p>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="spflow.modules.leaves.Geometric.logits">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">logits</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><span class="pre">Tensor</span></a></em><a class="headerlink" href="#spflow.modules.leaves.Geometric.logits" title="Link to this definition">¶</a></dt>
-<dd><p>Logits for the success probability.</p>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="spflow.modules.leaves.Geometric.params">
 <span class="sig-name descname"><span class="pre">params</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/leaves/geometric.html#Geometric.params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.leaves.Geometric.params" title="Link to this definition">¶</a></dt>
@@ -808,6 +796,18 @@ stored in logit-space for numerical stability), and k is the number of successes
 <dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>]</span></p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="spflow.modules.leaves.Geometric.logits">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">logits</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><span class="pre">Tensor</span></a></em><a class="headerlink" href="#spflow.modules.leaves.Geometric.logits" title="Link to this definition">¶</a></dt>
+<dd><p>Logits for the success probability.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="spflow.modules.leaves.Geometric.probs">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">probs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><span class="pre">Tensor</span></a></em><a class="headerlink" href="#spflow.modules.leaves.Geometric.probs" title="Link to this definition">¶</a></dt>
+<dd><p>Success probability in natural space (read via inverse projection of logits).</p>
 </dd></dl>
 
 </dd></dl>
@@ -843,24 +843,6 @@ Success probability p is stored in logit-space for numerical stability.</p>
 <dd><p>Underlying torch.distributions.NegativeBinomial.</p>
 </dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="spflow.modules.leaves.NegativeBinomial.total_count">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">total_count</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><span class="pre">Tensor</span></a></em><a class="headerlink" href="#spflow.modules.leaves.NegativeBinomial.total_count" title="Link to this definition">¶</a></dt>
-<dd><p>Returns the fixed number of required successes.</p>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="spflow.modules.leaves.NegativeBinomial.probs">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">probs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><span class="pre">Tensor</span></a></em><a class="headerlink" href="#spflow.modules.leaves.NegativeBinomial.probs" title="Link to this definition">¶</a></dt>
-<dd><p>Success probability in natural space (read via inverse projection of logit_p).</p>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="spflow.modules.leaves.NegativeBinomial.logits">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">logits</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><span class="pre">Tensor</span></a></em><a class="headerlink" href="#spflow.modules.leaves.NegativeBinomial.logits" title="Link to this definition">¶</a></dt>
-<dd><p>Logits for success probability.</p>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="spflow.modules.leaves.NegativeBinomial.params">
 <span class="sig-name descname"><span class="pre">params</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/leaves/negative_binomial.html#NegativeBinomial.params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.leaves.NegativeBinomial.params" title="Link to this definition">¶</a></dt>
@@ -870,6 +852,24 @@ Success probability p is stored in logit-space for numerical stability.</p>
 <dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>]</span></p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="spflow.modules.leaves.NegativeBinomial.logits">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">logits</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><span class="pre">Tensor</span></a></em><a class="headerlink" href="#spflow.modules.leaves.NegativeBinomial.logits" title="Link to this definition">¶</a></dt>
+<dd><p>Logits for success probability.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="spflow.modules.leaves.NegativeBinomial.probs">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">probs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><span class="pre">Tensor</span></a></em><a class="headerlink" href="#spflow.modules.leaves.NegativeBinomial.probs" title="Link to this definition">¶</a></dt>
+<dd><p>Success probability in natural space (read via inverse projection of logit_p).</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="spflow.modules.leaves.NegativeBinomial.total_count">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">total_count</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><span class="pre">Tensor</span></a></em><a class="headerlink" href="#spflow.modules.leaves.NegativeBinomial.total_count" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the fixed number of required successes.</p>
 </dd></dl>
 
 </dd></dl>
@@ -919,17 +919,6 @@ Success probability p is stored in logit-space for numerical stability.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="spflow.modules.leaves.Hypergeometric.params">
-<span class="sig-name descname"><span class="pre">params</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/leaves/hypergeometric.html#Hypergeometric.params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.leaves.Hypergeometric.params" title="Link to this definition">¶</a></dt>
-<dd><p>Returns distribution parameters.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>]</span></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="spflow.modules.leaves.Hypergeometric.check_support">
 <span class="sig-name descname"><span class="pre">check_support</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/leaves/hypergeometric.html#Hypergeometric.check_support"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.leaves.Hypergeometric.check_support" title="Link to this definition">¶</a></dt>
 <dd><p>Check if data is in support of the Hypergeometric distribution.</p>
@@ -943,6 +932,17 @@ Success probability p is stored in logit-space for numerical stability.</p>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Boolean tensor indicating which values are in support.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.modules.leaves.Hypergeometric.params">
+<span class="sig-name descname"><span class="pre">params</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/leaves/hypergeometric.html#Hypergeometric.params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.leaves.Hypergeometric.params" title="Link to this definition">¶</a></dt>
+<dd><p>Returns distribution parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>]</span></p>
 </dd>
 </dl>
 </dd></dl>
@@ -997,40 +997,6 @@ before it can be used for inference or sampling.</p>
 <dd><p>Whether the distribution has been initialized with data.</p>
 </dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="spflow.modules.leaves.PiecewiseLinear.distribution">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">distribution</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">PiecewiseLinearDist</span></em><a class="headerlink" href="#spflow.modules.leaves.PiecewiseLinear.distribution" title="Link to this definition">¶</a></dt>
-<dd><p>Returns the underlying PiecewiseLinearDist object.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Raises<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.14)"><strong>ValueError</strong></a> – If the distribution has not been initialized.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="spflow.modules.leaves.PiecewiseLinear.mode">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mode</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><span class="pre">Tensor</span></a></em><a class="headerlink" href="#spflow.modules.leaves.PiecewiseLinear.mode" title="Link to this definition">¶</a></dt>
-<dd><p>Return distribution mode.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Mode of the distribution.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="spflow.modules.leaves.PiecewiseLinear.params">
-<span class="sig-name descname"><span class="pre">params</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/leaves/piecewise_linear.html#PiecewiseLinear.params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.leaves.PiecewiseLinear.params" title="Link to this definition">¶</a></dt>
-<dd><p>Returns the parameters of the distribution.</p>
-<p>For PiecewiseLinear, returns xs and ys nested lists.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a></span></p>
-</dd>
-</dl>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="spflow.modules.leaves.PiecewiseLinear.initialize">
 <span class="sig-name descname"><span class="pre">initialize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">domains</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/leaves/piecewise_linear.html#PiecewiseLinear.initialize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.leaves.PiecewiseLinear.initialize" title="Link to this definition">¶</a></dt>
@@ -1049,17 +1015,6 @@ and F is the number of features.</p></li>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.14)"><strong>ValueError</strong></a> – If data shape doesn’t match scope.</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="spflow.modules.leaves.PiecewiseLinear.reset">
-<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/leaves/piecewise_linear.html#PiecewiseLinear.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.leaves.PiecewiseLinear.reset" title="Link to this definition">¶</a></dt>
-<dd><p>Reset the distribution to uninitialized state.</p>
-<dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
@@ -1087,6 +1042,29 @@ and F is the number of features.</p></li>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="spflow.modules.leaves.PiecewiseLinear.params">
+<span class="sig-name descname"><span class="pre">params</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/leaves/piecewise_linear.html#PiecewiseLinear.params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.leaves.PiecewiseLinear.params" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the parameters of the distribution.</p>
+<p>For PiecewiseLinear, returns xs and ys nested lists.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.modules.leaves.PiecewiseLinear.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/leaves/piecewise_linear.html#PiecewiseLinear.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.leaves.PiecewiseLinear.reset" title="Link to this definition">¶</a></dt>
+<dd><p>Reset the distribution to uninitialized state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="spflow.modules.leaves.PiecewiseLinear.sample">
 <span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_mpe</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampling_ctx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/leaves/piecewise_linear.html#PiecewiseLinear.sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.leaves.PiecewiseLinear.sample" title="Link to this definition">¶</a></dt>
 <dd><p>Sample from the piecewise linear distribution.</p>
@@ -1105,6 +1083,28 @@ and F is the number of features.</p></li>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Sampled data tensor.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="spflow.modules.leaves.PiecewiseLinear.distribution">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">distribution</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">PiecewiseLinearDist</span></em><a class="headerlink" href="#spflow.modules.leaves.PiecewiseLinear.distribution" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the underlying PiecewiseLinearDist object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.14)"><strong>ValueError</strong></a> – If the distribution has not been initialized.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="spflow.modules.leaves.PiecewiseLinear.mode">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mode</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><span class="pre">Tensor</span></a></em><a class="headerlink" href="#spflow.modules.leaves.PiecewiseLinear.mode" title="Link to this definition">¶</a></dt>
+<dd><p>Return distribution mode.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Mode of the distribution.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1176,8 +1176,8 @@ and F is the number of features.</p></li>
 <li><a class="reference internal" href="#spflow.modules.leaves.Normal"><code class="docutils literal notranslate"><span class="pre">Normal</span></code></a><ul>
 <li><a class="reference internal" href="#spflow.modules.leaves.Normal.loc"><code class="docutils literal notranslate"><span class="pre">Normal.loc</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.leaves.Normal.std"><code class="docutils literal notranslate"><span class="pre">Normal.std</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.leaves.Normal.scale"><code class="docutils literal notranslate"><span class="pre">Normal.scale</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.leaves.Normal.params"><code class="docutils literal notranslate"><span class="pre">Normal.params()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.leaves.Normal.scale"><code class="docutils literal notranslate"><span class="pre">Normal.scale</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -1187,8 +1187,8 @@ and F is the number of features.</p></li>
 <li><a class="reference internal" href="#spflow.modules.leaves.LogNormal.mean"><code class="docutils literal notranslate"><span class="pre">LogNormal.mean</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.leaves.LogNormal.std"><code class="docutils literal notranslate"><span class="pre">LogNormal.std</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.leaves.LogNormal.distribution"><code class="docutils literal notranslate"><span class="pre">LogNormal.distribution</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.leaves.LogNormal.scale"><code class="docutils literal notranslate"><span class="pre">LogNormal.scale</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.leaves.LogNormal.params"><code class="docutils literal notranslate"><span class="pre">LogNormal.params()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.leaves.LogNormal.scale"><code class="docutils literal notranslate"><span class="pre">LogNormal.scale</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -1197,8 +1197,8 @@ and F is the number of features.</p></li>
 <li><a class="reference internal" href="#spflow.modules.leaves.Exponential"><code class="docutils literal notranslate"><span class="pre">Exponential</span></code></a><ul>
 <li><a class="reference internal" href="#spflow.modules.leaves.Exponential.rate"><code class="docutils literal notranslate"><span class="pre">Exponential.rate</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.leaves.Exponential.distribution"><code class="docutils literal notranslate"><span class="pre">Exponential.distribution</span></code></a></li>
-<li><a class="reference internal" href="#id0"><code class="docutils literal notranslate"><span class="pre">Exponential.rate</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.leaves.Exponential.params"><code class="docutils literal notranslate"><span class="pre">Exponential.params()</span></code></a></li>
+<li><a class="reference internal" href="#id0"><code class="docutils literal notranslate"><span class="pre">Exponential.rate</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -1208,10 +1208,10 @@ and F is the number of features.</p></li>
 <li><a class="reference internal" href="#spflow.modules.leaves.Gamma.alpha"><code class="docutils literal notranslate"><span class="pre">Gamma.alpha</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.leaves.Gamma.beta"><code class="docutils literal notranslate"><span class="pre">Gamma.beta</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.leaves.Gamma.distribution"><code class="docutils literal notranslate"><span class="pre">Gamma.distribution</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.leaves.Gamma.concentration"><code class="docutils literal notranslate"><span class="pre">Gamma.concentration</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.leaves.Gamma.rate"><code class="docutils literal notranslate"><span class="pre">Gamma.rate</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.leaves.Gamma.conditional_distribution"><code class="docutils literal notranslate"><span class="pre">Gamma.conditional_distribution()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.leaves.Gamma.params"><code class="docutils literal notranslate"><span class="pre">Gamma.params()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.leaves.Gamma.concentration"><code class="docutils literal notranslate"><span class="pre">Gamma.concentration</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.leaves.Gamma.rate"><code class="docutils literal notranslate"><span class="pre">Gamma.rate</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -1223,9 +1223,9 @@ and F is the number of features.</p></li>
 <li><a class="reference internal" href="#spflow.modules.leaves.Uniform.end_next"><code class="docutils literal notranslate"><span class="pre">Uniform.end_next</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.leaves.Uniform.support_outside"><code class="docutils literal notranslate"><span class="pre">Uniform.support_outside</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.leaves.Uniform.distribution"><code class="docutils literal notranslate"><span class="pre">Uniform.distribution</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.leaves.Uniform.mode"><code class="docutils literal notranslate"><span class="pre">Uniform.mode</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.leaves.Uniform.params"><code class="docutils literal notranslate"><span class="pre">Uniform.params()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.leaves.Uniform.expectation_maximization"><code class="docutils literal notranslate"><span class="pre">Uniform.expectation_maximization()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.leaves.Uniform.params"><code class="docutils literal notranslate"><span class="pre">Uniform.params()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.leaves.Uniform.mode"><code class="docutils literal notranslate"><span class="pre">Uniform.mode</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -1238,9 +1238,9 @@ and F is the number of features.</p></li>
 <li><a class="reference internal" href="#spflow.modules.leaves.Categorical.p"><code class="docutils literal notranslate"><span class="pre">Categorical.p</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.leaves.Categorical.K"><code class="docutils literal notranslate"><span class="pre">Categorical.K</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.leaves.Categorical.distribution"><code class="docutils literal notranslate"><span class="pre">Categorical.distribution</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.leaves.Categorical.probs"><code class="docutils literal notranslate"><span class="pre">Categorical.probs</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.leaves.Categorical.logits"><code class="docutils literal notranslate"><span class="pre">Categorical.logits</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.leaves.Categorical.params"><code class="docutils literal notranslate"><span class="pre">Categorical.params()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.leaves.Categorical.logits"><code class="docutils literal notranslate"><span class="pre">Categorical.logits</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.leaves.Categorical.probs"><code class="docutils literal notranslate"><span class="pre">Categorical.probs</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -1249,9 +1249,9 @@ and F is the number of features.</p></li>
 <li><a class="reference internal" href="#spflow.modules.leaves.Bernoulli"><code class="docutils literal notranslate"><span class="pre">Bernoulli</span></code></a><ul>
 <li><a class="reference internal" href="#spflow.modules.leaves.Bernoulli.p"><code class="docutils literal notranslate"><span class="pre">Bernoulli.p</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.leaves.Bernoulli.distribution"><code class="docutils literal notranslate"><span class="pre">Bernoulli.distribution</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.leaves.Bernoulli.probs"><code class="docutils literal notranslate"><span class="pre">Bernoulli.probs</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.leaves.Bernoulli.logits"><code class="docutils literal notranslate"><span class="pre">Bernoulli.logits</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.leaves.Bernoulli.params"><code class="docutils literal notranslate"><span class="pre">Bernoulli.params()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.leaves.Bernoulli.logits"><code class="docutils literal notranslate"><span class="pre">Bernoulli.logits</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.leaves.Bernoulli.probs"><code class="docutils literal notranslate"><span class="pre">Bernoulli.probs</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -1261,10 +1261,10 @@ and F is the number of features.</p></li>
 <li><a class="reference internal" href="#spflow.modules.leaves.Binomial.p"><code class="docutils literal notranslate"><span class="pre">Binomial.p</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.leaves.Binomial.n"><code class="docutils literal notranslate"><span class="pre">Binomial.n</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.leaves.Binomial.distribution"><code class="docutils literal notranslate"><span class="pre">Binomial.distribution</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.leaves.Binomial.total_count"><code class="docutils literal notranslate"><span class="pre">Binomial.total_count</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.leaves.Binomial.probs"><code class="docutils literal notranslate"><span class="pre">Binomial.probs</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.leaves.Binomial.logits"><code class="docutils literal notranslate"><span class="pre">Binomial.logits</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.leaves.Binomial.params"><code class="docutils literal notranslate"><span class="pre">Binomial.params()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.leaves.Binomial.logits"><code class="docutils literal notranslate"><span class="pre">Binomial.logits</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.leaves.Binomial.probs"><code class="docutils literal notranslate"><span class="pre">Binomial.probs</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.leaves.Binomial.total_count"><code class="docutils literal notranslate"><span class="pre">Binomial.total_count</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -1273,8 +1273,8 @@ and F is the number of features.</p></li>
 <li><a class="reference internal" href="#spflow.modules.leaves.Poisson"><code class="docutils literal notranslate"><span class="pre">Poisson</span></code></a><ul>
 <li><a class="reference internal" href="#spflow.modules.leaves.Poisson.rate"><code class="docutils literal notranslate"><span class="pre">Poisson.rate</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.leaves.Poisson.distribution"><code class="docutils literal notranslate"><span class="pre">Poisson.distribution</span></code></a></li>
-<li><a class="reference internal" href="#id1"><code class="docutils literal notranslate"><span class="pre">Poisson.rate</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.leaves.Poisson.params"><code class="docutils literal notranslate"><span class="pre">Poisson.params()</span></code></a></li>
+<li><a class="reference internal" href="#id1"><code class="docutils literal notranslate"><span class="pre">Poisson.rate</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -1283,9 +1283,9 @@ and F is the number of features.</p></li>
 <li><a class="reference internal" href="#spflow.modules.leaves.Geometric"><code class="docutils literal notranslate"><span class="pre">Geometric</span></code></a><ul>
 <li><a class="reference internal" href="#spflow.modules.leaves.Geometric.p"><code class="docutils literal notranslate"><span class="pre">Geometric.p</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.leaves.Geometric.distribution"><code class="docutils literal notranslate"><span class="pre">Geometric.distribution</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.leaves.Geometric.probs"><code class="docutils literal notranslate"><span class="pre">Geometric.probs</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.leaves.Geometric.logits"><code class="docutils literal notranslate"><span class="pre">Geometric.logits</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.leaves.Geometric.params"><code class="docutils literal notranslate"><span class="pre">Geometric.params()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.leaves.Geometric.logits"><code class="docutils literal notranslate"><span class="pre">Geometric.logits</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.leaves.Geometric.probs"><code class="docutils literal notranslate"><span class="pre">Geometric.probs</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -1295,10 +1295,10 @@ and F is the number of features.</p></li>
 <li><a class="reference internal" href="#spflow.modules.leaves.NegativeBinomial.n"><code class="docutils literal notranslate"><span class="pre">NegativeBinomial.n</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.leaves.NegativeBinomial.p"><code class="docutils literal notranslate"><span class="pre">NegativeBinomial.p</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.leaves.NegativeBinomial.distribution"><code class="docutils literal notranslate"><span class="pre">NegativeBinomial.distribution</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.leaves.NegativeBinomial.total_count"><code class="docutils literal notranslate"><span class="pre">NegativeBinomial.total_count</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.leaves.NegativeBinomial.probs"><code class="docutils literal notranslate"><span class="pre">NegativeBinomial.probs</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.leaves.NegativeBinomial.logits"><code class="docutils literal notranslate"><span class="pre">NegativeBinomial.logits</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.leaves.NegativeBinomial.params"><code class="docutils literal notranslate"><span class="pre">NegativeBinomial.params()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.leaves.NegativeBinomial.logits"><code class="docutils literal notranslate"><span class="pre">NegativeBinomial.logits</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.leaves.NegativeBinomial.probs"><code class="docutils literal notranslate"><span class="pre">NegativeBinomial.probs</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.leaves.NegativeBinomial.total_count"><code class="docutils literal notranslate"><span class="pre">NegativeBinomial.total_count</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -1310,8 +1310,8 @@ and F is the number of features.</p></li>
 <li><a class="reference internal" href="#spflow.modules.leaves.Hypergeometric.n"><code class="docutils literal notranslate"><span class="pre">Hypergeometric.n</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.leaves.Hypergeometric.distribution"><code class="docutils literal notranslate"><span class="pre">Hypergeometric.distribution</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.leaves.Hypergeometric.check_inputs"><code class="docutils literal notranslate"><span class="pre">Hypergeometric.check_inputs()</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.leaves.Hypergeometric.params"><code class="docutils literal notranslate"><span class="pre">Hypergeometric.params()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.leaves.Hypergeometric.check_support"><code class="docutils literal notranslate"><span class="pre">Hypergeometric.check_support()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.leaves.Hypergeometric.params"><code class="docutils literal notranslate"><span class="pre">Hypergeometric.params()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -1326,13 +1326,13 @@ and F is the number of features.</p></li>
 <li><a class="reference internal" href="#spflow.modules.leaves.PiecewiseLinear.ys"><code class="docutils literal notranslate"><span class="pre">PiecewiseLinear.ys</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.leaves.PiecewiseLinear.domains"><code class="docutils literal notranslate"><span class="pre">PiecewiseLinear.domains</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.leaves.PiecewiseLinear.is_initialized"><code class="docutils literal notranslate"><span class="pre">PiecewiseLinear.is_initialized</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.leaves.PiecewiseLinear.initialize"><code class="docutils literal notranslate"><span class="pre">PiecewiseLinear.initialize()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.leaves.PiecewiseLinear.log_likelihood"><code class="docutils literal notranslate"><span class="pre">PiecewiseLinear.log_likelihood()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.leaves.PiecewiseLinear.params"><code class="docutils literal notranslate"><span class="pre">PiecewiseLinear.params()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.leaves.PiecewiseLinear.reset"><code class="docutils literal notranslate"><span class="pre">PiecewiseLinear.reset()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.leaves.PiecewiseLinear.sample"><code class="docutils literal notranslate"><span class="pre">PiecewiseLinear.sample()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.leaves.PiecewiseLinear.distribution"><code class="docutils literal notranslate"><span class="pre">PiecewiseLinear.distribution</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.leaves.PiecewiseLinear.mode"><code class="docutils literal notranslate"><span class="pre">PiecewiseLinear.mode</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.leaves.PiecewiseLinear.params"><code class="docutils literal notranslate"><span class="pre">PiecewiseLinear.params()</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.leaves.PiecewiseLinear.initialize"><code class="docutils literal notranslate"><span class="pre">PiecewiseLinear.initialize()</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.leaves.PiecewiseLinear.reset"><code class="docutils literal notranslate"><span class="pre">PiecewiseLinear.reset()</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.leaves.PiecewiseLinear.log_likelihood"><code class="docutils literal notranslate"><span class="pre">PiecewiseLinear.log_likelihood()</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.leaves.PiecewiseLinear.sample"><code class="docutils literal notranslate"><span class="pre">PiecewiseLinear.sample()</span></code></a></li>
 </ul>
 </li>
 </ul>

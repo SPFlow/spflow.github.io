@@ -301,10 +301,22 @@ proper bottom-up evaluation order.</p>
 </dl>
 </dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="spflow.modules.conv.ConvPc.feature_to_scope">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">feature_to_scope</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a></em><a class="headerlink" href="#spflow.modules.conv.ConvPc.feature_to_scope" title="Link to this definition">¶</a></dt>
-<dd><p>Single output feature with full scope.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.modules.conv.ConvPc.expectation_maximization">
+<span class="sig-name descname"><span class="pre">expectation_maximization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bias_correction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/conv/conv_pc.html#ConvPc.expectation_maximization"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.conv.ConvPc.expectation_maximization" title="Link to this definition">¶</a></dt>
+<dd><p>Perform EM update throughout the circuit.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Input data tensor.</p></li>
+<li><p><strong>bias_correction</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether to apply bias correction.</p></li>
+<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional cache with log-likelihoods.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -323,6 +335,27 @@ proper bottom-up evaluation order.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.modules.conv.ConvPc.marginalize">
+<span class="sig-name descname"><span class="pre">marginalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">marg_rvs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prune</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/conv/conv_pc.html#ConvPc.marginalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.conv.ConvPc.marginalize" title="Link to this definition">¶</a></dt>
+<dd><p>Marginalize out specified random variables.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>marg_rvs</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]</span>) – List of random variable indices to marginalize.</p></li>
+<li><p><strong>prune</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether to prune unnecessary nodes.</p></li>
+<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional cache for storing intermediate results.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Marginalized module or None if fully marginalized.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#spflow.modules.conv.ConvPc" title="spflow.modules.conv.ConvPc">ConvPc</a> | <a class="reference internal" href="base_modules.html#spflow.modules.module.Module" title="spflow.modules.module.Module">Module</a> | None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -353,43 +386,10 @@ recursively propagates sampling to the leaf.</p>
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="spflow.modules.conv.ConvPc.expectation_maximization">
-<span class="sig-name descname"><span class="pre">expectation_maximization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bias_correction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/conv/conv_pc.html#ConvPc.expectation_maximization"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.conv.ConvPc.expectation_maximization" title="Link to this definition">¶</a></dt>
-<dd><p>Perform EM update throughout the circuit.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Input data tensor.</p></li>
-<li><p><strong>bias_correction</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether to apply bias correction.</p></li>
-<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional cache with log-likelihoods.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="spflow.modules.conv.ConvPc.marginalize">
-<span class="sig-name descname"><span class="pre">marginalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">marg_rvs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prune</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/conv/conv_pc.html#ConvPc.marginalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.conv.ConvPc.marginalize" title="Link to this definition">¶</a></dt>
-<dd><p>Marginalize out specified random variables.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>marg_rvs</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]</span>) – List of random variable indices to marginalize.</p></li>
-<li><p><strong>prune</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether to prune unnecessary nodes.</p></li>
-<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional cache for storing intermediate results.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Marginalized module or None if fully marginalized.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#spflow.modules.conv.ConvPc" title="spflow.modules.conv.ConvPc">ConvPc</a> | <a class="reference internal" href="base_modules.html#spflow.modules.module.Module" title="spflow.modules.module.Module">Module</a> | None</p>
-</dd>
-</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="spflow.modules.conv.ConvPc.feature_to_scope">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">feature_to_scope</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a></em><a class="headerlink" href="#spflow.modules.conv.ConvPc.feature_to_scope" title="Link to this definition">¶</a></dt>
+<dd><p>Single output feature with full scope.</p>
 </dd></dl>
 
 </dd></dl>
@@ -466,6 +466,99 @@ across all spatial patches of the same position within the kernel.</p>
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.modules.conv.SumConv.expectation_maximization">
+<span class="sig-name descname"><span class="pre">expectation_maximization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bias_correction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/conv/sum_conv.html#SumConv.expectation_maximization"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.conv.SumConv.expectation_maximization" title="Link to this definition">¶</a></dt>
+<dd><p>Perform expectation-maximization step to update weights.</p>
+<p>Follows the standard EM update pattern for sum nodes:
+1. Get cached log-likelihoods for input and this module
+2. Compute expectations using: log_weights + log_grads + input_lls - module_lls
+3. Normalize to get new log_weights</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Input data tensor.</p></li>
+<li><p><strong>bias_correction</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether to apply bias correction (unused currently).</p></li>
+<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Cache dictionary with log-likelihoods from forward pass.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>MissingCacheError</strong> – If required log-likelihoods are not found in cache.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.modules.conv.SumConv.log_likelihood">
+<span class="sig-name descname"><span class="pre">log_likelihood</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/conv/sum_conv.html#SumConv.log_likelihood"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.conv.SumConv.log_likelihood" title="Link to this definition">¶</a></dt>
+<dd><p>Compute log likelihood using convolutional weighted sum.</p>
+<p>Applies weighted sum over input channels within spatial patches.
+Each kernel position gets its own set of mixture weights.
+Uses logsumexp for numerical stability.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Input data of shape (batch_size, num_features).</p></li>
+<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Cache for intermediate computations.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Log-likelihood of shape (batch, features, out_channels, reps).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.modules.conv.SumConv.marginalize">
+<span class="sig-name descname"><span class="pre">marginalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">marg_rvs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prune</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/conv/sum_conv.html#SumConv.marginalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.conv.SumConv.marginalize" title="Link to this definition">¶</a></dt>
+<dd><p>Marginalize out specified random variables.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>marg_rvs</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]</span>) – List of random variable indices to marginalize.</p></li>
+<li><p><strong>prune</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether to prune unnecessary nodes.</p></li>
+<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional cache for storing intermediate results.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Marginalized module or None if fully marginalized.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#spflow.modules.conv.SumConv" title="spflow.modules.conv.SumConv">SumConv</a> | <a class="reference internal" href="base_modules.html#spflow.modules.module.Module" title="spflow.modules.module.Module">Module</a> | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.modules.conv.SumConv.sample">
+<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_mpe</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampling_ctx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/conv/sum_conv.html#SumConv.sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.conv.SumConv.sample" title="Link to this definition">¶</a></dt>
+<dd><p>Generate samples from sum conv module.</p>
+<p>Each spatial position samples from its per-position kernel weights.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>num_samples</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Number of samples to generate.</p></li>
+<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Data tensor with NaN values to fill with samples.</p></li>
+<li><p><strong>is_mpe</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether to perform maximum a posteriori estimation.</p></li>
+<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional cache dictionary.</p></li>
+<li><p><strong>sampling_ctx</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">SamplingContext</span></code> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional sampling context.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Sampled values.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py property">
 <dt class="sig sig-object py" id="spflow.modules.conv.SumConv.feature_to_scope">
 <em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">feature_to_scope</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a></em><a class="headerlink" href="#spflow.modules.conv.SumConv.feature_to_scope" title="Link to this definition">¶</a></dt>
@@ -496,99 +589,6 @@ across all spatial patches of the same position within the kernel.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>Tensor</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="spflow.modules.conv.SumConv.log_likelihood">
-<span class="sig-name descname"><span class="pre">log_likelihood</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/conv/sum_conv.html#SumConv.log_likelihood"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.conv.SumConv.log_likelihood" title="Link to this definition">¶</a></dt>
-<dd><p>Compute log likelihood using convolutional weighted sum.</p>
-<p>Applies weighted sum over input channels within spatial patches.
-Each kernel position gets its own set of mixture weights.
-Uses logsumexp for numerical stability.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Input data of shape (batch_size, num_features).</p></li>
-<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Cache for intermediate computations.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Log-likelihood of shape (batch, features, out_channels, reps).</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Tensor</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="spflow.modules.conv.SumConv.sample">
-<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_mpe</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampling_ctx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/conv/sum_conv.html#SumConv.sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.conv.SumConv.sample" title="Link to this definition">¶</a></dt>
-<dd><p>Generate samples from sum conv module.</p>
-<p>Each spatial position samples from its per-position kernel weights.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>num_samples</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Number of samples to generate.</p></li>
-<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Data tensor with NaN values to fill with samples.</p></li>
-<li><p><strong>is_mpe</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether to perform maximum a posteriori estimation.</p></li>
-<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional cache dictionary.</p></li>
-<li><p><strong>sampling_ctx</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">SamplingContext</span></code> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional sampling context.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Sampled values.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Tensor</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="spflow.modules.conv.SumConv.expectation_maximization">
-<span class="sig-name descname"><span class="pre">expectation_maximization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bias_correction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/conv/sum_conv.html#SumConv.expectation_maximization"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.conv.SumConv.expectation_maximization" title="Link to this definition">¶</a></dt>
-<dd><p>Perform expectation-maximization step to update weights.</p>
-<p>Follows the standard EM update pattern for sum nodes:
-1. Get cached log-likelihoods for input and this module
-2. Compute expectations using: log_weights + log_grads + input_lls - module_lls
-3. Normalize to get new log_weights</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Input data tensor.</p></li>
-<li><p><strong>bias_correction</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether to apply bias correction (unused currently).</p></li>
-<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Cache dictionary with log-likelihoods from forward pass.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>MissingCacheError</strong> – If required log-likelihoods are not found in cache.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="spflow.modules.conv.SumConv.marginalize">
-<span class="sig-name descname"><span class="pre">marginalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">marg_rvs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prune</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/conv/sum_conv.html#SumConv.marginalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.conv.SumConv.marginalize" title="Link to this definition">¶</a></dt>
-<dd><p>Marginalize out specified random variables.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>marg_rvs</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]</span>) – List of random variable indices to marginalize.</p></li>
-<li><p><strong>prune</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether to prune unnecessary nodes.</p></li>
-<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional cache for storing intermediate results.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Marginalized module or None if fully marginalized.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#spflow.modules.conv.SumConv" title="spflow.modules.conv.SumConv">SumConv</a> | <a class="reference internal" href="base_modules.html#spflow.modules.module.Module" title="spflow.modules.module.Module">Module</a> | None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -668,17 +668,20 @@ Scope(2), Scope(3) produces Scope([0,1,2,3]).</p>
 </dl>
 </dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="spflow.modules.conv.ProdConv.feature_to_scope">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">feature_to_scope</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a></em><a class="headerlink" href="#spflow.modules.conv.ProdConv.feature_to_scope" title="Link to this definition">¶</a></dt>
-<dd><p>Aggregated scopes per output feature.</p>
-<p>Each output feature’s scope is the join of all input scopes within its patch.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.modules.conv.ProdConv.expectation_maximization">
+<span class="sig-name descname"><span class="pre">expectation_maximization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bias_correction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/conv/prod_conv.html#ProdConv.expectation_maximization"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.conv.ProdConv.expectation_maximization" title="Link to this definition">¶</a></dt>
+<dd><p>EM step (delegates to input, no learnable parameters).</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>2D array of Scope objects (features, repetitions).</p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Input data tensor for EM step.</p></li>
+<li><p><strong>bias_correction</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether to apply bias correction.</p></li>
+<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional cache for storing intermediate results.</p></li>
+</ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>np.ndarray</p>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
@@ -701,6 +704,27 @@ log-probabilities within patches.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.modules.conv.ProdConv.marginalize">
+<span class="sig-name descname"><span class="pre">marginalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">marg_rvs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prune</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/conv/prod_conv.html#ProdConv.marginalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.conv.ProdConv.marginalize" title="Link to this definition">¶</a></dt>
+<dd><p>Marginalize out specified random variables.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>marg_rvs</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]</span>) – List of random variable indices to marginalize.</p></li>
+<li><p><strong>prune</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether to prune unnecessary nodes.</p></li>
+<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional cache for storing intermediate results.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Marginalized module or None if fully marginalized.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#spflow.modules.conv.ProdConv" title="spflow.modules.conv.ProdConv">ProdConv</a> | <a class="reference internal" href="base_modules.html#spflow.modules.module.Module" title="spflow.modules.module.Module">Module</a> | None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -730,41 +754,17 @@ the sampling context to match input features and delegates.</p>
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="spflow.modules.conv.ProdConv.expectation_maximization">
-<span class="sig-name descname"><span class="pre">expectation_maximization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bias_correction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/conv/prod_conv.html#ProdConv.expectation_maximization"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.conv.ProdConv.expectation_maximization" title="Link to this definition">¶</a></dt>
-<dd><p>EM step (delegates to input, no learnable parameters).</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="spflow.modules.conv.ProdConv.feature_to_scope">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">feature_to_scope</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a></em><a class="headerlink" href="#spflow.modules.conv.ProdConv.feature_to_scope" title="Link to this definition">¶</a></dt>
+<dd><p>Aggregated scopes per output feature.</p>
+<p>Each output feature’s scope is the join of all input scopes within its patch.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Input data tensor for EM step.</p></li>
-<li><p><strong>bias_correction</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether to apply bias correction.</p></li>
-<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional cache for storing intermediate results.</p></li>
-</ul>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>2D array of Scope objects (features, repetitions).</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="spflow.modules.conv.ProdConv.marginalize">
-<span class="sig-name descname"><span class="pre">marginalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">marg_rvs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prune</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/conv/prod_conv.html#ProdConv.marginalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.conv.ProdConv.marginalize" title="Link to this definition">¶</a></dt>
-<dd><p>Marginalize out specified random variables.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>marg_rvs</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]</span>) – List of random variable indices to marginalize.</p></li>
-<li><p><strong>prune</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether to prune unnecessary nodes.</p></li>
-<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional cache for storing intermediate results.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Marginalized module or None if fully marginalized.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#spflow.modules.conv.ProdConv" title="spflow.modules.conv.ProdConv">ProdConv</a> | <a class="reference internal" href="base_modules.html#spflow.modules.module.Module" title="spflow.modules.module.Module">Module</a> | None</p>
+<dd class="field-even"><p>np.ndarray</p>
 </dd>
 </dl>
 </dd></dl>
@@ -834,11 +834,11 @@ the sampling context to match input features and delegates.</p>
 <li><a class="reference internal" href="#spflow.modules.conv.ConvPc"><code class="docutils literal notranslate"><span class="pre">ConvPc</span></code></a><ul>
 <li><a class="reference internal" href="#spflow.modules.conv.ConvPc.leaf"><code class="docutils literal notranslate"><span class="pre">ConvPc.leaf</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.conv.ConvPc.root"><code class="docutils literal notranslate"><span class="pre">ConvPc.root</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.conv.ConvPc.feature_to_scope"><code class="docutils literal notranslate"><span class="pre">ConvPc.feature_to_scope</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.conv.ConvPc.log_likelihood"><code class="docutils literal notranslate"><span class="pre">ConvPc.log_likelihood()</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.conv.ConvPc.sample"><code class="docutils literal notranslate"><span class="pre">ConvPc.sample()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.conv.ConvPc.expectation_maximization"><code class="docutils literal notranslate"><span class="pre">ConvPc.expectation_maximization()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.conv.ConvPc.log_likelihood"><code class="docutils literal notranslate"><span class="pre">ConvPc.log_likelihood()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.conv.ConvPc.marginalize"><code class="docutils literal notranslate"><span class="pre">ConvPc.marginalize()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.conv.ConvPc.sample"><code class="docutils literal notranslate"><span class="pre">ConvPc.sample()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.conv.ConvPc.feature_to_scope"><code class="docutils literal notranslate"><span class="pre">ConvPc.feature_to_scope</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -850,13 +850,13 @@ the sampling context to match input features and delegates.</p>
 <li><a class="reference internal" href="#spflow.modules.conv.SumConv.in_channels"><code class="docutils literal notranslate"><span class="pre">SumConv.in_channels</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.conv.SumConv.out_channels"><code class="docutils literal notranslate"><span class="pre">SumConv.out_channels</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.conv.SumConv.logits"><code class="docutils literal notranslate"><span class="pre">SumConv.logits</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.conv.SumConv.expectation_maximization"><code class="docutils literal notranslate"><span class="pre">SumConv.expectation_maximization()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.conv.SumConv.log_likelihood"><code class="docutils literal notranslate"><span class="pre">SumConv.log_likelihood()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.conv.SumConv.marginalize"><code class="docutils literal notranslate"><span class="pre">SumConv.marginalize()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.conv.SumConv.sample"><code class="docutils literal notranslate"><span class="pre">SumConv.sample()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.conv.SumConv.feature_to_scope"><code class="docutils literal notranslate"><span class="pre">SumConv.feature_to_scope</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.conv.SumConv.log_weights"><code class="docutils literal notranslate"><span class="pre">SumConv.log_weights</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.conv.SumConv.weights"><code class="docutils literal notranslate"><span class="pre">SumConv.weights</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.conv.SumConv.log_likelihood"><code class="docutils literal notranslate"><span class="pre">SumConv.log_likelihood()</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.conv.SumConv.sample"><code class="docutils literal notranslate"><span class="pre">SumConv.sample()</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.conv.SumConv.expectation_maximization"><code class="docutils literal notranslate"><span class="pre">SumConv.expectation_maximization()</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.conv.SumConv.marginalize"><code class="docutils literal notranslate"><span class="pre">SumConv.marginalize()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -868,11 +868,11 @@ the sampling context to match input features and delegates.</p>
 <li><a class="reference internal" href="#spflow.modules.conv.ProdConv.kernel_size_w"><code class="docutils literal notranslate"><span class="pre">ProdConv.kernel_size_w</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.conv.ProdConv.padding_h"><code class="docutils literal notranslate"><span class="pre">ProdConv.padding_h</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.conv.ProdConv.padding_w"><code class="docutils literal notranslate"><span class="pre">ProdConv.padding_w</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.conv.ProdConv.feature_to_scope"><code class="docutils literal notranslate"><span class="pre">ProdConv.feature_to_scope</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.conv.ProdConv.log_likelihood"><code class="docutils literal notranslate"><span class="pre">ProdConv.log_likelihood()</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.conv.ProdConv.sample"><code class="docutils literal notranslate"><span class="pre">ProdConv.sample()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.conv.ProdConv.expectation_maximization"><code class="docutils literal notranslate"><span class="pre">ProdConv.expectation_maximization()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.conv.ProdConv.log_likelihood"><code class="docutils literal notranslate"><span class="pre">ProdConv.log_likelihood()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.conv.ProdConv.marginalize"><code class="docutils literal notranslate"><span class="pre">ProdConv.marginalize()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.conv.ProdConv.sample"><code class="docutils literal notranslate"><span class="pre">ProdConv.sample()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.conv.ProdConv.feature_to_scope"><code class="docutils literal notranslate"><span class="pre">ProdConv.feature_to_scope</span></code></a></li>
 </ul>
 </li>
 </ul>

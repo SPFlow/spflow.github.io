@@ -297,92 +297,34 @@ sampling, and marginalization.</p>
 </dl>
 </dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="id0">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">inputs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#spflow.modules.module.Module" title="spflow.modules.module.Module"><span class="pre">Module</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable" title="(in Python v3.14)"><span class="pre">Iterable</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#spflow.modules.module.Module" title="spflow.modules.module.Module"><span class="pre">Module</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#id0" title="Link to this definition">¶</a></dt>
-<dd><p>Returns the input module, or None for leaf modules.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.modules.module.Module.expectation_maximization">
+<span class="sig-name descname"><span class="pre">expectation_maximization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bias_correction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/module.html#Module.expectation_maximization"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.module.Module.expectation_maximization" title="Link to this definition">¶</a></dt>
+<dd><p>Expectation-maximization step.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The child input module, or None if this is a leaf module.</p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Input data tensor.</p></li>
+<li><p><strong>bias_correction</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether to apply bias correction. Defaults to True.</p></li>
+<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional cache dictionary.</p></li>
+</ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="#spflow.modules.module.Module" title="spflow.modules.module.Module">Module</a> | None</p>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="id1">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">scope</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="scope.html#spflow.meta.data.scope.Scope" title="spflow.meta.data.scope.Scope"><span class="pre">Scope</span></a></em><a class="headerlink" href="#id1" title="Link to this definition">¶</a></dt>
-<dd><p>Variable scope defining which random variables this module operates on.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.modules.module.Module.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/module.html#Module.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.module.Module.forward" title="Link to this definition">¶</a></dt>
+<dd><p>Forward pass is simply the log-likelihood function.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The module’s scope.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="scope.html#spflow.meta.data.scope.Scope" title="spflow.meta.data.scope.Scope">Scope</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="spflow.modules.module.Module.feature_to_scope">
-<em class="property"><span class="k"><span class="pre">abstract</span></span><span class="w"> </span><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">feature_to_scope</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a></em><a class="headerlink" href="#spflow.modules.module.Module.feature_to_scope" title="Link to this definition">¶</a></dt>
-<dd><p>Mapping from output features to their respective scopes.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><dl class="simple">
-<dt>2D-array of scopes. Each row corresponds to an output feature,</dt><dd><p>each column to a repetition.</p>
-</dd>
-</dl>
-</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>np.ndarray[<a class="reference internal" href="scope.html#spflow.meta.data.scope.Scope" title="spflow.meta.data.scope.Scope">Scope</a>]</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="spflow.modules.module.Module.in_shape">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">in_shape</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="module_shape.html#spflow.modules.module_shape.ModuleShape" title="spflow.modules.module_shape.ModuleShape"><span class="pre">ModuleShape</span></a></em><a class="headerlink" href="#spflow.modules.module.Module.in_shape" title="Link to this definition">¶</a></dt>
-<dd><p>Expected input tensor shape (features, channels, repetitions).</p>
-<p>For leaf modules, returns the shape of data tensors: (features, 1, 1).</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The expected input shape.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="module_shape.html#spflow.modules.module_shape.ModuleShape" title="spflow.modules.module_shape.ModuleShape">ModuleShape</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="spflow.modules.module.Module.out_shape">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">out_shape</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="module_shape.html#spflow.modules.module_shape.ModuleShape" title="spflow.modules.module_shape.ModuleShape"><span class="pre">ModuleShape</span></a></em><a class="headerlink" href="#spflow.modules.module.Module.out_shape" title="Link to this definition">¶</a></dt>
-<dd><p>Output tensor shape (features, channels, repetitions).</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The output shape produced by this module.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="module_shape.html#spflow.modules.module_shape.ModuleShape" title="spflow.modules.module_shape.ModuleShape">ModuleShape</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="spflow.modules.module.Module.device">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">device</span></span><a class="headerlink" href="#spflow.modules.module.Module.device" title="Link to this definition">¶</a></dt>
-<dd><p>Device where the module’s parameters are located.</p>
-<p>Returns first parameter’s device, or CPU if no parameters exist.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Device where parameters are located.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensor_attributes.html#torch.device" title="(in PyTorch v2.9)">torch.device</a></p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Input data tensor.</p></li>
+<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional cache dictionary.</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -409,6 +351,106 @@ NaN values indicate missing values to marginalize over.</p></li>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.14)"><strong>ValueError</strong></a> – If input data shape is incompatible with module scope.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.modules.module.Module.marginalize">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">marginalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">marg_rvs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prune</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/module.html#Module.marginalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.module.Module.marginalize" title="Link to this definition">¶</a></dt>
+<dd><p>Structurally marginalize out specified random variables from the module.</p>
+<p>Computes a new module representing the marginal distribution by integrating out
+the specified variables from the structure. For data-level marginalization,
+use NaNs in <code class="docutils literal notranslate"><span class="pre">log_likelihood</span></code> inputs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>marg_rvs</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">list[int]</span></code>) – Random variable indices to marginalize out.</p></li>
+<li><p><strong>prune</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>optional</em>) – Whether to prune unnecessary modules during
+marginalization. Defaults to True.</p></li>
+<li><p><strong>cache</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span> <span class="pre">|</span> <span class="pre">None</span></code>, <em>optional</em>) – Cache for intermediate computations. Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Marginalized module, or None if all variables are marginalized out.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#spflow.modules.module.Module" title="spflow.modules.module.Module">Module</a> | None</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.14)"><strong>ValueError</strong></a> – If marginalization variables are not in the module’s scope.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.modules.module.Module.maximum_likelihood_estimation">
+<span class="sig-name descname"><span class="pre">maximum_likelihood_estimation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bias_correction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nan_strategy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ignore'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/module.html#Module.maximum_likelihood_estimation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.module.Module.maximum_likelihood_estimation" title="Link to this definition">¶</a></dt>
+<dd><p>Update parameters via maximum likelihood estimation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Input data tensor.</p></li>
+<li><p><strong>weights</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional sample weights.</p></li>
+<li><p><strong>bias_correction</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether to apply bias correction. Defaults to True.</p></li>
+<li><p><strong>nan_strategy</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – Strategy for handling NaN values in data. Defaults to “ignore”.</p></li>
+<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional cache dictionary.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.modules.module.Module.mpe">
+<span class="sig-name descname"><span class="pre">mpe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampling_ctx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/module.html#Module.mpe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.module.Module.mpe" title="Link to this definition">¶</a></dt>
+<dd><p>Generate most probable explanation from the module’s probability distribution.</p>
+<p>This is a convenience method that calls sample with is_mpe=True.</p>
+<p>Handles conditional sampling through evidence in data tensor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>num_samples</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span> <span class="pre">|</span> <span class="pre">None</span></code>, <em>optional</em>) – Number of samples to generate. Defaults to 1.</p></li>
+<li><p><strong>data</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span> <span class="pre">|</span> <span class="pre">None</span></code>, <em>optional</em>) – Pre-allocated tensor with NaN values indicating
+where to sample. If None, creates new tensor. Defaults to None.</p></li>
+<li><p><strong>cache</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span> <span class="pre">|</span> <span class="pre">None</span></code>, <em>optional</em>) – Cache for intermediate computations. Defaults to None.</p></li>
+<li><p><strong>sampling_ctx</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">SamplingContext</span> <span class="pre">|</span> <span class="pre">None</span></code>, <em>optional</em>) – Context for routing samples
+through the circuit. Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>MPE values of shape (batch_size, num_features).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tensor</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.14)"><strong>ValueError</strong></a> – If sampling parameters are incompatible.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.modules.module.Module.probability">
+<span class="sig-name descname"><span class="pre">probability</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/module.html#Module.probability"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.module.Module.probability" title="Link to this definition">¶</a></dt>
+<dd><p>Computes likelihoods for modules given input data.</p>
+<p>Likelihoods are computed from the log-likelihoods of a module.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Tensor containing the input data.
+Each row corresponds to a sample.</p></li>
+<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional cache dictionary.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tensor containing the likelihoods of the input data.
+Each row corresponds to an input sample.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -445,35 +487,6 @@ through the circuit. Defaults to None.</p></li>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="spflow.modules.module.Module.mpe">
-<span class="sig-name descname"><span class="pre">mpe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampling_ctx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/module.html#Module.mpe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.module.Module.mpe" title="Link to this definition">¶</a></dt>
-<dd><p>Generate most probable explanation from the module’s probability distribution.</p>
-<p>This is a convenience method that calls sample with is_mpe=True.</p>
-<p>Handles conditional sampling through evidence in data tensor.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>num_samples</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span> <span class="pre">|</span> <span class="pre">None</span></code>, <em>optional</em>) – Number of samples to generate. Defaults to 1.</p></li>
-<li><p><strong>data</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span> <span class="pre">|</span> <span class="pre">None</span></code>, <em>optional</em>) – Pre-allocated tensor with NaN values indicating
-where to sample. If None, creates new tensor. Defaults to None.</p></li>
-<li><p><strong>cache</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span> <span class="pre">|</span> <span class="pre">None</span></code>, <em>optional</em>) – Cache for intermediate computations. Defaults to None.</p></li>
-<li><p><strong>sampling_ctx</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">SamplingContext</span> <span class="pre">|</span> <span class="pre">None</span></code>, <em>optional</em>) – Context for routing samples
-through the circuit. Defaults to None.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>MPE values of shape (batch_size, num_features).</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Tensor</p>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.14)"><strong>ValueError</strong></a> – If sampling parameters are incompatible.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="spflow.modules.module.Module.sample_with_evidence">
 <span class="sig-name descname"><span class="pre">sample_with_evidence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">evidence</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_mpe</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampling_ctx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/module.html#Module.sample_with_evidence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.module.Module.sample_with_evidence" title="Link to this definition">¶</a></dt>
 <dd><p>Samples from module with evidence.</p>
@@ -494,86 +507,6 @@ Defaults to False.</p></li>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Tensor containing the sampled values. Each row corresponds to a sample.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="spflow.modules.module.Module.expectation_maximization">
-<span class="sig-name descname"><span class="pre">expectation_maximization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bias_correction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/module.html#Module.expectation_maximization"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.module.Module.expectation_maximization" title="Link to this definition">¶</a></dt>
-<dd><p>Expectation-maximization step.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Input data tensor.</p></li>
-<li><p><strong>bias_correction</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether to apply bias correction. Defaults to True.</p></li>
-<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional cache dictionary.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="spflow.modules.module.Module.maximum_likelihood_estimation">
-<span class="sig-name descname"><span class="pre">maximum_likelihood_estimation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bias_correction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nan_strategy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ignore'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/module.html#Module.maximum_likelihood_estimation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.module.Module.maximum_likelihood_estimation" title="Link to this definition">¶</a></dt>
-<dd><p>Update parameters via maximum likelihood estimation.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Input data tensor.</p></li>
-<li><p><strong>weights</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional sample weights.</p></li>
-<li><p><strong>bias_correction</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether to apply bias correction. Defaults to True.</p></li>
-<li><p><strong>nan_strategy</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – Strategy for handling NaN values in data. Defaults to “ignore”.</p></li>
-<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional cache dictionary.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="spflow.modules.module.Module.marginalize">
-<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">marginalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">marg_rvs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prune</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/module.html#Module.marginalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.module.Module.marginalize" title="Link to this definition">¶</a></dt>
-<dd><p>Structurally marginalize out specified random variables from the module.</p>
-<p>Computes a new module representing the marginal distribution by integrating out
-the specified variables from the structure. For data-level marginalization,
-use NaNs in <code class="docutils literal notranslate"><span class="pre">log_likelihood</span></code> inputs.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>marg_rvs</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">list[int]</span></code>) – Random variable indices to marginalize out.</p></li>
-<li><p><strong>prune</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>optional</em>) – Whether to prune unnecessary modules during
-marginalization. Defaults to True.</p></li>
-<li><p><strong>cache</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span> <span class="pre">|</span> <span class="pre">None</span></code>, <em>optional</em>) – Cache for intermediate computations. Defaults to None.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Marginalized module, or None if all variables are marginalized out.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#spflow.modules.module.Module" title="spflow.modules.module.Module">Module</a> | None</p>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.14)"><strong>ValueError</strong></a> – If marginalization variables are not in the module’s scope.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="spflow.modules.module.Module.forward">
-<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/module.html#Module.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.module.Module.forward" title="Link to this definition">¶</a></dt>
-<dd><p>Forward pass is simply the log-likelihood function.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Input data tensor.</p></li>
-<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional cache dictionary.</p></li>
-</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -619,25 +552,92 @@ marginalization. Defaults to True.</p></li>
 </div>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="spflow.modules.module.Module.probability">
-<span class="sig-name descname"><span class="pre">probability</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/module.html#Module.probability"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.module.Module.probability" title="Link to this definition">¶</a></dt>
-<dd><p>Computes likelihoods for modules given input data.</p>
-<p>Likelihoods are computed from the log-likelihoods of a module.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="spflow.modules.module.Module.device">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">device</span></span><a class="headerlink" href="#spflow.modules.module.Module.device" title="Link to this definition">¶</a></dt>
+<dd><p>Device where the module’s parameters are located.</p>
+<p>Returns first parameter’s device, or CPU if no parameters exist.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Tensor containing the input data.
-Each row corresponds to a sample.</p></li>
-<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional cache dictionary.</p></li>
-</ul>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Device where parameters are located.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensor_attributes.html#torch.device" title="(in PyTorch v2.9)">torch.device</a></p>
 </dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="spflow.modules.module.Module.feature_to_scope">
+<em class="property"><span class="k"><span class="pre">abstract</span></span><span class="w"> </span><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">feature_to_scope</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a></em><a class="headerlink" href="#spflow.modules.module.Module.feature_to_scope" title="Link to this definition">¶</a></dt>
+<dd><p>Mapping from output features to their respective scopes.</p>
+<dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Tensor containing the likelihoods of the input data.
-Each row corresponds to an input sample.</p>
+<dd class="field-odd"><p><dl class="simple">
+<dt>2D-array of scopes. Each row corresponds to an output feature,</dt><dd><p>each column to a repetition.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>np.ndarray[<a class="reference internal" href="scope.html#spflow.meta.data.scope.Scope" title="spflow.meta.data.scope.Scope">Scope</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="spflow.modules.module.Module.in_shape">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">in_shape</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="module_shape.html#spflow.modules.module_shape.ModuleShape" title="spflow.modules.module_shape.ModuleShape"><span class="pre">ModuleShape</span></a></em><a class="headerlink" href="#spflow.modules.module.Module.in_shape" title="Link to this definition">¶</a></dt>
+<dd><p>Expected input tensor shape (features, channels, repetitions).</p>
+<p>For leaf modules, returns the shape of data tensors: (features, 1, 1).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The expected input shape.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="module_shape.html#spflow.modules.module_shape.ModuleShape" title="spflow.modules.module_shape.ModuleShape">ModuleShape</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id0">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">inputs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#spflow.modules.module.Module" title="spflow.modules.module.Module"><span class="pre">Module</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable" title="(in Python v3.14)"><span class="pre">Iterable</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#spflow.modules.module.Module" title="spflow.modules.module.Module"><span class="pre">Module</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#id0" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the input module, or None for leaf modules.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The child input module, or None if this is a leaf module.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#spflow.modules.module.Module" title="spflow.modules.module.Module">Module</a> | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="spflow.modules.module.Module.out_shape">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">out_shape</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="module_shape.html#spflow.modules.module_shape.ModuleShape" title="spflow.modules.module_shape.ModuleShape"><span class="pre">ModuleShape</span></a></em><a class="headerlink" href="#spflow.modules.module.Module.out_shape" title="Link to this definition">¶</a></dt>
+<dd><p>Output tensor shape (features, channels, repetitions).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The output shape produced by this module.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="module_shape.html#spflow.modules.module_shape.ModuleShape" title="spflow.modules.module_shape.ModuleShape">ModuleShape</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id1">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">scope</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="scope.html#spflow.meta.data.scope.Scope" title="spflow.meta.data.scope.Scope"><span class="pre">Scope</span></a></em><a class="headerlink" href="#id1" title="Link to this definition">¶</a></dt>
+<dd><p>Variable scope defining which random variables this module operates on.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The module’s scope.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="scope.html#spflow.meta.data.scope.Scope" title="spflow.meta.data.scope.Scope">Scope</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -654,24 +654,6 @@ Each row corresponds to an input sample.</p>
 <dd><p>Bases: <a class="reference internal" href="#spflow.modules.module.Module" title="spflow.modules.module.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/abc.html#abc.ABC" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></a></p>
 <dl class="field-list simple">
 </dl>
-<dl class="py property">
-<dt class="sig sig-object py" id="spflow.modules.leaves.leaf.LeafModule.inputs">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">inputs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#spflow.modules.module.Module" title="spflow.modules.module.Module"><span class="pre">Module</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterable" title="(in Python v3.14)"><span class="pre">Iterable</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#spflow.modules.module.Module" title="spflow.modules.module.Module"><span class="pre">Module</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#spflow.modules.leaves.leaf.LeafModule.inputs" title="Link to this definition">¶</a></dt>
-<dd><p>Leaf modules do not have inputs.</p>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="spflow.modules.leaves.leaf.LeafModule.is_conditional">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_conditional</span></span><a class="headerlink" href="#spflow.modules.leaves.leaf.LeafModule.is_conditional" title="Link to this definition">¶</a></dt>
-<dd><p>Indicates if the leaf uses a parameter network for conditional parameters.</p>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="spflow.modules.leaves.leaf.LeafModule.distribution">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">distribution</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/distributions.html#torch.distributions.distribution.Distribution" title="(in PyTorch v2.9)"><span class="pre">Distribution</span></a></em><a class="headerlink" href="#spflow.modules.leaves.leaf.LeafModule.distribution" title="Link to this definition">¶</a></dt>
-<dd><p>Returns the underlying torch.distributions.Distribution object.</p>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="spflow.modules.leaves.leaf.LeafModule.conditional_distribution">
 <span class="sig-name descname"><span class="pre">conditional_distribution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">evidence</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/leaves/leaf.html#LeafModule.conditional_distribution"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.leaves.leaf.LeafModule.conditional_distribution" title="Link to this definition">¶</a></dt>
@@ -685,78 +667,6 @@ Each row corresponds to an input sample.</p>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>torch.distributions.Distribution constructed from conditional parameters.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="spflow.modules.leaves.leaf.LeafModule.params">
-<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">params</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/leaves/leaf.html#LeafModule.params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.leaves.leaf.LeafModule.params" title="Link to this definition">¶</a></dt>
-<dd><p>Returns the parameters of the distribution.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>]</span></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="spflow.modules.leaves.leaf.LeafModule.mode">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mode</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><span class="pre">Tensor</span></a></em><a class="headerlink" href="#spflow.modules.leaves.leaf.LeafModule.mode" title="Link to this definition">¶</a></dt>
-<dd><p>Return distribution mode.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Mode of the distribution.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="spflow.modules.leaves.leaf.LeafModule.marginalized_params">
-<span class="sig-name descname"><span class="pre">marginalized_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">indices</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/leaves/leaf.html#LeafModule.marginalized_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.leaves.leaf.LeafModule.marginalized_params" title="Link to this definition">¶</a></dt>
-<dd><p>Return parameters marginalized to specified indices.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>indices</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]</span>) – List of indices to marginalize to.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>]</span></p>
-</dd>
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Dictionary of marginalized parameters.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="spflow.modules.leaves.leaf.LeafModule.event_shape">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">event_shape</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#spflow.modules.leaves.leaf.LeafModule.event_shape" title="Link to this definition">¶</a></dt>
-<dd><p>Return event shape.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Event shape tuple.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="spflow.modules.leaves.leaf.LeafModule.feature_to_scope">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">feature_to_scope</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="scope.html#spflow.meta.data.scope.Scope" title="spflow.meta.data.scope.Scope"><span class="pre">Scope</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#spflow.modules.leaves.leaf.LeafModule.feature_to_scope" title="Link to this definition">¶</a></dt>
-<dd><p>Return list of scopes per feature.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>List of Scope objects, one per feature.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="spflow.modules.leaves.leaf.LeafModule.device">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">device</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensor_attributes.html#torch.device" title="(in PyTorch v2.9)"><span class="pre">device</span></a></em><a class="headerlink" href="#spflow.modules.leaves.leaf.LeafModule.device" title="Link to this definition">¶</a></dt>
-<dd><p>Return device of first parameter or buffer.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Device of the module.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -799,6 +709,44 @@ Each row corresponds to an input sample.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="spflow.modules.leaves.leaf.LeafModule.marginalize">
+<span class="sig-name descname"><span class="pre">marginalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">marg_rvs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prune</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/leaves/leaf.html#LeafModule.marginalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.leaves.leaf.LeafModule.marginalize" title="Link to this definition">¶</a></dt>
+<dd><p>Structurally marginalize specified variables.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>marg_rvs</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]</span>) – Variable indices to marginalize.</p></li>
+<li><p><strong>prune</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Unused (for interface consistency).</p></li>
+<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional cache dictionary.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference internal" href="#spflow.modules.leaves.leaf.LeafModule" title="spflow.modules.leaves.leaf.LeafModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">LeafModule</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Marginalized leaf or None if fully marginalized.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.modules.leaves.leaf.LeafModule.marginalized_params">
+<span class="sig-name descname"><span class="pre">marginalized_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">indices</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/leaves/leaf.html#LeafModule.marginalized_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.leaves.leaf.LeafModule.marginalized_params" title="Link to this definition">¶</a></dt>
+<dd><p>Return parameters marginalized to specified indices.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>indices</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]</span>) – List of indices to marginalize to.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dictionary of marginalized parameters.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="spflow.modules.leaves.leaf.LeafModule.maximum_likelihood_estimation">
 <span class="sig-name descname"><span class="pre">maximum_likelihood_estimation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bias_correction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nan_strategy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/leaves/leaf.html#LeafModule.maximum_likelihood_estimation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.leaves.leaf.LeafModule.maximum_likelihood_estimation" title="Link to this definition">¶</a></dt>
 <dd><p>Maximum (weighted) likelihood estimation via template method pattern.</p>
@@ -816,6 +764,17 @@ Weights normalized to sum to N.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.modules.leaves.leaf.LeafModule.params">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">params</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/leaves/leaf.html#LeafModule.params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.leaves.leaf.LeafModule.params" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the parameters of the distribution.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>]</span></p>
 </dd>
 </dl>
 </dd></dl>
@@ -843,23 +802,64 @@ Weights normalized to sum to N.</p>
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="spflow.modules.leaves.leaf.LeafModule.marginalize">
-<span class="sig-name descname"><span class="pre">marginalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">marg_rvs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prune</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/leaves/leaf.html#LeafModule.marginalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.leaves.leaf.LeafModule.marginalize" title="Link to this definition">¶</a></dt>
-<dd><p>Structurally marginalize specified variables.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="spflow.modules.leaves.leaf.LeafModule.device">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">device</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensor_attributes.html#torch.device" title="(in PyTorch v2.9)"><span class="pre">device</span></a></em><a class="headerlink" href="#spflow.modules.leaves.leaf.LeafModule.device" title="Link to this definition">¶</a></dt>
+<dd><p>Return device of first parameter or buffer.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>marg_rvs</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]</span>) – Variable indices to marginalize.</p></li>
-<li><p><strong>prune</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Unused (for interface consistency).</p></li>
-<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional cache dictionary.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference internal" href="#spflow.modules.leaves.leaf.LeafModule" title="spflow.modules.leaves.leaf.LeafModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">LeafModule</span></code></a>]</span></p>
-</dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Marginalized leaf or None if fully marginalized.</p>
+<dd class="field-odd"><p>Device of the module.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="spflow.modules.leaves.leaf.LeafModule.distribution">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">distribution</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/distributions.html#torch.distributions.distribution.Distribution" title="(in PyTorch v2.9)"><span class="pre">Distribution</span></a></em><a class="headerlink" href="#spflow.modules.leaves.leaf.LeafModule.distribution" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the underlying torch.distributions.Distribution object.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="spflow.modules.leaves.leaf.LeafModule.event_shape">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">event_shape</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#spflow.modules.leaves.leaf.LeafModule.event_shape" title="Link to this definition">¶</a></dt>
+<dd><p>Return event shape.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Event shape tuple.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="spflow.modules.leaves.leaf.LeafModule.feature_to_scope">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">feature_to_scope</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="scope.html#spflow.meta.data.scope.Scope" title="spflow.meta.data.scope.Scope"><span class="pre">Scope</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#spflow.modules.leaves.leaf.LeafModule.feature_to_scope" title="Link to this definition">¶</a></dt>
+<dd><p>Return list of scopes per feature.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of Scope objects, one per feature.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="spflow.modules.leaves.leaf.LeafModule.inputs">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">inputs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#spflow.modules.module.Module" title="spflow.modules.module.Module"><span class="pre">Module</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterable" title="(in Python v3.14)"><span class="pre">Iterable</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#spflow.modules.module.Module" title="spflow.modules.module.Module"><span class="pre">Module</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#spflow.modules.leaves.leaf.LeafModule.inputs" title="Link to this definition">¶</a></dt>
+<dd><p>Leaf modules do not have inputs.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="spflow.modules.leaves.leaf.LeafModule.is_conditional">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_conditional</span></span><a class="headerlink" href="#spflow.modules.leaves.leaf.LeafModule.is_conditional" title="Link to this definition">¶</a></dt>
+<dd><p>Indicates if the leaf uses a parameter network for conditional parameters.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="spflow.modules.leaves.leaf.LeafModule.mode">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mode</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><span class="pre">Tensor</span></a></em><a class="headerlink" href="#spflow.modules.leaves.leaf.LeafModule.mode" title="Link to this definition">¶</a></dt>
+<dd><p>Return distribution mode.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Mode of the distribution.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -929,43 +929,43 @@ Weights normalized to sum to N.</p>
 <li><a class="reference internal" href="#spflow.modules.module.Module"><code class="docutils literal notranslate"><span class="pre">Module</span></code></a><ul>
 <li><a class="reference internal" href="#spflow.modules.module.Module.inputs"><code class="docutils literal notranslate"><span class="pre">Module.inputs</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.module.Module.scope"><code class="docutils literal notranslate"><span class="pre">Module.scope</span></code></a></li>
-<li><a class="reference internal" href="#id0"><code class="docutils literal notranslate"><span class="pre">Module.inputs</span></code></a></li>
-<li><a class="reference internal" href="#id1"><code class="docutils literal notranslate"><span class="pre">Module.scope</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.module.Module.expectation_maximization"><code class="docutils literal notranslate"><span class="pre">Module.expectation_maximization()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.module.Module.forward"><code class="docutils literal notranslate"><span class="pre">Module.forward()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.module.Module.log_likelihood"><code class="docutils literal notranslate"><span class="pre">Module.log_likelihood()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.module.Module.marginalize"><code class="docutils literal notranslate"><span class="pre">Module.marginalize()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.module.Module.maximum_likelihood_estimation"><code class="docutils literal notranslate"><span class="pre">Module.maximum_likelihood_estimation()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.module.Module.mpe"><code class="docutils literal notranslate"><span class="pre">Module.mpe()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.module.Module.probability"><code class="docutils literal notranslate"><span class="pre">Module.probability()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.module.Module.sample"><code class="docutils literal notranslate"><span class="pre">Module.sample()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.module.Module.sample_with_evidence"><code class="docutils literal notranslate"><span class="pre">Module.sample_with_evidence()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.module.Module.to_str"><code class="docutils literal notranslate"><span class="pre">Module.to_str()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.module.Module.device"><code class="docutils literal notranslate"><span class="pre">Module.device</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.module.Module.feature_to_scope"><code class="docutils literal notranslate"><span class="pre">Module.feature_to_scope</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.module.Module.in_shape"><code class="docutils literal notranslate"><span class="pre">Module.in_shape</span></code></a></li>
+<li><a class="reference internal" href="#id0"><code class="docutils literal notranslate"><span class="pre">Module.inputs</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.module.Module.out_shape"><code class="docutils literal notranslate"><span class="pre">Module.out_shape</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.module.Module.device"><code class="docutils literal notranslate"><span class="pre">Module.device</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.module.Module.log_likelihood"><code class="docutils literal notranslate"><span class="pre">Module.log_likelihood()</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.module.Module.sample"><code class="docutils literal notranslate"><span class="pre">Module.sample()</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.module.Module.mpe"><code class="docutils literal notranslate"><span class="pre">Module.mpe()</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.module.Module.sample_with_evidence"><code class="docutils literal notranslate"><span class="pre">Module.sample_with_evidence()</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.module.Module.expectation_maximization"><code class="docutils literal notranslate"><span class="pre">Module.expectation_maximization()</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.module.Module.maximum_likelihood_estimation"><code class="docutils literal notranslate"><span class="pre">Module.maximum_likelihood_estimation()</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.module.Module.marginalize"><code class="docutils literal notranslate"><span class="pre">Module.marginalize()</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.module.Module.forward"><code class="docutils literal notranslate"><span class="pre">Module.forward()</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.module.Module.to_str"><code class="docutils literal notranslate"><span class="pre">Module.to_str()</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.module.Module.probability"><code class="docutils literal notranslate"><span class="pre">Module.probability()</span></code></a></li>
+<li><a class="reference internal" href="#id1"><code class="docutils literal notranslate"><span class="pre">Module.scope</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li><a class="reference internal" href="#leafmodule">LeafModule</a><ul>
 <li><a class="reference internal" href="#spflow.modules.leaves.leaf.LeafModule"><code class="docutils literal notranslate"><span class="pre">LeafModule</span></code></a><ul>
-<li><a class="reference internal" href="#spflow.modules.leaves.leaf.LeafModule.inputs"><code class="docutils literal notranslate"><span class="pre">LeafModule.inputs</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.leaves.leaf.LeafModule.is_conditional"><code class="docutils literal notranslate"><span class="pre">LeafModule.is_conditional</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.leaves.leaf.LeafModule.distribution"><code class="docutils literal notranslate"><span class="pre">LeafModule.distribution</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.leaves.leaf.LeafModule.conditional_distribution"><code class="docutils literal notranslate"><span class="pre">LeafModule.conditional_distribution()</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.leaves.leaf.LeafModule.params"><code class="docutils literal notranslate"><span class="pre">LeafModule.params()</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.leaves.leaf.LeafModule.mode"><code class="docutils literal notranslate"><span class="pre">LeafModule.mode</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.leaves.leaf.LeafModule.marginalized_params"><code class="docutils literal notranslate"><span class="pre">LeafModule.marginalized_params()</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.leaves.leaf.LeafModule.event_shape"><code class="docutils literal notranslate"><span class="pre">LeafModule.event_shape</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.leaves.leaf.LeafModule.feature_to_scope"><code class="docutils literal notranslate"><span class="pre">LeafModule.feature_to_scope</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.leaves.leaf.LeafModule.device"><code class="docutils literal notranslate"><span class="pre">LeafModule.device</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.leaves.leaf.LeafModule.expectation_maximization"><code class="docutils literal notranslate"><span class="pre">LeafModule.expectation_maximization()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.leaves.leaf.LeafModule.log_likelihood"><code class="docutils literal notranslate"><span class="pre">LeafModule.log_likelihood()</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.leaves.leaf.LeafModule.maximum_likelihood_estimation"><code class="docutils literal notranslate"><span class="pre">LeafModule.maximum_likelihood_estimation()</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.leaves.leaf.LeafModule.sample"><code class="docutils literal notranslate"><span class="pre">LeafModule.sample()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.leaves.leaf.LeafModule.marginalize"><code class="docutils literal notranslate"><span class="pre">LeafModule.marginalize()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.leaves.leaf.LeafModule.marginalized_params"><code class="docutils literal notranslate"><span class="pre">LeafModule.marginalized_params()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.leaves.leaf.LeafModule.maximum_likelihood_estimation"><code class="docutils literal notranslate"><span class="pre">LeafModule.maximum_likelihood_estimation()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.leaves.leaf.LeafModule.params"><code class="docutils literal notranslate"><span class="pre">LeafModule.params()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.leaves.leaf.LeafModule.sample"><code class="docutils literal notranslate"><span class="pre">LeafModule.sample()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.leaves.leaf.LeafModule.device"><code class="docutils literal notranslate"><span class="pre">LeafModule.device</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.leaves.leaf.LeafModule.distribution"><code class="docutils literal notranslate"><span class="pre">LeafModule.distribution</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.leaves.leaf.LeafModule.event_shape"><code class="docutils literal notranslate"><span class="pre">LeafModule.event_shape</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.leaves.leaf.LeafModule.feature_to_scope"><code class="docutils literal notranslate"><span class="pre">LeafModule.feature_to_scope</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.leaves.leaf.LeafModule.inputs"><code class="docutils literal notranslate"><span class="pre">LeafModule.inputs</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.leaves.leaf.LeafModule.is_conditional"><code class="docutils literal notranslate"><span class="pre">LeafModule.is_conditional</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.leaves.leaf.LeafModule.mode"><code class="docutils literal notranslate"><span class="pre">LeafModule.mode</span></code></a></li>
 </ul>
 </li>
 </ul>

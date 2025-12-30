@@ -272,6 +272,23 @@
 <p>Provides a standard interface for models that can predict class labels
 and class probabilities from input data.</p>
 <dl class="py method">
+<dt class="sig sig-object py" id="spflow.interfaces.classifier.Classifier.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/interfaces/classifier.html#Classifier.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.interfaces.classifier.Classifier.predict" title="Link to this definition">¶</a></dt>
+<dd><p>Predict class labels for input data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Input data tensor.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Predicted class labels.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="spflow.interfaces.classifier.Classifier.predict_proba">
 <em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">predict_proba</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/interfaces/classifier.html#Classifier.predict_proba"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.interfaces.classifier.Classifier.predict_proba" title="Link to this definition">¶</a></dt>
 <dd><p>Predict class probabilities for input data.</p>
@@ -285,23 +302,6 @@ and class probabilities from input data.</p>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Class probability predictions. Each row corresponds to a data point,
 and each column corresponds to a class.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="spflow.interfaces.classifier.Classifier.predict">
-<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/interfaces/classifier.html#Classifier.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.interfaces.classifier.Classifier.predict" title="Link to this definition">¶</a></dt>
-<dd><p>Predict class labels for input data.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Input data tensor.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span></p>
-</dd>
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Predicted class labels.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -369,8 +369,8 @@ and each column corresponds to a class.</p>
 <li><a class="reference internal" href="#">Interfaces</a><ul>
 <li><a class="reference internal" href="#classifier">Classifier</a><ul>
 <li><a class="reference internal" href="#spflow.interfaces.classifier.Classifier"><code class="docutils literal notranslate"><span class="pre">Classifier</span></code></a><ul>
-<li><a class="reference internal" href="#spflow.interfaces.classifier.Classifier.predict_proba"><code class="docutils literal notranslate"><span class="pre">Classifier.predict_proba()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.interfaces.classifier.Classifier.predict"><code class="docutils literal notranslate"><span class="pre">Classifier.predict()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.interfaces.classifier.Classifier.predict_proba"><code class="docutils literal notranslate"><span class="pre">Classifier.predict_proba()</span></code></a></li>
 </ul>
 </li>
 </ul>

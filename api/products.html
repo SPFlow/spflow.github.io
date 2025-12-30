@@ -283,20 +283,20 @@ inputs are automatically concatenated along the feature dimension.</p>
 </dl>
 </dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="spflow.modules.products.Product.feature_to_scope">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">feature_to_scope</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a></em><a class="headerlink" href="#spflow.modules.products.Product.feature_to_scope" title="Link to this definition">¶</a></dt>
-<dd><p>Mapping from output features to their respective scopes.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.modules.products.Product.expectation_maximization">
+<span class="sig-name descname"><span class="pre">expectation_maximization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bias_correction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/products/product.html#Product.expectation_maximization"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.products.Product.expectation_maximization" title="Link to this definition">¶</a></dt>
+<dd><p>EM step (delegates to input, no learnable parameters).</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><dl class="simple">
-<dt>2D-array of scopes. Each row corresponds to an output feature,</dt><dd><p>each column to a repetition.</p>
-</dd>
-</dl>
-</p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Input data tensor for EM step.</p></li>
+<li><p><strong>bias_correction</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether to apply bias correction. Defaults to True.</p></li>
+<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional cache for storing intermediate results.</p></li>
+</ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>np.ndarray[<a class="reference internal" href="scope.html#spflow.meta.data.scope.Scope" title="spflow.meta.data.scope.Scope">Scope</a>]</p>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
@@ -317,6 +317,45 @@ inputs are automatically concatenated along the feature dimension.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.modules.products.Product.marginalize">
+<span class="sig-name descname"><span class="pre">marginalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">marg_rvs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prune</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/products/product.html#Product.marginalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.products.Product.marginalize" title="Link to this definition">¶</a></dt>
+<dd><p>Marginalize out specified random variables.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>marg_rvs</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]</span>) – List of random variable indices to marginalize.</p></li>
+<li><p><strong>prune</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether to prune unnecessary nodes.</p></li>
+<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional cache for storing intermediate results.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Marginalized module or None if fully marginalized.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#spflow.modules.products.Product" title="spflow.modules.products.Product">Product</a> | <a class="reference internal" href="base_modules.html#spflow.modules.module.Module" title="spflow.modules.module.Module">Module</a> | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.modules.products.Product.maximum_likelihood_estimation">
+<span class="sig-name descname"><span class="pre">maximum_likelihood_estimation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/products/product.html#Product.maximum_likelihood_estimation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.products.Product.maximum_likelihood_estimation" title="Link to this definition">¶</a></dt>
+<dd><p>MLE step (delegates to input, no learnable parameters).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Input data tensor for MLE step.</p></li>
+<li><p><strong>weights</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional weights for weighted MLE.</p></li>
+<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional cache for storing intermediate results.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
@@ -344,59 +383,20 @@ inputs are automatically concatenated along the feature dimension.</p>
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="spflow.modules.products.Product.expectation_maximization">
-<span class="sig-name descname"><span class="pre">expectation_maximization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bias_correction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/products/product.html#Product.expectation_maximization"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.products.Product.expectation_maximization" title="Link to this definition">¶</a></dt>
-<dd><p>EM step (delegates to input, no learnable parameters).</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="spflow.modules.products.Product.feature_to_scope">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">feature_to_scope</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a></em><a class="headerlink" href="#spflow.modules.products.Product.feature_to_scope" title="Link to this definition">¶</a></dt>
+<dd><p>Mapping from output features to their respective scopes.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Input data tensor for EM step.</p></li>
-<li><p><strong>bias_correction</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether to apply bias correction. Defaults to True.</p></li>
-<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional cache for storing intermediate results.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>2D-array of scopes. Each row corresponds to an output feature,</dt><dd><p>each column to a repetition.</p>
 </dd>
 </dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="spflow.modules.products.Product.maximum_likelihood_estimation">
-<span class="sig-name descname"><span class="pre">maximum_likelihood_estimation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/products/product.html#Product.maximum_likelihood_estimation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.products.Product.maximum_likelihood_estimation" title="Link to this definition">¶</a></dt>
-<dd><p>MLE step (delegates to input, no learnable parameters).</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Input data tensor for MLE step.</p></li>
-<li><p><strong>weights</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional weights for weighted MLE.</p></li>
-<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional cache for storing intermediate results.</p></li>
-</ul>
+</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="spflow.modules.products.Product.marginalize">
-<span class="sig-name descname"><span class="pre">marginalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">marg_rvs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prune</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/products/product.html#Product.marginalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.products.Product.marginalize" title="Link to this definition">¶</a></dt>
-<dd><p>Marginalize out specified random variables.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>marg_rvs</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]</span>) – List of random variable indices to marginalize.</p></li>
-<li><p><strong>prune</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether to prune unnecessary nodes.</p></li>
-<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional cache for storing intermediate results.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Marginalized module or None if fully marginalized.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#spflow.modules.products.Product" title="spflow.modules.products.Product">Product</a> | <a class="reference internal" href="base_modules.html#spflow.modules.module.Module" title="spflow.modules.module.Module">Module</a> | None</p>
+<dd class="field-even"><p>np.ndarray[<a class="reference internal" href="scope.html#spflow.meta.data.scope.Scope" title="spflow.meta.data.scope.Scope">Scope</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -422,20 +422,22 @@ must be pairwise disjoint. Commonly used in RAT-SPN architectures.</p>
 <dd><p>Check if input shapes are compatible for broadcasting.</p>
 </dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="spflow.modules.products.ElementwiseProduct.feature_to_scope">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">feature_to_scope</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a></em><a class="headerlink" href="#spflow.modules.products.ElementwiseProduct.feature_to_scope" title="Link to this definition">¶</a></dt>
-<dd><p>Mapping from output features to their respective scopes.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.modules.products.ElementwiseProduct.log_likelihood">
+<span class="sig-name descname"><span class="pre">log_likelihood</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/products/elementwise_product.html#ElementwiseProduct.log_likelihood"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.products.ElementwiseProduct.log_likelihood" title="Link to this definition">¶</a></dt>
+<dd><p>Compute log likelihood by element-wise summing inputs.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><dl class="simple">
-<dt>2D-array of scopes. Each row corresponds to an output feature,</dt><dd><p>each column to a repetition.</p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Input data tensor.</p></li>
+<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional cache for storing intermediate computations.</p></li>
+</ul>
 </dd>
-</dl>
-</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Computed log likelihood values.</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>np.ndarray[<a class="reference internal" href="scope.html#spflow.meta.data.scope.Scope" title="spflow.meta.data.scope.Scope">Scope</a>]</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tensor</p>
 </dd>
 </dl>
 </dd></dl>
@@ -474,22 +476,20 @@ must be pairwise disjoint. Commonly used in RAT-SPN architectures.</p>
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="spflow.modules.products.ElementwiseProduct.log_likelihood">
-<span class="sig-name descname"><span class="pre">log_likelihood</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/products/elementwise_product.html#ElementwiseProduct.log_likelihood"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.products.ElementwiseProduct.log_likelihood" title="Link to this definition">¶</a></dt>
-<dd><p>Compute log likelihood by element-wise summing inputs.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="spflow.modules.products.ElementwiseProduct.feature_to_scope">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">feature_to_scope</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a></em><a class="headerlink" href="#spflow.modules.products.ElementwiseProduct.feature_to_scope" title="Link to this definition">¶</a></dt>
+<dd><p>Mapping from output features to their respective scopes.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Input data tensor.</p></li>
-<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional cache for storing intermediate computations.</p></li>
-</ul>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>2D-array of scopes. Each row corresponds to an output feature,</dt><dd><p>each column to a repetition.</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Computed log likelihood values.</p>
+</dl>
+</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Tensor</p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>np.ndarray[<a class="reference internal" href="scope.html#spflow.meta.data.scope.Scope" title="spflow.meta.data.scope.Scope">Scope</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -537,20 +537,25 @@ product of input channels. All input scopes must be pairwise disjoint.</p>
 </dl>
 </dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="spflow.modules.products.OuterProduct.feature_to_scope">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">feature_to_scope</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="scope.html#spflow.meta.data.scope.Scope" title="spflow.meta.data.scope.Scope"><span class="pre">Scope</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#spflow.modules.products.OuterProduct.feature_to_scope" title="Link to this definition">¶</a></dt>
-<dd><p>Mapping from output features to their respective scopes.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.modules.products.OuterProduct.log_likelihood">
+<span class="sig-name descname"><span class="pre">log_likelihood</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/products/outer_product.html#OuterProduct.log_likelihood"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.products.OuterProduct.log_likelihood" title="Link to this definition">¶</a></dt>
+<dd><p>Compute log likelihood via outer sum of pairwise combinations.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><dl class="simple">
-<dt>2D-array of scopes. Each row corresponds to an output feature,</dt><dd><p>each column to a repetition.</p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Input data tensor for computing log likelihood.</p></li>
+<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional cache for storing intermediate computations.</p></li>
+</ul>
 </dd>
-</dl>
-</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Log likelihood values with shape [batch_size, out_features, out_channels, num_repetitions].</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>np.ndarray[<a class="reference internal" href="scope.html#spflow.meta.data.scope.Scope" title="spflow.meta.data.scope.Scope">Scope</a>]</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tensor</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.14)"><strong>ValueError</strong></a> – If output tensor has invalid number of dimensions.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -595,25 +600,20 @@ product of input channels. All input scopes must be pairwise disjoint.</p>
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="spflow.modules.products.OuterProduct.log_likelihood">
-<span class="sig-name descname"><span class="pre">log_likelihood</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/products/outer_product.html#OuterProduct.log_likelihood"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.products.OuterProduct.log_likelihood" title="Link to this definition">¶</a></dt>
-<dd><p>Compute log likelihood via outer sum of pairwise combinations.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="spflow.modules.products.OuterProduct.feature_to_scope">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">feature_to_scope</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="scope.html#spflow.meta.data.scope.Scope" title="spflow.meta.data.scope.Scope"><span class="pre">Scope</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#spflow.modules.products.OuterProduct.feature_to_scope" title="Link to this definition">¶</a></dt>
+<dd><p>Mapping from output features to their respective scopes.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Input data tensor for computing log likelihood.</p></li>
-<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional cache for storing intermediate computations.</p></li>
-</ul>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>2D-array of scopes. Each row corresponds to an output feature,</dt><dd><p>each column to a repetition.</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Log likelihood values with shape [batch_size, out_features, out_channels, num_repetitions].</p>
+</dl>
+</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Tensor</p>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.14)"><strong>ValueError</strong></a> – If output tensor has invalid number of dimensions.</p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>np.ndarray[<a class="reference internal" href="scope.html#spflow.meta.data.scope.Scope" title="spflow.meta.data.scope.Scope">Scope</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -682,12 +682,12 @@ product of input channels. All input scopes must be pairwise disjoint.</p>
 <li><a class="reference internal" href="#product">Product</a><ul>
 <li><a class="reference internal" href="#spflow.modules.products.Product"><code class="docutils literal notranslate"><span class="pre">Product</span></code></a><ul>
 <li><a class="reference internal" href="#spflow.modules.products.Product.inputs"><code class="docutils literal notranslate"><span class="pre">Product.inputs</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.products.Product.feature_to_scope"><code class="docutils literal notranslate"><span class="pre">Product.feature_to_scope</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.products.Product.log_likelihood"><code class="docutils literal notranslate"><span class="pre">Product.log_likelihood()</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.products.Product.sample"><code class="docutils literal notranslate"><span class="pre">Product.sample()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.products.Product.expectation_maximization"><code class="docutils literal notranslate"><span class="pre">Product.expectation_maximization()</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.products.Product.maximum_likelihood_estimation"><code class="docutils literal notranslate"><span class="pre">Product.maximum_likelihood_estimation()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.products.Product.log_likelihood"><code class="docutils literal notranslate"><span class="pre">Product.log_likelihood()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.products.Product.marginalize"><code class="docutils literal notranslate"><span class="pre">Product.marginalize()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.products.Product.maximum_likelihood_estimation"><code class="docutils literal notranslate"><span class="pre">Product.maximum_likelihood_estimation()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.products.Product.sample"><code class="docutils literal notranslate"><span class="pre">Product.sample()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.products.Product.feature_to_scope"><code class="docutils literal notranslate"><span class="pre">Product.feature_to_scope</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -695,10 +695,10 @@ product of input channels. All input scopes must be pairwise disjoint.</p>
 <li><a class="reference internal" href="#elementwiseproduct">ElementwiseProduct</a><ul>
 <li><a class="reference internal" href="#spflow.modules.products.ElementwiseProduct"><code class="docutils literal notranslate"><span class="pre">ElementwiseProduct</span></code></a><ul>
 <li><a class="reference internal" href="#spflow.modules.products.ElementwiseProduct.check_shapes"><code class="docutils literal notranslate"><span class="pre">ElementwiseProduct.check_shapes()</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.products.ElementwiseProduct.feature_to_scope"><code class="docutils literal notranslate"><span class="pre">ElementwiseProduct.feature_to_scope</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.products.ElementwiseProduct.log_likelihood"><code class="docutils literal notranslate"><span class="pre">ElementwiseProduct.log_likelihood()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.products.ElementwiseProduct.map_out_channels_to_in_channels"><code class="docutils literal notranslate"><span class="pre">ElementwiseProduct.map_out_channels_to_in_channels()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.products.ElementwiseProduct.map_out_mask_to_in_mask"><code class="docutils literal notranslate"><span class="pre">ElementwiseProduct.map_out_mask_to_in_mask()</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.products.ElementwiseProduct.log_likelihood"><code class="docutils literal notranslate"><span class="pre">ElementwiseProduct.log_likelihood()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.products.ElementwiseProduct.feature_to_scope"><code class="docutils literal notranslate"><span class="pre">ElementwiseProduct.feature_to_scope</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -707,10 +707,10 @@ product of input channels. All input scopes must be pairwise disjoint.</p>
 <li><a class="reference internal" href="#spflow.modules.products.OuterProduct"><code class="docutils literal notranslate"><span class="pre">OuterProduct</span></code></a><ul>
 <li><a class="reference internal" href="#spflow.modules.products.OuterProduct.unraveled_channel_indices"><code class="docutils literal notranslate"><span class="pre">OuterProduct.unraveled_channel_indices</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.products.OuterProduct.check_shapes"><code class="docutils literal notranslate"><span class="pre">OuterProduct.check_shapes()</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.products.OuterProduct.feature_to_scope"><code class="docutils literal notranslate"><span class="pre">OuterProduct.feature_to_scope</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.products.OuterProduct.log_likelihood"><code class="docutils literal notranslate"><span class="pre">OuterProduct.log_likelihood()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.products.OuterProduct.map_out_channels_to_in_channels"><code class="docutils literal notranslate"><span class="pre">OuterProduct.map_out_channels_to_in_channels()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.products.OuterProduct.map_out_mask_to_in_mask"><code class="docutils literal notranslate"><span class="pre">OuterProduct.map_out_mask_to_in_mask()</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.products.OuterProduct.log_likelihood"><code class="docutils literal notranslate"><span class="pre">OuterProduct.log_likelihood()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.products.OuterProduct.feature_to_scope"><code class="docutils literal notranslate"><span class="pre">OuterProduct.feature_to_scope</span></code></a></li>
 </ul>
 </li>
 </ul>
