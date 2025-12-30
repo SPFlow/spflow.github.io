@@ -198,6 +198,7 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../concepts.html">Concepts</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../guides/user_guide.html">User Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../guides/dev_guide.html">Developer Guide</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../api/index.html">API Documentation</a><input aria-label="Toggle navigation of API Documentation" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -280,12 +281,18 @@
 
 <span class="sd">    Uses WeakKeyDictionary to store cached values keyed by module instances,</span>
 <span class="sd">    allowing garbage collection when modules are no longer referenced elsewhere.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        extras: Mutable dictionary for user-defined, per-traversal state. This can be</span>
+<span class="sd">            used to pass custom information through recursive module calls without</span>
+<span class="sd">            changing public method signatures.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize cache with per-method locks and storage.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_locks</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">]</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">WeakKeyDictionary</span><span class="p">[</span><span class="n">Module</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">extras</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
 
 <div class="viewcode-block" id="Cache.get">
 <a class="viewcode-back" href="../../../api/utilities.html#spflow.utils.cache.Cache.get">[docs]</a>

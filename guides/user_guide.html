@@ -3,7 +3,7 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Developer Guide" href="dev_guide.html"><link rel="prev" title="Getting Started" href="../getting_started.html">
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Developer Guide" href="dev_guide.html"><link rel="prev" title="Concepts" href="../concepts.html">
 
     <!-- Generated with Sphinx 8.2.3 and Furo 2025.12.19 -->
         <title>User Guide - SPFlow 1.0.0</title>
@@ -200,6 +200,7 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts.html">Concepts</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">User Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="dev_guide.html">Developer Guide</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../api/index.html">API Documentation</a><input aria-label="Toggle navigation of API Documentation" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -266,7 +267,7 @@
 <h2>Create Toy Dataset<a class="headerlink" href="#Create-Toy-Dataset" title="Link to this heading">¶</a></h2>
 <p>To demonstrate and visualize the main features of the library, we first create a 2D toy dataset with three Gaussian clusters, corresponding to labels 0, 1, and 2. The dataset is created with an imbalance. Therefore, class 0 has 200 datapoints, class 1 400 datapoints and class 2 600 datapoints, for a total of 1,200 data points.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
@@ -363,13 +364,13 @@ Dataset successfully created.
 Shape of dataset: torch.Size([1200, 2])
 Shape of labels: torch.Size([1200])
 First 5 samples:
-tensor([[-3.3426, -1.8364],
-        [ 3.3833, -2.4394],
-        [-3.3060, -2.2763],
-        [ 3.2458, -2.8907],
-        [ 3.4905, -2.1368]])
+tensor([[ 2.5944, -1.3643],
+        [-0.0568,  1.6113],
+        [ 3.0186, -2.2207],
+        [-1.6823, -2.1540],
+        [-2.0908, -1.7059]])
 Corresponding labels:
-tensor([1, 2, 1, 2, 2])
+tensor([2, 0, 2, 1, 1])
 1
 (1200, 2)
 Toy Data
@@ -391,7 +392,7 @@ layers instead of single nodes is much faster and more memory-efficient.</p>
 <p>Each module also has an input attribute that points to its input module. This lets you stack modules together in any order.</p>
 <p>Below, we will build a simple Sum-Product Network by stacking leaf, product, and sum layers.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.leaves</span><span class="w"> </span><span class="kn">import</span> <span class="n">Normal</span>
@@ -410,7 +411,7 @@ layers instead of single nodes is much faster and more memory-efficient.</p>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -426,7 +427,7 @@ Sum(
 </div>
 <p>Below is a visualization of the SPN defined above. The number of output channels of a sum or leaf layer is equivalent to the number of nodes in that layer. The number of nodes in a product layer is derived from the number of nodes in its input.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">Image</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;StandardSPN.png&#39;</span><span class="p">))</span>
@@ -442,7 +443,7 @@ Sum(
 </div>
 <p>Next, we can train the SPN, for example, using gradient descent. The library already provides a method for training an SPN with gradient descent. To do this, simply pass the module you want to train and the training parameters such as the number of epochs, learning rate, etc.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">spflow.learn</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_gradient_descent</span>
@@ -465,21 +466,21 @@ Sum(
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-2025-12-30 07:07:37,232 [INFO] spflow.learn.gradient_descent: Epoch [0/10]: Loss: 2.8904616832733154
-2025-12-30 07:07:37,338 [INFO] spflow.learn.gradient_descent: Epoch [1/10]: Loss: 2.9267611503601074
-2025-12-30 07:07:37,444 [INFO] spflow.learn.gradient_descent: Epoch [2/10]: Loss: 2.972346782684326
-2025-12-30 07:07:37,551 [INFO] spflow.learn.gradient_descent: Epoch [3/10]: Loss: 2.9362776279449463
-2025-12-30 07:07:37,658 [INFO] spflow.learn.gradient_descent: Epoch [4/10]: Loss: 2.951829433441162
-2025-12-30 07:07:37,765 [INFO] spflow.learn.gradient_descent: Epoch [5/10]: Loss: 2.846937656402588
-2025-12-30 07:07:37,871 [INFO] spflow.learn.gradient_descent: Epoch [6/10]: Loss: 2.841270685195923
-2025-12-30 07:07:37,976 [INFO] spflow.learn.gradient_descent: Epoch [7/10]: Loss: 2.840902090072632
-2025-12-30 07:07:38,082 [INFO] spflow.learn.gradient_descent: Epoch [8/10]: Loss: 2.8424298763275146
-2025-12-30 07:07:38,188 [INFO] spflow.learn.gradient_descent: Epoch [9/10]: Loss: 2.8436360359191895
+2025-12-22 07:34:53,500 [INFO] spflow.learn.gradient_descent: Epoch [0/10]: Loss: 2.934843063354492
+2025-12-22 07:34:53,521 [INFO] spflow.learn.gradient_descent: Epoch [1/10]: Loss: 2.59492826461792
+2025-12-22 07:34:53,542 [INFO] spflow.learn.gradient_descent: Epoch [2/10]: Loss: 2.5817837715148926
+2025-12-22 07:34:53,563 [INFO] spflow.learn.gradient_descent: Epoch [3/10]: Loss: 2.5888638496398926
+2025-12-22 07:34:53,584 [INFO] spflow.learn.gradient_descent: Epoch [4/10]: Loss: 2.5951147079467773
+2025-12-22 07:34:53,605 [INFO] spflow.learn.gradient_descent: Epoch [5/10]: Loss: 2.348515748977661
+2025-12-22 07:34:53,625 [INFO] spflow.learn.gradient_descent: Epoch [6/10]: Loss: 2.3337242603302
+2025-12-22 07:34:53,647 [INFO] spflow.learn.gradient_descent: Epoch [7/10]: Loss: 2.3390328884124756
+2025-12-22 07:34:53,668 [INFO] spflow.learn.gradient_descent: Epoch [8/10]: Loss: 2.3444979190826416
+2025-12-22 07:34:53,690 [INFO] spflow.learn.gradient_descent: Epoch [9/10]: Loss: 2.3482658863067627
 </pre></div></div>
 </div>
 <p>Once the SPN is trained, we can perform queries such as inference and sampling. SPFlow uses internal dispatching so that a single query function can work across all module types. For example, the log_likelihood method shown below can be used for every SPN model encountered throughout this guide.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ll</span> <span class="o">=</span> <span class="n">spn</span><span class="o">.</span><span class="n">log_likelihood</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
@@ -488,35 +489,35 @@ Sum(
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-tensor([[[[-2.0002]]],
+tensor([[[[-2.3057]]],
 
 
-        [[[-1.9763]]],
+        [[[-5.0846]]],
 
 
-        [[[-2.1800]]],
+        [[[-1.5577]]],
 
 
         ...,
 
 
-        [[[-3.7796]]],
+        [[[-1.7438]]],
 
 
-        [[[-2.0846]]],
+        [[[-2.1959]]],
 
 
-        [[[-2.9593]]]], grad_fn=&lt;ViewBackward0&gt;)
+        [[[-2.3187]]]], grad_fn=&lt;ViewBackward0&gt;)
 </pre></div></div>
 </div>
 <p>Finally, we can visualize the training results on our toy dataset.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><br/><br/><span></span><span class="n">data_np</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
@@ -566,11 +567,22 @@ tensor([[[[-2.0002]]],
 </pre></div>
 </div>
 </div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+&lt;&gt;:29: SyntaxWarning: invalid escape sequence &#39;\m&#39;
+&lt;&gt;:29: SyntaxWarning: invalid escape sequence &#39;\m&#39;
+/var/folders/t3/57fhyt955l9d7dby5dmlzs900000gn/T/ipykernel_76373/2429085685.py:29: SyntaxWarning: invalid escape sequence &#39;\m&#39;
+  plt.colorbar(contour, label=&#39;Log-Likelihood $LL(\mathbf{x})$&#39;)
+</pre></div></div>
+</div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/guides_user_guide_12_0.png" src="../_images/guides_user_guide_12_0.png" />
+<img alt="../_images/guides_user_guide_12_1.png" src="../_images/guides_user_guide_12_1.png" />
 </div>
 </div>
 </section>
@@ -578,7 +590,7 @@ tensor([[[[-2.0002]]],
 <h2>Temporary Method Replacement<a class="headerlink" href="#Temporary-Method-Replacement" title="Link to this heading">¶</a></h2>
 <p>SPFlow supports temporarily substituting module methods. For example, you can replace the sum operation in <code class="docutils literal notranslate"><span class="pre">Sum</span></code> with a custom implementation for a single call graph.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
@@ -639,7 +651,7 @@ Restored log-likelihood: tensor([-1.2842, -2.8750, -7.2442], grad_fn=&lt;ViewBac
 <h3>Rat-SPN<a class="headerlink" href="#Rat-SPN" title="Link to this heading">¶</a></h3>
 <p>The Rat-SPN algorithm builds a deep network structure by recursively partitioning the features (variables) into random subsets and alternating between sum and product layers. Below, we set up a Rat-SPN by defining its structure and parameters.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.rat.rat_spn</span><span class="w"> </span><span class="kn">import</span> <span class="n">RatSPN</span>
@@ -684,7 +696,7 @@ RatSPN [D=1, C=1, R=2] → scope: 0-1
 </div>
 <p>Here is a visualization of the architecture we just created.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">Image</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;Rat_SPN.png&#39;</span><span class="p">))</span>
@@ -699,7 +711,7 @@ RatSPN [D=1, C=1, R=2] → scope: 0-1
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ll</span> <span class="o">=</span> <span class="n">rat</span><span class="o">.</span><span class="n">log_likelihood</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
@@ -708,35 +720,35 @@ RatSPN [D=1, C=1, R=2] → scope: 0-1
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-tensor([[[[-10.6569]]],
+tensor([[[[ -9.3804]]],
 
 
-        [[[-13.9143]]],
+        [[[ -4.6398]]],
 
 
-        [[[-11.5026]]],
+        [[[-13.1110]]],
 
 
         ...,
 
 
-        [[[ -5.9139]]],
+        [[[ -9.8491]]],
 
 
-        [[[ -8.2588]]],
+        [[[ -8.9190]]],
 
 
-        [[[ -6.3513]]]], grad_fn=&lt;ViewBackward0&gt;)
+        [[[ -7.8716]]]], grad_fn=&lt;ViewBackward0&gt;)
 </pre></div></div>
 </div>
 <p>We can again train this model using the provided gradient descent method.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_gradient_descent</span><span class="p">(</span><span class="n">rat</span><span class="p">,</span> <span class="n">dataloader</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
@@ -745,7 +757,7 @@ tensor([[[[-10.6569]]],
 </div>
 <p>To verify that the training worked properly, we can visualize the log-likelihoods of the trained model.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_np</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
@@ -762,7 +774,7 @@ tensor([[[[-10.6569]]],
 </div>
 <p>Of course, computing log-likelihoods is not the only thing the model can do. Below is a visualization of samples drawn from the trained Rat-SPN.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">samples</span> <span class="o">=</span> <span class="n">spn</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">num_samples</span><span class="o">=</span><span class="mi">1500</span><span class="p">)</span>
@@ -792,7 +804,7 @@ Samples
 </div>
 <p>Up to now, we have focused only on generation, without considering the labels of the training instances. Next, we will train a second Rat-SPN for classification.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
@@ -835,112 +847,112 @@ Samples
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-2025-12-30 07:07:42,230 [INFO] spflow.learn.gradient_descent: Epoch [0/100]: Loss: 2.004916191101074
-2025-12-30 07:07:42,517 [INFO] spflow.learn.gradient_descent: Epoch [1/100]: Loss: 1.9983692169189453
-2025-12-30 07:07:42,804 [INFO] spflow.learn.gradient_descent: Epoch [2/100]: Loss: 1.9854066371917725
-2025-12-30 07:07:43,092 [INFO] spflow.learn.gradient_descent: Epoch [3/100]: Loss: 2.00046968460083
-2025-12-30 07:07:43,380 [INFO] spflow.learn.gradient_descent: Epoch [4/100]: Loss: 2.003180503845215
-2025-12-30 07:07:43,666 [INFO] spflow.learn.gradient_descent: Epoch [5/100]: Loss: 2.0203356742858887
-2025-12-30 07:07:43,956 [INFO] spflow.learn.gradient_descent: Epoch [6/100]: Loss: 2.0262837409973145
-2025-12-30 07:07:44,243 [INFO] spflow.learn.gradient_descent: Epoch [7/100]: Loss: 2.0263619422912598
-2025-12-30 07:07:44,529 [INFO] spflow.learn.gradient_descent: Epoch [8/100]: Loss: 2.019497871398926
-2025-12-30 07:07:44,818 [INFO] spflow.learn.gradient_descent: Epoch [9/100]: Loss: 2.01088809967041
-2025-12-30 07:07:45,112 [INFO] spflow.learn.gradient_descent: Epoch [10/100]: Loss: 2.003439426422119
-2025-12-30 07:07:45,407 [INFO] spflow.learn.gradient_descent: Epoch [11/100]: Loss: 1.9976564645767212
-2025-12-30 07:07:45,704 [INFO] spflow.learn.gradient_descent: Epoch [12/100]: Loss: 1.9932737350463867
-2025-12-30 07:07:45,993 [INFO] spflow.learn.gradient_descent: Epoch [13/100]: Loss: 1.9899115562438965
-2025-12-30 07:07:46,280 [INFO] spflow.learn.gradient_descent: Epoch [14/100]: Loss: 1.9872711896896362
-2025-12-30 07:07:46,568 [INFO] spflow.learn.gradient_descent: Epoch [15/100]: Loss: 1.9851515293121338
-2025-12-30 07:07:46,864 [INFO] spflow.learn.gradient_descent: Epoch [16/100]: Loss: 1.9834233522415161
-2025-12-30 07:07:47,167 [INFO] spflow.learn.gradient_descent: Epoch [17/100]: Loss: 1.98200523853302
-2025-12-30 07:07:47,462 [INFO] spflow.learn.gradient_descent: Epoch [18/100]: Loss: 1.9808424711227417
-2025-12-30 07:07:47,756 [INFO] spflow.learn.gradient_descent: Epoch [19/100]: Loss: 1.9799026250839233
-2025-12-30 07:07:48,048 [INFO] spflow.learn.gradient_descent: Epoch [20/100]: Loss: 1.9791715145111084
-2025-12-30 07:07:48,341 [INFO] spflow.learn.gradient_descent: Epoch [21/100]: Loss: 1.9786738157272339
-2025-12-30 07:07:48,632 [INFO] spflow.learn.gradient_descent: Epoch [22/100]: Loss: 1.9785351753234863
-2025-12-30 07:07:48,926 [INFO] spflow.learn.gradient_descent: Epoch [23/100]: Loss: 1.9792839288711548
-2025-12-30 07:07:49,215 [INFO] spflow.learn.gradient_descent: Epoch [24/100]: Loss: 1.9828391075134277
-2025-12-30 07:07:49,503 [INFO] spflow.learn.gradient_descent: Epoch [25/100]: Loss: 1.9871528148651123
-2025-12-30 07:07:49,790 [INFO] spflow.learn.gradient_descent: Epoch [26/100]: Loss: 1.9882378578186035
-2025-12-30 07:07:50,079 [INFO] spflow.learn.gradient_descent: Epoch [27/100]: Loss: 1.9883610010147095
-2025-12-30 07:07:50,369 [INFO] spflow.learn.gradient_descent: Epoch [28/100]: Loss: 1.9880238771438599
-2025-12-30 07:07:50,659 [INFO] spflow.learn.gradient_descent: Epoch [29/100]: Loss: 1.9874569177627563
-2025-12-30 07:07:50,950 [INFO] spflow.learn.gradient_descent: Epoch [30/100]: Loss: 1.9867730140686035
-2025-12-30 07:07:51,242 [INFO] spflow.learn.gradient_descent: Epoch [31/100]: Loss: 1.9860366582870483
-2025-12-30 07:07:51,534 [INFO] spflow.learn.gradient_descent: Epoch [32/100]: Loss: 1.9852875471115112
-2025-12-30 07:07:51,822 [INFO] spflow.learn.gradient_descent: Epoch [33/100]: Loss: 1.9845486879348755
-2025-12-30 07:07:52,111 [INFO] spflow.learn.gradient_descent: Epoch [34/100]: Loss: 1.9838343858718872
-2025-12-30 07:07:52,402 [INFO] spflow.learn.gradient_descent: Epoch [35/100]: Loss: 1.983153223991394
-2025-12-30 07:07:52,694 [INFO] spflow.learn.gradient_descent: Epoch [36/100]: Loss: 1.982508659362793
-2025-12-30 07:07:52,984 [INFO] spflow.learn.gradient_descent: Epoch [37/100]: Loss: 1.9819039106369019
-2025-12-30 07:07:53,274 [INFO] spflow.learn.gradient_descent: Epoch [38/100]: Loss: 1.9813389778137207
-2025-12-30 07:07:53,587 [INFO] spflow.learn.gradient_descent: Epoch [39/100]: Loss: 1.980811357498169
-2025-12-30 07:07:53,879 [INFO] spflow.learn.gradient_descent: Epoch [40/100]: Loss: 1.9803215265274048
-2025-12-30 07:07:54,168 [INFO] spflow.learn.gradient_descent: Epoch [41/100]: Loss: 1.9798669815063477
-2025-12-30 07:07:54,455 [INFO] spflow.learn.gradient_descent: Epoch [42/100]: Loss: 1.9794455766677856
-2025-12-30 07:07:54,742 [INFO] spflow.learn.gradient_descent: Epoch [43/100]: Loss: 1.9790539741516113
-2025-12-30 07:07:55,030 [INFO] spflow.learn.gradient_descent: Epoch [44/100]: Loss: 1.9786913394927979
-2025-12-30 07:07:55,319 [INFO] spflow.learn.gradient_descent: Epoch [45/100]: Loss: 1.9783556461334229
-2025-12-30 07:07:55,606 [INFO] spflow.learn.gradient_descent: Epoch [46/100]: Loss: 1.9780433177947998
-2025-12-30 07:07:55,892 [INFO] spflow.learn.gradient_descent: Epoch [47/100]: Loss: 1.9777541160583496
-2025-12-30 07:07:56,179 [INFO] spflow.learn.gradient_descent: Epoch [48/100]: Loss: 1.9774855375289917
-2025-12-30 07:07:56,466 [INFO] spflow.learn.gradient_descent: Epoch [49/100]: Loss: 1.9772359132766724
-2025-12-30 07:07:56,755 [INFO] spflow.learn.gradient_descent: Epoch [50/100]: Loss: 1.8436698913574219
-2025-12-30 07:07:57,046 [INFO] spflow.learn.gradient_descent: Epoch [51/100]: Loss: 1.8269050121307373
-2025-12-30 07:07:57,335 [INFO] spflow.learn.gradient_descent: Epoch [52/100]: Loss: 1.8231121301651
-2025-12-30 07:07:57,624 [INFO] spflow.learn.gradient_descent: Epoch [53/100]: Loss: 1.8216547966003418
-2025-12-30 07:07:57,911 [INFO] spflow.learn.gradient_descent: Epoch [54/100]: Loss: 1.820709466934204
-2025-12-30 07:07:58,199 [INFO] spflow.learn.gradient_descent: Epoch [55/100]: Loss: 1.819972276687622
-2025-12-30 07:07:58,485 [INFO] spflow.learn.gradient_descent: Epoch [56/100]: Loss: 1.8193639516830444
-2025-12-30 07:07:58,773 [INFO] spflow.learn.gradient_descent: Epoch [57/100]: Loss: 1.8188468217849731
-2025-12-30 07:07:59,060 [INFO] spflow.learn.gradient_descent: Epoch [58/100]: Loss: 1.8184024095535278
-2025-12-30 07:07:59,347 [INFO] spflow.learn.gradient_descent: Epoch [59/100]: Loss: 1.818011999130249
-2025-12-30 07:07:59,636 [INFO] spflow.learn.gradient_descent: Epoch [60/100]: Loss: 1.8176655769348145
-2025-12-30 07:07:59,924 [INFO] spflow.learn.gradient_descent: Epoch [61/100]: Loss: 1.817354440689087
-2025-12-30 07:08:00,214 [INFO] spflow.learn.gradient_descent: Epoch [62/100]: Loss: 1.8170727491378784
-2025-12-30 07:08:00,500 [INFO] spflow.learn.gradient_descent: Epoch [63/100]: Loss: 1.8168137073516846
-2025-12-30 07:08:00,787 [INFO] spflow.learn.gradient_descent: Epoch [64/100]: Loss: 1.8165779113769531
-2025-12-30 07:08:01,074 [INFO] spflow.learn.gradient_descent: Epoch [65/100]: Loss: 1.8163585662841797
-2025-12-30 07:08:01,362 [INFO] spflow.learn.gradient_descent: Epoch [66/100]: Loss: 1.8161550760269165
-2025-12-30 07:08:01,649 [INFO] spflow.learn.gradient_descent: Epoch [67/100]: Loss: 1.8159652948379517
-2025-12-30 07:08:01,936 [INFO] spflow.learn.gradient_descent: Epoch [68/100]: Loss: 1.8157873153686523
-2025-12-30 07:08:02,223 [INFO] spflow.learn.gradient_descent: Epoch [69/100]: Loss: 1.8156182765960693
-2025-12-30 07:08:02,511 [INFO] spflow.learn.gradient_descent: Epoch [70/100]: Loss: 1.8154606819152832
-2025-12-30 07:08:02,796 [INFO] spflow.learn.gradient_descent: Epoch [71/100]: Loss: 1.8153102397918701
-2025-12-30 07:08:03,083 [INFO] spflow.learn.gradient_descent: Epoch [72/100]: Loss: 1.8151687383651733
-2025-12-30 07:08:03,371 [INFO] spflow.learn.gradient_descent: Epoch [73/100]: Loss: 1.8150336742401123
-2025-12-30 07:08:03,662 [INFO] spflow.learn.gradient_descent: Epoch [74/100]: Loss: 1.814906358718872
-2025-12-30 07:08:03,952 [INFO] spflow.learn.gradient_descent: Epoch [75/100]: Loss: 1.815582036972046
-2025-12-30 07:08:04,237 [INFO] spflow.learn.gradient_descent: Epoch [76/100]: Loss: 1.8179190158843994
-2025-12-30 07:08:04,526 [INFO] spflow.learn.gradient_descent: Epoch [77/100]: Loss: 1.8199260234832764
-2025-12-30 07:08:04,814 [INFO] spflow.learn.gradient_descent: Epoch [78/100]: Loss: 1.8215827941894531
-2025-12-30 07:08:05,102 [INFO] spflow.learn.gradient_descent: Epoch [79/100]: Loss: 1.822925329208374
-2025-12-30 07:08:05,391 [INFO] spflow.learn.gradient_descent: Epoch [80/100]: Loss: 1.8240020275115967
-2025-12-30 07:08:05,684 [INFO] spflow.learn.gradient_descent: Epoch [81/100]: Loss: 1.8248565196990967
-2025-12-30 07:08:05,975 [INFO] spflow.learn.gradient_descent: Epoch [82/100]: Loss: 1.8255341053009033
-2025-12-30 07:08:06,267 [INFO] spflow.learn.gradient_descent: Epoch [83/100]: Loss: 1.82606840133667
-2025-12-30 07:08:06,558 [INFO] spflow.learn.gradient_descent: Epoch [84/100]: Loss: 1.826488733291626
-2025-12-30 07:08:06,850 [INFO] spflow.learn.gradient_descent: Epoch [85/100]: Loss: 1.826817512512207
-2025-12-30 07:08:07,143 [INFO] spflow.learn.gradient_descent: Epoch [86/100]: Loss: 1.827073335647583
-2025-12-30 07:08:07,437 [INFO] spflow.learn.gradient_descent: Epoch [87/100]: Loss: 1.8272745609283447
-2025-12-30 07:08:07,730 [INFO] spflow.learn.gradient_descent: Epoch [88/100]: Loss: 1.8274303674697876
-2025-12-30 07:08:08,022 [INFO] spflow.learn.gradient_descent: Epoch [89/100]: Loss: 1.8275498151779175
-2025-12-30 07:08:08,314 [INFO] spflow.learn.gradient_descent: Epoch [90/100]: Loss: 1.8276420831680298
-2025-12-30 07:08:08,606 [INFO] spflow.learn.gradient_descent: Epoch [91/100]: Loss: 1.8277121782302856
-2025-12-30 07:08:08,897 [INFO] spflow.learn.gradient_descent: Epoch [92/100]: Loss: 1.8277643918991089
-2025-12-30 07:08:09,188 [INFO] spflow.learn.gradient_descent: Epoch [93/100]: Loss: 1.8278027772903442
-2025-12-30 07:08:09,479 [INFO] spflow.learn.gradient_descent: Epoch [94/100]: Loss: 1.8278287649154663
-2025-12-30 07:08:09,773 [INFO] spflow.learn.gradient_descent: Epoch [95/100]: Loss: 1.8278459310531616
-2025-12-30 07:08:10,063 [INFO] spflow.learn.gradient_descent: Epoch [96/100]: Loss: 1.8278549909591675
-2025-12-30 07:08:10,355 [INFO] spflow.learn.gradient_descent: Epoch [97/100]: Loss: 1.8278597593307495
-2025-12-30 07:08:10,647 [INFO] spflow.learn.gradient_descent: Epoch [98/100]: Loss: 1.8278602361679077
-2025-12-30 07:08:10,938 [INFO] spflow.learn.gradient_descent: Epoch [99/100]: Loss: 1.8278555870056152
+2025-12-22 07:34:54,660 [INFO] spflow.learn.gradient_descent: Epoch [0/100]: Loss: 1.8467155694961548
+2025-12-22 07:34:54,760 [INFO] spflow.learn.gradient_descent: Epoch [1/100]: Loss: 1.6484947204589844
+2025-12-22 07:34:54,857 [INFO] spflow.learn.gradient_descent: Epoch [2/100]: Loss: 1.6660617589950562
+2025-12-22 07:34:54,952 [INFO] spflow.learn.gradient_descent: Epoch [3/100]: Loss: 1.663613200187683
+2025-12-22 07:34:55,046 [INFO] spflow.learn.gradient_descent: Epoch [4/100]: Loss: 1.6891857385635376
+2025-12-22 07:34:55,148 [INFO] spflow.learn.gradient_descent: Epoch [5/100]: Loss: 1.699773907661438
+2025-12-22 07:34:55,255 [INFO] spflow.learn.gradient_descent: Epoch [6/100]: Loss: 1.7084234952926636
+2025-12-22 07:34:55,363 [INFO] spflow.learn.gradient_descent: Epoch [7/100]: Loss: 1.7120063304901123
+2025-12-22 07:34:55,464 [INFO] spflow.learn.gradient_descent: Epoch [8/100]: Loss: 1.7221907377243042
+2025-12-22 07:34:55,561 [INFO] spflow.learn.gradient_descent: Epoch [9/100]: Loss: 1.7289313077926636
+2025-12-22 07:34:55,665 [INFO] spflow.learn.gradient_descent: Epoch [10/100]: Loss: 1.7329753637313843
+2025-12-22 07:34:55,772 [INFO] spflow.learn.gradient_descent: Epoch [11/100]: Loss: 1.7431440353393555
+2025-12-22 07:34:55,874 [INFO] spflow.learn.gradient_descent: Epoch [12/100]: Loss: 1.6949725151062012
+2025-12-22 07:34:55,973 [INFO] spflow.learn.gradient_descent: Epoch [13/100]: Loss: 1.682011604309082
+2025-12-22 07:34:56,071 [INFO] spflow.learn.gradient_descent: Epoch [14/100]: Loss: 1.671911597251892
+2025-12-22 07:34:56,168 [INFO] spflow.learn.gradient_descent: Epoch [15/100]: Loss: 1.6763224601745605
+2025-12-22 07:34:56,262 [INFO] spflow.learn.gradient_descent: Epoch [16/100]: Loss: 1.6806058883666992
+2025-12-22 07:34:56,357 [INFO] spflow.learn.gradient_descent: Epoch [17/100]: Loss: 1.685664415359497
+2025-12-22 07:34:56,456 [INFO] spflow.learn.gradient_descent: Epoch [18/100]: Loss: 1.6903789043426514
+2025-12-22 07:34:56,560 [INFO] spflow.learn.gradient_descent: Epoch [19/100]: Loss: 1.6944867372512817
+2025-12-22 07:34:56,664 [INFO] spflow.learn.gradient_descent: Epoch [20/100]: Loss: 1.6978530883789062
+2025-12-22 07:34:56,763 [INFO] spflow.learn.gradient_descent: Epoch [21/100]: Loss: 1.700566053390503
+2025-12-22 07:34:56,860 [INFO] spflow.learn.gradient_descent: Epoch [22/100]: Loss: 1.7027759552001953
+2025-12-22 07:34:56,957 [INFO] spflow.learn.gradient_descent: Epoch [23/100]: Loss: 1.7045958042144775
+2025-12-22 07:34:57,057 [INFO] spflow.learn.gradient_descent: Epoch [24/100]: Loss: 1.7060998678207397
+2025-12-22 07:34:57,157 [INFO] spflow.learn.gradient_descent: Epoch [25/100]: Loss: 1.7073413133621216
+2025-12-22 07:34:57,255 [INFO] spflow.learn.gradient_descent: Epoch [26/100]: Loss: 1.7083613872528076
+2025-12-22 07:34:57,352 [INFO] spflow.learn.gradient_descent: Epoch [27/100]: Loss: 1.709193229675293
+2025-12-22 07:34:57,448 [INFO] spflow.learn.gradient_descent: Epoch [28/100]: Loss: 1.7098655700683594
+2025-12-22 07:34:57,544 [INFO] spflow.learn.gradient_descent: Epoch [29/100]: Loss: 1.7104012966156006
+2025-12-22 07:34:57,640 [INFO] spflow.learn.gradient_descent: Epoch [30/100]: Loss: 1.7108222246170044
+2025-12-22 07:34:57,735 [INFO] spflow.learn.gradient_descent: Epoch [31/100]: Loss: 1.7111458778381348
+2025-12-22 07:34:57,829 [INFO] spflow.learn.gradient_descent: Epoch [32/100]: Loss: 1.711387276649475
+2025-12-22 07:34:57,926 [INFO] spflow.learn.gradient_descent: Epoch [33/100]: Loss: 1.7115610837936401
+2025-12-22 07:34:58,026 [INFO] spflow.learn.gradient_descent: Epoch [34/100]: Loss: 1.711676836013794
+2025-12-22 07:34:58,124 [INFO] spflow.learn.gradient_descent: Epoch [35/100]: Loss: 1.7117432355880737
+2025-12-22 07:34:58,219 [INFO] spflow.learn.gradient_descent: Epoch [36/100]: Loss: 1.7117706537246704
+2025-12-22 07:34:58,313 [INFO] spflow.learn.gradient_descent: Epoch [37/100]: Loss: 1.7117645740509033
+2025-12-22 07:34:58,408 [INFO] spflow.learn.gradient_descent: Epoch [38/100]: Loss: 1.71173095703125
+2025-12-22 07:34:58,507 [INFO] spflow.learn.gradient_descent: Epoch [39/100]: Loss: 1.7116758823394775
+2025-12-22 07:34:58,605 [INFO] spflow.learn.gradient_descent: Epoch [40/100]: Loss: 1.7116016149520874
+2025-12-22 07:34:58,706 [INFO] spflow.learn.gradient_descent: Epoch [41/100]: Loss: 1.7115139961242676
+2025-12-22 07:34:58,802 [INFO] spflow.learn.gradient_descent: Epoch [42/100]: Loss: 1.7114145755767822
+2025-12-22 07:34:58,897 [INFO] spflow.learn.gradient_descent: Epoch [43/100]: Loss: 1.7113068103790283
+2025-12-22 07:34:58,992 [INFO] spflow.learn.gradient_descent: Epoch [44/100]: Loss: 1.7111921310424805
+2025-12-22 07:34:59,085 [INFO] spflow.learn.gradient_descent: Epoch [45/100]: Loss: 1.711073637008667
+2025-12-22 07:34:59,179 [INFO] spflow.learn.gradient_descent: Epoch [46/100]: Loss: 1.7109534740447998
+2025-12-22 07:34:59,273 [INFO] spflow.learn.gradient_descent: Epoch [47/100]: Loss: 1.7108324766159058
+2025-12-22 07:34:59,366 [INFO] spflow.learn.gradient_descent: Epoch [48/100]: Loss: 1.7107127904891968
+2025-12-22 07:34:59,460 [INFO] spflow.learn.gradient_descent: Epoch [49/100]: Loss: 1.710597276687622
+2025-12-22 07:34:59,553 [INFO] spflow.learn.gradient_descent: Epoch [50/100]: Loss: 1.3369255065917969
+2025-12-22 07:34:59,648 [INFO] spflow.learn.gradient_descent: Epoch [51/100]: Loss: 1.3287739753723145
+2025-12-22 07:34:59,741 [INFO] spflow.learn.gradient_descent: Epoch [52/100]: Loss: 1.3285530805587769
+2025-12-22 07:34:59,834 [INFO] spflow.learn.gradient_descent: Epoch [53/100]: Loss: 1.3285112380981445
+2025-12-22 07:34:59,928 [INFO] spflow.learn.gradient_descent: Epoch [54/100]: Loss: 1.3284895420074463
+2025-12-22 07:35:00,021 [INFO] spflow.learn.gradient_descent: Epoch [55/100]: Loss: 1.3284748792648315
+2025-12-22 07:35:00,115 [INFO] spflow.learn.gradient_descent: Epoch [56/100]: Loss: 1.3284661769866943
+2025-12-22 07:35:00,209 [INFO] spflow.learn.gradient_descent: Epoch [57/100]: Loss: 1.3284618854522705
+2025-12-22 07:35:00,302 [INFO] spflow.learn.gradient_descent: Epoch [58/100]: Loss: 1.3284611701965332
+2025-12-22 07:35:00,396 [INFO] spflow.learn.gradient_descent: Epoch [59/100]: Loss: 1.3284646272659302
+2025-12-22 07:35:00,489 [INFO] spflow.learn.gradient_descent: Epoch [60/100]: Loss: 1.328471064567566
+2025-12-22 07:35:00,583 [INFO] spflow.learn.gradient_descent: Epoch [61/100]: Loss: 1.328479528427124
+2025-12-22 07:35:00,681 [INFO] spflow.learn.gradient_descent: Epoch [62/100]: Loss: 1.3284900188446045
+2025-12-22 07:35:00,775 [INFO] spflow.learn.gradient_descent: Epoch [63/100]: Loss: 1.3285014629364014
+2025-12-22 07:35:00,869 [INFO] spflow.learn.gradient_descent: Epoch [64/100]: Loss: 1.3285150527954102
+2025-12-22 07:35:00,963 [INFO] spflow.learn.gradient_descent: Epoch [65/100]: Loss: 1.328528881072998
+2025-12-22 07:35:01,057 [INFO] spflow.learn.gradient_descent: Epoch [66/100]: Loss: 1.3285441398620605
+2025-12-22 07:35:01,151 [INFO] spflow.learn.gradient_descent: Epoch [67/100]: Loss: 1.328559160232544
+2025-12-22 07:35:01,244 [INFO] spflow.learn.gradient_descent: Epoch [68/100]: Loss: 1.3285753726959229
+2025-12-22 07:35:01,338 [INFO] spflow.learn.gradient_descent: Epoch [69/100]: Loss: 1.3285917043685913
+2025-12-22 07:35:01,431 [INFO] spflow.learn.gradient_descent: Epoch [70/100]: Loss: 1.3286076784133911
+2025-12-22 07:35:01,525 [INFO] spflow.learn.gradient_descent: Epoch [71/100]: Loss: 1.328623652458191
+2025-12-22 07:35:01,618 [INFO] spflow.learn.gradient_descent: Epoch [72/100]: Loss: 1.3286406993865967
+2025-12-22 07:35:01,712 [INFO] spflow.learn.gradient_descent: Epoch [73/100]: Loss: 1.32865571975708
+2025-12-22 07:35:01,806 [INFO] spflow.learn.gradient_descent: Epoch [74/100]: Loss: 1.3286718130111694
+2025-12-22 07:35:01,900 [INFO] spflow.learn.gradient_descent: Epoch [75/100]: Loss: 1.3366516828536987
+2025-12-22 07:35:01,993 [INFO] spflow.learn.gradient_descent: Epoch [76/100]: Loss: 1.3437944650650024
+2025-12-22 07:35:02,089 [INFO] spflow.learn.gradient_descent: Epoch [77/100]: Loss: 1.3484121561050415
+2025-12-22 07:35:02,182 [INFO] spflow.learn.gradient_descent: Epoch [78/100]: Loss: 1.351446270942688
+2025-12-22 07:35:02,276 [INFO] spflow.learn.gradient_descent: Epoch [79/100]: Loss: 1.3534789085388184
+2025-12-22 07:35:02,369 [INFO] spflow.learn.gradient_descent: Epoch [80/100]: Loss: 1.3548715114593506
+2025-12-22 07:35:02,463 [INFO] spflow.learn.gradient_descent: Epoch [81/100]: Loss: 1.3558475971221924
+2025-12-22 07:35:02,556 [INFO] spflow.learn.gradient_descent: Epoch [82/100]: Loss: 1.356546401977539
+2025-12-22 07:35:02,660 [INFO] spflow.learn.gradient_descent: Epoch [83/100]: Loss: 1.3570581674575806
+2025-12-22 07:35:02,753 [INFO] spflow.learn.gradient_descent: Epoch [84/100]: Loss: 1.3574391603469849
+2025-12-22 07:35:02,846 [INFO] spflow.learn.gradient_descent: Epoch [85/100]: Loss: 1.3577278852462769
+2025-12-22 07:35:02,939 [INFO] spflow.learn.gradient_descent: Epoch [86/100]: Loss: 1.357948660850525
+2025-12-22 07:35:03,032 [INFO] spflow.learn.gradient_descent: Epoch [87/100]: Loss: 1.3581212759017944
+2025-12-22 07:35:03,126 [INFO] spflow.learn.gradient_descent: Epoch [88/100]: Loss: 1.3582552671432495
+2025-12-22 07:35:03,219 [INFO] spflow.learn.gradient_descent: Epoch [89/100]: Loss: 1.3583625555038452
+2025-12-22 07:35:03,312 [INFO] spflow.learn.gradient_descent: Epoch [90/100]: Loss: 1.3584474325180054
+2025-12-22 07:35:03,406 [INFO] spflow.learn.gradient_descent: Epoch [91/100]: Loss: 1.3585151433944702
+2025-12-22 07:35:03,499 [INFO] spflow.learn.gradient_descent: Epoch [92/100]: Loss: 1.3585697412490845
+2025-12-22 07:35:03,592 [INFO] spflow.learn.gradient_descent: Epoch [93/100]: Loss: 1.358614206314087
+2025-12-22 07:35:03,686 [INFO] spflow.learn.gradient_descent: Epoch [94/100]: Loss: 1.3586492538452148
+2025-12-22 07:35:03,780 [INFO] spflow.learn.gradient_descent: Epoch [95/100]: Loss: 1.3586797714233398
+2025-12-22 07:35:03,873 [INFO] spflow.learn.gradient_descent: Epoch [96/100]: Loss: 1.3587048053741455
+2025-12-22 07:35:03,967 [INFO] spflow.learn.gradient_descent: Epoch [97/100]: Loss: 1.35872483253479
+2025-12-22 07:35:04,060 [INFO] spflow.learn.gradient_descent: Epoch [98/100]: Loss: 1.3587424755096436
+2025-12-22 07:35:04,154 [INFO] spflow.learn.gradient_descent: Epoch [99/100]: Loss: 1.3587571382522583
 </pre></div></div>
 </div>
 <p>With this SPN, we can now draw samples based on its labels. Therefore, we use a sampling context. This sampling context can be passed to any sampling method. With the context, you can explicitly define from which output channel you want to sample or, for example, provide evidence. This allows advanced control over the sampling routine. In this case, the root layer has three output channels which correspond to the three classes. So being able to define from which output channel we want to sample
 means being able to choose from which class we want to sample.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">spflow.utils.sampling_context</span><span class="w"> </span><span class="kn">import</span> <span class="n">SamplingContext</span>
@@ -999,7 +1011,7 @@ Samples Class 2
 </div>
 <p>However, the model can of course also be used for classification. As an example, we visualize the trained decision boundaries of our model</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
@@ -1060,7 +1072,7 @@ Samples Class 2
 <h2>LearnSPN<a class="headerlink" href="#LearnSPN" title="Link to this heading">¶</a></h2>
 <p>Instead of creating a random structure, we can also train the SPN structure using the LearnSPN.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">spflow.learn.learn_spn</span><span class="w"> </span><span class="kn">import</span> <span class="n">learn_spn</span>
@@ -1081,24 +1093,58 @@ Samples Class 2
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+used 7 iterations (0.0028s) to cluster 1200 items into 2 clusters
+used 2 iterations (0.0002s) to cluster 600 items into 2 clusters
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-/tmp/ipykernel_2487/568267606.py:6: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.detach().clone() or sourceTensor.detach().clone().requires_grad_(True), rather than torch.tensor(sourceTensor).
+/var/folders/t3/57fhyt955l9d7dby5dmlzs900000gn/T/ipykernel_76373/568267606.py:6: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.detach().clone() or sourceTensor.detach().clone().requires_grad_(True), rather than torch.tensor(sourceTensor).
   torch.tensor(dataset, dtype=torch.float32),
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Product(
-  D=1, C=4, R=1
+Sum(
+  D=1, C=1, R=1, weights=(1, 5, 1, 1)
   (inputs): Cat(
-    D=2, C=4, R=1, dim=1
+    D=1, C=5, R=1, dim=2
     (inputs): ModuleList(
-      (0-1): 2 x Normal(D=1, C=4, R=1)
+      (0): Product(
+        D=1, C=4, R=1
+        (inputs): Cat(
+          D=2, C=4, R=1, dim=1
+          (inputs): ModuleList(
+            (0-1): 2 x Normal(D=1, C=4, R=1)
+          )
+        )
+      )
+      (1): Sum(
+        D=1, C=1, R=1, weights=(1, 8, 1, 1)
+        (inputs): Cat(
+          D=1, C=8, R=1, dim=2
+          (inputs): ModuleList(
+            (0-1): 2 x Product(
+              D=1, C=4, R=1
+              (inputs): Cat(
+                D=2, C=4, R=1, dim=1
+                (inputs): ModuleList(
+                  (0-1): 2 x Normal(D=1, C=4, R=1)
+                )
+              )
+            )
+          )
+        )
+      )
     )
   )
 )
@@ -1106,7 +1152,7 @@ Product(
 </div>
 <p>The trained SPN can now be used just like any other module</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">learn_spn_samples</span> <span class="o">=</span> <span class="n">spn</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">num_samples</span><span class="o">=</span><span class="mi">1500</span><span class="p">)</span>
@@ -1140,7 +1186,7 @@ Samples
 <h2>Advanced Queries<a class="headerlink" href="#Advanced-Queries" title="Link to this heading">¶</a></h2>
 <p>To showcase more advanced queries like conditional sampling and MPE (Most Probable Explanation) we take a look at a dataset with more features. Below, we load the digits dataset. This dataset contains 1797 8x8 images of digits 0 to 9.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
@@ -1187,7 +1233,7 @@ tensor(0.) tensor(16.)
 </div>
 <p>Again we create a Rat SPN, but this time we use a Binomial distribution for the leaf layer.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.leaves</span><span class="w"> </span><span class="kn">import</span> <span class="n">Binomial</span>
@@ -1237,7 +1283,7 @@ RatSPN [D=1, C=1, R=2] → scope: 0-63
 </pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_gradient_descent</span><span class="p">(</span><span class="n">rat</span><span class="p">,</span> <span class="n">dataloader</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
@@ -1246,7 +1292,7 @@ RatSPN [D=1, C=1, R=2] → scope: 0-63
 </div>
 <p>Below is a visualization of some samples drawn from the Spn</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">samples</span> <span class="o">=</span> <span class="n">rat</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">num_samples</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
@@ -1278,7 +1324,7 @@ torch.Size([5, 64])
 </div>
 <p>Now can show some more advanced queries. One of them is getting the MPE. It returns the most probable state of the probabilistic circuit. This is often helpful to generate more clear samples and a good indicator whether the model could learn the data or not, which is not always evident with regular samples.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mpe</span> <span class="o">=</span> <span class="n">rat</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">num_samples</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">is_mpe</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -1296,7 +1342,7 @@ torch.Size([5, 64])
 </div>
 <p>And at last we want to sample, given some evidence. In this example, the lower half of the image is given, and we want to sample the upper half given the lower half. This time, instead of explicitly defining a sampling context, we use the sample_with_evidence method. The method allows the user to just input the evidence and let the library internally handle the creation of the sampling context. This becomes handy if you have evidence but not multiple channel to sample from.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">evidence</span> <span class="o">=</span> <span class="n">X_tensor</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -1358,14 +1404,14 @@ torch.Size([1, 64])
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="../getting_started.html">
+          <a class="prev-page" href="../concepts.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Getting Started</div>
+                <div class="title">Concepts</div>
                 
               </div>
             </a>

@@ -199,6 +199,7 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts.html">Concepts</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guides/user_guide.html">User Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guides/dev_guide.html">Developer Guide</a></li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">API Documentation</a><input aria-label="Toggle navigation of API Documentation" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
@@ -361,6 +362,14 @@ created or overwritten if it already exists.</p></li>
 <p>Thread-safe cache with per-method-type locking and weak key references.</p>
 <p>Uses WeakKeyDictionary to store cached values keyed by module instances,
 allowing garbage collection when modules are no longer referenced elsewhere.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spflow.utils.cache.Cache.extras">
+<span class="sig-name descname"><span class="pre">extras</span></span><a class="headerlink" href="#spflow.utils.cache.Cache.extras" title="Link to this definition">¶</a></dt>
+<dd><p>Mutable dictionary for user-defined, per-traversal state. This can be
+used to pass custom information through recursive module calls without
+changing public method signatures.</p>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="spflow.utils.cache.Cache.get">
 <span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/utils/cache.html#Cache.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.utils.cache.Cache.get" title="Link to this definition">¶</a></dt>
@@ -426,21 +435,20 @@ signature with the original method (including ‘self’ as first parameter).</p
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<p><a href="#id1"><span class="problematic" id="id2">``</span></a><a href="#id3"><span class="problematic" id="id4">`</span></a>python
-def my_custom_ll(self, data, cache=None):</p>
-<blockquote>
-<div><p># Custom implementation
-return torch.ones(len(data))</p>
-</div></blockquote>
-<p>model = Product(Sum(Product(Normal(…))))</p>
-<p># Normal inference
-model.log_likelihood(data)</p>
-<p># Use custom implementation for Sum modules
-with replace(Sum.log_likelihood, my_custom_ll):</p>
-<blockquote>
-<div><p>model.log_likelihood(data)  # Sum instances now use my_custom_ll</p>
-</div></blockquote>
-<p><a href="#id5"><span class="problematic" id="id6">``</span></a><a href="#id7"><span class="problematic" id="id8">`</span></a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">my_custom_ll</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="c1"># Custom implementation</span>
+    <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">Product</span><span class="p">(</span><span class="n">Sum</span><span class="p">(</span><span class="n">Product</span><span class="p">(</span><span class="n">Normal</span><span class="p">(</span><span class="o">...</span><span class="p">))))</span>
+
+<span class="c1"># Normal inference</span>
+<span class="n">model</span><span class="o">.</span><span class="n">log_likelihood</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="c1"># Use custom implementation for Sum modules</span>
+<span class="k">with</span> <span class="n">replace</span><span class="p">(</span><span class="n">Sum</span><span class="o">.</span><span class="n">log_likelihood</span><span class="p">,</span> <span class="n">my_custom_ll</span><span class="p">):</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">log_likelihood</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>  <span class="c1"># Sum instances now use my_custom_ll</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Raises<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -521,6 +529,7 @@ with replace(Sum.log_likelihood, my_custom_ll):</p>
 </li>
 <li><a class="reference internal" href="#cache">Cache</a><ul>
 <li><a class="reference internal" href="#spflow.utils.cache.Cache"><code class="docutils literal notranslate"><span class="pre">Cache</span></code></a><ul>
+<li><a class="reference internal" href="#spflow.utils.cache.Cache.extras"><code class="docutils literal notranslate"><span class="pre">Cache.extras</span></code></a></li>
 <li><a class="reference internal" href="#spflow.utils.cache.Cache.get"><code class="docutils literal notranslate"><span class="pre">Cache.get()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.utils.cache.Cache.set"><code class="docutils literal notranslate"><span class="pre">Cache.set()</span></code></a></li>
 </ul>

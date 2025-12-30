@@ -199,6 +199,7 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="concepts.html">Concepts</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/user_guide.html">User Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/dev_guide.html">Developer Guide</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="api/index.html">API Documentation</a><input aria-label="Toggle navigation of API Documentation" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -260,7 +261,8 @@
         <article role="main" id="furo-main-content">
           <section id="frequently-asked-questions">
 <h1>Frequently Asked Questions<a class="headerlink" href="#frequently-asked-questions" title="Link to this heading">¶</a></h1>
-<p>This page answers common questions about SPFlow. For detailed tutorials, see the <a class="reference internal" href="guides/user_guide.html"><span class="doc">User Guide</span></a>.</p>
+<p>This page answers common questions about SPFlow. For deeper explanations, see <a class="reference internal" href="concepts.html"><span class="doc">Concepts</span></a>.
+For end-to-end tutorials, see the <a class="reference internal" href="guides/user_guide.html"><span class="doc">User Guide</span></a>.</p>
 <hr class="docutils" />
 <section id="general-questions">
 <h2>General Questions<a class="headerlink" href="#general-questions" title="Link to this heading">¶</a></h2>
@@ -297,32 +299,15 @@
 </section>
 <section id="what-is-a-scope">
 <h3>What is a Scope?<a class="headerlink" href="#what-is-a-scope" title="Link to this heading">¶</a></h3>
-<p>A <strong>Scope</strong> defines which input variables (features) a module operates on. Scopes are fundamental to probabilistic circuits:</p>
-<ul class="simple">
-<li><p>Leaf modules have scopes covering their input features</p></li>
-<li><p>Product nodes combine modules with <strong>disjoint</strong> scopes (decomposability)</p></li>
-<li><p>Sum nodes combine modules with the <strong>same</strong> scope</p></li>
-</ul>
-<p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">spflow.meta</span><span class="w"> </span><span class="kn">import</span> <span class="n">Scope</span>
-
-<span class="c1"># Scope covering features 0, 1, 2</span>
-<span class="n">scope</span> <span class="o">=</span> <span class="n">Scope</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
-</pre></div>
-</div>
+<p>A <strong>Scope</strong> defines which input variables (features) a module operates on. Scopes are what make sums/products well-defined
+and enforce decomposability/compatibility constraints.</p>
+<p>See <a class="reference internal" href="concepts.html#concepts-scopes-and-decomposability"><span class="std std-ref">Scopes and Decomposability</span></a>.</p>
 </section>
 <section id="what-are-repetitions">
 <h3>What are repetitions?<a class="headerlink" href="#what-are-repetitions" title="Link to this heading">¶</a></h3>
-<p><strong>Repetitions</strong> are multiple independent copies of the same circuit structure, each with different parameters. They enable:</p>
-<ul class="simple">
-<li><p>More expressive models without increasing depth</p></li>
-<li><p>Efficient parallel computation via batching</p></li>
-<li><p>Better coverage of the probability space</p></li>
-</ul>
-<p>Specify repetitions when creating modules:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">leaf</span> <span class="o">=</span> <span class="n">Normal</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="n">scope</span><span class="p">,</span> <span class="n">out_channels</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">num_repetitions</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
-</pre></div>
-</div>
+<p><strong>Repetitions</strong> are independent parameterizations of the same structure.
+They usually show up as <code class="docutils literal notranslate"><span class="pre">R</span></code> in <code class="docutils literal notranslate"><span class="pre">model.to_str()</span></code> and are tracked in module shapes.</p>
+<p>See <a class="reference internal" href="concepts.html#concepts-shapes-and-dimensions"><span class="std std-ref">Shapes and Dimensions</span></a>.</p>
 </section>
 <section id="what-is-the-difference-between-sum-and-elementwisesum">
 <h3>What is the difference between Sum and ElementwiseSum?<a class="headerlink" href="#what-is-the-difference-between-sum-and-elementwisesum" title="Link to this heading">¶</a></h3>
@@ -486,7 +471,7 @@
 <span class="p">)</span>
 </pre></div>
 </div>
-<p>See <a class="reference internal" href="api/learning.html"><span class="doc">Learning and Training</span></a> for details.</p>
+<p>See <a class="reference internal" href="api/learning.html"><span class="doc">Learning and Training</span></a> for details and the <a class="reference internal" href="guides/user_guide.html"><span class="doc">User Guide</span></a> for end-to-end examples.</p>
 </section>
 </section>
 <hr class="docutils" />
@@ -538,7 +523,7 @@ marginalizes over some variables while maximizing over others.</p>
 </section>
 <section id="how-do-i-handle-missing-data">
 <h3>How do I handle missing data?<a class="headerlink" href="#how-do-i-handle-missing-data" title="Link to this heading">¶</a></h3>
-<p>Use <code class="docutils literal notranslate"><span class="pre">torch.nan</span></code> in the evidence tensor to indicate missing values:</p>
+<p>Use <code class="docutils literal notranslate"><span class="pre">torch.nan</span></code> in your data/evidence tensor to indicate missing values:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create data with missing values</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
 <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;nan&#39;</span><span class="p">)</span>  <span class="c1"># Feature 2 is missing for sample 0</span>
@@ -549,6 +534,7 @@ marginalizes over some variables while maximizing over others.</p>
 </pre></div>
 </div>
 <p>SPFlow will marginalize over missing features when computing likelihoods.</p>
+<p>See <a class="reference internal" href="concepts.html#concepts-missing-data-and-evidence"><span class="std std-ref">Missing Data and Evidence</span></a> for details and conditional sampling patterns.</p>
 </section>
 </section>
 <hr class="docutils" />

@@ -200,6 +200,7 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts.html">Concepts</a></li>
 <li class="toctree-l1"><a class="reference internal" href="user_guide.html">User Guide</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Developer Guide</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../api/index.html">API Documentation</a><input aria-label="Toggle navigation of API Documentation" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -428,7 +429,7 @@ Leaf (Normal)
 <h3>Example: NoisyNormal<a class="headerlink" href="#Example:-NoisyNormal" title="Link to this heading">¶</a></h3>
 <p>A Normal distribution that adds noise to log-likelihoods during training. This demonstrates extending a standard distribution with training-time regularization.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
@@ -501,7 +502,7 @@ Leaf (Normal)
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Quick test</span>
@@ -569,7 +570,7 @@ Eval: outputs identical = True
 <h3>Example: NoisySum<a class="headerlink" href="#Example:-NoisySum" title="Link to this heading">¶</a></h3>
 <p>A sum module that adds Gaussian noise during training.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
@@ -698,7 +699,7 @@ Eval: outputs identical = True
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Test NoisySum</span>
@@ -778,7 +779,7 @@ Eval: outputs identical = True
 \[\log p(x) = \sum_j \log p_j(x_j) + \epsilon, \quad \epsilon \sim \mathcal{N}(0, \sigma^2)\]</div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">NoisyProduct</span><span class="p">(</span><span class="n">Module</span><span class="p">):</span>
@@ -866,7 +867,7 @@ Eval: outputs identical = True
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Test NoisyProduct</span>
@@ -946,7 +947,7 @@ Samples shape: torch.Size([100, 2])
 <h3>Example: RandomSplit<a class="headerlink" href="#Example:-RandomSplit" title="Link to this heading">¶</a></h3>
 <p>A <code class="docutils literal notranslate"><span class="pre">RandomSplit</span></code> assigns features to groups randomly (fixed at initialization).</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.ops.split</span><span class="w"> </span><span class="kn">import</span> <span class="n">Split</span>
@@ -1002,7 +1003,7 @@ Samples shape: torch.Size([100, 2])
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Test RandomSplit</span>
@@ -1038,7 +1039,7 @@ Split 1 shape: torch.Size([5, 1, 2, 1])
 <h2>6. Testing Your Module<a class="headerlink" href="#6.-Testing-Your-Module" title="Link to this heading">¶</a></h2>
 <p>SPFlow provides test utilities in <code class="docutils literal notranslate"><span class="pre">tests/utils/</span></code>. Here’s a minimal test pattern:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">test_noisy_normal_leaf</span><span class="p">():</span>

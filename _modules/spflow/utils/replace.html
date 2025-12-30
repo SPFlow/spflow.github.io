@@ -198,6 +198,7 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../concepts.html">Concepts</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../guides/user_guide.html">User Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../guides/dev_guide.html">Developer Guide</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../api/index.html">API Documentation</a><input aria-label="Toggle navigation of API Documentation" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -289,20 +290,20 @@
 <span class="sd">        None.</span>
 
 <span class="sd">    Example:</span>
-<span class="sd">        ```python</span>
-<span class="sd">        def my_custom_ll(self, data, cache=None):</span>
-<span class="sd">            # Custom implementation</span>
-<span class="sd">            return torch.ones(len(data))</span>
+<span class="sd">        ::</span>
 
-<span class="sd">        model = Product(Sum(Product(Normal(...))))</span>
+<span class="sd">            def my_custom_ll(self, data, cache=None):</span>
+<span class="sd">                # Custom implementation</span>
+<span class="sd">                return torch.ones(len(data))</span>
 
-<span class="sd">        # Normal inference</span>
-<span class="sd">        model.log_likelihood(data)</span>
+<span class="sd">            model = Product(Sum(Product(Normal(...))))</span>
 
-<span class="sd">        # Use custom implementation for Sum modules</span>
-<span class="sd">        with replace(Sum.log_likelihood, my_custom_ll):</span>
-<span class="sd">            model.log_likelihood(data)  # Sum instances now use my_custom_ll</span>
-<span class="sd">        ```</span>
+<span class="sd">            # Normal inference</span>
+<span class="sd">            model.log_likelihood(data)</span>
+
+<span class="sd">            # Use custom implementation for Sum modules</span>
+<span class="sd">            with replace(Sum.log_likelihood, my_custom_ll):</span>
+<span class="sd">                model.log_likelihood(data)  # Sum instances now use my_custom_ll</span>
 
 <span class="sd">    Raises:</span>
 <span class="sd">        ValueError: If the class cannot be inferred from the method reference.</span>
