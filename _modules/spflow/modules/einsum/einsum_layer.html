@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../../genindex.html"><link rel="search" title="Search" href="../../../../search.html">
 
-    <!-- Generated with Sphinx 8.2.3 and Furo 2025.12.19 -->
+    <!-- Generated with Sphinx 9.0.4 and Furo 2025.12.19 -->
         <title>spflow.modules.einsum.einsum_layer - SPFlow 1.0.0</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo.css?v=7bdb33bb" />
@@ -199,21 +199,38 @@
   <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../concepts.html">Concepts</a></li>
+</ul>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../zoo/index.html">Paper Zoo</a><input aria-label="Toggle navigation of Paper Zoo" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../zoo/rat_spn.html">Random and Tensorized Sum-Product Networks (RAT-SPN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../zoo/einet.html">Einsum Networks (Einet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../zoo/hclt.html">Hidden Chow-Liu Trees (HCLT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../zoo/conv_pc.html">Convolutional Probabilistic Circuits (ConvPc)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../zoo/apc.html">Autoencoding Probabilistic Circuits (APC)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../zoo/cms.html">Continuous Mixtures (CMs)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../zoo/socs.html">Sum of Compatible Squares (SOCS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../zoo/pic.html">Probabilistic Integral Circuits (PICs)</a></li>
+</ul>
+</li>
+</ul>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../guides/user_guide.html">User Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../guides/dev_guide.html">Developer Guide</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../api/index.html">API Documentation</a><input aria-label="Toggle navigation of API Documentation" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../guides/sklearn.html">Using SPFlow with sklearn</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../api/index.html">API Documentation</a><input aria-label="Toggle navigation of API Documentation" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/base_modules.html">Base Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/data.html">Data Structures</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/module_shape.html">Module Shape</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/dsl.html">DSL (Example Construction)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/sums.html">Sum Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/products.html">Product Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/conv.html">Convolutional Modules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../api/einsum.html">Einsum Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/leaves.html">Leaf Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/operations.html">Operations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../api/rat_spn.html">RAT-SPN Architecture</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/learning.html">Learning and Training</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/scope.html">Scope Management</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/utilities.html">Utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/measures.html">Measures</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/wrappers.html">Wrapper Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/interfaces.html">Interfaces</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/exceptions.html">Exceptions</a></li>
@@ -266,9 +283,15 @@
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">einops</span><span class="w"> </span><span class="kn">import</span> <span class="n">rearrange</span><span class="p">,</span> <span class="n">repeat</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">torch</span><span class="w"> </span><span class="kn">import</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">nn</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">InvalidWeightsError</span><span class="p">,</span> <span class="n">MissingCacheError</span><span class="p">,</span> <span class="n">ScopeError</span><span class="p">,</span> <span class="n">ShapeError</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">InvalidWeightsError</span><span class="p">,</span>
+    <span class="n">MissingCacheError</span><span class="p">,</span>
+    <span class="n">ScopeError</span><span class="p">,</span>
+    <span class="n">ShapeError</span><span class="p">,</span>
+<span class="p">)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.meta.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">Scope</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.module</span><span class="w"> </span><span class="kn">import</span> <span class="n">Module</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.module_shape</span><span class="w"> </span><span class="kn">import</span> <span class="n">ModuleShape</span>
@@ -276,11 +299,17 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.ops.split_consecutive</span><span class="w"> </span><span class="kn">import</span> <span class="n">SplitConsecutive</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.utils.cache</span><span class="w"> </span><span class="kn">import</span> <span class="n">Cache</span><span class="p">,</span> <span class="n">cached</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.utils.projections</span><span class="w"> </span><span class="kn">import</span> <span class="n">proj_convex_to_real</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.utils.sampling_context</span><span class="w"> </span><span class="kn">import</span> <span class="n">SamplingContext</span><span class="p">,</span> <span class="n">init_default_sampling_context</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.utils.sampling_context</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">SamplingContext</span><span class="p">,</span>
+    <span class="n">index_tensor</span><span class="p">,</span>
+    <span class="n">repeat_channel_index</span><span class="p">,</span>
+    <span class="n">repeat_repetition_index</span><span class="p">,</span>
+    <span class="n">sample_from_logits</span><span class="p">,</span>
+<span class="p">)</span>
 
 
 <div class="viewcode-block" id="EinsumLayer">
-<a class="viewcode-back" href="../../../../api/einsum.html#spflow.modules.einsum.EinsumLayer">[docs]</a>
+<a class="viewcode-back" href="../../../../zoo/einet.html#spflow.modules.einsum.EinsumLayer">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">EinsumLayer</span><span class="p">(</span><span class="n">Module</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;EinsumLayer combining product and sum operations efficiently.</span>
 
@@ -296,7 +325,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="EinsumLayer.__init__">
-<a class="viewcode-back" href="../../../../api/einsum.html#spflow.modules.einsum.EinsumLayer.__init__">[docs]</a>
+<a class="viewcode-back" href="../../../../zoo/einet.html#spflow.modules.einsum.EinsumLayer.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">inputs</span><span class="p">:</span> <span class="n">Module</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="n">Module</span><span class="p">],</span>
@@ -409,6 +438,20 @@
                 <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">,</span>
             <span class="p">),</span>
         <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">register_buffer</span><span class="p">(</span>
+            <span class="s2">&quot;flat_to_left_channels&quot;</span><span class="p">,</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">functional</span><span class="o">.</span><span class="n">one_hot</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">unraveled_channel_indices</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span>
+                <span class="n">num_classes</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_left_channels</span><span class="p">,</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">get_default_dtype</span><span class="p">()),</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">register_buffer</span><span class="p">(</span>
+            <span class="s2">&quot;flat_to_right_channels&quot;</span><span class="p">,</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">functional</span><span class="o">.</span><span class="n">one_hot</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">unraveled_channel_indices</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span>
+                <span class="n">num_classes</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_right_channels</span><span class="p">,</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">get_default_dtype</span><span class="p">()),</span>
+        <span class="p">)</span>
 
         <span class="k">if</span> <span class="n">weights</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="c1"># Initialize weights randomly, normalized over (i,j) pairs</span>
@@ -458,17 +501,27 @@
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">log_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Log-normalized weights (sum to 1 over input channel pairs).&quot;&quot;&quot;</span>
-        <span class="c1"># Flatten last two dims, softmax, reshape back</span>
-        <span class="n">flat_logits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">logits</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">logits</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="c1"># Flatten input-channel pair axes before normalization.</span>
+        <span class="n">flat_logits</span> <span class="o">=</span> <span class="n">rearrange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">logits</span><span class="p">,</span> <span class="s2">&quot;f co r i j -&gt; f co r (i j)&quot;</span><span class="p">)</span>
         <span class="n">log_weights</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">functional</span><span class="o">.</span><span class="n">log_softmax</span><span class="p">(</span><span class="n">flat_logits</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">log_weights</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">weights_shape</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">rearrange</span><span class="p">(</span>
+            <span class="n">log_weights</span><span class="p">,</span>
+            <span class="s2">&quot;f co r (i j) -&gt; f co r i j&quot;</span><span class="p">,</span>
+            <span class="n">i</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_left_channels</span><span class="p">,</span>
+            <span class="n">j</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_right_channels</span><span class="p">,</span>
+        <span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">weights</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Normalized weights (sum to 1 over input channel pairs).&quot;&quot;&quot;</span>
-        <span class="n">flat_logits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">logits</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">logits</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">flat_logits</span> <span class="o">=</span> <span class="n">rearrange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">logits</span><span class="p">,</span> <span class="s2">&quot;f co r i j -&gt; f co r (i j)&quot;</span><span class="p">)</span>
         <span class="n">weights</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">functional</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">flat_logits</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">weights</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">weights_shape</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">rearrange</span><span class="p">(</span>
+            <span class="n">weights</span><span class="p">,</span>
+            <span class="s2">&quot;f co r (i j) -&gt; f co r i j&quot;</span><span class="p">,</span>
+            <span class="n">i</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_left_channels</span><span class="p">,</span>
+            <span class="n">j</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_right_channels</span><span class="p">,</span>
+        <span class="p">)</span>
 
     <span class="nd">@weights</span><span class="o">.</span><span class="n">setter</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">weights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">values</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -481,9 +534,14 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">torch</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">sums</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">sums</span><span class="p">)):</span>
             <span class="k">raise</span> <span class="n">InvalidWeightsError</span><span class="p">(</span><span class="s2">&quot;Weights must sum to 1 over (i,j) channel pairs.&quot;</span><span class="p">)</span>
         <span class="c1"># Project to logits space</span>
-        <span class="n">flat_weights</span> <span class="o">=</span> <span class="n">values</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">*</span><span class="n">values</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">flat_weights</span> <span class="o">=</span> <span class="n">rearrange</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="s2">&quot;f co r i j -&gt; f co r (i j)&quot;</span><span class="p">)</span>
         <span class="n">flat_logits</span> <span class="o">=</span> <span class="n">proj_convex_to_real</span><span class="p">(</span><span class="n">flat_weights</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logits</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">flat_logits</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">weights_shape</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logits</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">rearrange</span><span class="p">(</span>
+            <span class="n">flat_logits</span><span class="p">,</span>
+            <span class="s2">&quot;f co r (i j) -&gt; f co r i j&quot;</span><span class="p">,</span>
+            <span class="n">i</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_left_channels</span><span class="p">,</span>
+            <span class="n">j</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_right_channels</span><span class="p">,</span>
+        <span class="p">)</span>
 
     <span class="nd">@log_weights</span><span class="o">.</span><span class="n">setter</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">log_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">values</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -512,7 +570,7 @@
         <span class="k">return</span> <span class="n">left_ll</span><span class="p">,</span> <span class="n">right_ll</span>
 
 <div class="viewcode-block" id="EinsumLayer.log_likelihood">
-<a class="viewcode-back" href="../../../../api/einsum.html#spflow.modules.einsum.EinsumLayer.log_likelihood">[docs]</a>
+<a class="viewcode-back" href="../../../../zoo/einet.html#spflow.modules.einsum.EinsumLayer.log_likelihood">[docs]</a>
     <span class="nd">@cached</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">log_likelihood</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -555,15 +613,11 @@
         <span class="k">return</span> <span class="n">log_prob</span></div>
 
 
-<div class="viewcode-block" id="EinsumLayer.sample">
-<a class="viewcode-back" href="../../../../api/einsum.html#spflow.modules.einsum.EinsumLayer.sample">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">sample</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_sample</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">num_samples</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">data</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">is_mpe</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-        <span class="n">cache</span><span class="p">:</span> <span class="n">Cache</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">sampling_ctx</span><span class="p">:</span> <span class="n">SamplingContext</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">data</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span>
+        <span class="n">sampling_ctx</span><span class="p">:</span> <span class="n">SamplingContext</span><span class="p">,</span>
+        <span class="n">cache</span><span class="p">:</span> <span class="n">Cache</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Sample from the EinsumLayer.</span>
 
@@ -578,79 +632,116 @@
 <span class="sd">            Sampled data tensor.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Prepare data tensor</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prepare_sample_data</span><span class="p">(</span><span class="n">num_samples</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">cache</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">cache</span> <span class="o">=</span> <span class="n">Cache</span><span class="p">()</span>
-
-        <span class="n">sampling_ctx</span> <span class="o">=</span> <span class="n">init_default_sampling_context</span><span class="p">(</span><span class="n">sampling_ctx</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">data</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+        <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">validate_sampling_context</span><span class="p">(</span>
+            <span class="n">num_samples</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+            <span class="n">num_features</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">features</span><span class="p">,</span>
+            <span class="n">num_channels</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">channels</span><span class="p">,</span>
+            <span class="n">num_repetitions</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">repetitions</span><span class="p">,</span>
+            <span class="n">allowed_feature_widths</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">features</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">broadcast_feature_width</span><span class="p">(</span><span class="n">target_features</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">features</span><span class="p">,</span> <span class="n">allow_from_one</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
         <span class="c1"># Get logits and select based on context</span>
         <span class="n">logits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">logits</span>  <span class="c1"># (D, O, R, I, J)</span>
 
         <span class="c1"># Expand for batch dimension</span>
-        <span class="n">batch_size</span> <span class="o">=</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">channel_index</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">logits</span> <span class="o">=</span> <span class="n">logits</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">batch_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">sampling_ctx</span><span class="o">.</span><span class="n">channel_index</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">logits</span> <span class="o">=</span> <span class="n">repeat</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="s2">&quot;f co r i j -&gt; b f co r i j&quot;</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="n">batch_size</span><span class="p">)</span>
         <span class="c1"># logits shape: (B, D, O, R, I, J)</span>
 
         <span class="c1"># Select output channel based on parent&#39;s channel_index</span>
-        <span class="c1"># sampling_ctx.channel_index: (B, D) - indices into out_channels</span>
-        <span class="n">channel_idx</span> <span class="o">=</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">channel_index</span>  <span class="c1"># (B, D)</span>
+        <span class="c1"># sampling_ctx.channel_index indexes out_channels.</span>
+        <span class="n">channel_idx</span> <span class="o">=</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">channel_index</span>
 
         <span class="c1"># Gather the correct output channel</span>
         <span class="c1"># Expand channel_idx to match logits dimensions</span>
-        <span class="n">idx</span> <span class="o">=</span> <span class="n">channel_idx</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">features</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="n">idx</span> <span class="o">=</span> <span class="n">idx</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">repetitions</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_left_channels</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_right_channels</span><span class="p">)</span>
-        <span class="n">logits</span> <span class="o">=</span> <span class="n">logits</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">idx</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">num_repetitions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">repetitions</span>
+        <span class="n">num_left_channels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_left_channels</span>
+        <span class="n">num_right_channels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_right_channels</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="n">repeat_channel_index</span><span class="p">(</span>
+            <span class="n">channel_idx</span><span class="p">,</span>
+            <span class="s2">&quot;b f co -&gt; b f co r i j&quot;</span><span class="p">,</span>
+            <span class="n">r</span><span class="o">=</span><span class="n">num_repetitions</span><span class="p">,</span>
+            <span class="n">i</span><span class="o">=</span><span class="n">num_left_channels</span><span class="p">,</span>
+            <span class="n">j</span><span class="o">=</span><span class="n">num_right_channels</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">logits</span> <span class="o">=</span> <span class="n">index_tensor</span><span class="p">(</span>
+            <span class="n">logits</span><span class="p">,</span>
+            <span class="n">index</span><span class="o">=</span><span class="n">idx</span><span class="p">,</span>
+            <span class="n">dim</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+            <span class="n">is_differentiable</span><span class="o">=</span><span class="n">sampling_ctx</span><span class="o">.</span><span class="n">is_differentiable</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="c1"># logits shape: (B, D, R, I, J)</span>
 
         <span class="c1"># Select repetition if specified</span>
-        <span class="k">if</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">repetition_idx</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">rep_idx</span> <span class="o">=</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">repetition_idx</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-            <span class="n">rep_idx</span> <span class="o">=</span> <span class="n">rep_idx</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span>
-                <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">features</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_left_channels</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_right_channels</span>
-            <span class="p">)</span>
-            <span class="n">logits</span> <span class="o">=</span> <span class="n">logits</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">rep_idx</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-            <span class="c1"># logits shape: (B, D, I, J)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">repetitions</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;repetition_idx must be provided when sampling with num_repetitions &gt; 1&quot;</span><span class="p">)</span>
-            <span class="n">logits</span> <span class="o">=</span> <span class="n">logits</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span>  <span class="c1"># (B, D, I, J)</span>
+        <span class="n">num_features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">features</span>
+        <span class="n">rep_idx</span> <span class="o">=</span> <span class="n">repeat_repetition_index</span><span class="p">(</span>
+            <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">repetition_index</span><span class="p">,</span>
+            <span class="s2">&quot;b r -&gt; b f r i j&quot;</span><span class="p">,</span>
+            <span class="n">f</span><span class="o">=</span><span class="n">num_features</span><span class="p">,</span>
+            <span class="n">i</span><span class="o">=</span><span class="n">num_left_channels</span><span class="p">,</span>
+            <span class="n">j</span><span class="o">=</span><span class="n">num_right_channels</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">logits</span> <span class="o">=</span> <span class="n">index_tensor</span><span class="p">(</span>
+            <span class="n">logits</span><span class="p">,</span>
+            <span class="n">index</span><span class="o">=</span><span class="n">rep_idx</span><span class="p">,</span>
+            <span class="n">dim</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+            <span class="n">is_differentiable</span><span class="o">=</span><span class="n">sampling_ctx</span><span class="o">.</span><span class="n">is_differentiable</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="c1"># logits shape: (B, D, I, J)</span>
 
         <span class="c1"># Flatten (I, J) for categorical sampling</span>
-        <span class="n">logits_flat</span> <span class="o">=</span> <span class="n">logits</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">features</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># (B, D, I*J)</span>
+        <span class="n">logits_flat</span> <span class="o">=</span> <span class="n">rearrange</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="s2">&quot;b f i j -&gt; b f (i j)&quot;</span><span class="p">)</span>
 
-        <span class="c1"># Condition on evidence if cache has log-likelihoods</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_two_inputs</span><span class="p">:</span>
-            <span class="n">left_cache_key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="n">right_cache_key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">left_cache_key</span> <span class="o">=</span> <span class="s2">&quot;einsum_left&quot;</span>
-            <span class="n">right_cache_key</span> <span class="o">=</span> <span class="s2">&quot;einsum_right&quot;</span>
+        <span class="c1"># Condition on evidence if cache has log-likelihoods.</span>
+        <span class="n">left_ll</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">right_ll</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="s2">&quot;log_likelihood&quot;</span> <span class="ow">in</span> <span class="n">cache</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_two_inputs</span><span class="p">:</span>
+                <span class="n">left_ll</span> <span class="o">=</span> <span class="n">cache</span><span class="p">[</span><span class="s2">&quot;log_likelihood&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="n">right_ll</span> <span class="o">=</span> <span class="n">cache</span><span class="p">[</span><span class="s2">&quot;log_likelihood&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">split_ll</span> <span class="o">=</span> <span class="n">cache</span><span class="p">[</span><span class="s2">&quot;log_likelihood&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">split_ll</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">))</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">split_ll</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                    <span class="n">left_ll</span><span class="p">,</span> <span class="n">right_ll</span> <span class="o">=</span> <span class="n">split_ll</span>
 
-        <span class="k">if</span> <span class="p">(</span>
-            <span class="n">cache</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-            <span class="ow">and</span> <span class="s2">&quot;log_likelihood&quot;</span> <span class="ow">in</span> <span class="n">cache</span>
-            <span class="ow">and</span> <span class="n">cache</span><span class="p">[</span><span class="s2">&quot;log_likelihood&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">left_cache_key</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-            <span class="ow">and</span> <span class="n">cache</span><span class="p">[</span><span class="s2">&quot;log_likelihood&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">right_cache_key</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-        <span class="p">):</span>
-            <span class="c1"># Get cached log-likelihoods</span>
-            <span class="n">left_ll</span> <span class="o">=</span> <span class="n">cache</span><span class="p">[</span><span class="s2">&quot;log_likelihood&quot;</span><span class="p">][</span><span class="n">left_cache_key</span><span class="p">]</span>  <span class="c1"># (B, D, C, R)</span>
-            <span class="n">right_ll</span> <span class="o">=</span> <span class="n">cache</span><span class="p">[</span><span class="s2">&quot;log_likelihood&quot;</span><span class="p">][</span><span class="n">right_cache_key</span><span class="p">]</span>  <span class="c1"># (B, D, C, R)</span>
-
+        <span class="k">if</span> <span class="n">left_ll</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">right_ll</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="c1"># Select repetition</span>
-            <span class="k">if</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">repetition_idx</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">rep_idx</span> <span class="o">=</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">repetition_idx</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-                <span class="n">rep_idx_l</span> <span class="o">=</span> <span class="n">rep_idx</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">left_ll</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">left_ll</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-                <span class="n">left_ll</span> <span class="o">=</span> <span class="n">left_ll</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">rep_idx_l</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-                <span class="n">right_ll</span> <span class="o">=</span> <span class="n">right_ll</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">rep_idx_l</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">num_features</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">left_ll</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">num_left_channels</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">left_ll</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+            <span class="n">num_right_channels</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">right_ll</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+            <span class="n">rep_idx_l</span> <span class="o">=</span> <span class="n">repeat_repetition_index</span><span class="p">(</span>
+                <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">repetition_index</span><span class="p">,</span>
+                <span class="s2">&quot;b r -&gt; b f i r&quot;</span><span class="p">,</span>
+                <span class="n">f</span><span class="o">=</span><span class="n">num_features</span><span class="p">,</span>
+                <span class="n">i</span><span class="o">=</span><span class="n">num_left_channels</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">rep_idx_r</span> <span class="o">=</span> <span class="n">repeat_repetition_index</span><span class="p">(</span>
+                <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">repetition_index</span><span class="p">,</span>
+                <span class="s2">&quot;b r -&gt; b f j r&quot;</span><span class="p">,</span>
+                <span class="n">f</span><span class="o">=</span><span class="n">num_features</span><span class="p">,</span>
+                <span class="n">j</span><span class="o">=</span><span class="n">num_right_channels</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">left_ll</span> <span class="o">=</span> <span class="n">index_tensor</span><span class="p">(</span>
+                <span class="n">left_ll</span><span class="p">,</span>
+                <span class="n">index</span><span class="o">=</span><span class="n">rep_idx_l</span><span class="p">,</span>
+                <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+                <span class="n">is_differentiable</span><span class="o">=</span><span class="n">sampling_ctx</span><span class="o">.</span><span class="n">is_differentiable</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">right_ll</span> <span class="o">=</span> <span class="n">index_tensor</span><span class="p">(</span>
+                <span class="n">right_ll</span><span class="p">,</span>
+                <span class="n">index</span><span class="o">=</span><span class="n">rep_idx_r</span><span class="p">,</span>
+                <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+                <span class="n">is_differentiable</span><span class="o">=</span><span class="n">sampling_ctx</span><span class="o">.</span><span class="n">is_differentiable</span><span class="p">,</span>
+            <span class="p">)</span>
 
             <span class="c1"># Compute joint log-likelihood for each (i, j) pair</span>
             <span class="c1"># left_ll: (B, D, I), right_ll: (B, D, J)</span>
-            <span class="n">left_ll</span> <span class="o">=</span> <span class="n">left_ll</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># (B, D, I, 1)</span>
-            <span class="n">right_ll</span> <span class="o">=</span> <span class="n">right_ll</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># (B, D, 1, J)</span>
+            <span class="n">left_ll</span> <span class="o">=</span> <span class="n">rearrange</span><span class="p">(</span><span class="n">left_ll</span><span class="p">,</span> <span class="s2">&quot;b f i -&gt; b f i 1&quot;</span><span class="p">)</span>
+            <span class="n">right_ll</span> <span class="o">=</span> <span class="n">rearrange</span><span class="p">(</span><span class="n">right_ll</span><span class="p">,</span> <span class="s2">&quot;b f j -&gt; b f 1 j&quot;</span><span class="p">)</span>
             <span class="n">joint_ll</span> <span class="o">=</span> <span class="n">left_ll</span> <span class="o">+</span> <span class="n">right_ll</span>  <span class="c1"># (B, D, I, J)</span>
-            <span class="n">joint_ll_flat</span> <span class="o">=</span> <span class="n">joint_ll</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">features</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">joint_ll_flat</span> <span class="o">=</span> <span class="n">rearrange</span><span class="p">(</span><span class="n">joint_ll</span><span class="p">,</span> <span class="s2">&quot;b f i j -&gt; b f (i j)&quot;</span><span class="p">)</span>
 
             <span class="c1"># Compute posterior</span>
             <span class="n">log_prior</span> <span class="o">=</span> <span class="n">logits_flat</span>
@@ -658,48 +749,51 @@
             <span class="n">log_posterior</span> <span class="o">=</span> <span class="n">log_posterior</span> <span class="o">-</span> <span class="n">torch</span><span class="o">.</span><span class="n">logsumexp</span><span class="p">(</span><span class="n">log_posterior</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="n">logits_flat</span> <span class="o">=</span> <span class="n">log_posterior</span>
 
-        <span class="c1"># Sample or MPE</span>
-        <span class="k">if</span> <span class="n">is_mpe</span><span class="p">:</span>
-            <span class="n">indices</span> <span class="o">=</span> <span class="n">logits_flat</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># (B, D)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">dist</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">distributions</span><span class="o">.</span><span class="n">Categorical</span><span class="p">(</span><span class="n">logits</span><span class="o">=</span><span class="n">logits_flat</span><span class="p">)</span>
-            <span class="n">indices</span> <span class="o">=</span> <span class="n">dist</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span>  <span class="c1"># (B, D)</span>
+        <span class="n">indices</span> <span class="o">=</span> <span class="n">sample_from_logits</span><span class="p">(</span>
+            <span class="n">logits</span><span class="o">=</span><span class="n">logits_flat</span><span class="p">,</span>
+            <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+            <span class="n">is_mpe</span><span class="o">=</span><span class="n">sampling_ctx</span><span class="o">.</span><span class="n">is_mpe</span><span class="p">,</span>
+            <span class="n">is_differentiable</span><span class="o">=</span><span class="n">sampling_ctx</span><span class="o">.</span><span class="n">is_differentiable</span><span class="p">,</span>
+            <span class="n">hard</span><span class="o">=</span><span class="n">sampling_ctx</span><span class="o">.</span><span class="n">hard</span><span class="p">,</span>
+            <span class="n">tau</span><span class="o">=</span><span class="n">sampling_ctx</span><span class="o">.</span><span class="n">tau</span><span class="p">,</span>
+        <span class="p">)</span>
 
         <span class="c1"># Unravel indices to (i, j) pairs</span>
-        <span class="n">ij_indices</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">unraveled_channel_indices</span><span class="p">[</span><span class="n">indices</span><span class="p">]</span>  <span class="c1"># (B, D, 2)</span>
-        <span class="n">left_indices</span> <span class="o">=</span> <span class="n">ij_indices</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>  <span class="c1"># (B, D)</span>
-        <span class="n">right_indices</span> <span class="o">=</span> <span class="n">ij_indices</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>  <span class="c1"># (B, D)</span>
+        <span class="k">if</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">is_differentiable</span><span class="p">:</span>
+            <span class="n">left_projection</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">flat_to_left_channels</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="o">=</span><span class="n">indices</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">indices</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+            <span class="n">right_projection</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">flat_to_right_channels</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="o">=</span><span class="n">indices</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">indices</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+            <span class="n">left_indices</span> <span class="o">=</span> <span class="n">indices</span> <span class="o">@</span> <span class="n">left_projection</span>  <span class="c1"># (B, D, I)</span>
+            <span class="n">right_indices</span> <span class="o">=</span> <span class="n">indices</span> <span class="o">@</span> <span class="n">right_projection</span>  <span class="c1"># (B, D, J)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ij_indices</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">unraveled_channel_indices</span><span class="p">[</span><span class="n">indices</span><span class="p">]</span>  <span class="c1"># (B, D, 2)</span>
+            <span class="n">left_indices</span> <span class="o">=</span> <span class="n">ij_indices</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>  <span class="c1"># (B, D)</span>
+            <span class="n">right_indices</span> <span class="o">=</span> <span class="n">ij_indices</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>  <span class="c1"># (B, D)</span>
 
         <span class="c1"># Sample from left and right children</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_two_inputs</span><span class="p">:</span>
             <span class="c1"># Left child</span>
-            <span class="n">left_ctx</span> <span class="o">=</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-            <span class="n">left_ctx</span><span class="o">.</span><span class="n">channel_index</span> <span class="o">=</span> <span class="n">left_indices</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">is_mpe</span><span class="o">=</span><span class="n">is_mpe</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">,</span> <span class="n">sampling_ctx</span><span class="o">=</span><span class="n">left_ctx</span><span class="p">)</span>
+            <span class="n">left_ctx</span> <span class="o">=</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">with_routing</span><span class="p">(</span><span class="n">channel_index</span><span class="o">=</span><span class="n">left_indices</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">sampling_ctx</span><span class="o">.</span><span class="n">mask</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">_sample</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">,</span> <span class="n">sampling_ctx</span><span class="o">=</span><span class="n">left_ctx</span><span class="p">)</span>
 
             <span class="c1"># Right child</span>
-            <span class="n">right_ctx</span> <span class="o">=</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-            <span class="n">right_ctx</span><span class="o">.</span><span class="n">channel_index</span> <span class="o">=</span> <span class="n">right_indices</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">is_mpe</span><span class="o">=</span><span class="n">is_mpe</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">,</span> <span class="n">sampling_ctx</span><span class="o">=</span><span class="n">right_ctx</span><span class="p">)</span>
+            <span class="n">right_ctx</span> <span class="o">=</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">with_routing</span><span class="p">(</span><span class="n">channel_index</span><span class="o">=</span><span class="n">right_indices</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">sampling_ctx</span><span class="o">.</span><span class="n">mask</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">_sample</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">,</span> <span class="n">sampling_ctx</span><span class="o">=</span><span class="n">right_ctx</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># Single input with Split module - use generic merge_split_indices</span>
-            <span class="n">full_indices</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">merge_split_indices</span><span class="p">(</span><span class="n">left_indices</span><span class="p">,</span> <span class="n">right_indices</span><span class="p">)</span>
-            <span class="n">full_mask</span> <span class="o">=</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">mask</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="n">full_indices</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">merge_split_tensors</span><span class="p">(</span><span class="n">left_indices</span><span class="p">,</span> <span class="n">right_indices</span><span class="p">)</span>
+            <span class="n">full_mask</span> <span class="o">=</span> <span class="n">repeat</span><span class="p">(</span><span class="n">sampling_ctx</span><span class="o">.</span><span class="n">mask</span><span class="p">,</span> <span class="s2">&quot;b f -&gt; b (f two)&quot;</span><span class="p">,</span> <span class="n">two</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
-            <span class="n">child_ctx</span> <span class="o">=</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-            <span class="n">child_ctx</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">channel_index</span><span class="o">=</span><span class="n">full_indices</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">full_mask</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">is_mpe</span><span class="o">=</span><span class="n">is_mpe</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">,</span> <span class="n">sampling_ctx</span><span class="o">=</span><span class="n">child_ctx</span><span class="p">)</span>
+            <span class="n">child_ctx</span> <span class="o">=</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">with_routing</span><span class="p">(</span><span class="n">channel_index</span><span class="o">=</span><span class="n">full_indices</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">full_mask</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">_sample</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">,</span> <span class="n">sampling_ctx</span><span class="o">=</span><span class="n">child_ctx</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">data</span></div>
+        <span class="k">return</span> <span class="n">data</span>
 
-
-<div class="viewcode-block" id="EinsumLayer.expectation_maximization">
-<a class="viewcode-back" href="../../../../api/einsum.html#spflow.modules.einsum.EinsumLayer.expectation_maximization">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">expectation_maximization</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_expectation_maximization_step</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">data</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span>
         <span class="n">bias_correction</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-        <span class="n">cache</span><span class="p">:</span> <span class="n">Cache</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">cache</span><span class="p">:</span> <span class="n">Cache</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Perform EM step to update weights.</span>
 
@@ -708,9 +802,6 @@
 <span class="sd">            bias_correction: Whether to apply bias correction.</span>
 <span class="sd">            cache: Cache with log-likelihoods.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">cache</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">cache</span> <span class="o">=</span> <span class="n">Cache</span><span class="p">()</span>
-
         <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
             <span class="c1"># Get cached values</span>
             <span class="n">left_ll</span><span class="p">,</span> <span class="n">right_ll</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_left_right_ll</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">cache</span><span class="p">)</span>
@@ -720,62 +811,48 @@
                 <span class="k">raise</span> <span class="n">MissingCacheError</span><span class="p">(</span><span class="s2">&quot;Module log-likelihoods not in cache. Call log_likelihood first.&quot;</span><span class="p">)</span>
 
             <span class="c1"># E-step: compute expected counts</span>
-            <span class="n">log_weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_weights</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># (1, D, O, R, I, J)</span>
+            <span class="n">log_weights</span> <span class="o">=</span> <span class="n">rearrange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">log_weights</span><span class="p">,</span> <span class="s2">&quot;f co r i j -&gt; 1 f co r i j&quot;</span><span class="p">)</span>
 
-            <span class="c1"># Expand input lls for outer product</span>
-            <span class="n">left_ll</span> <span class="o">=</span> <span class="n">left_ll</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>  <span class="c1"># (B, D, I, 1, R, 1)</span>
-            <span class="n">right_ll</span> <span class="o">=</span> <span class="n">right_ll</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>  <span class="c1"># (B, D, 1, J, R, 1)</span>
-
-            <span class="c1"># Rearrange dimensions to match weights: (D, O, R, I, J)</span>
-            <span class="n">left_ll</span> <span class="o">=</span> <span class="n">left_ll</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># (B, D, R, I, 1)</span>
-            <span class="n">right_ll</span> <span class="o">=</span> <span class="n">right_ll</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># (B, D, R, 1, J)</span>
+            <span class="n">left_ll</span> <span class="o">=</span> <span class="n">rearrange</span><span class="p">(</span><span class="n">left_ll</span><span class="p">,</span> <span class="s2">&quot;b f i r -&gt; b f 1 r i 1&quot;</span><span class="p">)</span>
+            <span class="n">right_ll</span> <span class="o">=</span> <span class="n">rearrange</span><span class="p">(</span><span class="n">right_ll</span><span class="p">,</span> <span class="s2">&quot;b f j r -&gt; b f 1 r 1 j&quot;</span><span class="p">)</span>
 
             <span class="c1"># Get gradients (how much each output contributed)</span>
             <span class="n">log_grads</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">module_lls</span><span class="o">.</span><span class="n">grad</span> <span class="o">+</span> <span class="mf">1e-10</span><span class="p">)</span>
 
-            <span class="n">log_grads</span> <span class="o">=</span> <span class="n">log_grads</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># (B, D, O, R, 1, 1)</span>
-
-            <span class="n">module_lls</span> <span class="o">=</span> <span class="n">module_lls</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># (B, D, O, R, 1, 1)</span>
+            <span class="n">log_grads</span> <span class="o">=</span> <span class="n">rearrange</span><span class="p">(</span><span class="n">log_grads</span><span class="p">,</span> <span class="s2">&quot;b f co r -&gt; b f co r 1 1&quot;</span><span class="p">)</span>
+            <span class="n">module_lls</span> <span class="o">=</span> <span class="n">rearrange</span><span class="p">(</span><span class="n">module_lls</span><span class="p">,</span> <span class="s2">&quot;b f co r -&gt; b f co r 1 1&quot;</span><span class="p">)</span>
 
             <span class="c1"># Joint input log-likelihood</span>
-            <span class="n">joint_input_ll</span> <span class="o">=</span> <span class="n">left_ll</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">right_ll</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># (B, D, 1, R, I, J)</span>
+            <span class="n">joint_input_ll</span> <span class="o">=</span> <span class="n">left_ll</span> <span class="o">+</span> <span class="n">right_ll</span>  <span class="c1"># (B, D, 1, R, I, J)</span>
 
             <span class="c1"># Compute log expectations</span>
             <span class="n">log_expectations</span> <span class="o">=</span> <span class="n">log_weights</span> <span class="o">+</span> <span class="n">log_grads</span> <span class="o">+</span> <span class="n">joint_input_ll</span> <span class="o">-</span> <span class="n">module_lls</span>
             <span class="n">log_expectations</span> <span class="o">=</span> <span class="n">log_expectations</span><span class="o">.</span><span class="n">logsumexp</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># Sum over batch</span>
 
             <span class="c1"># Normalize to get new log weights</span>
-            <span class="n">flat_expectations</span> <span class="o">=</span> <span class="n">log_expectations</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">*</span><span class="n">log_expectations</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">flat_expectations</span> <span class="o">=</span> <span class="n">rearrange</span><span class="p">(</span><span class="n">log_expectations</span><span class="p">,</span> <span class="s2">&quot;f co r i j -&gt; f co r (i j)&quot;</span><span class="p">)</span>
             <span class="n">flat_log_weights</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">functional</span><span class="o">.</span><span class="n">log_softmax</span><span class="p">(</span><span class="n">flat_expectations</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
-            <span class="n">new_log_weights</span> <span class="o">=</span> <span class="n">flat_log_weights</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">weights_shape</span><span class="p">)</span>
+            <span class="n">new_log_weights</span> <span class="o">=</span> <span class="n">rearrange</span><span class="p">(</span>
+                <span class="n">flat_log_weights</span><span class="p">,</span>
+                <span class="s2">&quot;f co r (i j) -&gt; f co r i j&quot;</span><span class="p">,</span>
+                <span class="n">i</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_left_channels</span><span class="p">,</span>
+                <span class="n">j</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_right_channels</span><span class="p">,</span>
+            <span class="p">)</span>
 
             <span class="c1"># M-step: update weights</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">log_weights</span> <span class="o">=</span> <span class="n">new_log_weights</span>
 
         <span class="c1"># Recurse to children</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_two_inputs</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">expectation_maximization</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">bias_correction</span><span class="o">=</span><span class="n">bias_correction</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">expectation_maximization</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">bias_correction</span><span class="o">=</span><span class="n">bias_correction</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">_expectation_maximization_step</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">bias_correction</span><span class="o">=</span><span class="n">bias_correction</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">_expectation_maximization_step</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">bias_correction</span><span class="o">=</span><span class="n">bias_correction</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">expectation_maximization</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">bias_correction</span><span class="o">=</span><span class="n">bias_correction</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="EinsumLayer.maximum_likelihood_estimation">
-<a class="viewcode-back" href="../../../../api/einsum.html#spflow.modules.einsum.EinsumLayer.maximum_likelihood_estimation">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">maximum_likelihood_estimation</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">data</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span>
-        <span class="n">weights</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">bias_correction</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-        <span class="n">nan_strategy</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;ignore&quot;</span><span class="p">,</span>
-        <span class="n">cache</span><span class="p">:</span> <span class="n">Cache</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;MLE step (equivalent to EM for sum nodes).&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">expectation_maximization</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">bias_correction</span><span class="o">=</span><span class="n">bias_correction</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span></div>
-
+            <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">_expectation_maximization_step</span><span class="p">(</span>
+                <span class="n">data</span><span class="p">,</span> <span class="n">bias_correction</span><span class="o">=</span><span class="n">bias_correction</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="n">cache</span>
+            <span class="p">)</span>
 
 <div class="viewcode-block" id="EinsumLayer.marginalize">
-<a class="viewcode-back" href="../../../../api/einsum.html#spflow.modules.einsum.EinsumLayer.marginalize">[docs]</a>
+<a class="viewcode-back" href="../../../../zoo/einet.html#spflow.modules.einsum.EinsumLayer.marginalize">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">marginalize</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">marg_rvs</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
@@ -792,9 +869,6 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            Marginalized module or None if fully marginalized.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">cache</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">cache</span> <span class="o">=</span> <span class="n">Cache</span><span class="p">()</span>
-
         <span class="n">module_scope</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scope</span>
         <span class="n">mutual_rvs</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">module_scope</span><span class="o">.</span><span class="n">query</span><span class="p">)</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">marg_rvs</span><span class="p">))</span>
 
@@ -875,8 +949,8 @@
     </aside>
   </div>
 </div><script src="../../../../_static/documentation_options.js?v=8d563738"></script>
-    <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
-    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../../_static/scripts/furo.js?v=46bd48cc"></script>
     <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../../../_static/copybutton.js?v=f281be69"></script>

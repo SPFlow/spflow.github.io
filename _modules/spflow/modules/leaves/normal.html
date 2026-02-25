@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../../genindex.html"><link rel="search" title="Search" href="../../../../search.html">
 
-    <!-- Generated with Sphinx 8.2.3 and Furo 2025.12.19 -->
+    <!-- Generated with Sphinx 9.0.4 and Furo 2025.12.19 -->
         <title>spflow.modules.leaves.normal - SPFlow 1.0.0</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo.css?v=7bdb33bb" />
@@ -199,21 +199,38 @@
   <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../concepts.html">Concepts</a></li>
+</ul>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../zoo/index.html">Paper Zoo</a><input aria-label="Toggle navigation of Paper Zoo" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../zoo/rat_spn.html">Random and Tensorized Sum-Product Networks (RAT-SPN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../zoo/einet.html">Einsum Networks (Einet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../zoo/hclt.html">Hidden Chow-Liu Trees (HCLT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../zoo/conv_pc.html">Convolutional Probabilistic Circuits (ConvPc)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../zoo/apc.html">Autoencoding Probabilistic Circuits (APC)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../zoo/cms.html">Continuous Mixtures (CMs)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../zoo/socs.html">Sum of Compatible Squares (SOCS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../zoo/pic.html">Probabilistic Integral Circuits (PICs)</a></li>
+</ul>
+</li>
+</ul>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../guides/user_guide.html">User Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../guides/dev_guide.html">Developer Guide</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../api/index.html">API Documentation</a><input aria-label="Toggle navigation of API Documentation" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../guides/sklearn.html">Using SPFlow with sklearn</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../api/index.html">API Documentation</a><input aria-label="Toggle navigation of API Documentation" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/base_modules.html">Base Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/data.html">Data Structures</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/module_shape.html">Module Shape</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/dsl.html">DSL (Example Construction)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/sums.html">Sum Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/products.html">Product Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/conv.html">Convolutional Modules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../api/einsum.html">Einsum Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/leaves.html">Leaf Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/operations.html">Operations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../api/rat_spn.html">RAT-SPN Architecture</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/learning.html">Learning and Training</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/scope.html">Scope Management</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/utilities.html">Utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/measures.html">Measures</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/wrappers.html">Wrapper Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/interfaces.html">Interfaces</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/exceptions.html">Exceptions</a></li>
@@ -254,6 +271,7 @@
         <article role="main" id="furo-main-content">
           <h1>Source code for spflow.modules.leaves.normal</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">einops</span><span class="w"> </span><span class="kn">import</span> <span class="n">rearrange</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">torch</span><span class="w"> </span><span class="kn">import</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">nn</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.leaves.leaf</span><span class="w"> </span><span class="kn">import</span> <span class="n">LeafModule</span>
@@ -277,7 +295,7 @@
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">scope</span><span class="p">,</span>
-        <span class="n">out_channels</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">out_channels</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
         <span class="n">num_repetitions</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
         <span class="n">parameter_fn</span><span class="p">:</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">validate_args</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
@@ -287,7 +305,8 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize Normal distribution.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            scope: Variable scope (Scope, int, or list[int]).</span>
+<span class="sd">            scope: Variable scope. Can be a Scope object, a single integer,</span>
+<span class="sd">                or an iterable of integers (list, tuple, numpy array, torch tensor, etc.).</span>
 <span class="sd">            out_channels: Number of output channels (inferred from params if None).</span>
 <span class="sd">            num_repetitions: Number of repetitions (for 3D event shapes).</span>
 <span class="sd">            parameter_fn: Optional neural network for parameter generation.</span>
@@ -328,6 +347,12 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">_torch_distribution_class</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">type</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">distributions</span><span class="o">.</span><span class="n">Normal</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">distributions</span><span class="o">.</span><span class="n">Normal</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_torch_distribution_class_with_differentiable_sampling</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">type</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">distributions</span><span class="o">.</span><span class="n">Normal</span><span class="p">]:</span>
         <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">distributions</span><span class="o">.</span><span class="n">Normal</span>
 
 <div class="viewcode-block" id="Normal.params">
@@ -373,7 +398,55 @@
 <span class="sd">            params_dict: Dictionary with &#39;loc&#39; and &#39;scale&#39; parameter values.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">loc</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">params_dict</span><span class="p">[</span><span class="s2">&quot;loc&quot;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">scale</span> <span class="o">=</span> <span class="n">params_dict</span><span class="p">[</span><span class="s2">&quot;scale&quot;</span><span class="p">]</span>  <span class="c1"># Uses property setter</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scale</span> <span class="o">=</span> <span class="n">params_dict</span><span class="p">[</span><span class="s2">&quot;scale&quot;</span><span class="p">]</span>  <span class="c1"># Uses property setter</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_log_likelihood_interval</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">low</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span>
+        <span class="n">high</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span>
+        <span class="n">cache</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute log P(low &lt;= X &lt;= high) for interval evidence.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            low: Lower bounds of shape (batch, features). NaN = no lower bound.</span>
+<span class="sd">            high: Upper bounds of shape (batch, features). NaN = no upper bound.</span>
+<span class="sd">            cache: Optional cache dictionary.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Log-likelihood tensor.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Get scope-filtered bounds</span>
+        <span class="n">low_scoped</span> <span class="o">=</span> <span class="n">low</span><span class="p">[:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scope</span><span class="o">.</span><span class="n">query</span><span class="p">]</span>
+        <span class="n">high_scoped</span> <span class="o">=</span> <span class="n">high</span><span class="p">[:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scope</span><span class="o">.</span><span class="n">query</span><span class="p">]</span>
+
+        <span class="c1"># Expand to match (batch, features, channels, repetitions)</span>
+        <span class="n">low_expanded</span> <span class="o">=</span> <span class="n">rearrange</span><span class="p">(</span><span class="n">low_scoped</span><span class="p">,</span> <span class="s2">&quot;b f -&gt; b f 1 1&quot;</span><span class="p">)</span>
+        <span class="n">high_expanded</span> <span class="o">=</span> <span class="n">rearrange</span><span class="p">(</span><span class="n">high_scoped</span><span class="p">,</span> <span class="s2">&quot;b f -&gt; b f 1 1&quot;</span><span class="p">)</span>
+
+        <span class="n">loc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loc</span>
+        <span class="n">scale</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale</span>
+
+        <span class="c1"># Handle NaN bounds as -inf/+inf</span>
+        <span class="n">low_for_cdf</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">low_expanded</span><span class="p">),</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">full_like</span><span class="p">(</span><span class="n">low_expanded</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;-inf&quot;</span><span class="p">)),</span>
+            <span class="n">low_expanded</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">high_for_cdf</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">high_expanded</span><span class="p">),</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">full_like</span><span class="p">(</span><span class="n">high_expanded</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">)),</span>
+            <span class="n">high_expanded</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Compute CDF values using error function</span>
+        <span class="n">sqrt2</span> <span class="o">=</span> <span class="mf">1.4142135623730951</span>
+        <span class="n">cdf_high</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">torch</span><span class="o">.</span><span class="n">erf</span><span class="p">((</span><span class="n">high_for_cdf</span> <span class="o">-</span> <span class="n">loc</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">scale</span> <span class="o">*</span> <span class="n">sqrt2</span><span class="p">)))</span>
+        <span class="n">cdf_low</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">torch</span><span class="o">.</span><span class="n">erf</span><span class="p">((</span><span class="n">low_for_cdf</span> <span class="o">-</span> <span class="n">loc</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">scale</span> <span class="o">*</span> <span class="n">sqrt2</span><span class="p">)))</span>
+
+        <span class="c1"># P(low &lt;= X &lt;= high) = CDF(high) - CDF(low)</span>
+        <span class="n">prob</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="n">cdf_high</span> <span class="o">-</span> <span class="n">cdf_low</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mf">1e-40</span><span class="p">)</span>  <span class="c1"># Numerical stability</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">prob</span><span class="p">)</span></div>
 
 </pre></div>
         </article>
@@ -408,8 +481,8 @@
     </aside>
   </div>
 </div><script src="../../../../_static/documentation_options.js?v=8d563738"></script>
-    <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
-    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../../_static/scripts/furo.js?v=46bd48cc"></script>
     <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../../../_static/copybutton.js?v=f281be69"></script>

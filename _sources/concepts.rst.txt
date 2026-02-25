@@ -4,6 +4,8 @@ Concepts
 
 This page is a stable, linkable reference for SPFlow concepts (separate from the API reference and notebooks).
 
+See also :doc:`SOCS <exp/socs>` for details on signed circuits and compatibility.
+
 .. _concepts-shapes-and-dimensions:
 
 Shapes and Dimensions
@@ -110,6 +112,16 @@ Related references
 
 - :doc:`FAQ <faq>`
 - :doc:`API Reference <api/index>`
+
+.. _concepts-differentiable-sampling:
+
+Differentiable Sampling
+=======================
+
+Differentiable sampling support has been removed from SPFlow.
+
+Use ``sample`` for stochastic generation and ``mpe`` for deterministic decoding.
+For APC models, latent-stat extraction and KL-style training helpers are currently unavailable.
 
 .. _concepts-caching-and-dispatch:
 

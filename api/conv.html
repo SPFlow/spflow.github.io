@@ -3,9 +3,9 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Einsum Modules" href="einsum.html"><link rel="prev" title="Product Modules" href="products.html">
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Leaf Modules" href="leaves.html"><link rel="prev" title="Product Modules" href="products.html">
 
-    <!-- Generated with Sphinx 8.2.3 and Furo 2025.12.19 -->
+    <!-- Generated with Sphinx 9.0.4 and Furo 2025.12.19 -->
         <title>Convolutional Modules - SPFlow 1.0.0</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
@@ -197,24 +197,41 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <ul class="current">
+  <ul>
 <li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../concepts.html">Concepts</a></li>
+</ul>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../zoo/index.html">Paper Zoo</a><input aria-label="Toggle navigation of Paper Zoo" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../zoo/rat_spn.html">Random and Tensorized Sum-Product Networks (RAT-SPN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zoo/einet.html">Einsum Networks (Einet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zoo/hclt.html">Hidden Chow-Liu Trees (HCLT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zoo/conv_pc.html">Convolutional Probabilistic Circuits (ConvPc)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zoo/apc.html">Autoencoding Probabilistic Circuits (APC)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zoo/cms.html">Continuous Mixtures (CMs)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zoo/socs.html">Sum of Compatible Squares (SOCS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zoo/pic.html">Probabilistic Integral Circuits (PICs)</a></li>
+</ul>
+</li>
+</ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../guides/user_guide.html">User Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guides/dev_guide.html">Developer Guide</a></li>
-<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">API Documentation</a><input aria-label="Toggle navigation of API Documentation" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../guides/sklearn.html">Using SPFlow with sklearn</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">API Documentation</a><input aria-label="Toggle navigation of API Documentation" checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="base_modules.html">Base Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html">Data Structures</a></li>
 <li class="toctree-l2"><a class="reference internal" href="module_shape.html">Module Shape</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dsl.html">DSL (Example Construction)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sums.html">Sum Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="products.html">Product Modules</a></li>
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Convolutional Modules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="einsum.html">Einsum Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="leaves.html">Leaf Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operations.html">Operations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="rat_spn.html">RAT-SPN Architecture</a></li>
 <li class="toctree-l2"><a class="reference internal" href="learning.html">Learning and Training</a></li>
 <li class="toctree-l2"><a class="reference internal" href="scope.html">Scope Management</a></li>
 <li class="toctree-l2"><a class="reference internal" href="utilities.html">Utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="measures.html">Measures</a></li>
 <li class="toctree-l2"><a class="reference internal" href="wrappers.html">Wrapper Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="interfaces.html">Interfaces</a></li>
 <li class="toctree-l2"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
@@ -262,173 +279,14 @@
           <section id="convolutional-modules">
 <h1>Convolutional Modules<a class="headerlink" href="#convolutional-modules" title="Link to this heading">¶</a></h1>
 <p>Convolutional layers for modeling spatial structure in image data with probabilistic circuits.</p>
-<section id="convpc">
-<h2>ConvPc<a class="headerlink" href="#convpc" title="Link to this heading">¶</a></h2>
-<p>High-level convolutional probabilistic circuit architecture that stacks alternating
-ProdConv and SumConv layers on top of a leaf distribution. Similar to RAT-SPN but
-designed specifically for image data with spatial structure.</p>
-<dl class="py class">
-<dt class="sig sig-object py" id="spflow.modules.conv.ConvPc">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">spflow.modules.conv.</span></span><span class="sig-name descname"><span class="pre">ConvPc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">leaf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">depth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kernel_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_repetitions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_sum_conv</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/conv/conv_pc.html#ConvPc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.conv.ConvPc" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="base_modules.html#spflow.modules.module.Module" title="spflow.modules.module.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a></p>
-<p>Convolutional Probabilistic Circuit.</p>
-<p>Builds a multi-layer circuit with alternating ProdConv and SumConv layers
-on top of a leaf distribution. The architecture progressively reduces
-spatial dimensions while learning mixture weights at each level.</p>
-<p>The layer ordering is: Leaf -&gt; ProdConv -&gt; SumConv -&gt; ProdConv -&gt; SumConv -&gt; … -&gt; Root Sum</p>
-<p>Layers are constructed top-down (from root to leaves), then reversed for
-proper bottom-up evaluation order.</p>
-<dl class="field-list simple">
-</dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="spflow.modules.conv.ConvPc.leaf">
-<span class="sig-name descname"><span class="pre">leaf</span></span><a class="headerlink" href="#spflow.modules.conv.ConvPc.leaf" title="Link to this definition">¶</a></dt>
-<dd><p>Leaf distribution module.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="spflow.modules.conv.ConvPc.root">
-<span class="sig-name descname"><span class="pre">root</span></span><a class="headerlink" href="#spflow.modules.conv.ConvPc.root" title="Link to this definition">¶</a></dt>
-<dd><p>Final sum layer producing scalar output per sample.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Sum</span></code></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="spflow.modules.conv.ConvPc.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">leaf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">depth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kernel_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_repetitions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_sum_conv</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/conv/conv_pc.html#ConvPc.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.conv.ConvPc.__init__" title="Link to this definition">¶</a></dt>
-<dd><p>Create a ConvPc for image modeling.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>leaf</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="base_modules.html#spflow.modules.module.Module" title="spflow.modules.module.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a></span>) – Leaf distribution module (e.g., Normal over pixels).</p></li>
-<li><p><strong>input_height</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Height of input image.</p></li>
-<li><p><strong>input_width</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Width of input image.</p></li>
-<li><p><strong>channels</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Number of channels per sum layer.</p></li>
-<li><p><strong>depth</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Number of (ProdConv, SumConv) layer pairs.</p></li>
-<li><p><strong>kernel_size</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Kernel size for pooling (default 2x2).</p></li>
-<li><p><strong>num_repetitions</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Number of independent repetitions.</p></li>
-<li><p><strong>use_sum_conv</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – If True, use SumConv layers with kernel-based spatial
-weights. If False (default), use regular Sum layers that treat
-features independently without spatial awareness.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.14)"><strong>ValueError</strong></a> – If depth &lt; 1.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="spflow.modules.conv.ConvPc.expectation_maximization">
-<span class="sig-name descname"><span class="pre">expectation_maximization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bias_correction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/conv/conv_pc.html#ConvPc.expectation_maximization"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.conv.ConvPc.expectation_maximization" title="Link to this definition">¶</a></dt>
-<dd><p>Perform EM update throughout the circuit.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Input data tensor.</p></li>
-<li><p><strong>bias_correction</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether to apply bias correction.</p></li>
-<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional cache with log-likelihoods.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="spflow.modules.conv.ConvPc.log_likelihood">
-<span class="sig-name descname"><span class="pre">log_likelihood</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/conv/conv_pc.html#ConvPc.log_likelihood"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.conv.ConvPc.log_likelihood" title="Link to this definition">¶</a></dt>
-<dd><p>Compute log likelihood through all layers.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Input data of shape (batch_size, num_pixels).</p></li>
-<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Cache for intermediate computations.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Log-likelihood of shape (batch, 1, 1, reps).</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Tensor</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="spflow.modules.conv.ConvPc.marginalize">
-<span class="sig-name descname"><span class="pre">marginalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">marg_rvs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prune</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/conv/conv_pc.html#ConvPc.marginalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.conv.ConvPc.marginalize" title="Link to this definition">¶</a></dt>
-<dd><p>Marginalize out specified random variables.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>marg_rvs</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]</span>) – List of random variable indices to marginalize.</p></li>
-<li><p><strong>prune</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether to prune unnecessary nodes.</p></li>
-<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional cache for storing intermediate results.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Marginalized module or None if fully marginalized.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#spflow.modules.conv.ConvPc" title="spflow.modules.conv.ConvPc">ConvPc</a> | <a class="reference internal" href="base_modules.html#spflow.modules.module.Module" title="spflow.modules.module.Module">Module</a> | None</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="spflow.modules.conv.ConvPc.sample">
-<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_mpe</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampling_ctx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/conv/conv_pc.html#ConvPc.sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.conv.ConvPc.sample" title="Link to this definition">¶</a></dt>
-<dd><p>Generate samples by sampling top-down through layers.</p>
-<p>Delegates sampling to the root module (RepetitionMixingLayer when
-num_repetitions &gt; 1, or Sum when num_repetitions == 1), which then
-recursively propagates sampling to the leaf.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>num_samples</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Number of samples to generate.</p></li>
-<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Data tensor with NaN values to fill with samples.</p></li>
-<li><p><strong>is_mpe</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether to perform maximum a posteriori estimation.</p></li>
-<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional cache dictionary.</p></li>
-<li><p><strong>sampling_ctx</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">SamplingContext</span></code> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional sampling context.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Sampled values of shape (num_samples, num_pixels).</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Tensor</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="spflow.modules.conv.ConvPc.feature_to_scope">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">feature_to_scope</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a></em><a class="headerlink" href="#spflow.modules.conv.ConvPc.feature_to_scope" title="Link to this definition">¶</a></dt>
-<dd><p>Single output feature with full scope.</p>
-</dd></dl>
-
-</dd></dl>
-
-</section>
 <section id="sumconv">
 <h2>SumConv<a class="headerlink" href="#sumconv" title="Link to this heading">¶</a></h2>
 <p>Convolutional sum layer that applies learned weighted sums over input channels
 within spatial patches. Enables mixture modeling with spatial structure.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="spflow.modules.conv.SumConv">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">spflow.modules.conv.</span></span><span class="sig-name descname"><span class="pre">SumConv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_channels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kernel_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_repetitions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/conv/sum_conv.html#SumConv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.conv.SumConv" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="base_modules.html#spflow.modules.module.Module" title="spflow.modules.module.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a></p>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">spflow.modules.conv.</span></span><span class="sig-name descname"><span class="pre">SumConv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_channels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kernel_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_repetitions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/conv/sum_conv.html#SumConv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.conv.SumConv" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
 <p>Convolutional sum layer for probabilistic circuits.</p>
 <p>Applies weighted sum over input channels within spatial patches. Weights are
 learned and normalized to sum to one per patch position, maintaining valid
@@ -499,7 +357,7 @@ across all spatial patches of the same position within the kernel.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>inputs</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="base_modules.html#spflow.modules.module.Module" title="spflow.modules.module.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a></span>) – Input module providing log-likelihoods with spatial structure.</p></li>
+<li><p><strong>inputs</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></span>) – Input module providing log-likelihoods with spatial structure.</p></li>
 <li><p><strong>out_channels</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Number of output mixture components.</p></li>
 <li><p><strong>kernel_size</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Size of the spatial kernel (kernel_size x kernel_size).</p></li>
 <li><p><strong>num_repetitions</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Number of independent repetitions.</p></li>
@@ -507,31 +365,6 @@ across all spatial patches of the same position within the kernel.</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.14)"><strong>ValueError</strong></a> – If out_channels &lt; 1 or kernel_size &lt; 1.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="spflow.modules.conv.SumConv.expectation_maximization">
-<span class="sig-name descname"><span class="pre">expectation_maximization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bias_correction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/conv/sum_conv.html#SumConv.expectation_maximization"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.conv.SumConv.expectation_maximization" title="Link to this definition">¶</a></dt>
-<dd><p>Perform expectation-maximization step to update weights.</p>
-<p>Follows the standard EM update pattern for sum nodes:
-1. Get cached log-likelihoods for input and this module
-2. Compute expectations using: log_weights + log_grads + input_lls - module_lls
-3. Normalize to get new log_weights</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Input data tensor.</p></li>
-<li><p><strong>bias_correction</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether to apply bias correction (unused currently).</p></li>
-<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Cache dictionary with log-likelihoods from forward pass.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>MissingCacheError</strong> – If required log-likelihoods are not found in cache.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
@@ -546,7 +379,7 @@ Uses logsumexp for numerical stability.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Input data of shape (batch_size, num_features).</p></li>
+<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Input data of shape (batch_size, num_features).</p></li>
 <li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Cache for intermediate computations.</p></li>
 </ul>
 </dd>
@@ -575,44 +408,20 @@ Uses logsumexp for numerical stability.</p>
 <dd class="field-even"><p>Marginalized module or None if fully marginalized.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#spflow.modules.conv.SumConv" title="spflow.modules.conv.SumConv">SumConv</a> | <a class="reference internal" href="base_modules.html#spflow.modules.module.Module" title="spflow.modules.module.Module">Module</a> | None</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="spflow.modules.conv.SumConv.sample">
-<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_mpe</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampling_ctx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/conv/sum_conv.html#SumConv.sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.conv.SumConv.sample" title="Link to this definition">¶</a></dt>
-<dd><p>Generate samples from sum conv module.</p>
-<p>Each spatial position samples from its per-position kernel weights.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>num_samples</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Number of samples to generate.</p></li>
-<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Data tensor with NaN values to fill with samples.</p></li>
-<li><p><strong>is_mpe</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether to perform maximum a posteriori estimation.</p></li>
-<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional cache dictionary.</p></li>
-<li><p><strong>sampling_ctx</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">SamplingContext</span></code> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional sampling context.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Sampled values.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Tensor</p>
+<dd class="field-odd"><p><a class="reference internal" href="#spflow.modules.conv.SumConv" title="spflow.modules.conv.SumConv">SumConv</a> | Module | None</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="spflow.modules.conv.SumConv.feature_to_scope">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">feature_to_scope</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a></em><a class="headerlink" href="#spflow.modules.conv.SumConv.feature_to_scope" title="Link to this definition">¶</a></dt>
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">feature_to_scope</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a></span><a class="headerlink" href="#spflow.modules.conv.SumConv.feature_to_scope" title="Link to this definition">¶</a></dt>
 <dd><p>Per-pixel scopes are preserved from input.</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="spflow.modules.conv.SumConv.log_weights">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">log_weights</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><span class="pre">Tensor</span></a></em><a class="headerlink" href="#spflow.modules.conv.SumConv.log_weights" title="Link to this definition">¶</a></dt>
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">log_weights</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><span class="pre">Tensor</span></a></span><a class="headerlink" href="#spflow.modules.conv.SumConv.log_weights" title="Link to this definition">¶</a></dt>
 <dd><p>Returns the log weights normalized to sum to one over input channels.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -626,7 +435,7 @@ Uses logsumexp for numerical stability.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="spflow.modules.conv.SumConv.weights">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">weights</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><span class="pre">Tensor</span></a></em><a class="headerlink" href="#spflow.modules.conv.SumConv.weights" title="Link to this definition">¶</a></dt>
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">weights</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><span class="pre">Tensor</span></a></span><a class="headerlink" href="#spflow.modules.conv.SumConv.weights" title="Link to this definition">¶</a></dt>
 <dd><p>Returns the weights normalized to sum to one over input channels.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -648,8 +457,8 @@ reducing spatial dimensions by the kernel size factor. Aggregates scopes
 within patches while maintaining proper probabilistic semantics.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="spflow.modules.conv.ProdConv">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">spflow.modules.conv.</span></span><span class="sig-name descname"><span class="pre">ProdConv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kernel_size_h</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kernel_size_w</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">padding_h</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">padding_w</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/conv/prod_conv.html#ProdConv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.conv.ProdConv" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="base_modules.html#spflow.modules.module.Module" title="spflow.modules.module.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a></p>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">spflow.modules.conv.</span></span><span class="sig-name descname"><span class="pre">ProdConv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kernel_size_h</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kernel_size_w</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">padding_h</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">padding_w</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/conv/prod_conv.html#ProdConv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.conv.ProdConv" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
 <p>Convolutional product layer for probabilistic circuits.</p>
 <p>Computes products over spatial patches, reducing spatial dimensions by the
 kernel size factor. This is equivalent to summing log-likelihoods within patches.
@@ -720,7 +529,7 @@ Scope(2), Scope(3) produces Scope([0,1,2,3]).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>inputs</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="base_modules.html#spflow.modules.module.Module" title="spflow.modules.module.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a></span>) – Input module providing log-likelihoods with spatial structure.</p></li>
+<li><p><strong>inputs</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></span>) – Input module providing log-likelihoods with spatial structure.</p></li>
 <li><p><strong>kernel_size_h</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Height of the pooling kernel.</p></li>
 <li><p><strong>kernel_size_w</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Width of the pooling kernel.</p></li>
 <li><p><strong>padding_h</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Padding in height dimension (added on both sides).</p></li>
@@ -734,24 +543,6 @@ Scope(2), Scope(3) produces Scope([0,1,2,3]).</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="spflow.modules.conv.ProdConv.expectation_maximization">
-<span class="sig-name descname"><span class="pre">expectation_maximization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bias_correction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/conv/prod_conv.html#ProdConv.expectation_maximization"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.conv.ProdConv.expectation_maximization" title="Link to this definition">¶</a></dt>
-<dd><p>EM step (delegates to input, no learnable parameters).</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Input data tensor for EM step.</p></li>
-<li><p><strong>bias_correction</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether to apply bias correction.</p></li>
-<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional cache for storing intermediate results.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="spflow.modules.conv.ProdConv.log_likelihood">
 <span class="sig-name descname"><span class="pre">log_likelihood</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/conv/prod_conv.html#ProdConv.log_likelihood"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.conv.ProdConv.log_likelihood" title="Link to this definition">¶</a></dt>
 <dd><p>Compute log likelihood by summing within patches.</p>
@@ -760,7 +551,7 @@ log-probabilities within patches.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Input data of shape (batch_size, num_features).</p></li>
+<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Input data of shape (batch_size, num_features).</p></li>
 <li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Cache for intermediate computations.</p></li>
 </ul>
 </dd>
@@ -789,39 +580,14 @@ log-probabilities within patches.</p>
 <dd class="field-even"><p>Marginalized module or None if fully marginalized.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#spflow.modules.conv.ProdConv" title="spflow.modules.conv.ProdConv">ProdConv</a> | <a class="reference internal" href="base_modules.html#spflow.modules.module.Module" title="spflow.modules.module.Module">Module</a> | None</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="spflow.modules.conv.ProdConv.sample">
-<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_mpe</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampling_ctx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/conv/prod_conv.html#ProdConv.sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.conv.ProdConv.sample" title="Link to this definition">¶</a></dt>
-<dd><p>Generate samples by delegating to input.</p>
-<p>ProdConv has no learnable parameters, so sampling simply expands
-the sampling context to match input features and delegates.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>num_samples</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Number of samples to generate.</p></li>
-<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Data tensor with NaN values to fill with samples.</p></li>
-<li><p><strong>is_mpe</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether to perform maximum a posteriori estimation.</p></li>
-<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional cache dictionary.</p></li>
-<li><p><strong>sampling_ctx</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">SamplingContext</span></code> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional sampling context.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Sampled values.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Tensor</p>
+<dd class="field-odd"><p><a class="reference internal" href="#spflow.modules.conv.ProdConv" title="spflow.modules.conv.ProdConv">ProdConv</a> | Module | None</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="spflow.modules.conv.ProdConv.feature_to_scope">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">feature_to_scope</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a></em><a class="headerlink" href="#spflow.modules.conv.ProdConv.feature_to_scope" title="Link to this definition">¶</a></dt>
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">feature_to_scope</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a></span><a class="headerlink" href="#spflow.modules.conv.ProdConv.feature_to_scope" title="Link to this definition">¶</a></dt>
 <dd><p>Aggregated scopes per output feature.</p>
 <p>Each output feature’s scope is the join of all input scopes within its patch.</p>
 <dl class="field-list simple">
@@ -844,12 +610,12 @@ the sampling context to match input features and delegates.</p>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="einsum.html">
+          <a class="next-page" href="leaves.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Einsum Modules</div>
+                <div class="title">Leaf Modules</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -895,20 +661,6 @@ the sampling context to match input features and delegates.</p>
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Convolutional Modules</a><ul>
-<li><a class="reference internal" href="#convpc">ConvPc</a><ul>
-<li><a class="reference internal" href="#spflow.modules.conv.ConvPc"><code class="docutils literal notranslate"><span class="pre">ConvPc</span></code></a><ul>
-<li><a class="reference internal" href="#spflow.modules.conv.ConvPc.leaf"><code class="docutils literal notranslate"><span class="pre">ConvPc.leaf</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.conv.ConvPc.root"><code class="docutils literal notranslate"><span class="pre">ConvPc.root</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.conv.ConvPc.__init__"><code class="docutils literal notranslate"><span class="pre">ConvPc.__init__()</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.conv.ConvPc.expectation_maximization"><code class="docutils literal notranslate"><span class="pre">ConvPc.expectation_maximization()</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.conv.ConvPc.log_likelihood"><code class="docutils literal notranslate"><span class="pre">ConvPc.log_likelihood()</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.conv.ConvPc.marginalize"><code class="docutils literal notranslate"><span class="pre">ConvPc.marginalize()</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.conv.ConvPc.sample"><code class="docutils literal notranslate"><span class="pre">ConvPc.sample()</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.conv.ConvPc.feature_to_scope"><code class="docutils literal notranslate"><span class="pre">ConvPc.feature_to_scope</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
 <li><a class="reference internal" href="#sumconv">SumConv</a><ul>
 <li><a class="reference internal" href="#spflow.modules.conv.SumConv"><code class="docutils literal notranslate"><span class="pre">SumConv</span></code></a><ul>
 <li><a class="reference internal" href="#spflow.modules.conv.SumConv.inputs"><code class="docutils literal notranslate"><span class="pre">SumConv.inputs</span></code></a></li>
@@ -917,10 +669,8 @@ the sampling context to match input features and delegates.</p>
 <li><a class="reference internal" href="#spflow.modules.conv.SumConv.out_channels"><code class="docutils literal notranslate"><span class="pre">SumConv.out_channels</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.conv.SumConv.logits"><code class="docutils literal notranslate"><span class="pre">SumConv.logits</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.conv.SumConv.__init__"><code class="docutils literal notranslate"><span class="pre">SumConv.__init__()</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.conv.SumConv.expectation_maximization"><code class="docutils literal notranslate"><span class="pre">SumConv.expectation_maximization()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.conv.SumConv.log_likelihood"><code class="docutils literal notranslate"><span class="pre">SumConv.log_likelihood()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.conv.SumConv.marginalize"><code class="docutils literal notranslate"><span class="pre">SumConv.marginalize()</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.conv.SumConv.sample"><code class="docutils literal notranslate"><span class="pre">SumConv.sample()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.conv.SumConv.feature_to_scope"><code class="docutils literal notranslate"><span class="pre">SumConv.feature_to_scope</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.conv.SumConv.log_weights"><code class="docutils literal notranslate"><span class="pre">SumConv.log_weights</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.conv.SumConv.weights"><code class="docutils literal notranslate"><span class="pre">SumConv.weights</span></code></a></li>
@@ -936,10 +686,8 @@ the sampling context to match input features and delegates.</p>
 <li><a class="reference internal" href="#spflow.modules.conv.ProdConv.padding_h"><code class="docutils literal notranslate"><span class="pre">ProdConv.padding_h</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.conv.ProdConv.padding_w"><code class="docutils literal notranslate"><span class="pre">ProdConv.padding_w</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.conv.ProdConv.__init__"><code class="docutils literal notranslate"><span class="pre">ProdConv.__init__()</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.conv.ProdConv.expectation_maximization"><code class="docutils literal notranslate"><span class="pre">ProdConv.expectation_maximization()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.conv.ProdConv.log_likelihood"><code class="docutils literal notranslate"><span class="pre">ProdConv.log_likelihood()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.conv.ProdConv.marginalize"><code class="docutils literal notranslate"><span class="pre">ProdConv.marginalize()</span></code></a></li>
-<li><a class="reference internal" href="#spflow.modules.conv.ProdConv.sample"><code class="docutils literal notranslate"><span class="pre">ProdConv.sample()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.conv.ProdConv.feature_to_scope"><code class="docutils literal notranslate"><span class="pre">ProdConv.feature_to_scope</span></code></a></li>
 </ul>
 </li>
@@ -957,8 +705,8 @@ the sampling context to match input features and delegates.</p>
     </aside>
   </div>
 </div><script src="../_static/documentation_options.js?v=8d563738"></script>
-    <script src="../_static/doctools.js?v=9bcbadda"></script>
-    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>

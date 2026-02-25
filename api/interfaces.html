@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Exceptions" href="exceptions.html"><link rel="prev" title="Wrapper Modules" href="wrappers.html">
 
-    <!-- Generated with Sphinx 8.2.3 and Furo 2025.12.19 -->
+    <!-- Generated with Sphinx 9.0.4 and Furo 2025.12.19 -->
         <title>Interfaces - SPFlow 1.0.0</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
@@ -197,24 +197,41 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <ul class="current">
+  <ul>
 <li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../concepts.html">Concepts</a></li>
+</ul>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../zoo/index.html">Paper Zoo</a><input aria-label="Toggle navigation of Paper Zoo" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../zoo/rat_spn.html">Random and Tensorized Sum-Product Networks (RAT-SPN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zoo/einet.html">Einsum Networks (Einet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zoo/hclt.html">Hidden Chow-Liu Trees (HCLT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zoo/conv_pc.html">Convolutional Probabilistic Circuits (ConvPc)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zoo/apc.html">Autoencoding Probabilistic Circuits (APC)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zoo/cms.html">Continuous Mixtures (CMs)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zoo/socs.html">Sum of Compatible Squares (SOCS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zoo/pic.html">Probabilistic Integral Circuits (PICs)</a></li>
+</ul>
+</li>
+</ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../guides/user_guide.html">User Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guides/dev_guide.html">Developer Guide</a></li>
-<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">API Documentation</a><input aria-label="Toggle navigation of API Documentation" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../guides/sklearn.html">Using SPFlow with sklearn</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">API Documentation</a><input aria-label="Toggle navigation of API Documentation" checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="base_modules.html">Base Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html">Data Structures</a></li>
 <li class="toctree-l2"><a class="reference internal" href="module_shape.html">Module Shape</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dsl.html">DSL (Example Construction)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sums.html">Sum Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="products.html">Product Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="conv.html">Convolutional Modules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="einsum.html">Einsum Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="leaves.html">Leaf Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operations.html">Operations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="rat_spn.html">RAT-SPN Architecture</a></li>
 <li class="toctree-l2"><a class="reference internal" href="learning.html">Learning and Training</a></li>
 <li class="toctree-l2"><a class="reference internal" href="scope.html">Scope Management</a></li>
 <li class="toctree-l2"><a class="reference internal" href="utilities.html">Utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="measures.html">Measures</a></li>
 <li class="toctree-l2"><a class="reference internal" href="wrappers.html">Wrapper Modules</a></li>
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Interfaces</a></li>
 <li class="toctree-l2"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
@@ -267,7 +284,7 @@
 <p>Abstract base class for modules that support classification.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="spflow.interfaces.classifier.Classifier">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">spflow.interfaces.classifier.</span></span><span class="sig-name descname"><span class="pre">Classifier</span></span><a class="reference internal" href="../_modules/spflow/interfaces/classifier.html#Classifier"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.interfaces.classifier.Classifier" title="Link to this definition">¶</a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">spflow.interfaces.classifier.</span></span><span class="sig-name descname"><span class="pre">Classifier</span></span><a class="reference internal" href="../_modules/spflow/interfaces/classifier.html#Classifier"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.interfaces.classifier.Classifier" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/abc.html#abc.ABC" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></a></p>
 <p>Abstract base class for modules that support classification.</p>
 <p>Provides a standard interface for models that can predict class labels
@@ -278,10 +295,10 @@ and class probabilities from input data.</p>
 <dd><p>Predict class labels for input data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Input data tensor.</p>
+<dd class="field-odd"><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Input data tensor.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span></p>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span></p>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Predicted class labels.</p>
@@ -291,19 +308,179 @@ and class probabilities from input data.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="spflow.interfaces.classifier.Classifier.predict_proba">
-<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">predict_proba</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/interfaces/classifier.html#Classifier.predict_proba"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.interfaces.classifier.Classifier.predict_proba" title="Link to this definition">¶</a></dt>
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">predict_proba</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/interfaces/classifier.html#Classifier.predict_proba"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.interfaces.classifier.Classifier.predict_proba" title="Link to this definition">¶</a></dt>
 <dd><p>Predict class probabilities for input data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Input data tensor.</p>
+<dd class="field-odd"><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Input data tensor.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span></p>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span></p>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Class probability predictions. Each row corresponds to a data point,
 and each column corresponds to a class.</p>
 </dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="sklearn-wrappers">
+<h2>sklearn Wrappers<a class="headerlink" href="#sklearn-wrappers" title="Link to this heading">¶</a></h2>
+<p>scikit-learn compatible wrappers for density estimation and classification.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="spflow.interfaces.sklearn.SPFlowDensityEstimator">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">spflow.interfaces.sklearn.</span></span><span class="sig-name descname"><span class="pre">SPFlowDensityEstimator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">structure_learner</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'learn_spn'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">structure_learner_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fit_params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">leaf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'normal'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">leaf_out_channels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_instances_slice</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_features_slice</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel_agg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'logmeanexp'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">repetition_agg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'logmeanexp'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/interfaces/sklearn.html#SPFlowDensityEstimator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.interfaces.sklearn.SPFlowDensityEstimator" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.base.BaseEstimator.html#sklearn.base.BaseEstimator" title="(in scikit-learn v1.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEstimator</span></code></a>, <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.base.DensityMixin.html#sklearn.base.DensityMixin" title="(in scikit-learn v1.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DensityMixin</span></code></a></p>
+<p>scikit-learn compatible density estimator for SPFlow models.</p>
+<p>Supports two workflows:
+- <strong>Structure learning</strong>: learn a model from data via <cite>learn_spn</cite> or <cite>learn_prometheus</cite>.
+- <strong>Parameter fitting</strong>: fit parameters of a provided SPFlow model via MLE.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional SPFlow model to fit and use for scoring/sampling.</p></li>
+<li><p><strong>structure_learner</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Literal</span></code></a>[<code class="docutils literal notranslate"><span class="pre">'learn_spn'</span></code>, <code class="docutils literal notranslate"><span class="pre">'prometheus'</span></code>]</span>) – “learn_spn” or “prometheus”. Only used when <cite>model</cite> is None.</p></li>
+<li><p><strong>structure_learner_kwargs</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>] | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Keyword arguments forwarded to the structure learner.</p></li>
+<li><p><strong>fit_params</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – If True and <cite>model</cite> is provided, run MLE (<cite>maximum_likelihood_estimation</cite>) in <cite>fit</cite>.</p></li>
+<li><p><strong>leaf</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Literal</span></code></a>[<code class="docutils literal notranslate"><span class="pre">'normal'</span></code>]</span>) – Leaf family used when learning structure and <cite>model</cite> is None. Currently supports “normal”.</p></li>
+<li><p><strong>leaf_out_channels</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Output channels for the leaf module template (passed to <cite>Normal</cite>).</p></li>
+<li><p><strong>min_instances_slice</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Stopping criterion for structure learning (forwarded if not overridden).</p></li>
+<li><p><strong>min_features_slice</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Stopping criterion for structure learning (forwarded if not overridden).</p></li>
+<li><p><strong>device</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Torch device string (e.g., “cpu”, “cuda”). If None, uses model device or CPU.</p></li>
+<li><p><strong>dtype</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Literal</span></code></a>[<code class="docutils literal notranslate"><span class="pre">'float32'</span></code>, <code class="docutils literal notranslate"><span class="pre">'float64'</span></code>]]</span>) – Torch dtype string (“float32”, “float64”) for inputs.</p></li>
+<li><p><strong>channel_agg</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Literal</span></code></a>[<code class="docutils literal notranslate"><span class="pre">'logmeanexp'</span></code>, <code class="docutils literal notranslate"><span class="pre">'logsumexp'</span></code>, <code class="docutils literal notranslate"><span class="pre">'first'</span></code>]</span>) – How to aggregate multiple output channels into a scalar log-likelihood.</p></li>
+<li><p><strong>repetition_agg</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Literal</span></code></a>[<code class="docutils literal notranslate"><span class="pre">'logmeanexp'</span></code>, <code class="docutils literal notranslate"><span class="pre">'logsumexp'</span></code>, <code class="docutils literal notranslate"><span class="pre">'first'</span></code>]</span>) – How to aggregate multiple repetitions into a scalar log-likelihood.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.interfaces.sklearn.SPFlowDensityEstimator.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/interfaces/sklearn.html#SPFlowDensityEstimator.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.interfaces.sklearn.SPFlowDensityEstimator.fit" title="Link to this definition">¶</a></dt>
+<dd><p>Fit a density model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a></span>) – Array-like of shape (n_samples, n_features).</p></li>
+<li><p><strong>y</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Ignored. Present for scikit-learn compatibility.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#spflow.interfaces.sklearn.SPFlowDensityEstimator" title="spflow.interfaces.sklearn.SPFlowDensityEstimator"><code class="xref py py-class docutils literal notranslate"><span class="pre">SPFlowDensityEstimator</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.interfaces.sklearn.SPFlowDensityEstimator.sample">
+<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/interfaces/sklearn.html#SPFlowDensityEstimator.sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.interfaces.sklearn.SPFlowDensityEstimator.sample" title="Link to this definition">¶</a></dt>
+<dd><p>Generate samples from the fitted model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_samples</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Number of samples to draw.</p></li>
+<li><p><strong>random_state</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional seed for deterministic sampling.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.interfaces.sklearn.SPFlowDensityEstimator.score_samples">
+<span class="sig-name descname"><span class="pre">score_samples</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/interfaces/sklearn.html#SPFlowDensityEstimator.score_samples"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.interfaces.sklearn.SPFlowDensityEstimator.score_samples" title="Link to this definition">¶</a></dt>
+<dd><p>Compute per-sample log-likelihood under the fitted model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="spflow.interfaces.sklearn.SPFlowClassifier">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">spflow.interfaces.sklearn.</span></span><span class="sig-name descname"><span class="pre">SPFlowClassifier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/interfaces/sklearn.html#SPFlowClassifier"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.interfaces.sklearn.SPFlowClassifier" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.base.BaseEstimator.html#sklearn.base.BaseEstimator" title="(in scikit-learn v1.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEstimator</span></code></a>, <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.base.ClassifierMixin.html#sklearn.base.ClassifierMixin" title="(in scikit-learn v1.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ClassifierMixin</span></code></a></p>
+<p>scikit-learn compatible classifier wrapper for SPFlow classifiers.</p>
+<p>This wrapper delegates to a provided SPFlow model that implements
+<cite>predict_proba(torch.Tensor) -&gt; torch.Tensor</cite>.</p>
+<dl class="field-list simple">
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.interfaces.sklearn.SPFlowClassifier.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/interfaces/sklearn.html#SPFlowClassifier.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.interfaces.sklearn.SPFlowClassifier.fit" title="Link to this definition">¶</a></dt>
+<dd><p>Store class labels for sklearn compatibility.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#spflow.interfaces.sklearn.SPFlowClassifier" title="spflow.interfaces.sklearn.SPFlowClassifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">SPFlowClassifier</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.interfaces.sklearn.SPFlowClassifier.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/interfaces/sklearn.html#SPFlowClassifier.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.interfaces.sklearn.SPFlowClassifier.predict" title="Link to this definition">¶</a></dt>
+<dd><p>Predict class labels using argmax over predicted probabilities.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.interfaces.sklearn.SPFlowClassifier.predict_proba">
+<span class="sig-name descname"><span class="pre">predict_proba</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/interfaces/sklearn.html#SPFlowClassifier.predict_proba"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.interfaces.sklearn.SPFlowClassifier.predict_proba" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.interfaces.sklearn.SPFlowClassifier.set_score_request">
+<span class="sig-name descname"><span class="pre">set_score_request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'$UNCHANGED$'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#spflow.interfaces.sklearn.SPFlowClassifier.set_score_request" title="Link to this definition">¶</a></dt>
+<dd><p>Configure whether metadata should be requested to be passed to the <code class="docutils literal notranslate"><span class="pre">score</span></code> method.</p>
+<p>Note that this method is only relevant when this estimator is used as a
+sub-estimator within a <a class="reference external" href="https://scikit-learn.org/stable/glossary.html#term-meta-estimator" title="(in scikit-learn v1.8)"><span class="xref std std-term">meta-estimator</span></a> and metadata routing is enabled
+with <code class="docutils literal notranslate"><span class="pre">enable_metadata_routing=True</span></code> (see <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.set_config.html#sklearn.set_config" title="(in scikit-learn v1.8)"><code class="xref py py-func docutils literal notranslate"><span class="pre">sklearn.set_config()</span></code></a>).
+Please check the <a class="reference external" href="https://scikit-learn.org/stable/metadata_routing.html#metadata-routing" title="(in scikit-learn v1.8)"><span class="xref std std-ref">User Guide</span></a> on how the routing
+mechanism works.</p>
+<p>The options for each parameter are:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">True</span></code>: metadata is requested, and passed to <code class="docutils literal notranslate"><span class="pre">score</span></code> if provided. The request is ignored if metadata is not provided.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">False</span></code>: metadata is not requested and the meta-estimator will not pass it to <code class="docutils literal notranslate"><span class="pre">score</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">None</span></code>: metadata is not requested, and the meta-estimator will raise an error if the user provides it.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">str</span></code>: metadata should be passed to the meta-estimator with this given alias instead of the original name.</p></li>
+</ul>
+<p>The default (<code class="docutils literal notranslate"><span class="pre">sklearn.utils.metadata_routing.UNCHANGED</span></code>) retains the
+existing request. This allows you to change the request for some
+parameters and not others.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 1.3.</span></p>
+</div>
+<section id="parameters">
+<h3>Parameters<a class="headerlink" href="#parameters" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>sample_weight<span class="classifier">str, True, False, or None,                     default=sklearn.utils.metadata_routing.UNCHANGED</span></dt><dd><p>Metadata routing for <code class="docutils literal notranslate"><span class="pre">sample_weight</span></code> parameter in <code class="docutils literal notranslate"><span class="pre">score</span></code>.</p>
+</dd>
+</dl>
+</section>
+<section id="returns">
+<h3>Returns<a class="headerlink" href="#returns" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>self<span class="classifier">object</span></dt><dd><p>The updated object.</p>
+</dd>
+</dl>
+</section>
+<dl class="field-list simple">
 </dl>
 </dd></dl>
 
@@ -376,6 +553,22 @@ and each column corresponds to a class.</p>
 </li>
 </ul>
 </li>
+<li><a class="reference internal" href="#sklearn-wrappers">sklearn Wrappers</a><ul>
+<li><a class="reference internal" href="#spflow.interfaces.sklearn.SPFlowDensityEstimator"><code class="docutils literal notranslate"><span class="pre">SPFlowDensityEstimator</span></code></a><ul>
+<li><a class="reference internal" href="#spflow.interfaces.sklearn.SPFlowDensityEstimator.fit"><code class="docutils literal notranslate"><span class="pre">SPFlowDensityEstimator.fit()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.interfaces.sklearn.SPFlowDensityEstimator.sample"><code class="docutils literal notranslate"><span class="pre">SPFlowDensityEstimator.sample()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.interfaces.sklearn.SPFlowDensityEstimator.score_samples"><code class="docutils literal notranslate"><span class="pre">SPFlowDensityEstimator.score_samples()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#spflow.interfaces.sklearn.SPFlowClassifier"><code class="docutils literal notranslate"><span class="pre">SPFlowClassifier</span></code></a><ul>
+<li><a class="reference internal" href="#spflow.interfaces.sklearn.SPFlowClassifier.fit"><code class="docutils literal notranslate"><span class="pre">SPFlowClassifier.fit()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.interfaces.sklearn.SPFlowClassifier.predict"><code class="docutils literal notranslate"><span class="pre">SPFlowClassifier.predict()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.interfaces.sklearn.SPFlowClassifier.predict_proba"><code class="docutils literal notranslate"><span class="pre">SPFlowClassifier.predict_proba()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.interfaces.sklearn.SPFlowClassifier.set_score_request"><code class="docutils literal notranslate"><span class="pre">SPFlowClassifier.set_score_request()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -388,8 +581,8 @@ and each column corresponds to a class.</p>
     </aside>
   </div>
 </div><script src="../_static/documentation_options.js?v=8d563738"></script>
-    <script src="../_static/doctools.js?v=9bcbadda"></script>
-    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>

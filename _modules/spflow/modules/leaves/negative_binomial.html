@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../../genindex.html"><link rel="search" title="Search" href="../../../../search.html">
 
-    <!-- Generated with Sphinx 8.2.3 and Furo 2025.12.19 -->
+    <!-- Generated with Sphinx 9.0.4 and Furo 2025.12.19 -->
         <title>spflow.modules.leaves.negative_binomial - SPFlow 1.0.0</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo.css?v=7bdb33bb" />
@@ -199,21 +199,38 @@
   <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../concepts.html">Concepts</a></li>
+</ul>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../zoo/index.html">Paper Zoo</a><input aria-label="Toggle navigation of Paper Zoo" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../zoo/rat_spn.html">Random and Tensorized Sum-Product Networks (RAT-SPN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../zoo/einet.html">Einsum Networks (Einet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../zoo/hclt.html">Hidden Chow-Liu Trees (HCLT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../zoo/conv_pc.html">Convolutional Probabilistic Circuits (ConvPc)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../zoo/apc.html">Autoencoding Probabilistic Circuits (APC)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../zoo/cms.html">Continuous Mixtures (CMs)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../zoo/socs.html">Sum of Compatible Squares (SOCS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../zoo/pic.html">Probabilistic Integral Circuits (PICs)</a></li>
+</ul>
+</li>
+</ul>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../guides/user_guide.html">User Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../guides/dev_guide.html">Developer Guide</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../api/index.html">API Documentation</a><input aria-label="Toggle navigation of API Documentation" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../guides/sklearn.html">Using SPFlow with sklearn</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../api/index.html">API Documentation</a><input aria-label="Toggle navigation of API Documentation" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/base_modules.html">Base Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/data.html">Data Structures</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/module_shape.html">Module Shape</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/dsl.html">DSL (Example Construction)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/sums.html">Sum Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/products.html">Product Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/conv.html">Convolutional Modules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../api/einsum.html">Einsum Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/leaves.html">Leaf Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/operations.html">Operations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../api/rat_spn.html">RAT-SPN Architecture</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/learning.html">Learning and Training</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/scope.html">Scope Management</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/utilities.html">Utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/measures.html">Measures</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/wrappers.html">Wrapper Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/interfaces.html">Interfaces</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/exceptions.html">Exceptions</a></li>
@@ -261,20 +278,26 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.leaves.leaf</span><span class="w"> </span><span class="kn">import</span> <span class="n">LeafModule</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.utils.leaves</span><span class="w"> </span><span class="kn">import</span> <span class="n">init_parameter</span><span class="p">,</span> <span class="n">_handle_mle_edge_cases</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.utils.projections</span><span class="w"> </span><span class="kn">import</span> <span class="n">proj_bounded_to_real</span><span class="p">,</span> <span class="n">proj_real_to_bounded</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.utils.sampling_context</span><span class="w"> </span><span class="kn">import</span> <span class="n">SIMPLE</span>
 
 
 <div class="viewcode-block" id="NegativeBinomial">
 <a class="viewcode-back" href="../../../../api/leaves.html#spflow.modules.leaves.NegativeBinomial">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">NegativeBinomial</span><span class="p">(</span><span class="n">LeafModule</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Negative Binomial distribution leaf for modeling failures before r-th success.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Negative Binomial distribution leaf matching ``torch.distributions.NegativeBinomial``.</span>
 
-<span class="sd">    Note: Parameter n (number of successes) is fixed and cannot be learned.</span>
-<span class="sd">    Success probability p is stored in logit-space for numerical stability.</span>
+<span class="sd">    In PyTorch, ``NegativeBinomial(total_count=r, probs=p)`` models the number of</span>
+<span class="sd">    **successes** observed before ``r`` failures occur, where each trial succeeds</span>
+<span class="sd">    with probability ``p``. This leaf uses that exact parameterization.</span>
+
+<span class="sd">    Notes:</span>
+<span class="sd">        - ``total_count`` (``r``) is fixed and cannot be learned.</span>
+<span class="sd">        - ``probs`` (``p``) is learnable and stored in logit-space for numerical stability.</span>
 
 <span class="sd">    Attributes:</span>
-<span class="sd">        n: Fixed number of required successes (buffer).</span>
-<span class="sd">        p: Success probability in [0, 1] (stored in logit-space).</span>
-<span class="sd">        distribution: Underlying torch.distributions.NegativeBinomial.</span>
+<span class="sd">        total_count: Fixed number of failures before stopping (buffer).</span>
+<span class="sd">        probs: Success probability in ``[0, 1]`` (stored in logit-space).</span>
+<span class="sd">        distribution: Underlying ``torch.distributions.NegativeBinomial``.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="NegativeBinomial.__init__">
@@ -282,7 +305,7 @@
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">scope</span><span class="p">:</span> <span class="n">Scope</span><span class="p">,</span>
-        <span class="n">out_channels</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">out_channels</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
         <span class="n">num_repetitions</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
         <span class="n">total_count</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">probs</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -296,7 +319,7 @@
 <span class="sd">            scope: Scope object specifying the scope of the distribution.</span>
 <span class="sd">            out_channels: Number of output channels (inferred from params if None).</span>
 <span class="sd">            num_repetitions: Number of repetitions for the distribution.</span>
-<span class="sd">            total_count: Number of required successes tensor (required).</span>
+<span class="sd">            total_count: Number of failures before stopping (required).</span>
 <span class="sd">            probs: Success probability tensor (optional).</span>
 <span class="sd">            logits: Logits of the success probability.</span>
 <span class="sd">            parameter_fn: Optional neural network for parameter generation.</span>
@@ -377,6 +400,10 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">_torch_distribution_class</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">type</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">distributions</span><span class="o">.</span><span class="n">NegativeBinomial</span><span class="p">]:</span>
         <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">distributions</span><span class="o">.</span><span class="n">NegativeBinomial</span>
 
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_torch_distribution_class_with_differentiable_sampling</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">type</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">distributions</span><span class="o">.</span><span class="n">Distribution</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="n">NegativeBinomialWithDifferentiableSamplingSIMPLE</span>
+
 <div class="viewcode-block" id="NegativeBinomial.params">
 <a class="viewcode-back" href="../../../../api/leaves.html#spflow.modules.leaves.NegativeBinomial.params">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">params</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]:</span>
@@ -423,6 +450,50 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">probs</span> <span class="o">=</span> <span class="n">params_dict</span><span class="p">[</span><span class="s2">&quot;probs&quot;</span><span class="p">]</span>  <span class="c1"># Uses property setter</span></div>
 
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">NegativeBinomialWithDifferentiableSamplingSIMPLE</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">distributions</span><span class="o">.</span><span class="n">NegativeBinomial</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;NegativeBinomial distribution with differentiable rsample via truncated SIMPLE.</span>
+
+<span class="sd">    Notes:</span>
+<span class="sd">        The NegativeBinomial distribution has infinite support over {0, 1, 2, ...}.</span>
+<span class="sd">        This implementation uses a truncated support [0..Kmax] where Kmax is</span>
+<span class="sd">        inferred from the current parameters and capped to keep computation bounded.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">has_rsample</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">_MAX_SUPPORT</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2048</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sample_shape</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Size</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Size</span><span class="p">())</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rsample</span><span class="p">(</span><span class="n">sample_shape</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">rsample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sample_shape</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Size</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Size</span><span class="p">())</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+        <span class="n">sample_shape</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Size</span><span class="p">(</span><span class="n">sample_shape</span><span class="p">)</span>
+
+        <span class="n">probs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">probs</span>
+        <span class="n">total_count</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_count</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="o">=</span><span class="n">probs</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">probs</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+        <span class="n">dtype</span> <span class="o">=</span> <span class="n">probs</span><span class="o">.</span><span class="n">dtype</span>
+        <span class="n">device</span> <span class="o">=</span> <span class="n">probs</span><span class="o">.</span><span class="n">device</span>
+
+        <span class="n">denom</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">probs</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">finfo</span><span class="p">(</span><span class="n">dtype</span><span class="p">)</span><span class="o">.</span><span class="n">eps</span><span class="p">)</span>
+        <span class="n">mean</span> <span class="o">=</span> <span class="n">total_count</span> <span class="o">*</span> <span class="n">probs</span> <span class="o">/</span> <span class="n">denom</span>
+        <span class="n">var</span> <span class="o">=</span> <span class="n">total_count</span> <span class="o">*</span> <span class="n">probs</span> <span class="o">/</span> <span class="p">(</span><span class="n">denom</span> <span class="o">*</span> <span class="n">denom</span><span class="p">)</span>
+        <span class="n">std</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="n">var</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mf">0.0</span><span class="p">))</span>
+        <span class="n">max_k</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ceil</span><span class="p">((</span><span class="n">mean</span> <span class="o">+</span> <span class="mf">10.0</span> <span class="o">*</span> <span class="n">std</span> <span class="o">+</span> <span class="mf">10.0</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">())</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+        <span class="n">max_k_int</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="n">max_k</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_MAX_SUPPORT</span><span class="p">)</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
+
+        <span class="n">k</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">max_k_int</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span>  <span class="c1"># (K,)</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">k</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">max_k_int</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="o">*</span><span class="p">([</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">batch_shape</span><span class="p">)))</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="n">max_k_int</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">batch_shape</span><span class="p">)</span>
+
+        <span class="n">base_dist</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">distributions</span><span class="o">.</span><span class="n">NegativeBinomial</span><span class="p">(</span>
+            <span class="n">total_count</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">total_count</span><span class="p">,</span> <span class="n">logits</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">logits</span><span class="p">,</span> <span class="n">validate_args</span><span class="o">=</span><span class="kc">False</span>
+        <span class="p">)</span>
+        <span class="n">logits</span> <span class="o">=</span> <span class="n">base_dist</span><span class="o">.</span><span class="n">log_prob</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="n">movedim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">sample_shape</span><span class="p">:</span>
+            <span class="n">logits</span> <span class="o">=</span> <span class="n">logits</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="o">*</span><span class="n">sample_shape</span><span class="p">,</span> <span class="o">*</span><span class="n">logits</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+        <span class="n">samples_oh</span> <span class="o">=</span> <span class="n">SIMPLE</span><span class="p">(</span><span class="n">logits</span><span class="o">=</span><span class="n">logits</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">is_mpe</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">samples_oh</span> <span class="o">*</span> <span class="n">k</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
         </article>
       </div>
@@ -456,8 +527,8 @@
     </aside>
   </div>
 </div><script src="../../../../_static/documentation_options.js?v=8d563738"></script>
-    <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
-    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../../_static/scripts/furo.js?v=46bd48cc"></script>
     <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../../../_static/copybutton.js?v=f281be69"></script>

@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="Concepts" href="concepts.html"><link rel="prev" title="SPFlow" href="index.html">
 
-    <!-- Generated with Sphinx 8.2.3 and Furo 2025.12.19 -->
+    <!-- Generated with Sphinx 9.0.4 and Furo 2025.12.19 -->
         <title>Getting Started - SPFlow 1.0.0</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
@@ -200,21 +200,38 @@
   <ul class="current">
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="concepts.html">Concepts</a></li>
+</ul>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="zoo/index.html">Paper Zoo</a><input aria-label="Toggle navigation of Paper Zoo" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="zoo/rat_spn.html">Random and Tensorized Sum-Product Networks (RAT-SPN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zoo/einet.html">Einsum Networks (Einet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zoo/hclt.html">Hidden Chow-Liu Trees (HCLT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zoo/conv_pc.html">Convolutional Probabilistic Circuits (ConvPc)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zoo/apc.html">Autoencoding Probabilistic Circuits (APC)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zoo/cms.html">Continuous Mixtures (CMs)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zoo/socs.html">Sum of Compatible Squares (SOCS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zoo/pic.html">Probabilistic Integral Circuits (PICs)</a></li>
+</ul>
+</li>
+</ul>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="guides/user_guide.html">User Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/dev_guide.html">Developer Guide</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="api/index.html">API Documentation</a><input aria-label="Toggle navigation of API Documentation" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l1"><a class="reference internal" href="guides/sklearn.html">Using SPFlow with sklearn</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="api/index.html">API Documentation</a><input aria-label="Toggle navigation of API Documentation" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="api/base_modules.html">Base Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/data.html">Data Structures</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/module_shape.html">Module Shape</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/dsl.html">DSL (Example Construction)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/sums.html">Sum Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/products.html">Product Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/conv.html">Convolutional Modules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/einsum.html">Einsum Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/leaves.html">Leaf Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/operations.html">Operations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/rat_spn.html">RAT-SPN Architecture</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/learning.html">Learning and Training</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/scope.html">Scope Management</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/utilities.html">Utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/measures.html">Measures</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/wrappers.html">Wrapper Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/interfaces.html">Interfaces</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/exceptions.html">Exceptions</a></li>
@@ -268,6 +285,10 @@
 <h3>From PyPI<a class="headerlink" href="#from-pypi" title="Link to this heading">¶</a></h3>
 <p>The easiest way to install SPFlow is via pip:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">spflow</span>
+</pre></div>
+</div>
+<p>Optional integrations can be installed via extras, for example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">spflow</span><span class="p">[</span><span class="n">sklearn</span><span class="p">]</span>
 </pre></div>
 </div>
 </section>
@@ -361,6 +382,22 @@
 </div>
 <img src="_static/layered-structure.svg" width="200px"/><p>This layered approach is more concise and scales better for larger circuits, automatically handling module composition instead of explicit node construction.</p>
 </section>
+<section id="example-dsl-construction-for-demos">
+<h3>Example DSL Construction (for demos)<a class="headerlink" href="#example-dsl-construction-for-demos" title="Link to this heading">¶</a></h3>
+<p>SPFlow also includes a tiny, example-oriented DSL for writing small circuits in an algebraic form.
+It is intentionally separate from the core <cite>spflow.modules</cite> API; call <code class="docutils literal notranslate"><span class="pre">.build()</span></code> to obtain an actual <code class="xref py py-class docutils literal notranslate"><span class="pre">spflow.modules.module.Module</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.leaves</span><span class="w"> </span><span class="kn">import</span> <span class="n">Normal</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.dsl</span><span class="w"> </span><span class="kn">import</span> <span class="n">dsl</span>
+
+<span class="k">with</span> <span class="n">dsl</span><span class="p">():</span>
+    <span class="n">terms</span> <span class="o">=</span> <span class="mf">0.4</span> <span class="o">*</span> <span class="n">Normal</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">*</span> <span class="n">Normal</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.6</span> <span class="o">*</span> <span class="n">Normal</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">*</span> <span class="n">Normal</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">pc</span> <span class="o">=</span> <span class="n">terms</span><span class="o">.</span><span class="n">build</span><span class="p">()</span>
+<span class="n">ll</span> <span class="o">=</span> <span class="n">pc</span><span class="o">.</span><span class="n">log_likelihood</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ll</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
 </section>
 <section id="next-steps">
 <h2>Next Steps<a class="headerlink" href="#next-steps" title="Link to this heading">¶</a></h2>
@@ -453,6 +490,7 @@
 <li><a class="reference internal" href="#quick-start">Quick Start</a><ul>
 <li><a class="reference internal" href="#basic-example-node-based-construction">Basic Example: Node-Based Construction</a></li>
 <li><a class="reference internal" href="#layered-module-composition">Layered Module Composition</a></li>
+<li><a class="reference internal" href="#example-dsl-construction-for-demos">Example DSL Construction (for demos)</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#next-steps">Next Steps</a></li>
@@ -469,8 +507,8 @@
     </aside>
   </div>
 </div><script src="_static/documentation_options.js?v=8d563738"></script>
-    <script src="_static/doctools.js?v=9bcbadda"></script>
-    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/scripts/furo.js?v=46bd48cc"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="_static/copybutton.js?v=f281be69"></script>

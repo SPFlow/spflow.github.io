@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../../genindex.html"><link rel="search" title="Search" href="../../../../search.html">
 
-    <!-- Generated with Sphinx 8.2.3 and Furo 2025.12.19 -->
+    <!-- Generated with Sphinx 9.0.4 and Furo 2025.12.19 -->
         <title>spflow.modules.wrapper.image_wrapper - SPFlow 1.0.0</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo.css?v=7bdb33bb" />
@@ -199,21 +199,38 @@
   <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../concepts.html">Concepts</a></li>
+</ul>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../zoo/index.html">Paper Zoo</a><input aria-label="Toggle navigation of Paper Zoo" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../zoo/rat_spn.html">Random and Tensorized Sum-Product Networks (RAT-SPN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../zoo/einet.html">Einsum Networks (Einet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../zoo/hclt.html">Hidden Chow-Liu Trees (HCLT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../zoo/conv_pc.html">Convolutional Probabilistic Circuits (ConvPc)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../zoo/apc.html">Autoencoding Probabilistic Circuits (APC)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../zoo/cms.html">Continuous Mixtures (CMs)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../zoo/socs.html">Sum of Compatible Squares (SOCS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../zoo/pic.html">Probabilistic Integral Circuits (PICs)</a></li>
+</ul>
+</li>
+</ul>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../guides/user_guide.html">User Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../guides/dev_guide.html">Developer Guide</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../api/index.html">API Documentation</a><input aria-label="Toggle navigation of API Documentation" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../guides/sklearn.html">Using SPFlow with sklearn</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../api/index.html">API Documentation</a><input aria-label="Toggle navigation of API Documentation" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/base_modules.html">Base Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/data.html">Data Structures</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/module_shape.html">Module Shape</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/dsl.html">DSL (Example Construction)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/sums.html">Sum Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/products.html">Product Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/conv.html">Convolutional Modules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../api/einsum.html">Einsum Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/leaves.html">Leaf Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/operations.html">Operations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../api/rat_spn.html">RAT-SPN Architecture</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/learning.html">Learning and Training</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/scope.html">Scope Management</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/utilities.html">Utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/measures.html">Measures</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/wrappers.html">Wrapper Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/interfaces.html">Interfaces</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/exceptions.html">Exceptions</a></li>
@@ -256,13 +273,14 @@
 <span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">einops</span><span class="w"> </span><span class="kn">import</span> <span class="n">rearrange</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">torch</span><span class="w"> </span><span class="kn">import</span> <span class="n">Tensor</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">ShapeError</span><span class="p">,</span> <span class="n">StructureError</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.module</span><span class="w"> </span><span class="kn">import</span> <span class="n">Module</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.wrapper.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">Wrapper</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.utils.cache</span><span class="w"> </span><span class="kn">import</span> <span class="n">Cache</span><span class="p">,</span> <span class="n">cached</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.utils.sampling_context</span><span class="w"> </span><span class="kn">import</span> <span class="n">SamplingContext</span><span class="p">,</span> <span class="n">init_default_sampling_context</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.utils.sampling_context</span><span class="w"> </span><span class="kn">import</span> <span class="n">SamplingContext</span>
 
 
 <div class="viewcode-block" id="MarginalizationContext">
@@ -366,7 +384,7 @@
                 <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">.&quot;</span>
             <span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">tensor</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">rearrange</span><span class="p">(</span><span class="n">tensor</span><span class="p">,</span> <span class="s2">&quot;b c h w -&gt; b (c h w)&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="ImageWrapper.to_image_format">
@@ -387,22 +405,40 @@
         <span class="k">if</span> <span class="n">batch</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">tensor</span><span class="o">.</span><span class="n">dim</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="n">ShapeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Input tensor must be 2-dimensional but got </span><span class="si">{</span><span class="n">tensor</span><span class="o">.</span><span class="n">dim</span><span class="p">()</span><span class="si">}</span><span class="s2">-dimensional.&quot;</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">tensor</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_channel</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">)</span>
+            <span class="n">num_channels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_channel</span>
+            <span class="n">image_height</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span>
+            <span class="n">image_width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span>
+            <span class="k">return</span> <span class="n">rearrange</span><span class="p">(</span>
+                <span class="n">tensor</span><span class="p">,</span>
+                <span class="s2">&quot;b (c h w) -&gt; b c h w&quot;</span><span class="p">,</span>
+                <span class="n">c</span><span class="o">=</span><span class="n">num_channels</span><span class="p">,</span>
+                <span class="n">h</span><span class="o">=</span><span class="n">image_height</span><span class="p">,</span>
+                <span class="n">w</span><span class="o">=</span><span class="n">image_width</span><span class="p">,</span>
+            <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">tensor</span><span class="o">.</span><span class="n">dim</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="n">ShapeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Input tensor must be 1-dimensional but got </span><span class="si">{</span><span class="n">tensor</span><span class="o">.</span><span class="n">dim</span><span class="p">()</span><span class="si">}</span><span class="s2">-dimensional.&quot;</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">tensor</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_channel</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">)</span></div>
+            <span class="n">num_channels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_channel</span>
+            <span class="n">image_height</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span>
+            <span class="n">image_width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span>
+            <span class="k">return</span> <span class="n">rearrange</span><span class="p">(</span>
+                <span class="n">tensor</span><span class="p">,</span>
+                <span class="s2">&quot;(c h w) -&gt; c h w&quot;</span><span class="p">,</span>
+                <span class="n">c</span><span class="o">=</span><span class="n">num_channels</span><span class="p">,</span>
+                <span class="n">h</span><span class="o">=</span><span class="n">image_height</span><span class="p">,</span>
+                <span class="n">w</span><span class="o">=</span><span class="n">image_width</span><span class="p">,</span>
+            <span class="p">)</span></div>
 
 
     <span class="k">def</span><span class="w"> </span><span class="nf">extra_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;C=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">num_channel</span><span class="si">}</span><span class="s2">, H=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">height</span><span class="si">}</span><span class="s2">, W=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="si">}</span><span class="s2">&quot;</span>
 
-<div class="viewcode-block" id="ImageWrapper.expectation_maximization">
-<a class="viewcode-back" href="../../../../api/wrappers.html#spflow.modules.wrapper.image_wrapper.ImageWrapper.expectation_maximization">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">expectation_maximization</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_expectation_maximization_step</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">data</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span>
-        <span class="n">cache</span><span class="p">:</span> <span class="n">Cache</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">bias_correction</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">cache</span><span class="p">:</span> <span class="n">Cache</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Performs a single expectation maximization (EM) step for the wrapped module.</span>
 
@@ -410,6 +446,8 @@
 <span class="sd">            data:</span>
 <span class="sd">                Four-dimensional PyTorch tensor containing the input data.</span>
 <span class="sd">                Shape: (batch_size, num_channel, height, width).</span>
+<span class="sd">            bias_correction:</span>
+<span class="sd">                Whether to apply bias correction in leaf updates.</span>
 <span class="sd">            cache:</span>
 <span class="sd">                Optional cache dictionary for memoization.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -420,37 +458,7 @@
             <span class="p">)</span>
 
         <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">module</span><span class="o">.</span><span class="n">expectation_maximization</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="ImageWrapper.maximum_likelihood_estimation">
-<a class="viewcode-back" href="../../../../api/wrappers.html#spflow.modules.wrapper.image_wrapper.ImageWrapper.maximum_likelihood_estimation">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">maximum_likelihood_estimation</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">data</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span>
-        <span class="n">weights</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">cache</span><span class="p">:</span> <span class="n">Cache</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameters via maximum likelihood estimation for the wrapped module.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            data:</span>
-<span class="sd">                Four-dimensional PyTorch tensor containing the input data.</span>
-<span class="sd">                Shape: (batch_size, num_channel, height, width).</span>
-<span class="sd">            weights:</span>
-<span class="sd">                Optional sample weights tensor.</span>
-<span class="sd">            cache:</span>
-<span class="sd">                Optional cache dictionary for memoization.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_channel</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="n">ShapeError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Data shape must be (batch_size, num_channel, height, width) but got </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">.&quot;</span>
-            <span class="p">)</span>
-
-        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">module</span><span class="o">.</span><span class="n">maximum_likelihood_estimation</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">weights</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">module</span><span class="o">.</span><span class="n">_expectation_maximization_step</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">bias_correction</span><span class="o">=</span><span class="n">bias_correction</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
 
 <div class="viewcode-block" id="ImageWrapper.log_likelihood">
 <a class="viewcode-back" href="../../../../api/wrappers.html#spflow.modules.wrapper.image_wrapper.ImageWrapper.log_likelihood">[docs]</a>
@@ -529,7 +537,6 @@
         <span class="n">data</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">is_mpe</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">cache</span><span class="p">:</span> <span class="n">Cache</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">sampling_ctx</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SamplingContext</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Samples from the wrapped module, returning results in image format.</span>
 
@@ -544,8 +551,6 @@
 <span class="sd">                Defaults to False.</span>
 <span class="sd">            cache:</span>
 <span class="sd">                Optional cache dictionary for memoization.</span>
-<span class="sd">            sampling_ctx:</span>
-<span class="sd">                Optional sampling context containing the instances (i.e., rows) of ``data`` to fill with sampled values and the output indices of the node to sample from.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            Four-dimensional PyTorch tensor in image format containing the sampled values.</span>
@@ -553,19 +558,35 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Prepare data tensor</span>
         <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prepare_sample_data</span><span class="p">(</span><span class="n">num_samples</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">cache</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">cache</span> <span class="o">=</span> <span class="n">Cache</span><span class="p">()</span>
 
-        <span class="n">sampling_ctx</span> <span class="o">=</span> <span class="n">init_default_sampling_context</span><span class="p">(</span><span class="n">sampling_ctx</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">sampling_ctx</span> <span class="o">=</span> <span class="n">SamplingContext</span><span class="p">(</span><span class="n">num_samples</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">device</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="n">is_mpe</span><span class="o">=</span><span class="n">is_mpe</span><span class="p">)</span>
 
         <span class="c1"># Flatten data to 2D for processing</span>
         <span class="n">flat_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">module</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">module</span><span class="o">.</span><span class="n">_sample</span><span class="p">(</span>
             <span class="n">data</span><span class="o">=</span><span class="n">flat_data</span><span class="p">,</span>
-            <span class="n">is_mpe</span><span class="o">=</span><span class="n">is_mpe</span><span class="p">,</span>
             <span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">,</span>
             <span class="n">sampling_ctx</span><span class="o">=</span><span class="n">sampling_ctx</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_image_format</span><span class="p">(</span><span class="n">flat_data</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_sample</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">data</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span>
+        <span class="n">sampling_ctx</span><span class="p">:</span> <span class="n">SamplingContext</span><span class="p">,</span>
+        <span class="n">cache</span><span class="p">:</span> <span class="n">Cache</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+        <span class="n">flat_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">module</span><span class="o">.</span><span class="n">_sample</span><span class="p">(</span>
+            <span class="n">data</span><span class="o">=</span><span class="n">flat_data</span><span class="p">,</span>
+            <span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">,</span>
+            <span class="n">sampling_ctx</span><span class="o">=</span><span class="n">sampling_ctx</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_image_format</span><span class="p">(</span><span class="n">flat_data</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="ImageWrapper.marginalize">
@@ -649,8 +670,8 @@
     </aside>
   </div>
 </div><script src="../../../../_static/documentation_options.js?v=8d563738"></script>
-    <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
-    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../../_static/scripts/furo.js?v=46bd48cc"></script>
     <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../../../_static/copybutton.js?v=f281be69"></script>

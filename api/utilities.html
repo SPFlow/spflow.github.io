@@ -3,9 +3,9 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Wrapper Modules" href="wrappers.html"><link rel="prev" title="Scope Management" href="scope.html">
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Measures" href="measures.html"><link rel="prev" title="Scope Management" href="scope.html">
 
-    <!-- Generated with Sphinx 8.2.3 and Furo 2025.12.19 -->
+    <!-- Generated with Sphinx 9.0.4 and Furo 2025.12.19 -->
         <title>Utilities - SPFlow 1.0.0</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
@@ -197,24 +197,41 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <ul class="current">
+  <ul>
 <li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../concepts.html">Concepts</a></li>
+</ul>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../zoo/index.html">Paper Zoo</a><input aria-label="Toggle navigation of Paper Zoo" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../zoo/rat_spn.html">Random and Tensorized Sum-Product Networks (RAT-SPN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zoo/einet.html">Einsum Networks (Einet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zoo/hclt.html">Hidden Chow-Liu Trees (HCLT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zoo/conv_pc.html">Convolutional Probabilistic Circuits (ConvPc)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zoo/apc.html">Autoencoding Probabilistic Circuits (APC)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zoo/cms.html">Continuous Mixtures (CMs)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zoo/socs.html">Sum of Compatible Squares (SOCS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zoo/pic.html">Probabilistic Integral Circuits (PICs)</a></li>
+</ul>
+</li>
+</ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../guides/user_guide.html">User Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guides/dev_guide.html">Developer Guide</a></li>
-<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">API Documentation</a><input aria-label="Toggle navigation of API Documentation" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../guides/sklearn.html">Using SPFlow with sklearn</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">API Documentation</a><input aria-label="Toggle navigation of API Documentation" checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="base_modules.html">Base Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html">Data Structures</a></li>
 <li class="toctree-l2"><a class="reference internal" href="module_shape.html">Module Shape</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dsl.html">DSL (Example Construction)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sums.html">Sum Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="products.html">Product Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="conv.html">Convolutional Modules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="einsum.html">Einsum Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="leaves.html">Leaf Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operations.html">Operations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="rat_spn.html">RAT-SPN Architecture</a></li>
 <li class="toctree-l2"><a class="reference internal" href="learning.html">Learning and Training</a></li>
 <li class="toctree-l2"><a class="reference internal" href="scope.html">Scope Management</a></li>
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="measures.html">Measures</a></li>
 <li class="toctree-l2"><a class="reference internal" href="wrappers.html">Wrapper Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="interfaces.html">Interfaces</a></li>
 <li class="toctree-l2"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
@@ -272,7 +289,7 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>module</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="base_modules.html#spflow.modules.module.Module" title="spflow.modules.module.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a></span>) – The root module to visualize.</p></li>
+<li><p><strong>module</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></span>) – The root module to visualize.</p></li>
 <li><p><strong>output_path</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – Path to save the visualization (without extension).</p></li>
 <li><p><strong>show_scope</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether to display scope information in node labels.</p></li>
 <li><p><strong>show_shape</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether to display shape information (D: out_features, C: out_channels) in node labels.</p></li>
@@ -323,7 +340,7 @@ Defaults to True.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>model</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="base_modules.html#spflow.modules.module.Module" title="spflow.modules.module.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a></span>) – The SPFlow module to save.</p></li>
+<li><p><strong>model</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></span>) – The SPFlow module to save.</p></li>
 <li><p><strong>path</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/os.html#os.PathLike" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">PathLike</span></code></a></span>) – File path where the model will be saved. The file will be
 created or overwritten if it already exists.</p></li>
 </ul>
@@ -343,7 +360,7 @@ created or overwritten if it already exists.</p></li>
 <dd class="field-odd"><p><strong>path</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/os.html#os.PathLike" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">PathLike</span></code></a></span>) – File path of the saved model to load.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="base_modules.html#spflow.modules.module.Module" title="spflow.modules.module.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a></span></p>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></span></p>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The deserialized SPFlow module.</p>
@@ -357,7 +374,7 @@ created or overwritten if it already exists.</p></li>
 <p>Utilities for caching intermediate computations to speed up inference.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="spflow.utils.cache.Cache">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">spflow.utils.cache.</span></span><span class="sig-name descname"><span class="pre">Cache</span></span><a class="reference internal" href="../_modules/spflow/utils/cache.html#Cache"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.utils.cache.Cache" title="Link to this definition">¶</a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">spflow.utils.cache.</span></span><span class="sig-name descname"><span class="pre">Cache</span></span><a class="reference internal" href="../_modules/spflow/utils/cache.html#Cache"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.utils.cache.Cache" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Thread-safe cache with per-method-type locking and weak key references.</p>
 <p>Uses WeakKeyDictionary to store cached values keyed by module instances,
@@ -384,7 +401,7 @@ changing public method signatures.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>method_name</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – Name of the cached method (e.g., “log_likelihood”).</p></li>
-<li><p><strong>module</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="base_modules.html#spflow.modules.module.Module" title="spflow.modules.module.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a></span>) – Module instance to use as cache key.</p></li>
+<li><p><strong>module</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></span>) – Module instance to use as cache key.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -404,7 +421,7 @@ changing public method signatures.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>method_name</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – Name of the cached method (e.g., “log_likelihood”).</p></li>
-<li><p><strong>module</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="base_modules.html#spflow.modules.module.Module" title="spflow.modules.module.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a></span>) – Module instance to use as cache key.</p></li>
+<li><p><strong>module</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></span>) – Module instance to use as cache key.</p></li>
 <li><p><strong>value</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a></span>) – Value to cache.</p></li>
 </ul>
 </dd>
@@ -414,6 +431,61 @@ changing public method signatures.</p>
 </dl>
 </dd></dl>
 
+</dd></dl>
+
+</section>
+<section id="rqmc">
+<h2>RQMC<a class="headerlink" href="#rqmc" title="Link to this heading">¶</a></h2>
+<p>Randomized quasi-Monte Carlo helpers used for continuous mixtures.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="spflow.zoo.cms.RqmcPoints">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">spflow.zoo.cms.</span></span><span class="sig-name descname"><span class="pre">RqmcPoints</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/cms/rqmc.html#RqmcPoints"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.cms.RqmcPoints" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>RQMC integration points and weights.</p>
+<p>The returned tensors follow the usual numerical integration convention:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">z</span></code> has shape <code class="docutils literal notranslate"><span class="pre">(num_points,</span> <span class="pre">latent_dim)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">weights</span></code> has shape <code class="docutils literal notranslate"><span class="pre">(num_points,)</span></code> and sums to 1</p></li>
+</ul>
+<dl class="field-list simple">
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spflow.zoo.cms.RqmcPoints.weights">
+<span class="sig-name descname"><span class="pre">weights</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><span class="pre">Tensor</span></a></span><a class="headerlink" href="#spflow.zoo.cms.RqmcPoints.weights" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spflow.zoo.cms.RqmcPoints.z">
+<span class="sig-name descname"><span class="pre">z</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><span class="pre">Tensor</span></a></span><a class="headerlink" href="#spflow.zoo.cms.RqmcPoints.z" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="spflow.zoo.cms.rqmc_sobol_normal">
+<span class="sig-prename descclassname"><span class="pre">spflow.zoo.cms.</span></span><span class="sig-name descname"><span class="pre">rqmc_sobol_normal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_points</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latent_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-06</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/cms/rqmc.html#rqmc_sobol_normal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.cms.rqmc_sobol_normal" title="Link to this definition">¶</a></dt>
+<dd><p>Generate Sobol-RQMC points for a standard normal prior N(0, I).</p>
+<p>Uses a Sobol low-discrepancy sequence in (0,1)^d, applies a random shift
+modulo 1, and maps to N(0,I) via inverse CDF (icdf).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>num_points</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Number of integration points N.</p></li>
+<li><p><strong>latent_dim</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Latent dimension d.</p></li>
+<li><p><strong>device</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensor_attributes.html#torch.device" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">device</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Target device.</p></li>
+<li><p><strong>dtype</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensor_attributes.html#torch.dtype" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dtype</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Target dtype for returned tensors.</p></li>
+<li><p><strong>seed</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional seed used to sample the random shift. If provided, this
+yields deterministic points.</p></li>
+<li><p><strong>eps</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Clamp epsilon for icdf numerical stability.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#spflow.zoo.cms.RqmcPoints" title="spflow.zoo.cms.rqmc.RqmcPoints"><code class="xref py py-class docutils literal notranslate"><span class="pre">RqmcPoints</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>RqmcPoints containing (z, weights).</p>
+</dd>
+</dl>
 </dd></dl>
 
 </section>
@@ -473,12 +545,12 @@ signature with the original method (including ‘self’ as first parameter).</p
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="wrappers.html">
+          <a class="next-page" href="measures.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Wrapper Modules</div>
+                <div class="title">Measures</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -543,6 +615,15 @@ signature with the original method (including ‘self’ as first parameter).</p
 </li>
 </ul>
 </li>
+<li><a class="reference internal" href="#rqmc">RQMC</a><ul>
+<li><a class="reference internal" href="#spflow.zoo.cms.RqmcPoints"><code class="docutils literal notranslate"><span class="pre">RqmcPoints</span></code></a><ul>
+<li><a class="reference internal" href="#spflow.zoo.cms.RqmcPoints.weights"><code class="docutils literal notranslate"><span class="pre">RqmcPoints.weights</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.cms.RqmcPoints.z"><code class="docutils literal notranslate"><span class="pre">RqmcPoints.z</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#spflow.zoo.cms.rqmc_sobol_normal"><code class="docutils literal notranslate"><span class="pre">rqmc_sobol_normal()</span></code></a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#method-replacement">Method Replacement</a><ul>
 <li><a class="reference internal" href="#spflow.utils.replace.replace"><code class="docutils literal notranslate"><span class="pre">replace()</span></code></a></li>
 </ul>
@@ -559,8 +640,8 @@ signature with the original method (including ‘self’ as first parameter).</p
     </aside>
   </div>
 </div><script src="../_static/documentation_options.js?v=8d563738"></script>
-    <script src="../_static/doctools.js?v=9bcbadda"></script>
-    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>

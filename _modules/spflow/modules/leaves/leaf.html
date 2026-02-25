@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../../genindex.html"><link rel="search" title="Search" href="../../../../search.html">
 
-    <!-- Generated with Sphinx 8.2.3 and Furo 2025.12.19 -->
+    <!-- Generated with Sphinx 9.0.4 and Furo 2025.12.19 -->
         <title>spflow.modules.leaves.leaf - SPFlow 1.0.0</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo.css?v=7bdb33bb" />
@@ -199,21 +199,38 @@
   <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../concepts.html">Concepts</a></li>
+</ul>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../zoo/index.html">Paper Zoo</a><input aria-label="Toggle navigation of Paper Zoo" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../zoo/rat_spn.html">Random and Tensorized Sum-Product Networks (RAT-SPN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../zoo/einet.html">Einsum Networks (Einet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../zoo/hclt.html">Hidden Chow-Liu Trees (HCLT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../zoo/conv_pc.html">Convolutional Probabilistic Circuits (ConvPc)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../zoo/apc.html">Autoencoding Probabilistic Circuits (APC)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../zoo/cms.html">Continuous Mixtures (CMs)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../zoo/socs.html">Sum of Compatible Squares (SOCS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../zoo/pic.html">Probabilistic Integral Circuits (PICs)</a></li>
+</ul>
+</li>
+</ul>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../guides/user_guide.html">User Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../guides/dev_guide.html">Developer Guide</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../api/index.html">API Documentation</a><input aria-label="Toggle navigation of API Documentation" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../guides/sklearn.html">Using SPFlow with sklearn</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../api/index.html">API Documentation</a><input aria-label="Toggle navigation of API Documentation" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/base_modules.html">Base Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/data.html">Data Structures</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/module_shape.html">Module Shape</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/dsl.html">DSL (Example Construction)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/sums.html">Sum Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/products.html">Product Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/conv.html">Convolutional Modules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../api/einsum.html">Einsum Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/leaves.html">Leaf Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/operations.html">Operations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../api/rat_spn.html">RAT-SPN Architecture</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/learning.html">Learning and Training</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/scope.html">Scope Management</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/utilities.html">Utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/measures.html">Measures</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/wrappers.html">Wrapper Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/interfaces.html">Interfaces</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/exceptions.html">Exceptions</a></li>
@@ -260,15 +277,18 @@
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">einops</span><span class="w"> </span><span class="kn">import</span> <span class="n">rearrange</span><span class="p">,</span> <span class="n">repeat</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">torch</span><span class="w"> </span><span class="kn">import</span> <span class="n">Tensor</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">ShapeError</span><span class="p">,</span> <span class="n">UnsupportedOperationError</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">MissingCacheError</span><span class="p">,</span> <span class="n">ShapeError</span><span class="p">,</span> <span class="n">UnsupportedOperationError</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.meta.data.interval_evidence</span><span class="w"> </span><span class="kn">import</span> <span class="n">IntervalEvidence</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.meta.data.scope</span><span class="w"> </span><span class="kn">import</span> <span class="n">Scope</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.module</span><span class="w"> </span><span class="kn">import</span> <span class="n">Module</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.module_shape</span><span class="w"> </span><span class="kn">import</span> <span class="n">ModuleShape</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.utils.cache</span><span class="w"> </span><span class="kn">import</span> <span class="n">Cache</span><span class="p">,</span> <span class="n">cached</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.utils.leaves</span><span class="w"> </span><span class="kn">import</span> <span class="n">apply_nan_strategy</span><span class="p">,</span> <span class="n">parse_leaf_args</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.utils.sampling_context</span><span class="w"> </span><span class="kn">import</span> <span class="n">SamplingContext</span><span class="p">,</span> <span class="n">init_default_sampling_context</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.utils.sampling_context</span><span class="w"> </span><span class="kn">import</span> <span class="n">SamplingContext</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.utils.sampling_context</span><span class="w"> </span><span class="kn">import</span> <span class="n">index_tensor</span><span class="p">,</span> <span class="n">repeat_repetition_index</span>
 
 
 <div class="viewcode-block" id="LeafModule">
@@ -278,8 +298,8 @@
 <a class="viewcode-back" href="../../../../api/base_modules.html#spflow.modules.leaves.leaf.LeafModule.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">scope</span><span class="p">:</span> <span class="n">Scope</span> <span class="o">|</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
-        <span class="n">out_channels</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">scope</span><span class="p">:</span> <span class="n">Scope</span> <span class="o">|</span> <span class="nb">int</span> <span class="o">|</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
+        <span class="n">out_channels</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
         <span class="n">num_repetitions</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
         <span class="n">params</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Tensor</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">parameter_fn</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Tensor</span><span class="p">],</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -288,7 +308,8 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Base class for leaf distribution modules.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            scope: Variable scope (Scope, int, or list[int]).</span>
+<span class="sd">            scope: Variable scope. Can be a Scope object, a single integer,</span>
+<span class="sd">                or an iterable of integers (list, tuple, numpy array, torch tensor, etc.).</span>
 <span class="sd">            out_channels: Number of output channels (inferred from params if None).</span>
 <span class="sd">            num_repetitions: Number of repetitions (for 3D event shapes).</span>
 <span class="sd">            params: List of parameter tensors (can include None to trigger random init).</span>
@@ -341,34 +362,60 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Indicates if the leaf uses a parameter network for conditional parameters.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameter_fn</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
 
-    <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">distribution</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">distributions</span><span class="o">.</span><span class="n">Distribution</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the underlying torch.distributions.Distribution object.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__make_distribution</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">())</span>
+<div class="viewcode-block" id="LeafModule.distribution">
+<a class="viewcode-back" href="../../../../api/base_modules.html#spflow.modules.leaves.leaf.LeafModule.distribution">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">distribution</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">with_differentiable_sampling</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">distributions</span><span class="o">.</span><span class="n">Distribution</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return this leaf&#39;s distribution.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            with_differentiable_sampling: Hook for subclasses to return an alternative</span>
+<span class="sd">                differentiable distribution when sampling requires gradient flow.</span>
+<span class="sd">                Ignored by the base implementation.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__make_distribution</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">(),</span> <span class="n">with_differentiable_sampling</span><span class="o">=</span><span class="n">with_differentiable_sampling</span><span class="p">)</span></div>
+
 
     <span class="nd">@property</span>
     <span class="nd">@abstractmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">_torch_distribution_class</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">type</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">distributions</span><span class="o">.</span><span class="n">Distribution</span><span class="p">]:</span>
         <span class="k">pass</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">__make_distribution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">distributions</span><span class="o">.</span><span class="n">Distribution</span><span class="p">:</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_torch_distribution_class_with_differentiable_sampling</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">type</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">distributions</span><span class="o">.</span><span class="n">Distribution</span><span class="p">]:</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> does not implement an alternative distribution with differentiable sampling. &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;Override _torch_distribution_class_with_differentiable_sampling or set with_differentiable_sampling=False when calling distribution().&quot;</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">__make_distribution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">],</span> <span class="n">with_differentiable_sampling</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">distributions</span><span class="o">.</span><span class="n">Distribution</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Helper method to create distribution from given parameters.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            params: Dictionary of distribution parameters.</span>
+<span class="sd">            with_differentiable_sampling: Whether to use the differentiable sampling distribution class.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            torch.distributions.Distribution constructed from the parameters.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_torch_distribution_class</span><span class="p">(</span><span class="n">validate_args</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_validate_args</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>  <span class="c1"># type: ignore[call-arg]</span>
+        <span class="k">if</span> <span class="n">with_differentiable_sampling</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_torch_distribution_class_with_differentiable_sampling</span><span class="p">(</span><span class="n">validate_args</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_validate_args</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>  <span class="c1"># type: ignore[call-arg]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_torch_distribution_class</span><span class="p">(</span><span class="n">validate_args</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_validate_args</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>  <span class="c1"># type: ignore[call-arg]</span>
 
 <div class="viewcode-block" id="LeafModule.conditional_distribution">
 <a class="viewcode-back" href="../../../../api/base_modules.html#spflow.modules.leaves.leaf.LeafModule.conditional_distribution">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">conditional_distribution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evidence</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">distributions</span><span class="o">.</span><span class="n">Distribution</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generates torch.distributions object conditionally based on evidence.</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">conditional_distribution</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">evidence</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">with_differentiable_sampling</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">distributions</span><span class="o">.</span><span class="n">Distribution</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate a conditional distribution from evidence.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            evidence: Evidence tensor for conditioning.</span>
+<span class="sd">            with_differentiable_sampling: Hook for subclasses to return an alternative</span>
+<span class="sd">                distribution with differentiable sampling when needed. Ignored by the base</span>
+<span class="sd">                implementation.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            torch.distributions.Distribution constructed from conditional parameters.</span>
@@ -376,7 +423,7 @@
         <span class="k">if</span> <span class="n">evidence</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Evidence tensor must be provided for conditional distribution.&quot;</span><span class="p">)</span>
         <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameter_fn</span><span class="p">(</span><span class="n">evidence</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__make_distribution</span><span class="p">(</span><span class="n">params</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__make_distribution</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">with_differentiable_sampling</span><span class="o">=</span><span class="n">with_differentiable_sampling</span><span class="p">)</span></div>
 
 
     <span class="nd">@property</span>
@@ -421,17 +468,18 @@
             <span class="p">)</span>
 
         <span class="n">supported_tensor</span> <span class="o">=</span> <span class="n">supported_value</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="o">=</span><span class="n">scoped_data</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">scoped_data</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">supported_tensor</span><span class="o">.</span><span class="n">numel</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">supported_tensor</span><span class="o">.</span><span class="n">reshape</span><span class="p">(())</span><span class="o">.</span><span class="n">expand_as</span><span class="p">(</span><span class="n">scoped_data</span><span class="p">)</span>
-
+        <span class="n">batch_size</span> <span class="o">=</span> <span class="n">scoped_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">num_features</span> <span class="o">=</span> <span class="n">scoped_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">supported_tensor</span><span class="o">.</span><span class="n">numel</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">repeat</span><span class="p">(</span><span class="n">supported_tensor</span><span class="o">.</span><span class="n">reshape</span><span class="p">(()),</span> <span class="s2">&quot;-&gt; b f&quot;</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">f</span><span class="o">=</span><span class="n">num_features</span><span class="p">)</span>
+
         <span class="k">if</span> <span class="n">supported_tensor</span><span class="o">.</span><span class="n">dim</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">supported_tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">num_features</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="n">ShapeError</span><span class="p">(</span>
                     <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">._supported_value has shape </span><span class="si">{</span><span class="nb">tuple</span><span class="p">(</span><span class="n">supported_tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span><span class="si">}</span><span class="s2">; &quot;</span>
                     <span class="sa">f</span><span class="s2">&quot;expected (</span><span class="si">{</span><span class="n">num_features</span><span class="si">}</span><span class="s2">,).&quot;</span>
                 <span class="p">)</span>
-            <span class="k">return</span> <span class="n">supported_tensor</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">expand_as</span><span class="p">(</span><span class="n">scoped_data</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">repeat</span><span class="p">(</span><span class="n">supported_tensor</span><span class="p">,</span> <span class="s2">&quot;f -&gt; b f&quot;</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="n">batch_size</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">supported_tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">num_features</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">ShapeError</span><span class="p">(</span>
@@ -449,7 +497,7 @@
                 <span class="sa">f</span><span class="s2">&quot;got shape </span><span class="si">{</span><span class="nb">tuple</span><span class="p">(</span><span class="n">feature_values</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span>
             <span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">feature_values</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">expand_as</span><span class="p">(</span><span class="n">scoped_data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">repeat</span><span class="p">(</span><span class="n">feature_values</span><span class="p">,</span> <span class="s2">&quot;f -&gt; b f&quot;</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="n">batch_size</span><span class="p">)</span>
 
 <div class="viewcode-block" id="LeafModule.params">
 <a class="viewcode-back" href="../../../../api/base_modules.html#spflow.modules.leaves.leaf.LeafModule.params">[docs]</a>
@@ -459,14 +507,19 @@
         <span class="k">pass</span></div>
 
 
-    <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">mode</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<div class="viewcode-block" id="LeafModule.mode">
+<a class="viewcode-back" href="../../../../api/base_modules.html#spflow.modules.leaves.leaf.LeafModule.mode">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">mode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">is_differentiable</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return distribution mode.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            is_differentiable: Whether to return the mode from the differentiable distribution (if supported).</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            Mode of the distribution.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">distribution</span><span class="o">.</span><span class="n">mode</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">distribution</span><span class="p">()</span><span class="o">.</span><span class="n">mode</span></div>
+
 
 <div class="viewcode-block" id="LeafModule.marginalized_params">
 <a class="viewcode-back" href="../../../../api/base_modules.html#spflow.modules.leaves.leaf.LeafModule.marginalized_params">[docs]</a>
@@ -490,7 +543,7 @@
 <span class="sd">            weights: Weight tensor for each data point.</span>
 <span class="sd">            bias_correction: Whether to apply bias correction to variance estimate.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">features</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># Add channel and repetition dims</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">rearrange</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s2">&quot;b f -&gt; b f 1 1&quot;</span><span class="p">)</span>
         <span class="n">estimates</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_parameter_estimates</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">bias_correction</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_set_mle_parameters</span><span class="p">(</span><span class="n">estimates</span><span class="p">)</span>
 
@@ -582,46 +635,52 @@
             <span class="k">return</span> <span class="n">param_est</span>
 
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">target_shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-            <span class="n">param_est</span> <span class="o">=</span> <span class="n">param_est</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span>
+            <span class="n">param_est</span> <span class="o">=</span> <span class="n">rearrange</span><span class="p">(</span><span class="n">param_est</span><span class="p">,</span> <span class="s2">&quot;f ... -&gt; f 1 ...&quot;</span><span class="p">)</span>
+            <span class="n">param_est</span> <span class="o">=</span> <span class="n">param_est</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">channels</span><span class="p">,</span> <span class="o">*</span><span class="p">([</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">param_est</span><span class="o">.</span><span class="n">dim</span><span class="p">()</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)))</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">target_shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">param_est</span> <span class="o">=</span> <span class="n">rearrange</span><span class="p">(</span><span class="n">param_est</span><span class="p">,</span> <span class="s2">&quot;f ... -&gt; f 1 1 ...&quot;</span><span class="p">)</span>
+            <span class="n">param_est</span> <span class="o">=</span> <span class="n">param_est</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span>
                 <span class="mi">1</span><span class="p">,</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">channels</span><span class="p">,</span>
-                <span class="o">*</span><span class="p">([</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">param_est</span><span class="o">.</span><span class="n">dim</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)),</span>
-            <span class="p">)</span>
-        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">target_shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
-            <span class="n">param_est</span> <span class="o">=</span> <span class="p">(</span>
-                <span class="n">param_est</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-                <span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-                <span class="o">.</span><span class="n">repeat</span><span class="p">(</span>
-                    <span class="mi">1</span><span class="p">,</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">channels</span><span class="p">,</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">repetitions</span><span class="p">,</span>
-                    <span class="o">*</span><span class="p">([</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">param_est</span><span class="o">.</span><span class="n">dim</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)),</span>
-                <span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">repetitions</span><span class="p">,</span>
+                <span class="o">*</span><span class="p">([</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">param_est</span><span class="o">.</span><span class="n">dim</span><span class="p">()</span> <span class="o">-</span> <span class="mi">3</span><span class="p">)),</span>
             <span class="p">)</span>
 
         <span class="k">return</span> <span class="n">param_est</span>
 
-<div class="viewcode-block" id="LeafModule.expectation_maximization">
-<a class="viewcode-back" href="../../../../api/base_modules.html#spflow.modules.leaves.leaf.LeafModule.expectation_maximization">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">expectation_maximization</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_expectation_maximization_step</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">data</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>
-        <span class="n">bias_correction</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-        <span class="n">cache</span><span class="p">:</span> <span class="n">Cache</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">bias_correction</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">cache</span><span class="p">:</span> <span class="n">Cache</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Perform single EM step.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            data: Input data tensor.</span>
-<span class="sd">            cache: Optional cache dictionary.</span>
+<span class="sd">            bias_correction: Whether to apply bias correction for leaf statistics.</span>
+<span class="sd">            cache: Cache dictionary from a preceding forward pass.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># initialize cache</span>
+        <span class="c1"># Fixed-parameter leaves (no learnable parameters) are explicit EM no-ops.</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">requires_grad</span> <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">()):</span>
+            <span class="k">return</span>
 
         <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
             <span class="c1"># ----- expectation step -----</span>
 
             <span class="c1"># get cached log-likelihood gradients w.r.t. module log-likelihoods</span>
-            <span class="n">expectations</span> <span class="o">=</span> <span class="n">cache</span><span class="p">[</span><span class="s2">&quot;log_likelihood&quot;</span><span class="p">][</span><span class="bp">self</span><span class="p">]</span><span class="o">.</span><span class="n">grad</span>
+            <span class="n">module_lls</span> <span class="o">=</span> <span class="n">cache</span><span class="p">[</span><span class="s2">&quot;log_likelihood&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">module_lls</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">MissingCacheError</span><span class="p">(</span>
+                    <span class="s2">&quot;Module log-likelihoods not found in cache. Call log_likelihood first.&quot;</span>
+                <span class="p">)</span>
+
+            <span class="n">expectations</span> <span class="o">=</span> <span class="n">module_lls</span><span class="o">.</span><span class="n">grad</span>
+            <span class="k">if</span> <span class="n">expectations</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Expected gradient for cached log-likelihood tensor of </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">, but found None.&quot;</span>
+                <span class="p">)</span>
             <span class="n">expectations</span> <span class="o">+=</span> <span class="mf">1e-12</span>  <span class="c1"># numerical stability</span>
             <span class="n">expectations</span> <span class="o">/=</span> <span class="n">expectations</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># Normalize</span>
 
@@ -631,9 +690,7 @@
                 <span class="n">data</span><span class="p">,</span>
                 <span class="n">weights</span><span class="o">=</span><span class="n">expectations</span><span class="p">,</span>
                 <span class="n">bias_correction</span><span class="o">=</span><span class="n">bias_correction</span><span class="p">,</span>
-                <span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">,</span>
-            <span class="p">)</span></div>
-
+            <span class="p">)</span>
 
         <span class="c1"># NOTE: since we explicitely override parameters in &#39;maximum_likelihood_estimation&#39;,</span>
         <span class="c1"># we do not need to zero/None parameter gradients</span>
@@ -643,18 +700,21 @@
     <span class="nd">@cached</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">log_likelihood</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">data</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span>
+        <span class="n">data</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">|</span> <span class="n">IntervalEvidence</span><span class="p">,</span>
         <span class="n">cache</span><span class="p">:</span> <span class="n">Cache</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute log-likelihoods, marginalizing over NaN values.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            data: Input data tensor.</span>
+<span class="sd">            data: Input data tensor or IntervalEvidence for range queries.</span>
 <span class="sd">            cache: Optional cache dictionary.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            Log-likelihood tensor.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Dispatch on IntervalEvidence</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">IntervalEvidence</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_log_likelihood_interval</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">low</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">high</span><span class="p">,</span> <span class="n">cache</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">dim</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Data must be 2-dimensional (batch, num_features), got shape </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
@@ -677,16 +737,16 @@
 
         <span class="c1"># ----- log probabilities -----</span>
 
-        <span class="c1"># Unsqueeze scope_data to make space for out_channels and repetition dimensions</span>
-        <span class="c1"># event_shape is now always [features, out_channels, num_repetitions]</span>
-        <span class="n">data_q</span> <span class="o">=</span> <span class="n">data_q</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="c1"># Add broadcast dims for channel and repetition axes.</span>
+        <span class="c1"># event_shape is always [features, out_channels, num_repetitions].</span>
+        <span class="n">data_q</span> <span class="o">=</span> <span class="n">rearrange</span><span class="p">(</span><span class="n">data_q</span><span class="p">,</span> <span class="s2">&quot;b f -&gt; b f 1 1&quot;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_conditional</span><span class="p">:</span>
             <span class="c1"># Get evidence</span>
             <span class="n">data_e</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scope</span><span class="o">.</span><span class="n">evidence</span><span class="p">]</span>
             <span class="n">dist</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conditional_distribution</span><span class="p">(</span><span class="n">data_e</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">dist</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">distribution</span>
+            <span class="n">dist</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">distribution</span><span class="p">()</span>
 
         <span class="n">log_prob</span> <span class="o">=</span> <span class="n">dist</span><span class="o">.</span><span class="n">log_prob</span><span class="p">(</span><span class="n">data_q</span><span class="p">)</span>
 
@@ -694,18 +754,85 @@
         <span class="k">if</span> <span class="n">has_marginalizations</span><span class="p">:</span>
             <span class="c1"># Expand marg_mask to match log_prob shape by broadcasting</span>
             <span class="c1"># marg_mask is [batch, features], expand to [batch, features, 1, 1]</span>
-            <span class="n">marg_mask_for_log_prob</span> <span class="o">=</span> <span class="n">marg_mask</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">marg_mask_for_log_prob</span> <span class="o">=</span> <span class="n">rearrange</span><span class="p">(</span><span class="n">marg_mask</span><span class="p">,</span> <span class="s2">&quot;b f -&gt; b f 1 1&quot;</span><span class="p">)</span>
             <span class="c1"># Broadcast to log_prob shape</span>
             <span class="n">marg_mask_for_log_prob</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">broadcast_to</span><span class="p">(</span><span class="n">marg_mask_for_log_prob</span><span class="p">,</span> <span class="n">log_prob</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
             <span class="n">log_prob</span><span class="p">[</span><span class="n">marg_mask_for_log_prob</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
 
         <span class="c1"># Set marginalized scope data back to NaNs</span>
         <span class="k">if</span> <span class="n">has_marginalizations</span><span class="p">:</span>
-            <span class="n">marg_mask_for_data</span> <span class="o">=</span> <span class="n">marg_mask</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">marg_mask_for_data</span> <span class="o">=</span> <span class="n">rearrange</span><span class="p">(</span><span class="n">marg_mask</span><span class="p">,</span> <span class="s2">&quot;b f -&gt; b f 1 1&quot;</span><span class="p">)</span>
             <span class="n">data_q</span><span class="p">[</span><span class="n">marg_mask_for_data</span><span class="p">]</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nan</span>
 
         <span class="k">return</span> <span class="n">log_prob</span></div>
 
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_log_likelihood_interval</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">low</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span>
+        <span class="n">high</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span>
+        <span class="n">cache</span><span class="p">:</span> <span class="n">Cache</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute log P(low &lt;= X &lt;= high) for interval evidence.</span>
+
+<span class="sd">        Uses the distribution&#39;s CDF: P(low &lt;= X &lt;= high) = CDF(high) - CDF(low).</span>
+<span class="sd">        Subclasses can override this for custom implementations.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            low: Lower bounds of shape (batch, features). NaN = no lower bound (-inf).</span>
+<span class="sd">            high: Upper bounds of shape (batch, features). NaN = no upper bound (+inf).</span>
+<span class="sd">            cache: Optional cache dictionary.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Log-likelihood tensor.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            NotImplementedError: If the distribution doesn&#39;t support CDF.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Get scope-filtered bounds</span>
+        <span class="n">low_scoped</span> <span class="o">=</span> <span class="n">low</span><span class="p">[:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scope</span><span class="o">.</span><span class="n">query</span><span class="p">]</span>
+        <span class="n">high_scoped</span> <span class="o">=</span> <span class="n">high</span><span class="p">[:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scope</span><span class="o">.</span><span class="n">query</span><span class="p">]</span>
+
+        <span class="c1"># Expand to match (batch, features, channels, repetitions)</span>
+        <span class="n">low_expanded</span> <span class="o">=</span> <span class="n">rearrange</span><span class="p">(</span><span class="n">low_scoped</span><span class="p">,</span> <span class="s2">&quot;b f -&gt; b f 1 1&quot;</span><span class="p">)</span>
+        <span class="n">high_expanded</span> <span class="o">=</span> <span class="n">rearrange</span><span class="p">(</span><span class="n">high_scoped</span><span class="p">,</span> <span class="s2">&quot;b f -&gt; b f 1 1&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Get the distribution</span>
+        <span class="n">dist</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">distribution</span><span class="p">()</span>
+
+        <span class="c1"># Check if distribution has cdf method</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="s2">&quot;cdf&quot;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> does not support interval inference. &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;The underlying distribution </span><span class="si">{</span><span class="n">dist</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> has no cdf() method.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Handle NaN bounds as -inf/+inf</span>
+        <span class="n">low_for_cdf</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">low_expanded</span><span class="p">),</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">full_like</span><span class="p">(</span><span class="n">low_expanded</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;-inf&quot;</span><span class="p">)),</span>
+            <span class="n">low_expanded</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">high_for_cdf</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">high_expanded</span><span class="p">),</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">full_like</span><span class="p">(</span><span class="n">high_expanded</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">)),</span>
+            <span class="n">high_expanded</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Compute CDF values</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">cdf_high</span> <span class="o">=</span> <span class="n">dist</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">high_for_cdf</span><span class="p">)</span>
+            <span class="n">cdf_low</span> <span class="o">=</span> <span class="n">dist</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">low_for_cdf</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">NotImplementedError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> does not support interval inference. &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;The underlying distribution </span><span class="si">{</span><span class="n">dist</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> does not implement cdf().&quot;</span>
+            <span class="p">)</span>
+
+        <span class="c1"># P(low &lt;= X &lt;= high) = CDF(high) - CDF(low)</span>
+        <span class="n">prob</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="n">cdf_high</span> <span class="o">-</span> <span class="n">cdf_low</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mf">1e-40</span><span class="p">)</span>  <span class="c1"># Numerical stability</span>
+
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">prob</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_prepare_mle_data</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -749,7 +876,6 @@
         <span class="n">weights</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">bias_correction</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
         <span class="n">nan_strategy</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Callable</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">cache</span><span class="p">:</span> <span class="n">Cache</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Maximum (weighted) likelihood estimation via template method pattern.</span>
 
@@ -761,7 +887,6 @@
 <span class="sd">            weights: Optional sample weights.</span>
 <span class="sd">            bias_correction: Apply bias correction.</span>
 <span class="sd">            nan_strategy: Handle NaN (&#39;ignore&#39;, callable, or None).</span>
-<span class="sd">            cache: Optional cache dictionary.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_conditional</span><span class="p">:</span>
@@ -778,15 +903,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_mle_update_statistics</span><span class="p">(</span><span class="n">data_prepared</span><span class="p">,</span> <span class="n">weights_prepared</span><span class="p">,</span> <span class="n">bias_correction</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="LeafModule.sample">
-<a class="viewcode-back" href="../../../../api/base_modules.html#spflow.modules.leaves.leaf.LeafModule.sample">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">sample</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_sample</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">num_samples</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">data</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">is_mpe</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-        <span class="n">cache</span><span class="p">:</span> <span class="n">Cache</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">sampling_ctx</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SamplingContext</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">data</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span>
+        <span class="n">sampling_ctx</span><span class="p">:</span> <span class="n">SamplingContext</span><span class="p">,</span>
+        <span class="n">cache</span><span class="p">:</span> <span class="n">Cache</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Sample from leaf distribution given potential evidence.</span>
 
@@ -801,9 +922,14 @@
 <span class="sd">            Sampled data tensor.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Prepare data tensor</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prepare_sample_data</span><span class="p">(</span><span class="n">num_samples</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
 
-        <span class="n">sampling_ctx</span> <span class="o">=</span> <span class="n">init_default_sampling_context</span><span class="p">(</span><span class="n">sampling_ctx</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">validate_sampling_context</span><span class="p">(</span>
+            <span class="n">num_samples</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+            <span class="n">num_features</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">features</span><span class="p">,</span>
+            <span class="n">num_channels</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">channels</span><span class="p">,</span>
+            <span class="n">num_repetitions</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">repetitions</span><span class="p">,</span>
+            <span class="n">allowed_feature_widths</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">features</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+        <span class="p">)</span>
 
         <span class="n">scope_cols</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_resolve_scope_columns</span><span class="p">(</span><span class="n">num_features</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
         <span class="n">out_of_scope</span> <span class="o">=</span> <span class="p">[</span><span class="n">idx</span> <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="k">if</span> <span class="n">idx</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">scope_cols</span><span class="p">]</span>
@@ -812,7 +938,7 @@
 
         <span class="c1"># Mask that tells us which feature at which sample is relevant and should be sampled</span>
         <span class="n">samples_mask</span> <span class="o">=</span> <span class="n">marg_mask</span>
-        <span class="n">ctx_channel_index</span><span class="p">,</span> <span class="n">ctx_mask</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_slice_sampling_context</span><span class="p">(</span>
+        <span class="n">c_idx</span><span class="p">,</span> <span class="n">ctx_mask</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_slice_sampling_context</span><span class="p">(</span>
             <span class="n">sampling_ctx</span><span class="o">=</span><span class="n">sampling_ctx</span><span class="p">,</span> <span class="n">num_features</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">scope_cols</span><span class="o">=</span><span class="n">scope_cols</span>
         <span class="p">)</span>
         <span class="n">samples_mask</span><span class="p">[:,</span> <span class="n">scope_cols</span><span class="p">]</span> <span class="o">&amp;=</span> <span class="n">ctx_mask</span>
@@ -821,18 +947,13 @@
         <span class="n">instance_mask</span> <span class="o">=</span> <span class="n">samples_mask</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
         <span class="n">n_samples</span> <span class="o">=</span> <span class="n">instance_mask</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>  <span class="c1"># count number of rows which have at least one true value</span>
 
-        <span class="k">if</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">repetition_idx</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">repetitions</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                    <span class="s2">&quot;Repetition index must be provided in sampling context for leaves with multiple repetitions.&quot;</span>
-                <span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">repetition_idx</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="n">is_mpe</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">is_mpe</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_conditional</span><span class="p">:</span>
                 <span class="n">evidence</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">instance_mask</span><span class="p">][:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scope</span><span class="o">.</span><span class="n">evidence</span><span class="p">]</span>
-                <span class="n">dist</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conditional_distribution</span><span class="p">(</span><span class="n">evidence</span><span class="p">)</span>
+                <span class="n">dist</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conditional_distribution</span><span class="p">(</span>
+                    <span class="n">evidence</span><span class="o">=</span><span class="n">evidence</span><span class="p">,</span>
+                    <span class="n">with_differentiable_sampling</span><span class="o">=</span><span class="n">sampling_ctx</span><span class="o">.</span><span class="n">is_differentiable</span><span class="p">,</span>
+                <span class="p">)</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="s2">&quot;mode&quot;</span><span class="p">):</span>
                     <span class="k">raise</span> <span class="n">UnsupportedOperationError</span><span class="p">(</span>
                         <span class="sa">f</span><span class="s2">&quot;MPE sampling requires a distribution with a &#39;mode&#39; attribute, but &quot;</span>
@@ -841,83 +962,89 @@
                 <span class="n">samples</span> <span class="o">=</span> <span class="n">dist</span><span class="o">.</span><span class="n">mode</span>
 
                 <span class="k">if</span> <span class="n">samples</span><span class="o">.</span><span class="n">dim</span><span class="p">()</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-                    <span class="n">samples</span> <span class="o">=</span> <span class="n">samples</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+                    <span class="n">samples</span> <span class="o">=</span> <span class="n">rearrange</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="s2">&quot;b f -&gt; b f 1 1&quot;</span><span class="p">)</span>
                 <span class="k">elif</span> <span class="n">samples</span><span class="o">.</span><span class="n">dim</span><span class="p">()</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
-                    <span class="n">samples</span> <span class="o">=</span> <span class="n">samples</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+                    <span class="n">samples</span> <span class="o">=</span> <span class="n">rearrange</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="s2">&quot;b f ci -&gt; b f ci 1&quot;</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="c1"># Get mode of distribution as MPE</span>
-                <span class="n">samples</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                <span class="n">dist</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">distribution</span><span class="p">(</span><span class="n">with_differentiable_sampling</span><span class="o">=</span><span class="n">sampling_ctx</span><span class="o">.</span><span class="n">is_differentiable</span><span class="p">)</span>
+                <span class="n">samples</span> <span class="o">=</span> <span class="n">rearrange</span><span class="p">(</span><span class="n">dist</span><span class="o">.</span><span class="n">mode</span><span class="p">,</span> <span class="s2">&quot;f ci r -&gt; 1 f ci r&quot;</span><span class="p">)</span>
 
-            <span class="k">if</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">repetition_idx</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">samples</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">samples</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_conditional</span><span class="p">:</span>
-                    <span class="n">samples</span> <span class="o">=</span> <span class="n">samples</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span>
-                <span class="c1"># repetition_idx shape: (n_samples,)</span>
-                <span class="n">repetition_idx</span> <span class="o">=</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">repetition_idx</span><span class="p">[</span><span class="n">instance_mask</span><span class="p">]</span>
+                    <span class="n">samples</span> <span class="o">=</span> <span class="n">repeat</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="s2">&quot;1 f ci r -&gt; n f ci r&quot;</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">n_samples</span><span class="o">.</span><span class="n">item</span><span class="p">()))</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span>
+                <span class="c1"># repetition_index shape: (n_samples,)</span>
+                <span class="n">r_idx</span> <span class="o">=</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">repetition_index</span><span class="p">[</span><span class="n">instance_mask</span><span class="p">]</span>
 
-                <span class="n">r_idxs</span> <span class="o">=</span> <span class="n">repetition_idx</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">samples</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">samples</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+                <span class="n">num_features</span> <span class="o">=</span> <span class="n">samples</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">num_channels</span> <span class="o">=</span> <span class="n">samples</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+                <span class="n">r_idx</span> <span class="o">=</span> <span class="n">repeat_repetition_index</span><span class="p">(</span>
+                    <span class="n">repetition_index</span><span class="o">=</span><span class="n">r_idx</span><span class="p">,</span>
+                    <span class="n">pattern</span><span class="o">=</span><span class="s2">&quot;b r -&gt; b f c r&quot;</span><span class="p">,</span>
+                    <span class="n">f</span><span class="o">=</span><span class="n">num_features</span><span class="p">,</span>
+                    <span class="n">c</span><span class="o">=</span><span class="n">num_channels</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="n">samples</span> <span class="o">=</span> <span class="n">index_tensor</span><span class="p">(</span>
+                    <span class="n">samples</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">r_idx</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">is_differentiable</span><span class="o">=</span><span class="n">sampling_ctx</span><span class="o">.</span><span class="n">is_differentiable</span>
+                <span class="p">)</span>
 
-                <span class="c1"># Gather samples according to repetition index</span>
-                <span class="n">samples</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">r_idxs</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-
-            <span class="k">elif</span> <span class="p">(</span>
-                <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">repetition_idx</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-                <span class="ow">and</span> <span class="n">samples</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">4</span>
-                <span class="ow">or</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">repetition_idx</span> <span class="ow">is</span> <span class="kc">None</span>
-                <span class="ow">and</span> <span class="n">samples</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">4</span>
-            <span class="p">):</span>
+            <span class="k">elif</span> <span class="n">samples</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">4</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                    <span class="s2">&quot;Either there is no repetition index or the samples are not 4-dimensional. This should not happen.&quot;</span>
+                    <span class="s2">&quot;The samples are not 4-dimensional. This should not happen.&quot;</span>
                 <span class="p">)</span>
 
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_conditional</span><span class="p">:</span>
-                    <span class="n">samples</span> <span class="o">=</span> <span class="n">samples</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span>
+                    <span class="n">samples</span> <span class="o">=</span> <span class="n">repeat</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="s2">&quot;1 f ci -&gt; n f ci&quot;</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">n_samples</span><span class="o">.</span><span class="n">item</span><span class="p">()))</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span>
 
         <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_conditional</span><span class="p">:</span>
                 <span class="c1"># Get evidence</span>
                 <span class="n">evidence</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">instance_mask</span><span class="p">][:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scope</span><span class="o">.</span><span class="n">evidence</span><span class="p">]</span>
-                <span class="n">dist</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conditional_distribution</span><span class="p">(</span><span class="n">evidence</span><span class="p">)</span>
-                <span class="n">samples</span> <span class="o">=</span> <span class="n">dist</span><span class="o">.</span><span class="n">sample</span><span class="p">((</span><span class="mi">1</span><span class="p">,))</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># Distribution parameters already contain batch dim</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">dist</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">distribution</span>
-                <span class="c1"># Sample n_samples from distribution</span>
-                <span class="n">samples</span> <span class="o">=</span> <span class="n">dist</span><span class="o">.</span><span class="n">sample</span><span class="p">((</span><span class="n">n_samples</span><span class="p">,))</span>
-
-            <span class="k">if</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">repetition_idx</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">samples</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
-                <span class="c1"># repetition_idx shape: (n_samples,)</span>
-                <span class="n">repetition_idx</span> <span class="o">=</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">repetition_idx</span><span class="p">[</span><span class="n">instance_mask</span><span class="p">]</span>
-
-                <span class="n">r_idxs</span> <span class="o">=</span> <span class="n">repetition_idx</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">samples</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">samples</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-
-                <span class="c1"># Gather samples according to repetition index</span>
-                <span class="n">samples</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">r_idxs</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-
-            <span class="k">elif</span> <span class="p">(</span>
-                <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">repetition_idx</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-                <span class="ow">and</span> <span class="n">samples</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">4</span>
-                <span class="ow">or</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">repetition_idx</span> <span class="ow">is</span> <span class="kc">None</span>
-                <span class="ow">and</span> <span class="n">samples</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">4</span>
-            <span class="p">):</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                    <span class="s2">&quot;Either there is no repetition index or the samples are not 4-dimensional. This should not happen.&quot;</span>
+                <span class="n">dist</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conditional_distribution</span><span class="p">(</span>
+                    <span class="n">evidence</span><span class="o">=</span><span class="n">evidence</span><span class="p">,</span>
+                    <span class="n">with_differentiable_sampling</span><span class="o">=</span><span class="n">sampling_ctx</span><span class="o">.</span><span class="n">is_differentiable</span><span class="p">,</span>
                 <span class="p">)</span>
+                <span class="c1"># Distribution parameters already contain batch dim, therefore sample shape is (1,)</span>
+                <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="s2">&quot;has_rsample&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+                    <span class="n">samples</span> <span class="o">=</span> <span class="n">dist</span><span class="o">.</span><span class="n">rsample</span><span class="p">((</span><span class="mi">1</span><span class="p">,))</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">samples</span> <span class="o">=</span> <span class="n">dist</span><span class="o">.</span><span class="n">sample</span><span class="p">((</span><span class="mi">1</span><span class="p">,))</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Sample n_samples from distribution</span>
+                <span class="n">dist</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">distribution</span><span class="p">(</span><span class="n">with_differentiable_sampling</span><span class="o">=</span><span class="n">sampling_ctx</span><span class="o">.</span><span class="n">is_differentiable</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="s2">&quot;has_rsample&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+                    <span class="n">samples</span> <span class="o">=</span> <span class="n">dist</span><span class="o">.</span><span class="n">rsample</span><span class="p">((</span><span class="n">n_samples</span><span class="p">,))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">samples</span> <span class="o">=</span> <span class="n">dist</span><span class="o">.</span><span class="n">sample</span><span class="p">((</span><span class="n">n_samples</span><span class="p">,))</span>
+
+            <span class="c1"># repetition_index shape: (n_samples,)</span>
+            <span class="n">r_idx</span> <span class="o">=</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">repetition_index</span><span class="p">[</span><span class="n">instance_mask</span><span class="p">]</span>
+
+            <span class="n">num_features</span> <span class="o">=</span> <span class="n">samples</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">num_channels</span> <span class="o">=</span> <span class="n">samples</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+            <span class="n">r_idx</span> <span class="o">=</span> <span class="n">repeat_repetition_index</span><span class="p">(</span>
+                <span class="n">repetition_index</span><span class="o">=</span><span class="n">r_idx</span><span class="p">,</span>
+                <span class="n">pattern</span><span class="o">=</span><span class="s2">&quot;b r -&gt; b f c r&quot;</span><span class="p">,</span>
+                <span class="n">f</span><span class="o">=</span><span class="n">num_features</span><span class="p">,</span>
+                <span class="n">c</span><span class="o">=</span><span class="n">num_channels</span><span class="p">,</span>
+            <span class="p">)</span>
+
+            <span class="c1"># Index into samples with r_idx to select the correct repetition for each sample</span>
+            <span class="n">samples</span> <span class="o">=</span> <span class="n">index_tensor</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">r_idx</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">is_differentiable</span><span class="o">=</span><span class="n">sampling_ctx</span><span class="o">.</span><span class="n">is_differentiable</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">samples</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">channel_index</span><span class="p">[</span><span class="n">instance_mask</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;Sample shape mismatch: got </span><span class="si">{</span><span class="n">samples</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">, expected </span><span class="si">{</span><span class="n">sampling_ctx</span><span class="o">.</span><span class="n">channel_index</span><span class="p">[</span><span class="n">instance_mask</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
             <span class="p">)</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">channels</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="c1"># If the output of the input module has a single channel, set the output_ids to zero since</span>
-            <span class="c1"># this input was broadcasted to match the channel dimension of the other inputs</span>
-            <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">channel_index</span><span class="o">.</span><span class="n">zero_</span><span class="p">()</span>
-            <span class="n">ctx_channel_index</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">ctx_channel_index</span><span class="p">)</span>
+        <span class="n">c_idx</span> <span class="o">=</span> <span class="n">c_idx</span><span class="p">[</span><span class="n">instance_mask</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">is_differentiable</span><span class="p">:</span>
+            <span class="n">c_idx</span> <span class="o">=</span> <span class="n">rearrange</span><span class="p">(</span><span class="n">c_idx</span><span class="p">,</span> <span class="s2">&quot;b f -&gt; b f 1&quot;</span><span class="p">)</span>
 
-        <span class="n">c_idxs</span> <span class="o">=</span> <span class="n">ctx_channel_index</span><span class="p">[</span><span class="n">instance_mask</span><span class="p">]</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-
-        <span class="c1"># Index the channel_index to get the correct samples for each scope</span>
-        <span class="n">samples</span> <span class="o">=</span> <span class="n">samples</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">c_idxs</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">samples</span> <span class="o">=</span> <span class="n">index_tensor</span><span class="p">(</span>
+            <span class="n">tensor</span><span class="o">=</span><span class="n">samples</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">c_idx</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">is_differentiable</span><span class="o">=</span><span class="n">sampling_ctx</span><span class="o">.</span><span class="n">is_differentiable</span>
+        <span class="p">)</span>
 
         <span class="c1"># Ensure, that no data is overwritten</span>
         <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="n">samples_mask</span><span class="p">]</span><span class="o">.</span><span class="n">isfinite</span><span class="p">()</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
@@ -936,8 +1063,10 @@
         <span class="c1"># Expand to create all (row, col) index pairs</span>
         <span class="c1"># rows: (n_instances, out_features) - row index repeated for each feature</span>
         <span class="c1"># cols: (n_instances, out_features) - scope indices repeated for each instance</span>
-        <span class="n">rows</span> <span class="o">=</span> <span class="n">row_indices</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">scope_idx</span><span class="p">))</span>
-        <span class="n">cols</span> <span class="o">=</span> <span class="n">scope_idx</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">num_scope_features</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">scope_idx</span><span class="p">)</span>
+        <span class="n">num_instances</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_samples</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
+        <span class="n">rows</span> <span class="o">=</span> <span class="n">repeat</span><span class="p">(</span><span class="n">row_indices</span><span class="p">,</span> <span class="s2">&quot;n -&gt; n s&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="n">num_scope_features</span><span class="p">)</span>
+        <span class="n">cols</span> <span class="o">=</span> <span class="n">repeat</span><span class="p">(</span><span class="n">scope_idx</span><span class="p">,</span> <span class="s2">&quot;s -&gt; n s&quot;</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="n">num_instances</span><span class="p">)</span>
 
         <span class="c1"># Get mask subset for scope positions only</span>
         <span class="n">mask_subset</span> <span class="o">=</span> <span class="n">samples_mask</span><span class="p">[</span><span class="n">instance_mask</span><span class="p">][:,</span> <span class="n">scope_cols</span><span class="p">]</span>  <span class="c1"># (n_instances, out_features)</span>
@@ -945,8 +1074,7 @@
         <span class="c1"># Apply mask and flatten for single vectorized assignment</span>
         <span class="n">data</span><span class="p">[</span><span class="n">rows</span><span class="p">[</span><span class="n">mask_subset</span><span class="p">],</span> <span class="n">cols</span><span class="p">[</span><span class="n">mask_subset</span><span class="p">]]</span> <span class="o">=</span> <span class="n">samples</span><span class="p">[</span><span class="n">mask_subset</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">data</span></div>
-
+        <span class="k">return</span> <span class="n">data</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_resolve_scope_columns</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_features</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Resolve the column indices in `data` that correspond to this leaf&#39;s scope.</span>
@@ -995,20 +1123,21 @@
         <span class="n">ctx_features</span> <span class="o">=</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">mask</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
         <span class="n">scope_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">scope_cols</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">ctx_features</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">channel_index</span> <span class="o">=</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">channel_index</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">scope_size</span><span class="p">)</span>
-            <span class="n">mask</span> <span class="o">=</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">mask</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">scope_size</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">channel_index</span><span class="p">,</span> <span class="n">mask</span>
-
         <span class="k">if</span> <span class="n">ctx_features</span> <span class="o">==</span> <span class="n">scope_size</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">channel_index</span><span class="p">,</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">mask</span>
+
+        <span class="k">if</span> <span class="n">ctx_features</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span>
+                <span class="n">repeat</span><span class="p">(</span><span class="n">sampling_ctx</span><span class="o">.</span><span class="n">channel_index</span><span class="p">,</span> <span class="s2">&quot;b 1 -&gt; b f&quot;</span><span class="p">,</span> <span class="n">f</span><span class="o">=</span><span class="n">scope_size</span><span class="p">),</span>
+                <span class="n">repeat</span><span class="p">(</span><span class="n">sampling_ctx</span><span class="o">.</span><span class="n">mask</span><span class="p">,</span> <span class="s2">&quot;b 1 -&gt; b f&quot;</span><span class="p">,</span> <span class="n">f</span><span class="o">=</span><span class="n">scope_size</span><span class="p">),</span>
+            <span class="p">)</span>
 
         <span class="k">if</span> <span class="n">ctx_features</span> <span class="o">==</span> <span class="n">num_features</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">channel_index</span><span class="p">[:,</span> <span class="n">scope_cols</span><span class="p">],</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">mask</span><span class="p">[:,</span> <span class="n">scope_cols</span><span class="p">]</span>
 
         <span class="k">raise</span> <span class="n">ShapeError</span><span class="p">(</span>
             <span class="s2">&quot;SamplingContext feature dimension mismatch: &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;got </span><span class="si">{</span><span class="n">ctx_features</span><span class="si">}</span><span class="s2">, expected 1, </span><span class="si">{</span><span class="n">scope_size</span><span class="si">}</span><span class="s2">, or </span><span class="si">{</span><span class="n">num_features</span><span class="si">}</span><span class="s2">.&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;got </span><span class="si">{</span><span class="n">ctx_features</span><span class="si">}</span><span class="s2">, expected </span><span class="si">{</span><span class="n">scope_size</span><span class="si">}</span><span class="s2"> or </span><span class="si">{</span><span class="n">num_features</span><span class="si">}</span><span class="s2">.&quot;</span>
         <span class="p">)</span>
 
 <div class="viewcode-block" id="LeafModule.marginalize">
@@ -1088,8 +1217,8 @@
     </aside>
   </div>
 </div><script src="../../../../_static/documentation_options.js?v=8d563738"></script>
-    <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
-    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../../_static/scripts/furo.js?v=46bd48cc"></script>
     <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../../../_static/copybutton.js?v=f281be69"></script>

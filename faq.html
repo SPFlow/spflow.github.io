@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="prev" title="Exceptions" href="api/exceptions.html">
 
-    <!-- Generated with Sphinx 8.2.3 and Furo 2025.12.19 -->
+    <!-- Generated with Sphinx 9.0.4 and Furo 2025.12.19 -->
         <title>Frequently Asked Questions - SPFlow 1.0.0</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
@@ -197,24 +197,41 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <ul class="current">
+  <ul>
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="concepts.html">Concepts</a></li>
+</ul>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="zoo/index.html">Paper Zoo</a><input aria-label="Toggle navigation of Paper Zoo" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="zoo/rat_spn.html">Random and Tensorized Sum-Product Networks (RAT-SPN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zoo/einet.html">Einsum Networks (Einet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zoo/hclt.html">Hidden Chow-Liu Trees (HCLT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zoo/conv_pc.html">Convolutional Probabilistic Circuits (ConvPc)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zoo/apc.html">Autoencoding Probabilistic Circuits (APC)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zoo/cms.html">Continuous Mixtures (CMs)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zoo/socs.html">Sum of Compatible Squares (SOCS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zoo/pic.html">Probabilistic Integral Circuits (PICs)</a></li>
+</ul>
+</li>
+</ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="guides/user_guide.html">User Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/dev_guide.html">Developer Guide</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="api/index.html">API Documentation</a><input aria-label="Toggle navigation of API Documentation" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l1"><a class="reference internal" href="guides/sklearn.html">Using SPFlow with sklearn</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="api/index.html">API Documentation</a><input aria-label="Toggle navigation of API Documentation" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="api/base_modules.html">Base Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/data.html">Data Structures</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/module_shape.html">Module Shape</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/dsl.html">DSL (Example Construction)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/sums.html">Sum Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/products.html">Product Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/conv.html">Convolutional Modules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/einsum.html">Einsum Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/leaves.html">Leaf Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/operations.html">Operations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/rat_spn.html">RAT-SPN Architecture</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/learning.html">Learning and Training</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/scope.html">Scope Management</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/utilities.html">Utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/measures.html">Measures</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/wrappers.html">Wrapper Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/interfaces.html">Interfaces</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/exceptions.html">Exceptions</a></li>
@@ -292,8 +309,13 @@ For end-to-end tutorials, see the <a class="reference internal" href="guides/use
 <ul class="simple">
 <li><p><strong>Leaves</strong>: Probability distributions at the terminals (Normal, Categorical, Bernoulli, etc.)</p></li>
 <li><p><strong>Products</strong>: Combine independent distributions (Product, OuterProduct, ElementwiseProduct)</p></li>
-<li><p><strong>Sums</strong>: Weighted mixtures of distributions (Sum, ElementwiseSum)</p></li>
-<li><p><strong>Specialized architectures</strong>: RAT-SPN, ConvPc for images</p></li>
+<li><dl class="simple">
+<dt><strong>Sums</strong>: Weighted mixtures of distributions (Sum, ElementwiseSum)</dt><dd><ul>
+<li><p><strong>Specialized architectures</strong>: RAT-SPN, ConvPc for images (see <a class="reference internal" href="zoo/index.html"><span class="doc">Paper Zoo</span></a>)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
 </ul>
 <p>See the <a class="reference internal" href="api/index.html"><span class="doc">API Reference</span></a> for complete documentation.</p>
 </section>
@@ -362,7 +384,7 @@ They usually show up as <code class="docutils literal notranslate"><span class="
 <section id="how-do-i-use-rat-spn">
 <h3>How do I use RAT-SPN?<a class="headerlink" href="#how-do-i-use-rat-spn" title="Link to this heading">¶</a></h3>
 <p>RAT-SPN (Randomized And Tensorized SPN) automatically builds a deep circuit from hyperparameters:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.rat</span><span class="w"> </span><span class="kn">import</span> <span class="n">RatSPN</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">spflow.zoo.rat</span><span class="w"> </span><span class="kn">import</span> <span class="n">RatSPN</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.leaves</span><span class="w"> </span><span class="kn">import</span> <span class="n">Normal</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.meta</span><span class="w"> </span><span class="kn">import</span> <span class="n">Scope</span>
 
@@ -380,12 +402,12 @@ They usually show up as <code class="docutils literal notranslate"><span class="
 <span class="p">)</span>
 </pre></div>
 </div>
-<p>See <a class="reference internal" href="api/rat_spn.html"><span class="doc">RAT-SPN Architecture</span></a> for details.</p>
+<p>See <a class="reference internal" href="zoo/rat_spn.html"><span class="doc">Random and Tensorized Sum-Product Networks (RAT-SPN)</span></a> for details.</p>
 </section>
 <section id="does-spflow-have-image-specific-modules">
 <h3>Does SPFlow have image-specific modules?<a class="headerlink" href="#does-spflow-have-image-specific-modules" title="Link to this heading">¶</a></h3>
 <p>Yes! Use the <code class="docutils literal notranslate"><span class="pre">ConvPc</span></code> module for image data with spatial structure:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.conv</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConvPc</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">spflow.zoo.conv</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConvPc</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.leaves</span><span class="w"> </span><span class="kn">import</span> <span class="n">Binomial</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.meta</span><span class="w"> </span><span class="kn">import</span> <span class="n">Scope</span>
 
@@ -417,7 +439,7 @@ They usually show up as <code class="docutils literal notranslate"><span class="
 <span class="n">log_ll</span> <span class="o">=</span> <span class="n">wrapped</span><span class="o">.</span><span class="n">log_likelihood</span><span class="p">(</span><span class="n">image_data</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>See <a class="reference internal" href="api/conv.html"><span class="doc">Convolutional Modules</span></a> and <a class="reference internal" href="api/wrappers.html"><span class="doc">Wrapper Modules</span></a> for complete documentation.</p>
+<p>See <a class="reference internal" href="api/conv.html"><span class="doc">Convolutional Modules</span></a>, <a class="reference internal" href="zoo/conv_pc.html"><span class="doc">Convolutional Probabilistic Circuits (ConvPc)</span></a> and <a class="reference internal" href="api/wrappers.html"><span class="doc">Wrapper Modules</span></a> for complete documentation.</p>
 </section>
 </section>
 <hr class="docutils" />
@@ -577,6 +599,22 @@ marginalizes over some variables while maximizing over others.</p>
 </pre></div>
 </div>
 </section>
+<section id="how-do-i-log-model-complexity-nodes-edges-parameters">
+<h3>How do I log model complexity (nodes/edges/parameters)?<a class="headerlink" href="#how-do-i-log-model-complexity-nodes-edges-parameters" title="Link to this heading">¶</a></h3>
+<p>Use <code class="docutils literal notranslate"><span class="pre">get_structure_stats</span></code> to compute deterministic structure statistics:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">spflow.utils.structure_stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_structure_stats</span>
+
+<span class="n">stats</span> <span class="o">=</span> <span class="n">get_structure_stats</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">stats</span><span class="o">.</span><span class="n">num_nodes_total</span><span class="p">,</span> <span class="n">stats</span><span class="o">.</span><span class="n">num_edges_total</span><span class="p">,</span> <span class="n">stats</span><span class="o">.</span><span class="n">num_parameters_total</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For a short text overview (similar to <code class="docutils literal notranslate"><span class="pre">to_str()</span></code>), use:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">print_structure_stats</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>The traversal matches <code class="docutils literal notranslate"><span class="pre">model.to_str()</span></code> (it skips internal <code class="docutils literal notranslate"><span class="pre">Cat</span></code>/<code class="docutils literal notranslate"><span class="pre">ModuleList</span></code> wrappers), is DAG-aware,
+and counts parameters uniquely across shared subgraphs.</p>
+</section>
 <hr class="docutils" />
 <section id="what-s-the-difference-between-spflow-v1-x-and-the-legacy-version">
 <h3>What’s the difference between SPFlow v1.x and the legacy version?<a class="headerlink" href="#what-s-the-difference-between-spflow-v1-x-and-the-legacy-version" title="Link to this heading">¶</a></h3>
@@ -706,6 +744,7 @@ marginalizes over some variables while maximizing over others.</p>
 <li><a class="reference internal" href="#how-do-i-visualize-a-circuit">How do I visualize a circuit?</a></li>
 <li><a class="reference internal" href="#what-output-formats-are-supported">What output formats are supported?</a></li>
 <li><a class="reference internal" href="#how-do-i-print-the-model-structure">How do I print the model structure?</a></li>
+<li><a class="reference internal" href="#how-do-i-log-model-complexity-nodes-edges-parameters">How do I log model complexity (nodes/edges/parameters)?</a></li>
 <li><a class="reference internal" href="#what-s-the-difference-between-spflow-v1-x-and-the-legacy-version">What’s the difference between SPFlow v1.x and the legacy version?</a></li>
 </ul>
 </li>
@@ -726,8 +765,8 @@ marginalizes over some variables while maximizing over others.</p>
     </aside>
   </div>
 </div><script src="_static/documentation_options.js?v=8d563738"></script>
-    <script src="_static/doctools.js?v=9bcbadda"></script>
-    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/scripts/furo.js?v=46bd48cc"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="_static/copybutton.js?v=f281be69"></script>

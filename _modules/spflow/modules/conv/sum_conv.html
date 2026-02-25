@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../../genindex.html"><link rel="search" title="Search" href="../../../../search.html">
 
-    <!-- Generated with Sphinx 8.2.3 and Furo 2025.12.19 -->
+    <!-- Generated with Sphinx 9.0.4 and Furo 2025.12.19 -->
         <title>spflow.modules.conv.sum_conv - SPFlow 1.0.0</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo.css?v=7bdb33bb" />
@@ -199,21 +199,38 @@
   <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../concepts.html">Concepts</a></li>
+</ul>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../zoo/index.html">Paper Zoo</a><input aria-label="Toggle navigation of Paper Zoo" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../zoo/rat_spn.html">Random and Tensorized Sum-Product Networks (RAT-SPN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../zoo/einet.html">Einsum Networks (Einet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../zoo/hclt.html">Hidden Chow-Liu Trees (HCLT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../zoo/conv_pc.html">Convolutional Probabilistic Circuits (ConvPc)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../zoo/apc.html">Autoencoding Probabilistic Circuits (APC)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../zoo/cms.html">Continuous Mixtures (CMs)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../zoo/socs.html">Sum of Compatible Squares (SOCS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../zoo/pic.html">Probabilistic Integral Circuits (PICs)</a></li>
+</ul>
+</li>
+</ul>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../guides/user_guide.html">User Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../guides/dev_guide.html">Developer Guide</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../api/index.html">API Documentation</a><input aria-label="Toggle navigation of API Documentation" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../guides/sklearn.html">Using SPFlow with sklearn</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../api/index.html">API Documentation</a><input aria-label="Toggle navigation of API Documentation" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/base_modules.html">Base Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/data.html">Data Structures</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/module_shape.html">Module Shape</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/dsl.html">DSL (Example Construction)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/sums.html">Sum Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/products.html">Product Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/conv.html">Convolutional Modules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../api/einsum.html">Einsum Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/leaves.html">Leaf Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/operations.html">Operations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../api/rat_spn.html">RAT-SPN Architecture</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/learning.html">Learning and Training</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/scope.html">Scope Management</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/utilities.html">Utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/measures.html">Measures</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/wrappers.html">Wrapper Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/interfaces.html">Interfaces</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/exceptions.html">Exceptions</a></li>
@@ -263,6 +280,7 @@
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">einops</span><span class="w"> </span><span class="kn">import</span> <span class="n">rearrange</span><span class="p">,</span> <span class="n">repeat</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">torch</span><span class="w"> </span><span class="kn">import</span> <span class="n">Tensor</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">torch.nn</span><span class="w"> </span><span class="kn">import</span> <span class="n">functional</span> <span class="k">as</span> <span class="n">F</span>
 
@@ -271,8 +289,14 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.module_shape</span><span class="w"> </span><span class="kn">import</span> <span class="n">ModuleShape</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.utils.cache</span><span class="w"> </span><span class="kn">import</span> <span class="n">Cache</span><span class="p">,</span> <span class="n">cached</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.utils.projections</span><span class="w"> </span><span class="kn">import</span> <span class="n">proj_convex_to_real</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.utils.sampling_context</span><span class="w"> </span><span class="kn">import</span> <span class="n">SamplingContext</span><span class="p">,</span> <span class="n">init_default_sampling_context</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.conv.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">expand_sampling_context</span><span class="p">,</span> <span class="n">upsample_sampling_context</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.utils.sampling_context</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">SamplingContext</span><span class="p">,</span>
+    <span class="n">index_tensor</span><span class="p">,</span>
+    <span class="n">repeat_channel_index</span><span class="p">,</span>
+    <span class="n">repeat_repetition_index</span><span class="p">,</span>
+    <span class="n">sample_from_logits</span><span class="p">,</span>
+    <span class="n">update_channel_index_strict</span><span class="p">,</span>
+<span class="p">)</span>
 
 
 <div class="viewcode-block" id="SumConv">
@@ -428,9 +452,6 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            Tensor: Log-likelihood of shape (batch, features, out_channels, reps).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">cache</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">cache</span> <span class="o">=</span> <span class="n">Cache</span><span class="p">()</span>
-
         <span class="c1"># Get input log-likelihoods: (batch, features, in_channels, reps)</span>
         <span class="n">ll</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">log_likelihood</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
 
@@ -442,8 +463,9 @@
         <span class="c1"># Handle repetition matching</span>
         <span class="n">out_reps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">repetitions</span>
         <span class="k">if</span> <span class="n">in_reps</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">out_reps</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="c1"># Broadcast input reps</span>
-            <span class="n">ll</span> <span class="o">=</span> <span class="n">ll</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">out_reps</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+                <span class="s2">&quot;Input repetitions cannot be broadcast to multiple output repetitions in SumConv.log_likelihood.&quot;</span>
+            <span class="p">)</span>
         <span class="k">elif</span> <span class="n">in_reps</span> <span class="o">!=</span> <span class="n">out_reps</span> <span class="ow">and</span> <span class="n">in_reps</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Input repetitions </span><span class="si">{</span><span class="n">in_reps</span><span class="si">}</span><span class="s2"> incompatible with output </span><span class="si">{</span><span class="n">out_reps</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
@@ -465,10 +487,10 @@
             <span class="n">log_weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_weights</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">:]</span>  <span class="c1"># (out_c, in_c, reps)</span>
 
             <span class="c1"># Reshape for broadcasting: (1, 1, out_c, in_c, reps)</span>
-            <span class="n">log_weights</span> <span class="o">=</span> <span class="n">log_weights</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">channels</span><span class="p">,</span> <span class="n">in_channels</span><span class="p">,</span> <span class="n">out_reps</span><span class="p">)</span>
+            <span class="n">log_weights</span> <span class="o">=</span> <span class="n">rearrange</span><span class="p">(</span><span class="n">log_weights</span><span class="p">,</span> <span class="s2">&quot;co ci r -&gt; 1 1 co ci r&quot;</span><span class="p">)</span>
 
             <span class="c1"># Reshape ll for broadcasting: (batch, features, 1, in_c, reps)</span>
-            <span class="n">ll</span> <span class="o">=</span> <span class="n">ll</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+            <span class="n">ll</span> <span class="o">=</span> <span class="n">rearrange</span><span class="p">(</span><span class="n">ll</span><span class="p">,</span> <span class="s2">&quot;b f ci r -&gt; b f 1 ci r&quot;</span><span class="p">)</span>
 
             <span class="c1"># Weighted sum over input channels: logsumexp over dim 3 (in_channels)</span>
             <span class="n">weighted_lls</span> <span class="o">=</span> <span class="n">ll</span> <span class="o">+</span> <span class="n">log_weights</span>
@@ -482,49 +504,35 @@
         <span class="c1"># Get log weights: (out_c, in_c, k, k, reps)</span>
         <span class="n">log_weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_weights</span>
 
-        <span class="c1"># Reshape ll from (batch, features, in_c, reps) to spatial form</span>
+        <span class="c1"># Reshape ll from (batch, features, in_c, reps) to spatial form:</span>
         <span class="c1"># (batch, in_c, H, W, reps)</span>
-        <span class="n">ll</span> <span class="o">=</span> <span class="n">ll</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>  <span class="c1"># (batch, in_c, features, reps)</span>
-        <span class="n">ll</span> <span class="o">=</span> <span class="n">ll</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">in_channels</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">out_reps</span><span class="p">)</span>
+        <span class="n">ll</span> <span class="o">=</span> <span class="n">rearrange</span><span class="p">(</span><span class="n">ll</span><span class="p">,</span> <span class="s2">&quot;b (h w) ci r -&gt; b ci h w r&quot;</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="n">H</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="n">W</span><span class="p">)</span>
 
         <span class="c1"># Patch the input into KxK blocks</span>
         <span class="c1"># (batch, in_c, H//K, K, W//K, K, reps)</span>
-        <span class="n">ll</span> <span class="o">=</span> <span class="n">ll</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">in_channels</span><span class="p">,</span> <span class="n">H</span> <span class="o">//</span> <span class="n">K</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">W</span> <span class="o">//</span> <span class="n">K</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">out_reps</span><span class="p">)</span>
-        <span class="c1"># Reorder to (batch, in_c, H//K, W//K, K, K, reps)</span>
-        <span class="n">ll</span> <span class="o">=</span> <span class="n">ll</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+        <span class="n">ll</span> <span class="o">=</span> <span class="n">rearrange</span><span class="p">(</span><span class="n">ll</span><span class="p">,</span> <span class="s2">&quot;b ci (oh kh) (ow kw) r -&gt; b ci oh ow kh kw r&quot;</span><span class="p">,</span> <span class="n">kh</span><span class="o">=</span><span class="n">K</span><span class="p">,</span> <span class="n">kw</span><span class="o">=</span><span class="n">K</span><span class="p">)</span>
 
         <span class="c1"># Make space for out_channels: (batch, 1, in_c, H//K, W//K, K, K, reps)</span>
-        <span class="n">ll</span> <span class="o">=</span> <span class="n">ll</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">ll</span> <span class="o">=</span> <span class="n">rearrange</span><span class="p">(</span><span class="n">ll</span><span class="p">,</span> <span class="s2">&quot;b ci oh ow kh kw r -&gt; b 1 ci oh ow kh kw r&quot;</span><span class="p">)</span>
 
         <span class="c1"># Make space in log_weights for spatial dims: (1, out_c, in_c, 1, 1, K, K, reps)</span>
-        <span class="n">log_weights</span> <span class="o">=</span> <span class="n">log_weights</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+        <span class="n">log_weights</span> <span class="o">=</span> <span class="n">rearrange</span><span class="p">(</span><span class="n">log_weights</span><span class="p">,</span> <span class="s2">&quot;co ci kh kw r -&gt; 1 co ci 1 1 kh kw r&quot;</span><span class="p">)</span>
 
         <span class="c1"># Weighted sum over input channels: logsumexp over dim 2 (in_channels)</span>
         <span class="n">weighted_lls</span> <span class="o">=</span> <span class="n">ll</span> <span class="o">+</span> <span class="n">log_weights</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">logsumexp</span><span class="p">(</span><span class="n">weighted_lls</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># (batch, out_c, H//K, W//K, K, K, reps)</span>
 
-        <span class="c1"># Invert the patch transformation</span>
-        <span class="c1"># (batch, out_c, H//K, W//K, K, K, reps) -&gt; (batch, out_c, H//K, K, W//K, K, reps)</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
-        <span class="c1"># Reshape back to (batch, out_c, H, W, reps)</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">contiguous</span><span class="p">()</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">channels</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">out_reps</span><span class="p">)</span>
-
-        <span class="c1"># Convert back to (batch, features, out_c, reps)</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">channels</span><span class="p">,</span> <span class="n">num_features</span><span class="p">,</span> <span class="n">out_reps</span><span class="p">)</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>  <span class="c1"># (batch, features, out_c, reps)</span>
+        <span class="c1"># Invert the patch transformation and flatten spatial dimensions.</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">rearrange</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="s2">&quot;b co oh ow kh kw r -&gt; b (oh kh ow kw) co r&quot;</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">result</span></div>
 
 
-<div class="viewcode-block" id="SumConv.sample">
-<a class="viewcode-back" href="../../../../api/conv.html#spflow.modules.conv.SumConv.sample">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">sample</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_sample</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">num_samples</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">data</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">is_mpe</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-        <span class="n">cache</span><span class="p">:</span> <span class="n">Cache</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">sampling_ctx</span><span class="p">:</span> <span class="n">SamplingContext</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">data</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span>
+        <span class="n">sampling_ctx</span><span class="p">:</span> <span class="n">SamplingContext</span><span class="p">,</span>
+        <span class="n">cache</span><span class="p">:</span> <span class="n">Cache</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate samples from sum conv module.</span>
 
@@ -540,19 +548,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            Tensor: Sampled values.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">cache</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">cache</span> <span class="o">=</span> <span class="n">Cache</span><span class="p">()</span>
-
-        <span class="c1"># Handle num_samples case</span>
-        <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">num_samples</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">num_samples</span> <span class="o">=</span> <span class="mi">1</span>
-            <span class="n">data</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="n">num_samples</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scope</span><span class="o">.</span><span class="n">query</span><span class="p">)),</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;nan&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
-
         <span class="n">batch_size</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-
-        <span class="c1"># Initialize sampling context</span>
-        <span class="n">sampling_ctx</span> <span class="o">=</span> <span class="n">init_default_sampling_context</span><span class="p">(</span><span class="n">sampling_ctx</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
 
         <span class="n">num_features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_shape</span><span class="o">.</span><span class="n">features</span>
 
@@ -569,104 +565,100 @@
         <span class="k">if</span> <span class="n">H</span> <span class="o">%</span> <span class="n">K</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">W</span> <span class="o">%</span> <span class="n">K</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Spatial dims (</span><span class="si">{</span><span class="n">H</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">W</span><span class="si">}</span><span class="s2">) must be divisible by kernel_size </span><span class="si">{</span><span class="n">K</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-        <span class="c1"># Expand channel_index and mask to match input features if needed</span>
-        <span class="n">current_features</span> <span class="o">=</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">channel_index</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-        <span class="k">if</span> <span class="n">current_features</span> <span class="o">!=</span> <span class="n">num_features</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">current_features</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="n">expand_sampling_context</span><span class="p">(</span><span class="n">sampling_ctx</span><span class="p">,</span> <span class="n">num_features</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="c1"># Upsample from parent spatial dims to input spatial dims</span>
-                <span class="n">upsample_sampling_context</span><span class="p">(</span>
-                    <span class="n">sampling_ctx</span><span class="p">,</span>
-                    <span class="n">current_height</span><span class="o">=</span><span class="n">H</span> <span class="o">//</span> <span class="n">K</span><span class="p">,</span>
-                    <span class="n">current_width</span><span class="o">=</span><span class="n">W</span> <span class="o">//</span> <span class="n">K</span><span class="p">,</span>
-                    <span class="n">scale_h</span><span class="o">=</span><span class="n">K</span><span class="p">,</span>
-                    <span class="n">scale_w</span><span class="o">=</span><span class="n">K</span><span class="p">,</span>
-                <span class="p">)</span>
+        <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">validate_sampling_context</span><span class="p">(</span>
+            <span class="n">num_samples</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+            <span class="n">num_features</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">features</span><span class="p">,</span>
+            <span class="n">num_channels</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">channels</span><span class="p">,</span>
+            <span class="n">num_repetitions</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">repetitions</span><span class="p">,</span>
+            <span class="n">allowed_feature_widths</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_features</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">broadcast_feature_width</span><span class="p">(</span><span class="n">target_features</span><span class="o">=</span><span class="n">num_features</span><span class="p">,</span> <span class="n">allow_from_one</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-        <span class="n">channel_idx</span> <span class="o">=</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">channel_index</span>  <span class="c1"># (batch, H*W)</span>
+        <span class="n">out_channels</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">channels</span><span class="p">)</span>
+        <span class="n">in_channels</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">in_channels</span><span class="p">)</span>
 
-        <span class="c1"># Get logits: (out_c, in_c, k, k, reps)</span>
-        <span class="n">logits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">logits</span>
-
-        <span class="c1"># Select repetition</span>
-        <span class="k">if</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">repetition_idx</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="c1"># logits: (out_c, in_c, k, k, reps) -&gt; select reps</span>
-            <span class="n">rep_idx</span> <span class="o">=</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">repetition_idx</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-            <span class="n">rep_idx</span> <span class="o">=</span> <span class="n">rep_idx</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">logits</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">logits</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">K</span><span class="p">,</span> <span class="n">K</span><span class="p">)</span>
-            <span class="n">logits</span> <span class="o">=</span> <span class="n">logits</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-            <span class="n">logits</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">rep_idx</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-            <span class="c1"># logits: (batch, out_c, in_c, k, k)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">logits</span> <span class="o">=</span> <span class="n">logits</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>  <span class="c1"># (out_c, in_c, k, k)</span>
-            <span class="n">logits</span> <span class="o">=</span> <span class="n">logits</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-            <span class="c1"># logits: (batch, out_c, in_c, k, k)</span>
+        <span class="n">logits</span> <span class="o">=</span> <span class="n">repeat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">logits</span><span class="p">,</span> <span class="s2">&quot;co ci kh kw r -&gt; b co ci kh kw r&quot;</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="n">batch_size</span><span class="p">)</span>
+        <span class="n">rep_idx</span> <span class="o">=</span> <span class="n">repeat_repetition_index</span><span class="p">(</span>
+            <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">repetition_index</span><span class="p">,</span>
+            <span class="s2">&quot;b r -&gt; b co ci kh kw r&quot;</span><span class="p">,</span>
+            <span class="n">co</span><span class="o">=</span><span class="n">out_channels</span><span class="p">,</span>
+            <span class="n">ci</span><span class="o">=</span><span class="n">in_channels</span><span class="p">,</span>
+            <span class="n">kh</span><span class="o">=</span><span class="n">K</span><span class="p">,</span>
+            <span class="n">kw</span><span class="o">=</span><span class="n">K</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">logits</span> <span class="o">=</span> <span class="n">index_tensor</span><span class="p">(</span>
+            <span class="n">logits</span><span class="p">,</span>
+            <span class="n">index</span><span class="o">=</span><span class="n">rep_idx</span><span class="p">,</span>
+            <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+            <span class="n">is_differentiable</span><span class="o">=</span><span class="n">sampling_ctx</span><span class="o">.</span><span class="n">is_differentiable</span><span class="p">,</span>
+        <span class="p">)</span>
 
         <span class="c1"># Check for cached likelihoods (conditional sampling)</span>
         <span class="n">input_lls</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="k">if</span> <span class="p">(</span>
-            <span class="n">cache</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-            <span class="ow">and</span> <span class="s2">&quot;log_likelihood&quot;</span> <span class="ow">in</span> <span class="n">cache</span>
-            <span class="ow">and</span> <span class="n">cache</span><span class="p">[</span><span class="s2">&quot;log_likelihood&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-        <span class="p">):</span>
+        <span class="k">if</span> <span class="s2">&quot;log_likelihood&quot;</span> <span class="ow">in</span> <span class="n">cache</span> <span class="ow">and</span> <span class="n">cache</span><span class="p">[</span><span class="s2">&quot;log_likelihood&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">input_lls</span> <span class="o">=</span> <span class="n">cache</span><span class="p">[</span><span class="s2">&quot;log_likelihood&quot;</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">]</span>  <span class="c1"># (batch, features, in_c, reps)</span>
 
-            <span class="c1"># Select repetition</span>
-            <span class="k">if</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">repetition_idx</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">rep_idx</span> <span class="o">=</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">repetition_idx</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-                <span class="n">rep_idx</span> <span class="o">=</span> <span class="n">rep_idx</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">input_lls</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">input_lls</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
-                <span class="n">input_lls</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="n">input_lls</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">rep_idx</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">input_lls</span> <span class="o">=</span> <span class="n">input_lls</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+            <span class="n">num_features</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">input_lls</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">num_input_channels</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">input_lls</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+            <span class="n">rep_idx</span> <span class="o">=</span> <span class="n">repeat_repetition_index</span><span class="p">(</span>
+                <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">repetition_index</span><span class="p">,</span>
+                <span class="s2">&quot;b r -&gt; b f ci r&quot;</span><span class="p">,</span>
+                <span class="n">f</span><span class="o">=</span><span class="n">num_features</span><span class="p">,</span>
+                <span class="n">ci</span><span class="o">=</span><span class="n">num_input_channels</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">input_lls</span> <span class="o">=</span> <span class="n">index_tensor</span><span class="p">(</span>
+                <span class="n">input_lls</span><span class="p">,</span>
+                <span class="n">index</span><span class="o">=</span><span class="n">rep_idx</span><span class="p">,</span>
+                <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+                <span class="n">is_differentiable</span><span class="o">=</span><span class="n">sampling_ctx</span><span class="o">.</span><span class="n">is_differentiable</span><span class="p">,</span>
+            <span class="p">)</span>
             <span class="c1"># input_lls: (batch, H*W, in_c)</span>
 
             <span class="c1"># Reshape to spatial: (batch, H, W, in_c)</span>
-            <span class="n">input_lls</span> <span class="o">=</span> <span class="n">input_lls</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_channels</span><span class="p">)</span>
-
-        <span class="c1"># Reshape channel_idx to spatial: (batch, H, W)</span>
-        <span class="n">channel_idx</span> <span class="o">=</span> <span class="n">channel_idx</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">W</span><span class="p">)</span>
+            <span class="n">input_lls</span> <span class="o">=</span> <span class="n">rearrange</span><span class="p">(</span><span class="n">input_lls</span><span class="p">,</span> <span class="s2">&quot;b (h w) ci -&gt; b h w ci&quot;</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="n">H</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="n">W</span><span class="p">)</span>
 
         <span class="c1"># Sample per-position: each pixel position needs its own sample</span>
         <span class="c1"># Create position indices for kernel</span>
         <span class="c1"># Position within kernel: pixel (i, j) has kernel pos (i % K, j % K)</span>
-        <span class="n">row_pos</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">device</span><span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">W</span><span class="p">)</span>
-        <span class="n">col_pos</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">device</span><span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">W</span><span class="p">)</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">W</span><span class="p">)</span>
+        <span class="n">row_pos</span> <span class="o">=</span> <span class="n">repeat</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">device</span><span class="p">),</span> <span class="s2">&quot;h -&gt; b h w&quot;</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="n">W</span><span class="p">)</span>
+        <span class="n">col_pos</span> <span class="o">=</span> <span class="n">repeat</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">device</span><span class="p">),</span> <span class="s2">&quot;w -&gt; b h w&quot;</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="n">H</span><span class="p">)</span>
         <span class="n">k_row</span> <span class="o">=</span> <span class="n">row_pos</span> <span class="o">%</span> <span class="n">K</span>  <span class="c1"># (batch, H, W)</span>
         <span class="n">k_col</span> <span class="o">=</span> <span class="n">col_pos</span> <span class="o">%</span> <span class="n">K</span>  <span class="c1"># (batch, H, W)</span>
 
         <span class="c1"># logits: (batch, out_c, in_c, k, k)</span>
         <span class="c1"># Select logits for each position based on parent channel and kernel position</span>
         <span class="c1"># First gather by parent channel: (batch, H, W, in_c, k, k)</span>
-        <span class="n">logits_per_pos</span> <span class="o">=</span> <span class="n">logits</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>  <span class="c1"># (batch, k, k, out_c, in_c)</span>
-
-        <span class="c1"># Index by kernel position</span>
-        <span class="c1"># k_row, k_col: (batch, H, W)</span>
-        <span class="c1"># Need to gather from (batch, k, k, out_c, in_c)</span>
-        <span class="c1"># Flatten kernel dims for gathering</span>
-        <span class="n">logits_per_pos</span> <span class="o">=</span> <span class="n">logits_per_pos</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">K</span> <span class="o">*</span> <span class="n">K</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">channels</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_channels</span><span class="p">)</span>
+        <span class="n">logits_per_pos</span> <span class="o">=</span> <span class="n">rearrange</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="s2">&quot;b co ci kh kw -&gt; b (kh kw) co ci&quot;</span><span class="p">)</span>
 
         <span class="c1"># Compute flat kernel index</span>
         <span class="n">k_flat</span> <span class="o">=</span> <span class="n">k_row</span> <span class="o">*</span> <span class="n">K</span> <span class="o">+</span> <span class="n">k_col</span>  <span class="c1"># (batch, H, W)</span>
 
-        <span class="c1"># Expand for gathering: (batch, H, W, out_c, in_c)</span>
-        <span class="n">k_flat_exp</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">k_flat</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">channels</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_channels</span><span class="p">)</span>
-        <span class="p">)</span>
-        <span class="n">logits_per_pos_exp</span> <span class="o">=</span> <span class="n">logits_per_pos</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="c1"># Expand logits to per-pixel layout before kernel-index gathering.</span>
+        <span class="n">logits_per_pos_exp</span> <span class="o">=</span> <span class="n">repeat</span><span class="p">(</span><span class="n">logits_per_pos</span><span class="p">,</span> <span class="s2">&quot;b kk co ci -&gt; b kk h w co ci&quot;</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="n">H</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="n">W</span><span class="p">)</span>
         <span class="c1"># (batch, K*K, H, W, out_c, in_c) -&gt; swap dims for gather</span>
-        <span class="n">logits_per_pos_exp</span> <span class="o">=</span> <span class="n">logits_per_pos_exp</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>  <span class="c1"># (batch, H, W, K*K, out_c, in_c)</span>
+        <span class="n">logits_per_pos_exp</span> <span class="o">=</span> <span class="n">rearrange</span><span class="p">(</span><span class="n">logits_per_pos_exp</span><span class="p">,</span> <span class="s2">&quot;b kk h w co ci -&gt; b h w kk co ci&quot;</span><span class="p">)</span>
 
         <span class="c1"># Gather by k_flat</span>
-        <span class="n">k_flat_exp2</span> <span class="o">=</span> <span class="n">k_flat</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># (batch, H, W, 1, 1, 1)</span>
-        <span class="n">k_flat_exp2</span> <span class="o">=</span> <span class="n">k_flat_exp2</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">channels</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_channels</span><span class="p">)</span>
-        <span class="n">selected_logits</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="n">logits_per_pos_exp</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">k_flat_exp2</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-        <span class="c1"># selected_logits: (batch, H, W, out_c, in_c)</span>
+        <span class="n">num_output_channels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">channels</span>
+        <span class="n">num_input_channels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_channels</span>
+        <span class="n">k_flat_exp2</span> <span class="o">=</span> <span class="n">repeat</span><span class="p">(</span><span class="n">k_flat</span><span class="p">,</span> <span class="s2">&quot;b h w -&gt; b h w 1 co ci&quot;</span><span class="p">,</span> <span class="n">co</span><span class="o">=</span><span class="n">num_output_channels</span><span class="p">,</span> <span class="n">ci</span><span class="o">=</span><span class="n">num_input_channels</span><span class="p">)</span>
+        <span class="n">selected_logits</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="n">logits_per_pos_exp</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">k_flat_exp2</span><span class="p">)</span>
+        <span class="n">selected_logits</span> <span class="o">=</span> <span class="n">rearrange</span><span class="p">(</span><span class="n">selected_logits</span><span class="p">,</span> <span class="s2">&quot;b h w 1 co ci -&gt; b h w co ci&quot;</span><span class="p">)</span>
+        <span class="n">selected_logits</span> <span class="o">=</span> <span class="n">rearrange</span><span class="p">(</span><span class="n">selected_logits</span><span class="p">,</span> <span class="s2">&quot;b h w co ci -&gt; b (h w) co ci&quot;</span><span class="p">)</span>
 
-        <span class="c1"># Now select by parent channel: channel_idx (batch, H, W)</span>
-        <span class="n">parent_ch</span> <span class="o">=</span> <span class="n">channel_idx</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># (batch, H, W, 1, 1)</span>
-        <span class="n">parent_ch</span> <span class="o">=</span> <span class="n">parent_ch</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_channels</span><span class="p">)</span>  <span class="c1"># (batch, H, W, 1, in_c)</span>
-        <span class="n">selected_logits</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="n">selected_logits</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">parent_ch</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-        <span class="c1"># selected_logits: (batch, H, W, in_c)</span>
+        <span class="c1"># Select parent output-channel routes (integer gather or one-hot reduction).</span>
+        <span class="n">parent_ch</span> <span class="o">=</span> <span class="n">repeat_channel_index</span><span class="p">(</span>
+            <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">channel_index</span><span class="p">,</span>
+            <span class="s2">&quot;b f co -&gt; b f co ci&quot;</span><span class="p">,</span>
+            <span class="n">ci</span><span class="o">=</span><span class="n">num_input_channels</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">selected_logits</span> <span class="o">=</span> <span class="n">index_tensor</span><span class="p">(</span>
+            <span class="n">selected_logits</span><span class="p">,</span>
+            <span class="n">index</span><span class="o">=</span><span class="n">parent_ch</span><span class="p">,</span>
+            <span class="n">dim</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+            <span class="n">is_differentiable</span><span class="o">=</span><span class="n">sampling_ctx</span><span class="o">.</span><span class="n">is_differentiable</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">selected_logits</span> <span class="o">=</span> <span class="n">rearrange</span><span class="p">(</span><span class="n">selected_logits</span><span class="p">,</span> <span class="s2">&quot;b (h w) ci -&gt; b h w ci&quot;</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="n">H</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="n">W</span><span class="p">)</span>
 
         <span class="c1"># Compute posterior if we have cached likelihoods</span>
         <span class="k">if</span> <span class="n">input_lls</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -676,37 +668,49 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">log_posterior</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">log_softmax</span><span class="p">(</span><span class="n">selected_logits</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
 
-        <span class="c1"># Sample for each position</span>
-        <span class="n">log_posterior_flat</span> <span class="o">=</span> <span class="n">log_posterior</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_channels</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">is_mpe</span><span class="p">:</span>
-            <span class="n">sampled_channels_flat</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">log_posterior_flat</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="c1"># Sample for each position.</span>
+        <span class="n">log_posterior_flat</span> <span class="o">=</span> <span class="n">rearrange</span><span class="p">(</span><span class="n">log_posterior</span><span class="p">,</span> <span class="s2">&quot;b h w ci -&gt; (b h w) ci&quot;</span><span class="p">)</span>
+        <span class="n">sampled_channels_flat</span> <span class="o">=</span> <span class="n">sample_from_logits</span><span class="p">(</span>
+            <span class="n">logits</span><span class="o">=</span><span class="n">log_posterior_flat</span><span class="p">,</span>
+            <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+            <span class="n">is_mpe</span><span class="o">=</span><span class="n">sampling_ctx</span><span class="o">.</span><span class="n">is_mpe</span><span class="p">,</span>
+            <span class="n">is_differentiable</span><span class="o">=</span><span class="n">sampling_ctx</span><span class="o">.</span><span class="n">is_differentiable</span><span class="p">,</span>
+            <span class="n">hard</span><span class="o">=</span><span class="n">sampling_ctx</span><span class="o">.</span><span class="n">hard</span><span class="p">,</span>
+            <span class="n">tau</span><span class="o">=</span><span class="n">sampling_ctx</span><span class="o">.</span><span class="n">tau</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">is_differentiable</span><span class="p">:</span>
+            <span class="n">sampled_channels</span> <span class="o">=</span> <span class="n">rearrange</span><span class="p">(</span>
+                <span class="n">sampled_channels_flat</span><span class="p">,</span>
+                <span class="s2">&quot;(b h w) ci -&gt; b (h w) ci&quot;</span><span class="p">,</span>
+                <span class="n">b</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span>
+                <span class="n">h</span><span class="o">=</span><span class="n">H</span><span class="p">,</span>
+                <span class="n">w</span><span class="o">=</span><span class="n">W</span><span class="p">,</span>
+            <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">sampled_channels_flat</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">distributions</span><span class="o">.</span><span class="n">Categorical</span><span class="p">(</span><span class="n">logits</span><span class="o">=</span><span class="n">log_posterior_flat</span><span class="p">)</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span>
-
-        <span class="n">sampled_channels</span> <span class="o">=</span> <span class="n">sampled_channels_flat</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">W</span><span class="p">)</span>
-        <span class="n">sampled_channels</span> <span class="o">=</span> <span class="n">sampled_channels</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">num_features</span><span class="p">)</span>
-
-        <span class="c1"># Update sampling context</span>
-        <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">channel_index</span> <span class="o">=</span> <span class="n">sampled_channels</span>
+            <span class="n">sampled_channels</span> <span class="o">=</span> <span class="n">rearrange</span><span class="p">(</span>
+                <span class="n">sampled_channels_flat</span><span class="p">,</span>
+                <span class="s2">&quot;(b h w) -&gt; b (h w)&quot;</span><span class="p">,</span>
+                <span class="n">b</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span>
+                <span class="n">h</span><span class="o">=</span><span class="n">H</span><span class="p">,</span>
+                <span class="n">w</span><span class="o">=</span><span class="n">W</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="n">update_channel_index_strict</span><span class="p">(</span><span class="n">sampling_ctx</span><span class="p">,</span> <span class="n">sampled_channels</span><span class="p">)</span>
 
         <span class="c1"># Sample from input</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">_sample</span><span class="p">(</span>
             <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
-            <span class="n">is_mpe</span><span class="o">=</span><span class="n">is_mpe</span><span class="p">,</span>
             <span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">,</span>
             <span class="n">sampling_ctx</span><span class="o">=</span><span class="n">sampling_ctx</span><span class="p">,</span>
         <span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">data</span></div>
+        <span class="k">return</span> <span class="n">data</span>
 
-
-<div class="viewcode-block" id="SumConv.expectation_maximization">
-<a class="viewcode-back" href="../../../../api/conv.html#spflow.modules.conv.SumConv.expectation_maximization">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">expectation_maximization</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_expectation_maximization_step</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">data</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span>
         <span class="n">bias_correction</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-        <span class="n">cache</span><span class="p">:</span> <span class="n">Cache</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">cache</span><span class="p">:</span> <span class="n">Cache</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Perform expectation-maximization step to update weights.</span>
 
@@ -723,9 +727,6 @@
 <span class="sd">        Raises:</span>
 <span class="sd">            MissingCacheError: If required log-likelihoods are not found in cache.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">cache</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">cache</span> <span class="o">=</span> <span class="n">Cache</span><span class="p">()</span>
-
         <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
             <span class="c1"># Get cached log-likelihoods</span>
             <span class="n">input_lls</span> <span class="o">=</span> <span class="n">cache</span><span class="p">[</span><span class="s2">&quot;log_likelihood&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">)</span>
@@ -744,19 +745,23 @@
             <span class="c1"># module_lls shape: (batch, features, out_channels, reps)</span>
             <span class="c1"># log_weights shape: (out_channels, in_channels, k, k, reps)</span>
 
-            <span class="n">batch_size</span> <span class="o">=</span> <span class="n">input_lls</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="n">num_features</span> <span class="o">=</span> <span class="n">input_lls</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-            <span class="n">in_channels</span> <span class="o">=</span> <span class="n">input_lls</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-            <span class="n">out_channels</span> <span class="o">=</span> <span class="n">module_lls</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-            <span class="n">num_reps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">repetitions</span>
+            <span class="c1"># Get log gradients from module output.</span>
+            <span class="c1"># Accessing `.grad` on non-leaf tensors without `retain_grad()` emits</span>
+            <span class="c1"># a PyTorch warning, so only read it when it is expected to exist.</span>
+            <span class="n">grad_expected</span> <span class="o">=</span> <span class="n">module_lls</span><span class="o">.</span><span class="n">is_leaf</span> <span class="ow">or</span> <span class="n">module_lls</span><span class="o">.</span><span class="n">retains_grad</span>
+            <span class="n">module_lls_grad</span> <span class="o">=</span> <span class="n">module_lls</span><span class="o">.</span><span class="n">grad</span> <span class="k">if</span> <span class="n">grad_expected</span> <span class="k">else</span> <span class="kc">None</span>
 
-            <span class="c1"># Get log gradients from module output</span>
-            <span class="c1"># grad is set during backward pass or EM routine</span>
-            <span class="k">if</span> <span class="n">module_lls</span><span class="o">.</span><span class="n">grad</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">module_lls_grad</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">grad_expected</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+                    <span class="s2">&quot;Expected gradient for cached module log-likelihood, but found None. &quot;</span>
+                    <span class="s2">&quot;This usually indicates a disconnected/non-differentiable computation path.&quot;</span>
+                <span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">module_lls_grad</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="c1"># If no gradient, use uniform (this happens at the root)</span>
                 <span class="n">log_grads</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">module_lls</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">log_grads</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">module_lls</span><span class="o">.</span><span class="n">grad</span> <span class="o">+</span> <span class="mf">1e-10</span><span class="p">)</span>
+                <span class="n">log_grads</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">module_lls_grad</span> <span class="o">+</span> <span class="mf">1e-10</span><span class="p">)</span>
 
             <span class="c1"># Current log weights: (out_c, in_c, k, k, reps)</span>
             <span class="c1"># Average over kernel spatial dims for simplicity</span>
@@ -768,10 +773,10 @@
             <span class="c1"># input_lls: (batch, features, 1, in_c, reps)</span>
             <span class="c1"># module_lls: (batch, features, out_c, 1, reps)</span>
 
-            <span class="n">log_weights</span> <span class="o">=</span> <span class="n">log_weights</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># (1, 1, out_c, in_c, reps)</span>
-            <span class="n">log_grads</span> <span class="o">=</span> <span class="n">log_grads</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>  <span class="c1"># (batch, features, out_c, 1, reps)</span>
-            <span class="n">input_lls</span> <span class="o">=</span> <span class="n">input_lls</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># (batch, features, 1, in_c, reps)</span>
-            <span class="n">module_lls</span> <span class="o">=</span> <span class="n">module_lls</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>  <span class="c1"># (batch, features, out_c, 1, reps)</span>
+            <span class="n">log_weights</span> <span class="o">=</span> <span class="n">rearrange</span><span class="p">(</span><span class="n">log_weights</span><span class="p">,</span> <span class="s2">&quot;co ci r -&gt; 1 1 co ci r&quot;</span><span class="p">)</span>
+            <span class="n">log_grads</span> <span class="o">=</span> <span class="n">rearrange</span><span class="p">(</span><span class="n">log_grads</span><span class="p">,</span> <span class="s2">&quot;b f co r -&gt; b f co 1 r&quot;</span><span class="p">)</span>
+            <span class="n">input_lls</span> <span class="o">=</span> <span class="n">rearrange</span><span class="p">(</span><span class="n">input_lls</span><span class="p">,</span> <span class="s2">&quot;b f ci r -&gt; b f 1 ci r&quot;</span><span class="p">)</span>
+            <span class="n">module_lls</span> <span class="o">=</span> <span class="n">rearrange</span><span class="p">(</span><span class="n">module_lls</span><span class="p">,</span> <span class="s2">&quot;b f co r -&gt; b f co 1 r&quot;</span><span class="p">)</span>
 
             <span class="c1"># Compute log expectations</span>
             <span class="c1"># This follows the standard EM derivation for mixture models</span>
@@ -790,15 +795,14 @@
             <span class="c1"># Current shape: (out_c, in_c, reps)</span>
             <span class="c1"># Target shape: (out_c, in_c, k, k, reps)</span>
             <span class="n">k</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel_size</span>
-            <span class="n">new_log_weights</span> <span class="o">=</span> <span class="n">log_expectations</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>  <span class="c1"># (out_c, in_c, 1, 1, reps)</span>
-            <span class="n">new_log_weights</span> <span class="o">=</span> <span class="n">new_log_weights</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># (out_c, in_c, k, k, reps)</span>
+            <span class="n">new_log_weights</span> <span class="o">=</span> <span class="n">rearrange</span><span class="p">(</span><span class="n">log_expectations</span><span class="p">,</span> <span class="s2">&quot;co ci r -&gt; co ci 1 1 r&quot;</span><span class="p">)</span>
+            <span class="n">new_log_weights</span> <span class="o">=</span> <span class="n">repeat</span><span class="p">(</span><span class="n">new_log_weights</span><span class="p">,</span> <span class="s2">&quot;co ci 1 1 r -&gt; co ci kh kw r&quot;</span><span class="p">,</span> <span class="n">kh</span><span class="o">=</span><span class="n">k</span><span class="p">,</span> <span class="n">kw</span><span class="o">=</span><span class="n">k</span><span class="p">)</span>
 
             <span class="c1"># Set new weights</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">logits</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">new_log_weights</span><span class="o">.</span><span class="n">contiguous</span><span class="p">()</span>
 
         <span class="c1"># Recursively call EM on inputs</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">expectation_maximization</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">,</span> <span class="n">bias_correction</span><span class="o">=</span><span class="n">bias_correction</span><span class="p">)</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">_expectation_maximization_step</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">,</span> <span class="n">bias_correction</span><span class="o">=</span><span class="n">bias_correction</span><span class="p">)</span>
 
 <div class="viewcode-block" id="SumConv.marginalize">
 <a class="viewcode-back" href="../../../../api/conv.html#spflow.modules.conv.SumConv.marginalize">[docs]</a>
@@ -874,8 +878,8 @@
     </aside>
   </div>
 </div><script src="../../../../_static/documentation_options.js?v=8d563738"></script>
-    <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
-    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../../_static/scripts/furo.js?v=46bd48cc"></script>
     <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../../../_static/copybutton.js?v=f281be69"></script>

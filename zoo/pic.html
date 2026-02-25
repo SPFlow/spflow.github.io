@@ -1,0 +1,1685 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="User Guide" href="../guides/user_guide.html"><link rel="prev" title="Sum of Compatible Squares (SOCS)" href="socs.html">
+
+    <!-- Generated with Sphinx 9.0.4 and Furo 2025.12.19 -->
+        <title>Probabilistic Integral Circuits (PICs) - SPFlow 1.0.0</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  --color-brand-primary: #0066cc;
+  --color-brand-content: #0066cc;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #4da6ff;
+  --color-brand-content: #4da6ff;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #4da6ff;
+  --color-brand-content: #4da6ff;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">SPFlow 1.0.0</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  <span class="sidebar-brand-text">SPFlow 1.0.0</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts.html">Concepts</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Paper Zoo</a><input aria-label="Toggle navigation of Paper Zoo" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="rat_spn.html">Random and Tensorized Sum-Product Networks (RAT-SPN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="einet.html">Einsum Networks (Einet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hclt.html">Hidden Chow-Liu Trees (HCLT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="conv_pc.html">Convolutional Probabilistic Circuits (ConvPc)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apc.html">Autoencoding Probabilistic Circuits (APC)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cms.html">Continuous Mixtures (CMs)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="socs.html">Sum of Compatible Squares (SOCS)</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Probabilistic Integral Circuits (PICs)</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../guides/user_guide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/dev_guide.html">Developer Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/sklearn.html">Using SPFlow with sklearn</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../api/index.html">API Documentation</a><input aria-label="Toggle navigation of API Documentation" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../api/base_modules.html">Base Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/data.html">Data Structures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/module_shape.html">Module Shape</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/dsl.html">DSL (Example Construction)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/sums.html">Sum Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/products.html">Product Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/conv.html">Convolutional Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/leaves.html">Leaf Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/operations.html">Operations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/learning.html">Learning and Training</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/scope.html">Scope Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/utilities.html">Utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/measures.html">Measures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/wrappers.html">Wrapper Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/interfaces.html">Interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/exceptions.html">Exceptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently Asked Questions</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../_sources/zoo/pic.rst.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="probabilistic-integral-circuits-pics">
+<h1>Probabilistic Integral Circuits (PICs)<a class="headerlink" href="#probabilistic-integral-circuits-pics" title="Link to this heading">¶</a></h1>
+<p>Probabilistic Integral Circuits (PICs) are a framework for scaling continuous latent variable models by representing them as integrals over tractable circuits. They allow for flexible neural functional sharing while maintaining tractability via quadrature-based materialization.</p>
+<section id="reference">
+<h2>Reference<a class="headerlink" href="#reference" title="Link to this heading">¶</a></h2>
+<p>PICs are described in the NeurIPS 2024 paper:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://arxiv.org/abs/2410.02410">Scaling Continuous Latent Variable Models as Probabilistic Integral Circuits</a></p></li>
+</ul>
+</section>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
+<p>A PIC is a symbolic representation of a continuous mixture model. It consists of:</p>
+<ul class="simple">
+<li><p><strong>Input Units</strong>: Representing leaf functions <span class="math notranslate nohighlight">\(f_u(X_u, Z_u)\)</span>.</p></li>
+<li><p><strong>Sum Units</strong>: Representing convex mixtures.</p></li>
+<li><p><strong>Product Units</strong>: Representing factorized distributions.</p></li>
+<li><p><strong>Integral Units</strong>: Representing integration over continuous latent variables <span class="math notranslate nohighlight">\(Z\)</span>.</p></li>
+</ul>
+</section>
+<section id="pipeline">
+<h2>Pipeline<a class="headerlink" href="#pipeline" title="Link to this heading">¶</a></h2>
+<p>The typical PIC workflow in SPFlow follows these steps:</p>
+<ol class="arabic simple">
+<li><p><strong>RegionGraph to PIC</strong>: Convert a standard <code class="xref py py-class docutils literal notranslate"><span class="pre">spflow.meta.region_graph.RegionGraph</span></code> into a symbolic PIC using <a class="reference internal" href="#spflow.zoo.pic.rg2pic" title="spflow.zoo.pic.rg2pic"><code class="xref py py-func docutils literal notranslate"><span class="pre">spflow.zoo.pic.rg2pic()</span></code></a>.</p></li>
+<li><p><strong>Functional Sharing</strong>: Attach neural networks (e.g., <a class="reference internal" href="#spflow.zoo.pic.SharedMLP" title="spflow.zoo.pic.SharedMLP"><code class="xref py py-class docutils literal notranslate"><span class="pre">spflow.zoo.pic.SharedMLP</span></code></a>) to Integral units to allow parameters to be shared across the circuit.</p></li>
+<li><p><strong>Materialization (PIC to QPC)</strong>: Convert the symbolic PIC into a materialized <strong>Quadrature Product Circuit (QPC)</strong> using <a class="reference internal" href="#spflow.zoo.pic.pic2qpc" title="spflow.zoo.pic.pic2qpc"><code class="xref py py-func docutils literal notranslate"><span class="pre">spflow.zoo.pic.pic2qpc()</span></code></a>. The QPC is a standard SPFlow <code class="xref py py-class docutils literal notranslate"><span class="pre">spflow.modules.Module</span></code> that can be evaluated using <code class="docutils literal notranslate"><span class="pre">log_likelihood()</span></code>.</p></li>
+</ol>
+</section>
+<section id="merge-strategies">
+<h2>Merge Strategies<a class="headerlink" href="#merge-strategies" title="Link to this heading">¶</a></h2>
+<p>When converting a RegionGraph to a PIC, SPFlow supports different merge strategies:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">AUTO</span></code>: Uses Tucker merge if latent variables differ, otherwise CP merge (matching paper semantics).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">TUCKER</span></code>: Always uses Tucker-style merging (resulting in <a class="reference internal" href="../api/products.html#spflow.modules.products.OuterProduct" title="spflow.modules.products.OuterProduct"><code class="xref py py-class docutils literal notranslate"><span class="pre">spflow.modules.products.OuterProduct</span></code></a> after materialization).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CP</span></code>: Always uses CP-style merging (resulting in <a class="reference internal" href="../api/products.html#spflow.modules.products.ElementwiseProduct" title="spflow.modules.products.ElementwiseProduct"><code class="xref py py-class docutils literal notranslate"><span class="pre">spflow.modules.products.ElementwiseProduct</span></code></a> after materialization).</p></li>
+</ul>
+</section>
+<section id="functional-sharing">
+<h2>Functional Sharing<a class="headerlink" href="#functional-sharing" title="Link to this heading">¶</a></h2>
+<p>PICs allow parameters of the circuit to be computed by neural networks. This is implemented via:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#spflow.zoo.pic.SharedMLP" title="spflow.zoo.pic.SharedMLP"><code class="xref py py-class docutils literal notranslate"><span class="pre">spflow.zoo.pic.SharedMLP</span></code></a>: A simple MLP shared across all units in a group.</p></li>
+<li><p><a class="reference internal" href="#spflow.zoo.pic.MultiHeadedMLP" title="spflow.zoo.pic.MultiHeadedMLP"><code class="xref py py-class docutils literal notranslate"><span class="pre">spflow.zoo.pic.MultiHeadedMLP</span></code></a>: An MLP with multiple output heads for different units.</p></li>
+<li><p><a class="reference internal" href="#spflow.zoo.pic.FourierFeatures" title="spflow.zoo.pic.FourierFeatures"><code class="xref py py-class docutils literal notranslate"><span class="pre">spflow.zoo.pic.FourierFeatures</span></code></a>: Positional encoding for latent variables.</p></li>
+</ul>
+</section>
+<section id="tensorized-qpcs">
+<h2>Tensorized QPCs<a class="headerlink" href="#tensorized-qpcs" title="Link to this heading">¶</a></h2>
+<p>For high-performance evaluation, PICs can be materialized into a <strong>Tensorized QPC</strong>. This mode avoids creating thousands of small SPFlow modules and instead uses a single folded module that performs evaluation using efficient tensor operations.</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#spflow.zoo.pic.TensorizedQPC" title="spflow.zoo.pic.TensorizedQPC"><code class="xref py py-class docutils literal notranslate"><span class="pre">spflow.zoo.pic.TensorizedQPC</span></code></a>: A folded module for efficient PIC inference.</p></li>
+</ul>
+</section>
+<section id="minimal-example">
+<h2>Minimal Example<a class="headerlink" href="#minimal-example" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.meta.region_graph</span><span class="w"> </span><span class="kn">import</span> <span class="n">RegionGraph</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.zoo.pic</span><span class="w"> </span><span class="kn">import</span> <span class="n">rg2pic</span><span class="p">,</span> <span class="n">pic2qpc</span><span class="p">,</span> <span class="n">QuadratureRule</span><span class="p">,</span> <span class="n">PICInput</span>
+
+<span class="c1"># 1. Define a simple RegionGraph</span>
+<span class="n">rg</span> <span class="o">=</span> <span class="n">RegionGraph</span><span class="o">.</span><span class="n">from_nested_list</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+
+<span class="c1"># 2. Define a leaf factory</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">MyInput</span><span class="p">(</span><span class="n">PICInput</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scope</span><span class="p">,</span> <span class="n">latent_scope</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scope</span> <span class="o">=</span> <span class="n">scope</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">latent_scope</span> <span class="o">=</span> <span class="n">latent_scope</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">materialize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">quadrature_rule</span><span class="p">):</span>
+        <span class="c1"># Return a standard SPFlow module (e.g. Gaussian leaves)</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.leaves</span><span class="w"> </span><span class="kn">import</span> <span class="n">Normal</span>
+        <span class="n">K</span> <span class="o">=</span> <span class="n">quadrature_rule</span><span class="o">.</span><span class="n">points</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">Normal</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">scope</span><span class="p">,</span> <span class="n">channels</span><span class="o">=</span><span class="n">K</span><span class="p">)</span>
+
+<span class="c1"># 3. Build symbolic PIC</span>
+<span class="n">pic</span> <span class="o">=</span> <span class="n">rg2pic</span><span class="p">(</span><span class="n">rg</span><span class="p">,</span> <span class="n">leaf_factory</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">z</span><span class="p">:</span> <span class="n">MyInput</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">z</span><span class="p">))</span>
+
+<span class="c1"># 4. Materialize to QPC</span>
+<span class="n">q_rule</span> <span class="o">=</span> <span class="n">QuadratureRule</span><span class="p">(</span>
+    <span class="n">points</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+    <span class="n">weights</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">/</span> <span class="mi">5</span>
+<span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">pic2qpc</span><span class="p">(</span><span class="n">pic</span><span class="p">,</span> <span class="n">q_rule</span><span class="p">)</span>
+
+<span class="c1"># 5. Evaluate</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">ll</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">log_likelihood</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="api-reference">
+<h2>API Reference<a class="headerlink" href="#api-reference" title="Link to this heading">¶</a></h2>
+</section>
+<section id="id1">
+<h2>Pipeline<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="spflow.zoo.pic.rg2pic">
+<span class="sig-prename descclassname"><span class="pre">spflow.zoo.pic.</span></span><span class="sig-name descname"><span class="pre">rg2pic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rg</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">merge_strategy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">MergeStrategy.AUTO</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">leaf_factory</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function_factory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sum_weights_factory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">integral_group_factory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/pic/pipeline.html#rg2pic"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.pic.rg2pic" title="Link to this definition">¶</a></dt>
+<dd><p>Algorithm 1: Convert RegionGraph to a symbolic PIC.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rg</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">RegionGraph</span></code></span>) – Input RegionGraph (currently expected to be binary).</p></li>
+<li><p><strong>merge_strategy</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#spflow.zoo.pic.MergeStrategy" title="spflow.zoo.pic.pipeline.MergeStrategy"><code class="xref py py-class docutils literal notranslate"><span class="pre">MergeStrategy</span></code></a></span>) – Merge rule (AUTO matches the paper).</p></li>
+<li><p><strong>leaf_factory</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code></a>[[<code class="xref py py-class docutils literal notranslate"><span class="pre">Scope</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Scope</span></code>], <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code>]</span>) – Factory for leaf-region input units. Called with <cite>(x_scope, z_scope)</cite>.</p></li>
+<li><p><strong>function_factory</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code></a>[[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>], <a class="reference external" href="https://docs.pytorch.org/docs/stable/generated/torch.nn.Module.html#torch.nn.Module" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a>]]</span>) – Factory for integral functions f_u, called as <cite>(z_dim, y_dim)</cite>.</p></li>
+<li><p><strong>sum_weights_factory</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code></a>[[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>], <a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>]]</span>) – Optional factory for + weights of length N partitions (defaults to uniform).</p></li>
+<li><p><strong>integral_group_factory</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code></a>[[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>], <a class="reference internal" href="#spflow.zoo.pic.FunctionGroup" title="spflow.zoo.pic.functional_sharing.FunctionGroup"><code class="xref py py-class docutils literal notranslate"><span class="pre">FunctionGroup</span></code></a>]]</span>) – Optional factory for depth-wise functional sharing groups. If provided,
+integrals created at the same RG depth with the same <cite>(z_dim, y_dim)</cite> can share a group.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Root PIC module (symbolic).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="spflow.zoo.pic.pic2qpc">
+<span class="sig-prename descclassname"><span class="pre">spflow.zoo.pic.</span></span><span class="sig-name descname"><span class="pre">pic2qpc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pic</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">quadrature_rule</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'expanded'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tensorized_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/pic/pipeline.html#pic2qpc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.pic.pic2qpc" title="Link to this definition">¶</a></dt>
+<dd><p>Algorithm 3: Materialize a symbolic PIC into a QPC.</p>
+<p>This function supports two modes:</p>
+<ul class="simple">
+<li><p><cite>mode=”expanded”</cite>: current exact materialization into a standard SPFlow module graph
+(OuterProduct / ElementwiseProduct / WeightedSum), matching Eqs. (3)–(4) in the paper.</p></li>
+<li><p><cite>mode=”tensorized”</cite>: folded/tensorized materialization inspired by the authors’ reference
+implementation (see <cite>reference-repos/ten-pics</cite>). This returns a single SPFlow <cite>Module</cite>
+that evaluates the folded tensorized circuit and parameterizes its inner layers via
+neural functional sharing (perm_dim/norm_dim + chunked quadrature evaluation).</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type">Module</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="spflow.zoo.pic.MergeStrategy">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">spflow.zoo.pic.</span></span><span class="sig-name descname"><span class="pre">MergeStrategy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/pic/pipeline.html#MergeStrategy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.pic.MergeStrategy" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></a></p>
+<p>Merge strategy for RG → PIC (Algorithm 2).</p>
+<ul class="simple">
+<li><p>AUTO: Tucker if Z_u1 != Z_u2 else CP (paper semantics)</p></li>
+<li><p>TUCKER: always Tucker merge</p></li>
+<li><p>CP: always CP merge (requires Z_u1 == Z_u2)</p></li>
+</ul>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spflow.zoo.pic.MergeStrategy.AUTO">
+<span class="sig-name descname"><span class="pre">AUTO</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'auto'</span></span><a class="headerlink" href="#spflow.zoo.pic.MergeStrategy.AUTO" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spflow.zoo.pic.MergeStrategy.CP">
+<span class="sig-name descname"><span class="pre">CP</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'cp'</span></span><a class="headerlink" href="#spflow.zoo.pic.MergeStrategy.CP" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spflow.zoo.pic.MergeStrategy.TUCKER">
+<span class="sig-name descname"><span class="pre">TUCKER</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'tucker'</span></span><a class="headerlink" href="#spflow.zoo.pic.MergeStrategy.TUCKER" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="spflow.zoo.pic.QuadratureRule">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">spflow.zoo.pic.</span></span><span class="sig-name descname"><span class="pre">QuadratureRule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/pic/pipeline.html#QuadratureRule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.pic.QuadratureRule" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>1D quadrature rule used for all PIC latents.</p>
+<dl class="field-list simple">
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spflow.zoo.pic.QuadratureRule.points">
+<span class="sig-name descname"><span class="pre">points</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><span class="pre">Tensor</span></a></span><a class="headerlink" href="#spflow.zoo.pic.QuadratureRule.points" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spflow.zoo.pic.QuadratureRule.weights">
+<span class="sig-name descname"><span class="pre">weights</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><span class="pre">Tensor</span></a></span><a class="headerlink" href="#spflow.zoo.pic.QuadratureRule.weights" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="integral-and-sum-units">
+<h2>Integral and Sum Units<a class="headerlink" href="#integral-and-sum-units" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="spflow.zoo.pic.Integral">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">spflow.zoo.pic.</span></span><span class="sig-name descname"><span class="pre">Integral</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latent_scope</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">integrated_latent_scope</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function_head_idx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/pic/integral.html#Integral"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.pic.Integral" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>Integral module representing a continuous latent variable integration.</p>
+<dl class="simple">
+<dt>Computes:</dt><dd><p>g_u(X, Z_u) = ∫ f_u(Z_u, Y_u) · g_in(X, Y_u) dY_u</p>
+</dd>
+<dt>Where:</dt><dd><ul class="simple">
+<li><p>X are variables from the input branch (descendants).</p></li>
+<li><p>Z_u are conditioned latent variables for this unit.</p></li>
+<li><p>Y_u are latent variables integrated out by this unit.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spflow.zoo.pic.Integral.inputs">
+<span class="sig-name descname"><span class="pre">inputs</span></span><a class="headerlink" href="#spflow.zoo.pic.Integral.inputs" title="Link to this definition">¶</a></dt>
+<dd><p>The child module whose output depends on Y_u.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spflow.zoo.pic.Integral.latent_scope">
+<span class="sig-name descname"><span class="pre">latent_scope</span></span><a class="headerlink" href="#spflow.zoo.pic.Integral.latent_scope" title="Link to this definition">¶</a></dt>
+<dd><p>Conditioned latent variables Z_u for this unit.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Scope</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spflow.zoo.pic.Integral.integrated_latent_scope">
+<span class="sig-name descname"><span class="pre">integrated_latent_scope</span></span><a class="headerlink" href="#spflow.zoo.pic.Integral.integrated_latent_scope" title="Link to this definition">¶</a></dt>
+<dd><p>Integrated latent variables Y_u for this unit.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Scope</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spflow.zoo.pic.Integral.function">
+<span class="sig-name descname"><span class="pre">function</span></span><a class="headerlink" href="#spflow.zoo.pic.Integral.function" title="Link to this definition">¶</a></dt>
+<dd><p>The weighting function f_u(Z_u, Y_u).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Callable</span> <span class="pre">|</span> <span class="pre">nn.Module</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.zoo.pic.Integral.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latent_scope</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">integrated_latent_scope</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function_head_idx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/pic/integral.html#Integral.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.pic.Integral.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Initialize the Integral module.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_module</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></span>) – The child module.</p></li>
+<li><p><strong>latent_scope</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Scope</span></code> | <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterable</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>] | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Scope of conditioned latent variables Z_u.</p></li>
+<li><p><strong>integrated_latent_scope</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Scope</span></code> | <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterable</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>] | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Scope of integrated latent variables Y_u.</p></li>
+<li><p><strong>function</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Callable</span></code></a>[[<a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>, <a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>], <a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>] | <a class="reference external" href="https://docs.pytorch.org/docs/stable/generated/torch.nn.Module.html#torch.nn.Module" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Function f(Z, Y) parameterized by neural network or similar.
+Should accept broadcastable tensors <cite>z</cite> and <cite>y</cite> and return positive weights.
+Convention: <cite>z.shape[-1] == |Z_u|</cite> and <cite>y.shape[-1] == |Y_u|</cite>.</p></li>
+<li><p><strong>function_head_idx</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]</span>) – Optional head index when <cite>function</cite> is a multi-function group.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.zoo.pic.Integral.log_likelihood">
+<span class="sig-name descname"><span class="pre">log_likelihood</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/pic/integral.html#Integral.log_likelihood"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.pic.Integral.log_likelihood" title="Link to this definition">¶</a></dt>
+<dd><p>Compute symbolic log-likelihood (Not Implemented for direct execution).</p>
+<p>Integral nodes are typically compiled to QPCs for inference.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.zoo.pic.Integral.marginalize">
+<span class="sig-name descname"><span class="pre">marginalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">marg_rvs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prune</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/pic/integral.html#Integral.marginalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.pic.Integral.marginalize" title="Link to this definition">¶</a></dt>
+<dd><p>Structurally marginalize out specified random variables from the module.</p>
+<p>Computes a new module representing the marginal distribution by integrating out
+the specified variables from the structure. For data-level marginalization,
+use NaNs in <code class="docutils literal notranslate"><span class="pre">log_likelihood</span></code> inputs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>marg_rvs</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">list[int]</span></code>) – Random variable indices to marginalize out.</p></li>
+<li><p><strong>prune</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>optional</em>) – Whether to prune unnecessary modules during
+marginalization. Defaults to True.</p></li>
+<li><p><strong>cache</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span> <span class="pre">|</span> <span class="pre">None</span></code>, <em>optional</em>) – Cache for intermediate computations. Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Marginalized module, or None if all variables are marginalized out.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Module | None</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.14)"><strong>ValueError</strong></a> – If marginalization variables are not in the module’s scope.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.zoo.pic.Integral.sample">
+<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_mpe</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/pic/integral.html#Integral.sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.pic.Integral.sample" title="Link to this definition">¶</a></dt>
+<dd><p>Generate samples from the module’s probability distribution.</p>
+<p>Supports both random sampling and MAP inference (via is_mpe flag).
+Handles conditional sampling through evidence in data tensor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>num_samples</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span> <span class="pre">|</span> <span class="pre">None</span></code>, <em>optional</em>) – Number of samples to generate. Defaults to 1.</p></li>
+<li><p><strong>data</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span> <span class="pre">|</span> <span class="pre">None</span></code>, <em>optional</em>) – Pre-allocated tensor with NaN values indicating
+where to sample. If None, creates new tensor. Defaults to None.</p></li>
+<li><p><strong>is_mpe</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>optional</em>) – If True, returns most probable values instead of
+random samples. Defaults to False.</p></li>
+<li><p><strong>cache</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span> <span class="pre">|</span> <span class="pre">None</span></code>, <em>optional</em>) – Cache for intermediate computations. Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Sampled values of shape (batch_size, num_features).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tensor</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.14)"><strong>ValueError</strong></a> – If sampling parameters are incompatible.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="spflow.zoo.pic.Integral.feature_to_scope">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">feature_to_scope</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a></span><a class="headerlink" href="#spflow.zoo.pic.Integral.feature_to_scope" title="Link to this definition">¶</a></dt>
+<dd><p>Mapping from output features to their respective scopes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>2D-array of scopes. Each row corresponds to an output feature,</dt><dd><p>each column to a repetition.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>np.ndarray[Scope]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="spflow.zoo.pic.PICSum">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">spflow.zoo.pic.</span></span><span class="sig-name descname"><span class="pre">PICSum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latent_scope</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/pic/pipeline.html#PICSum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.pic.PICSum" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>Symbolic PIC sum unit +([u_i, w_i]).</p>
+<dl class="field-list simple">
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.zoo.pic.PICSum.log_likelihood">
+<span class="sig-name descname"><span class="pre">log_likelihood</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/pic/pipeline.html#PICSum.log_likelihood"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.pic.PICSum.log_likelihood" title="Link to this definition">¶</a></dt>
+<dd><p>Compute log likelihood P(data | module).</p>
+<p>Computes log probability of input data under this module’s distribution.
+Uses log-space for numerical stability. Results should be cached for efficiency.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code>) – Input data of shape (batch_size, num_features).
+NaN values indicate missing values to marginalize over.</p></li>
+<li><p><strong>cache</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span> <span class="pre">|</span> <span class="pre">None</span></code>, <em>optional</em>) – Cache for intermediate computations. Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Log-likelihood of shape (batch_size, out_features, out_channels).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tensor</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.14)"><strong>ValueError</strong></a> – If input data shape is incompatible with module scope.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.zoo.pic.PICSum.marginalize">
+<span class="sig-name descname"><span class="pre">marginalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">marg_rvs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prune</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/pic/pipeline.html#PICSum.marginalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.pic.PICSum.marginalize" title="Link to this definition">¶</a></dt>
+<dd><p>Structurally marginalize out specified random variables from the module.</p>
+<p>Computes a new module representing the marginal distribution by integrating out
+the specified variables from the structure. For data-level marginalization,
+use NaNs in <code class="docutils literal notranslate"><span class="pre">log_likelihood</span></code> inputs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>marg_rvs</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">list[int]</span></code>) – Random variable indices to marginalize out.</p></li>
+<li><p><strong>prune</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>optional</em>) – Whether to prune unnecessary modules during
+marginalization. Defaults to True.</p></li>
+<li><p><strong>cache</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span> <span class="pre">|</span> <span class="pre">None</span></code>, <em>optional</em>) – Cache for intermediate computations. Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Marginalized module, or None if all variables are marginalized out.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Module | None</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.14)"><strong>ValueError</strong></a> – If marginalization variables are not in the module’s scope.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.zoo.pic.PICSum.sample">
+<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_mpe</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/pic/pipeline.html#PICSum.sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.pic.PICSum.sample" title="Link to this definition">¶</a></dt>
+<dd><p>Generate samples from the module’s probability distribution.</p>
+<p>Supports both random sampling and MAP inference (via is_mpe flag).
+Handles conditional sampling through evidence in data tensor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>num_samples</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span> <span class="pre">|</span> <span class="pre">None</span></code>, <em>optional</em>) – Number of samples to generate. Defaults to 1.</p></li>
+<li><p><strong>data</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span> <span class="pre">|</span> <span class="pre">None</span></code>, <em>optional</em>) – Pre-allocated tensor with NaN values indicating
+where to sample. If None, creates new tensor. Defaults to None.</p></li>
+<li><p><strong>is_mpe</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>optional</em>) – If True, returns most probable values instead of
+random samples. Defaults to False.</p></li>
+<li><p><strong>cache</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span> <span class="pre">|</span> <span class="pre">None</span></code>, <em>optional</em>) – Cache for intermediate computations. Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Sampled values of shape (batch_size, num_features).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tensor</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.14)"><strong>ValueError</strong></a> – If sampling parameters are incompatible.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="spflow.zoo.pic.PICSum.feature_to_scope">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">feature_to_scope</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a></span><a class="headerlink" href="#spflow.zoo.pic.PICSum.feature_to_scope" title="Link to this definition">¶</a></dt>
+<dd><p>Mapping from output features to their respective scopes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>2D-array of scopes. Each row corresponds to an output feature,</dt><dd><p>each column to a repetition.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>np.ndarray[Scope]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="spflow.zoo.pic.PICProduct">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">spflow.zoo.pic.</span></span><span class="sig-name descname"><span class="pre">PICProduct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">left</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">right</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/pic/pipeline.html#PICProduct"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.pic.PICProduct" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>Symbolic PIC product unit ×([u1, u2]).</p>
+<dl class="field-list simple">
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.zoo.pic.PICProduct.log_likelihood">
+<span class="sig-name descname"><span class="pre">log_likelihood</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/pic/pipeline.html#PICProduct.log_likelihood"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.pic.PICProduct.log_likelihood" title="Link to this definition">¶</a></dt>
+<dd><p>Compute log likelihood P(data | module).</p>
+<p>Computes log probability of input data under this module’s distribution.
+Uses log-space for numerical stability. Results should be cached for efficiency.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code>) – Input data of shape (batch_size, num_features).
+NaN values indicate missing values to marginalize over.</p></li>
+<li><p><strong>cache</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span> <span class="pre">|</span> <span class="pre">None</span></code>, <em>optional</em>) – Cache for intermediate computations. Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Log-likelihood of shape (batch_size, out_features, out_channels).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tensor</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.14)"><strong>ValueError</strong></a> – If input data shape is incompatible with module scope.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.zoo.pic.PICProduct.marginalize">
+<span class="sig-name descname"><span class="pre">marginalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">marg_rvs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prune</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/pic/pipeline.html#PICProduct.marginalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.pic.PICProduct.marginalize" title="Link to this definition">¶</a></dt>
+<dd><p>Structurally marginalize out specified random variables from the module.</p>
+<p>Computes a new module representing the marginal distribution by integrating out
+the specified variables from the structure. For data-level marginalization,
+use NaNs in <code class="docutils literal notranslate"><span class="pre">log_likelihood</span></code> inputs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>marg_rvs</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">list[int]</span></code>) – Random variable indices to marginalize out.</p></li>
+<li><p><strong>prune</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>optional</em>) – Whether to prune unnecessary modules during
+marginalization. Defaults to True.</p></li>
+<li><p><strong>cache</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span> <span class="pre">|</span> <span class="pre">None</span></code>, <em>optional</em>) – Cache for intermediate computations. Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Marginalized module, or None if all variables are marginalized out.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Module | None</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.14)"><strong>ValueError</strong></a> – If marginalization variables are not in the module’s scope.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.zoo.pic.PICProduct.sample">
+<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_mpe</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/pic/pipeline.html#PICProduct.sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.pic.PICProduct.sample" title="Link to this definition">¶</a></dt>
+<dd><p>Generate samples from the module’s probability distribution.</p>
+<p>Supports both random sampling and MAP inference (via is_mpe flag).
+Handles conditional sampling through evidence in data tensor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>num_samples</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span> <span class="pre">|</span> <span class="pre">None</span></code>, <em>optional</em>) – Number of samples to generate. Defaults to 1.</p></li>
+<li><p><strong>data</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span> <span class="pre">|</span> <span class="pre">None</span></code>, <em>optional</em>) – Pre-allocated tensor with NaN values indicating
+where to sample. If None, creates new tensor. Defaults to None.</p></li>
+<li><p><strong>is_mpe</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>optional</em>) – If True, returns most probable values instead of
+random samples. Defaults to False.</p></li>
+<li><p><strong>cache</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span> <span class="pre">|</span> <span class="pre">None</span></code>, <em>optional</em>) – Cache for intermediate computations. Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Sampled values of shape (batch_size, num_features).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tensor</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.14)"><strong>ValueError</strong></a> – If sampling parameters are incompatible.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="spflow.zoo.pic.PICProduct.feature_to_scope">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">feature_to_scope</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a></span><a class="headerlink" href="#spflow.zoo.pic.PICProduct.feature_to_scope" title="Link to this definition">¶</a></dt>
+<dd><p>Mapping from output features to their respective scopes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>2D-array of scopes. Each row corresponds to an output feature,</dt><dd><p>each column to a repetition.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>np.ndarray[Scope]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">spflow.zoo.pic.</span></span><span class="sig-name descname"><span class="pre">WeightedSum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_repetitions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/pic/weighted_sum.html#WeightedSum"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>Sum module with non-normalized weights for quadrature integration.</p>
+<p>Unlike the standard Sum module which normalizes weights via softmax,
+WeightedSum preserves exact weight values. This is essential for
+Quadrature Probabilistic Circuits (QPCs) where weights represent
+integration weights from numerical quadrature.</p>
+<dl class="field-list simple">
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">inputs</span></span></dt>
+<dd><p>Input module(s) to the sum node.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">weights</span></span></dt>
+<dd><p>Raw (non-normalized) weights tensor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Parameter</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_repetitions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/pic/weighted_sum.html#WeightedSum.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Create a WeightedSum module with explicit weights.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>inputs</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> | <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code>]</span>) – Single module or list of modules to weight.</p></li>
+<li><p><strong>weights</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Weight tensor. Shape should be compatible with
+(features, in_channels, out_channels, repetitions).</p></li>
+<li><p><strong>num_repetitions</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Number of repetitions for structured representations.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.14)"><strong>ValueError</strong></a> – If inputs empty or weights have invalid shape.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">log_likelihood</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/pic/weighted_sum.html#WeightedSum.log_likelihood"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Compute log likelihood P(data | module).</p>
+<p>Uses logsumexp for numerical stability with the stored (non-normalized) weights.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Input data of shape (batch_size, num_features).</p></li>
+<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="../api/utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Cache for intermediate computations. Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Log-likelihood of shape (batch_size, num_features, out_channels, repetitions).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">marginalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">marg_rvs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prune</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/pic/weighted_sum.html#WeightedSum.marginalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Marginalize out specified random variables.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>marg_rvs</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]</span>) – List of random variables to marginalize.</p></li>
+<li><p><strong>prune</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether to prune the module.</p></li>
+<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="../api/utilities.html#spflow.utils.cache.Cache" title="spflow.utils.cache.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional cache dictionary.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">WeightedSum</span></code> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Marginalized WeightedSum module or None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">feature_to_scope</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a></span></dt>
+<dd><p>Mapping from output features to their respective scopes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>2D-array of scopes. Each row corresponds to an output feature,</dt><dd><p>each column to a repetition.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>np.ndarray[Scope]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">log_weights</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><span class="pre">Tensor</span></a></span></dt>
+<dd><p>Returns the log weights (log of raw weights).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Log of weights, no softmax applied.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">weights</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><span class="pre">Tensor</span></a></span></dt>
+<dd><p>Returns the raw (non-normalized) weights tensor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Weights as stored, without normalization.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="id2">
+<h2>Functional Sharing<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="spflow.zoo.pic.SharedMLP">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">spflow.zoo.pic.</span></span><span class="sig-name descname"><span class="pre">SharedMLP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hidden_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_layers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">activation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">SiLU()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fourier_scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/pic/functional_sharing.html#SharedMLP"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.pic.SharedMLP" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.pytorch.org/docs/stable/generated/torch.nn.Module.html#torch.nn.Module" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a></p>
+<p>Shared MLP backbone for functional sharing.</p>
+<p>Parameterizes the shared function f in functional sharing.
+Uses Fourier features followed by MLP layers with nonlinearity.</p>
+<p>From paper: φ^(γ) : R^I → R^M := φ_L ∘ … ∘ φ_1 ∘ FF</p>
+<dl class="field-list simple">
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spflow.zoo.pic.SharedMLP.fourier">
+<span class="sig-name descname"><span class="pre">fourier</span></span><a class="headerlink" href="#spflow.zoo.pic.SharedMLP.fourier" title="Link to this definition">¶</a></dt>
+<dd><p>FourierFeatures input encoding.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spflow.zoo.pic.SharedMLP.layers">
+<span class="sig-name descname"><span class="pre">layers</span></span><a class="headerlink" href="#spflow.zoo.pic.SharedMLP.layers" title="Link to this definition">¶</a></dt>
+<dd><p>Sequential MLP layers.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.zoo.pic.SharedMLP.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hidden_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_layers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">activation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">SiLU()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fourier_scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/pic/functional_sharing.html#SharedMLP.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.pic.SharedMLP.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Initialize SharedMLP.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_dim</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Dimension of input (e.g., latent variable dimension).</p></li>
+<li><p><strong>hidden_dim</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Dimension of hidden layers M.</p></li>
+<li><p><strong>num_layers</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Number of hidden layers L.</p></li>
+<li><p><strong>activation</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/generated/torch.nn.Module.html#torch.nn.Module" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a></span>) – Activation function ψ.</p></li>
+<li><p><strong>fourier_scale</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Scale for Fourier features.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.zoo.pic.SharedMLP.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/pic/functional_sharing.html#SharedMLP.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.pic.SharedMLP.forward" title="Link to this definition">¶</a></dt>
+<dd><p>Forward pass through shared MLP.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>x</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Input tensor of shape (…, input_dim).</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Hidden representation of shape (…, hidden_dim).</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="spflow.zoo.pic.MultiHeadedMLP">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">spflow.zoo.pic.</span></span><span class="sig-name descname"><span class="pre">MultiHeadedMLP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shared_mlp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_heads</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_activation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/pic/functional_sharing.html#MultiHeadedMLP"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.pic.MultiHeadedMLP" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.pytorch.org/docs/stable/generated/torch.nn.Module.html#torch.nn.Module" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a></p>
+<p>Multi-headed MLP for C-sharing (composite sharing).</p>
+<p>Shares a SharedMLP backbone across multiple functions, with separate
+output heads for each function. This enables efficient C-sharing where
+fi = hi ∘ f, sharing inner function f.</p>
+<p>From paper (neural C-sharing):
+fi : R^M → R := softplus(h^(i) · φ^(γ) + b^(i))</p>
+<dl class="field-list simple">
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spflow.zoo.pic.MultiHeadedMLP.shared">
+<span class="sig-name descname"><span class="pre">shared</span></span><a class="headerlink" href="#spflow.zoo.pic.MultiHeadedMLP.shared" title="Link to this definition">¶</a></dt>
+<dd><p>SharedMLP backbone.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spflow.zoo.pic.MultiHeadedMLP.heads">
+<span class="sig-name descname"><span class="pre">heads</span></span><a class="headerlink" href="#spflow.zoo.pic.MultiHeadedMLP.heads" title="Link to this definition">¶</a></dt>
+<dd><p>List of linear heads for each function.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.zoo.pic.MultiHeadedMLP.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shared_mlp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_heads</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_activation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/pic/functional_sharing.html#MultiHeadedMLP.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.pic.MultiHeadedMLP.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Initialize MultiHeadedMLP.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>shared_mlp</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#spflow.zoo.pic.SharedMLP" title="spflow.zoo.pic.functional_sharing.SharedMLP"><code class="xref py py-class docutils literal notranslate"><span class="pre">SharedMLP</span></code></a></span>) – Shared MLP backbone.</p></li>
+<li><p><strong>num_heads</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Number of output heads N.</p></li>
+<li><p><strong>output_activation</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.pytorch.org/docs/stable/generated/torch.nn.Module.html#torch.nn.Module" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a>]</span>) – Activation for outputs (default: softplus for positivity).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.zoo.pic.MultiHeadedMLP.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">head_idx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/pic/functional_sharing.html#MultiHeadedMLP.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.pic.MultiHeadedMLP.forward" title="Link to this definition">¶</a></dt>
+<dd><p>Forward pass through multi-headed MLP.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Input tensor of shape (…, input_dim).</p></li>
+<li><p><strong>head_idx</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]</span>) – Optional specific head index. If None, returns all heads.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Output of shape (…, 1).
+Otherwise: Output of shape (…, num_heads).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>If head_idx is specified</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="spflow.zoo.pic.FourierFeatures">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">spflow.zoo.pic.</span></span><span class="sig-name descname"><span class="pre">FourierFeatures</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_features</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_features</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/pic/functional_sharing.html#FourierFeatures"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.pic.FourierFeatures" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.pytorch.org/docs/stable/generated/torch.nn.Module.html#torch.nn.Module" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a></p>
+<p>Fourier feature encoding layer for positional encoding.</p>
+<p>Maps low-dimensional inputs to higher-dimensional features using
+random Fourier features, which helps MLPs learn high-frequency functions.</p>
+<p>From paper Eq. 5: FF : R^I → R^M</p>
+<dl class="field-list simple">
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spflow.zoo.pic.FourierFeatures.B">
+<span class="sig-name descname"><span class="pre">B</span></span><a class="headerlink" href="#spflow.zoo.pic.FourierFeatures.B" title="Link to this definition">¶</a></dt>
+<dd><p>Random frequency matrix (not trained).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spflow.zoo.pic.FourierFeatures.scale">
+<span class="sig-name descname"><span class="pre">scale</span></span><a class="headerlink" href="#spflow.zoo.pic.FourierFeatures.scale" title="Link to this definition">¶</a></dt>
+<dd><p>Frequency scaling factor.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.zoo.pic.FourierFeatures.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_features</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_features</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/pic/functional_sharing.html#FourierFeatures.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.pic.FourierFeatures.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Initialize FourierFeatures layer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>in_features</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Input dimension I.</p></li>
+<li><p><strong>out_features</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Output dimension M (half of final output due to sin/cos).</p></li>
+<li><p><strong>scale</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Scaling factor for frequencies.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.zoo.pic.FourierFeatures.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/pic/functional_sharing.html#FourierFeatures.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.pic.FourierFeatures.forward" title="Link to this definition">¶</a></dt>
+<dd><p>Apply Fourier feature encoding.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>x</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Input tensor of shape (…, in_features).</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tensor of shape (…, out_features * 2).</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="spflow.zoo.pic.FunctionGroup">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">spflow.zoo.pic.</span></span><span class="sig-name descname"><span class="pre">FunctionGroup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sharing_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'c'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hidden_dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">64</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_layers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/pic/functional_sharing.html#FunctionGroup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.pic.FunctionGroup" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.pytorch.org/docs/stable/generated/torch.nn.Module.html#torch.nn.Module" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a></p>
+<p>Container for grouping PIC units with functional sharing.</p>
+<p>Groups integral/input units that share the same MLP for efficient
+materialization.</p>
+<dl class="field-list simple">
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spflow.zoo.pic.FunctionGroup.sharing_type">
+<span class="sig-name descname"><span class="pre">sharing_type</span></span><a class="headerlink" href="#spflow.zoo.pic.FunctionGroup.sharing_type" title="Link to this definition">¶</a></dt>
+<dd><p>Type of sharing (“f” for F-sharing, “c” for C-sharing).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spflow.zoo.pic.FunctionGroup.units">
+<span class="sig-name descname"><span class="pre">units</span></span><a class="headerlink" href="#spflow.zoo.pic.FunctionGroup.units" title="Link to this definition">¶</a></dt>
+<dd><p>List of units in this group.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spflow.zoo.pic.FunctionGroup.mlp">
+<span class="sig-name descname"><span class="pre">mlp</span></span><a class="headerlink" href="#spflow.zoo.pic.FunctionGroup.mlp" title="Link to this definition">¶</a></dt>
+<dd><p>Shared MLP for this group.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.zoo.pic.FunctionGroup.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sharing_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'c'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hidden_dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">64</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_layers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/pic/functional_sharing.html#FunctionGroup.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.pic.FunctionGroup.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Initialize FunctionGroup.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sharing_type</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – “f” for F-sharing (all same), “c” for C-sharing (multi-headed).</p></li>
+<li><p><strong>input_dim</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Input dimension for MLP.</p></li>
+<li><p><strong>hidden_dim</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Hidden dimension for MLP.</p></li>
+<li><p><strong>num_layers</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Number of layers in MLP.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.zoo.pic.FunctionGroup.add_unit">
+<span class="sig-name descname"><span class="pre">add_unit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">unit</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/pic/functional_sharing.html#FunctionGroup.add_unit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.pic.FunctionGroup.add_unit" title="Link to this definition">¶</a></dt>
+<dd><p>Add a unit to this group.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>unit</strong> – PIC unit (Integral or input unit).</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Index of the unit in this group (for C-sharing head selection).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.zoo.pic.FunctionGroup.evaluate_batched">
+<span class="sig-name descname"><span class="pre">evaluate_batched</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/pic/functional_sharing.html#FunctionGroup.evaluate_batched"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.pic.FunctionGroup.evaluate_batched" title="Link to this definition">¶</a></dt>
+<dd><p>Evaluate all functions in the group in a single shared-backbone pass.</p>
+<p>This implements the C-sharing/F-sharing semantics from Sec. 3.3 of the paper:</p>
+<ul class="simple">
+<li><p>C-sharing: different heads over a shared backbone</p></li>
+<li><p>F-sharing: a single head shared across units</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>z</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Tensor with last dimension matching the z-input dimensionality.</p></li>
+<li><p><strong>y</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Tensor with last dimension matching the y-input dimensionality.
+<cite>z</cite> and <cite>y</cite> must be broadcastable to the same leading shape.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Tensor of shape (num_units, <a href="#id3"><span class="problematic" id="id4">*</span></a>leading_shape).
+If F-sharing: Tensor of shape (1, <a href="#id5"><span class="problematic" id="id6">*</span></a>leading_shape).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>If C-sharing</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.zoo.pic.FunctionGroup.finalize">
+<span class="sig-name descname"><span class="pre">finalize</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/pic/functional_sharing.html#FunctionGroup.finalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.pic.FunctionGroup.finalize" title="Link to this definition">¶</a></dt>
+<dd><p>Finalize the group after all units are added.</p>
+<p>Creates the multi-headed MLP for C-sharing.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.zoo.pic.FunctionGroup.get_function">
+<span class="sig-name descname"><span class="pre">get_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">unit_idx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/pic/functional_sharing.html#FunctionGroup.get_function"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.pic.FunctionGroup.get_function" title="Link to this definition">¶</a></dt>
+<dd><p>Get a callable function for a specific unit/head.</p>
+<p>The returned callable preserves broadcast shapes: for broadcastable <cite>z</cite> and <cite>y</cite>,
+it returns a tensor with the broadcasted leading shape.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>unit_idx</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Index of the unit in this group (only used for C-sharing).</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code></a>[[<a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>, <a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>], <a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Callable mapping <cite>(z, y)</cite> to a positive tensor.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="tensorized-qpc">
+<h2>Tensorized QPC<a class="headerlink" href="#tensorized-qpc" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="spflow.zoo.pic.TensorizedQPC">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">spflow.zoo.pic.</span></span><span class="sig-name descname"><span class="pre">TensorizedQPC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">rg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">quadrature_rule</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/pic/tensorized/qpc.html#TensorizedQPC"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.pic.TensorizedQPC" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>Folded tensorized QPC as a SPFlow <cite>Module</cite>.</p>
+<dl class="field-list simple">
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.zoo.pic.TensorizedQPC.from_region_graph">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">from_region_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rg</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">quadrature_rule</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/pic/tensorized/qpc.html#TensorizedQPC.from_region_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.pic.TensorizedQPC.from_region_graph" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#spflow.zoo.pic.TensorizedQPC" title="spflow.zoo.pic.tensorized.qpc.TensorizedQPC"><code class="xref py py-class docutils literal notranslate"><span class="pre">TensorizedQPC</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.zoo.pic.TensorizedQPC.log_likelihood">
+<span class="sig-name descname"><span class="pre">log_likelihood</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/pic/tensorized/qpc.html#TensorizedQPC.log_likelihood"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.pic.TensorizedQPC.log_likelihood" title="Link to this definition">¶</a></dt>
+<dd><p>Compute log likelihood P(data | module).</p>
+<p>Computes log probability of input data under this module’s distribution.
+Uses log-space for numerical stability. Results should be cached for efficiency.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code>) – Input data of shape (batch_size, num_features).
+NaN values indicate missing values to marginalize over.</p></li>
+<li><p><strong>cache</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span> <span class="pre">|</span> <span class="pre">None</span></code>, <em>optional</em>) – Cache for intermediate computations. Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Log-likelihood of shape (batch_size, out_features, out_channels).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tensor</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.14)"><strong>ValueError</strong></a> – If input data shape is incompatible with module scope.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.zoo.pic.TensorizedQPC.marginalize">
+<span class="sig-name descname"><span class="pre">marginalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">marg_rvs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prune</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/pic/tensorized/qpc.html#TensorizedQPC.marginalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.pic.TensorizedQPC.marginalize" title="Link to this definition">¶</a></dt>
+<dd><p>Structurally marginalize out specified random variables from the module.</p>
+<p>Computes a new module representing the marginal distribution by integrating out
+the specified variables from the structure. For data-level marginalization,
+use NaNs in <code class="docutils literal notranslate"><span class="pre">log_likelihood</span></code> inputs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>marg_rvs</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">list[int]</span></code>) – Random variable indices to marginalize out.</p></li>
+<li><p><strong>prune</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>optional</em>) – Whether to prune unnecessary modules during
+marginalization. Defaults to True.</p></li>
+<li><p><strong>cache</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span> <span class="pre">|</span> <span class="pre">None</span></code>, <em>optional</em>) – Cache for intermediate computations. Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Marginalized module, or None if all variables are marginalized out.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Module | None</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.14)"><strong>ValueError</strong></a> – If marginalization variables are not in the module’s scope.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.zoo.pic.TensorizedQPC.sample">
+<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_mpe</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/pic/tensorized/qpc.html#TensorizedQPC.sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.pic.TensorizedQPC.sample" title="Link to this definition">¶</a></dt>
+<dd><p>Generate samples from the module’s probability distribution.</p>
+<p>Supports both random sampling and MAP inference (via is_mpe flag).
+Handles conditional sampling through evidence in data tensor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>num_samples</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span> <span class="pre">|</span> <span class="pre">None</span></code>, <em>optional</em>) – Number of samples to generate. Defaults to 1.</p></li>
+<li><p><strong>data</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span> <span class="pre">|</span> <span class="pre">None</span></code>, <em>optional</em>) – Pre-allocated tensor with NaN values indicating
+where to sample. If None, creates new tensor. Defaults to None.</p></li>
+<li><p><strong>is_mpe</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>optional</em>) – If True, returns most probable values instead of
+random samples. Defaults to False.</p></li>
+<li><p><strong>cache</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span> <span class="pre">|</span> <span class="pre">None</span></code>, <em>optional</em>) – Cache for intermediate computations. Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Sampled values of shape (batch_size, num_features).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tensor</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.14)"><strong>ValueError</strong></a> – If sampling parameters are incompatible.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="spflow.zoo.pic.TensorizedQPC.feature_to_scope">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">feature_to_scope</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a></span><a class="headerlink" href="#spflow.zoo.pic.TensorizedQPC.feature_to_scope" title="Link to this definition">¶</a></dt>
+<dd><p>Mapping from output features to their respective scopes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>2D-array of scopes. Each row corresponds to an output feature,</dt><dd><p>each column to a repetition.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>np.ndarray[Scope]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="spflow.zoo.pic.TensorizedQPCConfig">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">spflow.zoo.pic.</span></span><span class="sig-name descname"><span class="pre">TensorizedQPCConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">leaf_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_categories</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">net_dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">64</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bias</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_sharing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'none'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inner_sharing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'none'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ff_dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">learn_ff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_chunks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer_cls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/pic/tensorized/qpc.html#TensorizedQPCConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.pic.TensorizedQPCConfig" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Configuration for folded tensorized QPC materialization.</p>
+<dl class="field-list simple">
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spflow.zoo.pic.TensorizedQPCConfig.bias">
+<span class="sig-name descname"><span class="pre">bias</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></span><a class="headerlink" href="#spflow.zoo.pic.TensorizedQPCConfig.bias" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spflow.zoo.pic.TensorizedQPCConfig.ff_dim">
+<span class="sig-name descname"><span class="pre">ff_dim</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#spflow.zoo.pic.TensorizedQPCConfig.ff_dim" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spflow.zoo.pic.TensorizedQPCConfig.inner_sharing">
+<span class="sig-name descname"><span class="pre">inner_sharing</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.14)"><span class="pre">Literal</span></a><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'none'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'f'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'c'</span></span><span class="p"><span class="pre">]</span></span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'none'</span></span><a class="headerlink" href="#spflow.zoo.pic.TensorizedQPCConfig.inner_sharing" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spflow.zoo.pic.TensorizedQPCConfig.input_sharing">
+<span class="sig-name descname"><span class="pre">input_sharing</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.14)"><span class="pre">Literal</span></a><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'none'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'f'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'c'</span></span><span class="p"><span class="pre">]</span></span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'none'</span></span><a class="headerlink" href="#spflow.zoo.pic.TensorizedQPCConfig.input_sharing" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spflow.zoo.pic.TensorizedQPCConfig.layer_cls">
+<span class="sig-name descname"><span class="pre">layer_cls</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.14)"><span class="pre">Literal</span></a><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'auto'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'tucker'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'cp'</span></span><span class="p"><span class="pre">]</span></span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'auto'</span></span><a class="headerlink" href="#spflow.zoo.pic.TensorizedQPCConfig.layer_cls" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spflow.zoo.pic.TensorizedQPCConfig.leaf_type">
+<span class="sig-name descname"><span class="pre">leaf_type</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.14)"><span class="pre">Literal</span></a><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'normal'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'bernoulli'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'categorical'</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#spflow.zoo.pic.TensorizedQPCConfig.leaf_type" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spflow.zoo.pic.TensorizedQPCConfig.learn_ff">
+<span class="sig-name descname"><span class="pre">learn_ff</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></span><a class="headerlink" href="#spflow.zoo.pic.TensorizedQPCConfig.learn_ff" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spflow.zoo.pic.TensorizedQPCConfig.n_chunks">
+<span class="sig-name descname"><span class="pre">n_chunks</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></span><a class="headerlink" href="#spflow.zoo.pic.TensorizedQPCConfig.n_chunks" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spflow.zoo.pic.TensorizedQPCConfig.net_dim">
+<span class="sig-name descname"><span class="pre">net_dim</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">64</span></span><a class="headerlink" href="#spflow.zoo.pic.TensorizedQPCConfig.net_dim" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spflow.zoo.pic.TensorizedQPCConfig.num_categories">
+<span class="sig-name descname"><span class="pre">num_categories</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#spflow.zoo.pic.TensorizedQPCConfig.num_categories" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spflow.zoo.pic.TensorizedQPCConfig.num_classes">
+<span class="sig-name descname"><span class="pre">num_classes</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></span><a class="headerlink" href="#spflow.zoo.pic.TensorizedQPCConfig.num_classes" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spflow.zoo.pic.TensorizedQPCConfig.sigma">
+<span class="sig-name descname"><span class="pre">sigma</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1.0</span></span><a class="headerlink" href="#spflow.zoo.pic.TensorizedQPCConfig.sigma" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="../guides/user_guide.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">User Guide</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="socs.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Sum of Compatible Squares (SOCS)</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2025, SPFlow Contributors
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Probabilistic Integral Circuits (PICs)</a><ul>
+<li><a class="reference internal" href="#reference">Reference</a></li>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#pipeline">Pipeline</a></li>
+<li><a class="reference internal" href="#merge-strategies">Merge Strategies</a></li>
+<li><a class="reference internal" href="#functional-sharing">Functional Sharing</a></li>
+<li><a class="reference internal" href="#tensorized-qpcs">Tensorized QPCs</a></li>
+<li><a class="reference internal" href="#minimal-example">Minimal Example</a></li>
+<li><a class="reference internal" href="#api-reference">API Reference</a></li>
+<li><a class="reference internal" href="#id1">Pipeline</a><ul>
+<li><a class="reference internal" href="#spflow.zoo.pic.rg2pic"><code class="docutils literal notranslate"><span class="pre">rg2pic()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.pic.pic2qpc"><code class="docutils literal notranslate"><span class="pre">pic2qpc()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.pic.MergeStrategy"><code class="docutils literal notranslate"><span class="pre">MergeStrategy</span></code></a><ul>
+<li><a class="reference internal" href="#spflow.zoo.pic.MergeStrategy.AUTO"><code class="docutils literal notranslate"><span class="pre">MergeStrategy.AUTO</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.pic.MergeStrategy.CP"><code class="docutils literal notranslate"><span class="pre">MergeStrategy.CP</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.pic.MergeStrategy.TUCKER"><code class="docutils literal notranslate"><span class="pre">MergeStrategy.TUCKER</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#spflow.zoo.pic.QuadratureRule"><code class="docutils literal notranslate"><span class="pre">QuadratureRule</span></code></a><ul>
+<li><a class="reference internal" href="#spflow.zoo.pic.QuadratureRule.points"><code class="docutils literal notranslate"><span class="pre">QuadratureRule.points</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.pic.QuadratureRule.weights"><code class="docutils literal notranslate"><span class="pre">QuadratureRule.weights</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#integral-and-sum-units">Integral and Sum Units</a><ul>
+<li><a class="reference internal" href="#spflow.zoo.pic.Integral"><code class="docutils literal notranslate"><span class="pre">Integral</span></code></a><ul>
+<li><a class="reference internal" href="#spflow.zoo.pic.Integral.inputs"><code class="docutils literal notranslate"><span class="pre">Integral.inputs</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.pic.Integral.latent_scope"><code class="docutils literal notranslate"><span class="pre">Integral.latent_scope</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.pic.Integral.integrated_latent_scope"><code class="docutils literal notranslate"><span class="pre">Integral.integrated_latent_scope</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.pic.Integral.function"><code class="docutils literal notranslate"><span class="pre">Integral.function</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.pic.Integral.__init__"><code class="docutils literal notranslate"><span class="pre">Integral.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.pic.Integral.log_likelihood"><code class="docutils literal notranslate"><span class="pre">Integral.log_likelihood()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.pic.Integral.marginalize"><code class="docutils literal notranslate"><span class="pre">Integral.marginalize()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.pic.Integral.sample"><code class="docutils literal notranslate"><span class="pre">Integral.sample()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.pic.Integral.feature_to_scope"><code class="docutils literal notranslate"><span class="pre">Integral.feature_to_scope</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#spflow.zoo.pic.PICSum"><code class="docutils literal notranslate"><span class="pre">PICSum</span></code></a><ul>
+<li><a class="reference internal" href="#spflow.zoo.pic.PICSum.log_likelihood"><code class="docutils literal notranslate"><span class="pre">PICSum.log_likelihood()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.pic.PICSum.marginalize"><code class="docutils literal notranslate"><span class="pre">PICSum.marginalize()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.pic.PICSum.sample"><code class="docutils literal notranslate"><span class="pre">PICSum.sample()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.pic.PICSum.feature_to_scope"><code class="docutils literal notranslate"><span class="pre">PICSum.feature_to_scope</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#spflow.zoo.pic.PICProduct"><code class="docutils literal notranslate"><span class="pre">PICProduct</span></code></a><ul>
+<li><a class="reference internal" href="#spflow.zoo.pic.PICProduct.log_likelihood"><code class="docutils literal notranslate"><span class="pre">PICProduct.log_likelihood()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.pic.PICProduct.marginalize"><code class="docutils literal notranslate"><span class="pre">PICProduct.marginalize()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.pic.PICProduct.sample"><code class="docutils literal notranslate"><span class="pre">PICProduct.sample()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.pic.PICProduct.feature_to_scope"><code class="docutils literal notranslate"><span class="pre">PICProduct.feature_to_scope</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id2">Functional Sharing</a><ul>
+<li><a class="reference internal" href="#spflow.zoo.pic.SharedMLP"><code class="docutils literal notranslate"><span class="pre">SharedMLP</span></code></a><ul>
+<li><a class="reference internal" href="#spflow.zoo.pic.SharedMLP.fourier"><code class="docutils literal notranslate"><span class="pre">SharedMLP.fourier</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.pic.SharedMLP.layers"><code class="docutils literal notranslate"><span class="pre">SharedMLP.layers</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.pic.SharedMLP.__init__"><code class="docutils literal notranslate"><span class="pre">SharedMLP.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.pic.SharedMLP.forward"><code class="docutils literal notranslate"><span class="pre">SharedMLP.forward()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#spflow.zoo.pic.MultiHeadedMLP"><code class="docutils literal notranslate"><span class="pre">MultiHeadedMLP</span></code></a><ul>
+<li><a class="reference internal" href="#spflow.zoo.pic.MultiHeadedMLP.shared"><code class="docutils literal notranslate"><span class="pre">MultiHeadedMLP.shared</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.pic.MultiHeadedMLP.heads"><code class="docutils literal notranslate"><span class="pre">MultiHeadedMLP.heads</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.pic.MultiHeadedMLP.__init__"><code class="docutils literal notranslate"><span class="pre">MultiHeadedMLP.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.pic.MultiHeadedMLP.forward"><code class="docutils literal notranslate"><span class="pre">MultiHeadedMLP.forward()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#spflow.zoo.pic.FourierFeatures"><code class="docutils literal notranslate"><span class="pre">FourierFeatures</span></code></a><ul>
+<li><a class="reference internal" href="#spflow.zoo.pic.FourierFeatures.B"><code class="docutils literal notranslate"><span class="pre">FourierFeatures.B</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.pic.FourierFeatures.scale"><code class="docutils literal notranslate"><span class="pre">FourierFeatures.scale</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.pic.FourierFeatures.__init__"><code class="docutils literal notranslate"><span class="pre">FourierFeatures.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.pic.FourierFeatures.forward"><code class="docutils literal notranslate"><span class="pre">FourierFeatures.forward()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#spflow.zoo.pic.FunctionGroup"><code class="docutils literal notranslate"><span class="pre">FunctionGroup</span></code></a><ul>
+<li><a class="reference internal" href="#spflow.zoo.pic.FunctionGroup.sharing_type"><code class="docutils literal notranslate"><span class="pre">FunctionGroup.sharing_type</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.pic.FunctionGroup.units"><code class="docutils literal notranslate"><span class="pre">FunctionGroup.units</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.pic.FunctionGroup.mlp"><code class="docutils literal notranslate"><span class="pre">FunctionGroup.mlp</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.pic.FunctionGroup.__init__"><code class="docutils literal notranslate"><span class="pre">FunctionGroup.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.pic.FunctionGroup.add_unit"><code class="docutils literal notranslate"><span class="pre">FunctionGroup.add_unit()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.pic.FunctionGroup.evaluate_batched"><code class="docutils literal notranslate"><span class="pre">FunctionGroup.evaluate_batched()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.pic.FunctionGroup.finalize"><code class="docutils literal notranslate"><span class="pre">FunctionGroup.finalize()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.pic.FunctionGroup.get_function"><code class="docutils literal notranslate"><span class="pre">FunctionGroup.get_function()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#tensorized-qpc">Tensorized QPC</a><ul>
+<li><a class="reference internal" href="#spflow.zoo.pic.TensorizedQPC"><code class="docutils literal notranslate"><span class="pre">TensorizedQPC</span></code></a><ul>
+<li><a class="reference internal" href="#spflow.zoo.pic.TensorizedQPC.from_region_graph"><code class="docutils literal notranslate"><span class="pre">TensorizedQPC.from_region_graph()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.pic.TensorizedQPC.log_likelihood"><code class="docutils literal notranslate"><span class="pre">TensorizedQPC.log_likelihood()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.pic.TensorizedQPC.marginalize"><code class="docutils literal notranslate"><span class="pre">TensorizedQPC.marginalize()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.pic.TensorizedQPC.sample"><code class="docutils literal notranslate"><span class="pre">TensorizedQPC.sample()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.pic.TensorizedQPC.feature_to_scope"><code class="docutils literal notranslate"><span class="pre">TensorizedQPC.feature_to_scope</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#spflow.zoo.pic.TensorizedQPCConfig"><code class="docutils literal notranslate"><span class="pre">TensorizedQPCConfig</span></code></a><ul>
+<li><a class="reference internal" href="#spflow.zoo.pic.TensorizedQPCConfig.bias"><code class="docutils literal notranslate"><span class="pre">TensorizedQPCConfig.bias</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.pic.TensorizedQPCConfig.ff_dim"><code class="docutils literal notranslate"><span class="pre">TensorizedQPCConfig.ff_dim</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.pic.TensorizedQPCConfig.inner_sharing"><code class="docutils literal notranslate"><span class="pre">TensorizedQPCConfig.inner_sharing</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.pic.TensorizedQPCConfig.input_sharing"><code class="docutils literal notranslate"><span class="pre">TensorizedQPCConfig.input_sharing</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.pic.TensorizedQPCConfig.layer_cls"><code class="docutils literal notranslate"><span class="pre">TensorizedQPCConfig.layer_cls</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.pic.TensorizedQPCConfig.leaf_type"><code class="docutils literal notranslate"><span class="pre">TensorizedQPCConfig.leaf_type</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.pic.TensorizedQPCConfig.learn_ff"><code class="docutils literal notranslate"><span class="pre">TensorizedQPCConfig.learn_ff</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.pic.TensorizedQPCConfig.n_chunks"><code class="docutils literal notranslate"><span class="pre">TensorizedQPCConfig.n_chunks</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.pic.TensorizedQPCConfig.net_dim"><code class="docutils literal notranslate"><span class="pre">TensorizedQPCConfig.net_dim</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.pic.TensorizedQPCConfig.num_categories"><code class="docutils literal notranslate"><span class="pre">TensorizedQPCConfig.num_categories</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.pic.TensorizedQPCConfig.num_classes"><code class="docutils literal notranslate"><span class="pre">TensorizedQPCConfig.num_classes</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.pic.TensorizedQPCConfig.sigma"><code class="docutils literal notranslate"><span class="pre">TensorizedQPCConfig.sigma</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/documentation_options.js?v=8d563738"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    </body>
+</html>

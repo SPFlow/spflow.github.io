@@ -3,9 +3,9 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Base Classes" href="base_modules.html"><link rel="prev" title="Developer Guide" href="../guides/dev_guide.html">
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Base Classes" href="base_modules.html"><link rel="prev" title="Using SPFlow with sklearn" href="../guides/sklearn.html">
 
-    <!-- Generated with Sphinx 8.2.3 and Furo 2025.12.19 -->
+    <!-- Generated with Sphinx 9.0.4 and Furo 2025.12.19 -->
         <title>API Documentation - SPFlow 1.0.0</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
@@ -197,24 +197,41 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <ul class="current">
+  <ul>
 <li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../concepts.html">Concepts</a></li>
+</ul>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../zoo/index.html">Paper Zoo</a><input aria-label="Toggle navigation of Paper Zoo" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../zoo/rat_spn.html">Random and Tensorized Sum-Product Networks (RAT-SPN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zoo/einet.html">Einsum Networks (Einet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zoo/hclt.html">Hidden Chow-Liu Trees (HCLT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zoo/conv_pc.html">Convolutional Probabilistic Circuits (ConvPc)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zoo/apc.html">Autoencoding Probabilistic Circuits (APC)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zoo/cms.html">Continuous Mixtures (CMs)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zoo/socs.html">Sum of Compatible Squares (SOCS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zoo/pic.html">Probabilistic Integral Circuits (PICs)</a></li>
+</ul>
+</li>
+</ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../guides/user_guide.html">User Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guides/dev_guide.html">Developer Guide</a></li>
-<li class="toctree-l1 current has-children current-page"><a class="current reference internal" href="#">API Documentation</a><input aria-label="Toggle navigation of API Documentation" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l1"><a class="reference internal" href="../guides/sklearn.html">Using SPFlow with sklearn</a></li>
+<li class="toctree-l1 current has-children current-page"><a class="current reference internal" href="#">API Documentation</a><input aria-label="Toggle navigation of API Documentation" checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="base_modules.html">Base Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html">Data Structures</a></li>
 <li class="toctree-l2"><a class="reference internal" href="module_shape.html">Module Shape</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dsl.html">DSL (Example Construction)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sums.html">Sum Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="products.html">Product Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="conv.html">Convolutional Modules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="einsum.html">Einsum Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="leaves.html">Leaf Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operations.html">Operations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="rat_spn.html">RAT-SPN Architecture</a></li>
 <li class="toctree-l2"><a class="reference internal" href="learning.html">Learning and Training</a></li>
 <li class="toctree-l2"><a class="reference internal" href="scope.html">Scope Management</a></li>
 <li class="toctree-l2"><a class="reference internal" href="utilities.html">Utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="measures.html">Measures</a></li>
 <li class="toctree-l2"><a class="reference internal" href="wrappers.html">Wrapper Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="interfaces.html">Interfaces</a></li>
 <li class="toctree-l2"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
@@ -269,13 +286,32 @@
 <li class="toctree-l2"><a class="reference internal" href="base_modules.html#leafmodule">LeafModule</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="data.html">Data Structures</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="data.html#intervalevidence">IntervalEvidence</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="module_shape.html">Module Shape</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="module_shape.html#moduleshape">ModuleShape</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dsl.html">DSL (Example Construction)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dsl.html#spflow.dsl.Buildable"><code class="docutils literal notranslate"><span class="pre">Buildable</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dsl.html#spflow.dsl.ProductExpr"><code class="docutils literal notranslate"><span class="pre">ProductExpr</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dsl.html#spflow.dsl.SumExpr"><code class="docutils literal notranslate"><span class="pre">SumExpr</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dsl.html#spflow.dsl.Term"><code class="docutils literal notranslate"><span class="pre">Term</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dsl.html#spflow.dsl.WeightedExpr"><code class="docutils literal notranslate"><span class="pre">WeightedExpr</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dsl.html#spflow.dsl.as_expr"><code class="docutils literal notranslate"><span class="pre">as_expr()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dsl.html#spflow.dsl.build"><code class="docutils literal notranslate"><span class="pre">build()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dsl.html#spflow.dsl.dsl"><code class="docutils literal notranslate"><span class="pre">dsl()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dsl.html#spflow.dsl.term"><code class="docutils literal notranslate"><span class="pre">term()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dsl.html#spflow.dsl.w"><code class="docutils literal notranslate"><span class="pre">w()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="sums.html">Sum Modules</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="sums.html#sum">Sum</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sums.html#elementwisesum">ElementwiseSum</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sums.html#repetitionmixinglayer">RepetitionMixingLayer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sums.html#signedsum">SignedSum</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="products.html">Product Modules</a><ul>
@@ -285,16 +321,8 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="conv.html">Convolutional Modules</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="conv.html#convpc">ConvPc</a></li>
 <li class="toctree-l2"><a class="reference internal" href="conv.html#sumconv">SumConv</a></li>
 <li class="toctree-l2"><a class="reference internal" href="conv.html#prodconv">ProdConv</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="einsum.html">Einsum Modules</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="einsum.html#einet">Einet</a></li>
-<li class="toctree-l2"><a class="reference internal" href="einsum.html#einsumlayer">EinsumLayer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="einsum.html#linsumlayer">LinsumLayer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="einsum.html#comparison">Comparison</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="leaves.html">Leaf Modules</a><ul>
@@ -312,15 +340,11 @@
 <li class="toctree-l2"><a class="reference internal" href="operations.html#splitbyindex">SplitByIndex</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="rat_spn.html">RAT-SPN Architecture</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="rat_spn.html#ratspn">RatSPN</a></li>
-<li class="toctree-l2"><a class="reference internal" href="rat_spn.html#repetitionmixinglayer">RepetitionMixingLayer</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="learning.html">Learning and Training</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="learning.html#structure-learning">Structure Learning</a></li>
 <li class="toctree-l2"><a class="reference internal" href="learning.html#parameter-learning-em">Parameter Learning: EM</a></li>
 <li class="toctree-l2"><a class="reference internal" href="learning.html#parameter-learning-gradient-descent">Parameter Learning: Gradient Descent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="learning.html#socs-builder">SOCS Builder</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="scope.html">Scope Management</a><ul>
@@ -331,17 +355,25 @@
 <li class="toctree-l2"><a class="reference internal" href="utilities.html#visualization">Visualization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="utilities.html#model-i-o">Model I/O</a></li>
 <li class="toctree-l2"><a class="reference internal" href="utilities.html#cache">Cache</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utilities.html#rqmc">RQMC</a></li>
 <li class="toctree-l2"><a class="reference internal" href="utilities.html#method-replacement">Method Replacement</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="measures.html">Measures</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="measures.html#information-theory">Information Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="measures.html#weight-of-evidence">Weight of Evidence</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="wrappers.html">Wrapper Modules</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="wrappers.html#wrapper-base-class">Wrapper (Base Class)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="wrappers.html#imagewrapper">ImageWrapper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wrappers.html#jointloglikelihood">JointLogLikelihood</a></li>
 <li class="toctree-l2"><a class="reference internal" href="wrappers.html#marginalizationcontext">MarginalizationContext</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="interfaces.html">Interfaces</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="interfaces.html#classifier">Classifier</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interfaces.html#sklearn-wrappers">sklearn Wrappers</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="exceptions.html">Exceptions</a><ul>
@@ -370,14 +402,14 @@
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="../guides/dev_guide.html">
+          <a class="prev-page" href="../guides/sklearn.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Developer Guide</div>
+                <div class="title">Using SPFlow with sklearn</div>
                 
               </div>
             </a>
@@ -406,8 +438,8 @@
     </aside>
   </div>
 </div><script src="../_static/documentation_options.js?v=8d563738"></script>
-    <script src="../_static/doctools.js?v=9bcbadda"></script>
-    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>

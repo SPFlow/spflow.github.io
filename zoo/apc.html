@@ -1,0 +1,1001 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Continuous Mixtures (CMs)" href="cms.html"><link rel="prev" title="Convolutional Probabilistic Circuits (ConvPc)" href="conv_pc.html">
+
+    <!-- Generated with Sphinx 9.0.4 and Furo 2025.12.19 -->
+        <title>Autoencoding Probabilistic Circuits (APC) - SPFlow 1.0.0</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  --color-brand-primary: #0066cc;
+  --color-brand-content: #0066cc;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #4da6ff;
+  --color-brand-content: #4da6ff;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #4da6ff;
+  --color-brand-content: #4da6ff;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">SPFlow 1.0.0</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  <span class="sidebar-brand-text">SPFlow 1.0.0</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts.html">Concepts</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Paper Zoo</a><input aria-label="Toggle navigation of Paper Zoo" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="rat_spn.html">Random and Tensorized Sum-Product Networks (RAT-SPN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="einet.html">Einsum Networks (Einet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hclt.html">Hidden Chow-Liu Trees (HCLT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="conv_pc.html">Convolutional Probabilistic Circuits (ConvPc)</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Autoencoding Probabilistic Circuits (APC)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cms.html">Continuous Mixtures (CMs)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="socs.html">Sum of Compatible Squares (SOCS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pic.html">Probabilistic Integral Circuits (PICs)</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../guides/user_guide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/dev_guide.html">Developer Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/sklearn.html">Using SPFlow with sklearn</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../api/index.html">API Documentation</a><input aria-label="Toggle navigation of API Documentation" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../api/base_modules.html">Base Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/data.html">Data Structures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/module_shape.html">Module Shape</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/dsl.html">DSL (Example Construction)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/sums.html">Sum Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/products.html">Product Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/conv.html">Convolutional Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/leaves.html">Leaf Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/operations.html">Operations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/learning.html">Learning and Training</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/scope.html">Scope Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/utilities.html">Utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/measures.html">Measures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/wrappers.html">Wrapper Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/interfaces.html">Interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/exceptions.html">Exceptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently Asked Questions</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../_sources/zoo/apc.rst.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="autoencoding-probabilistic-circuits-apc">
+<h1>Autoencoding Probabilistic Circuits (APC)<a class="headerlink" href="#autoencoding-probabilistic-circuits-apc" title="Link to this heading">¶</a></h1>
+<p>APC combines a tractable probabilistic-circuit encoder over joint variables <span class="math notranslate nohighlight">\((X, Z)\)</span> with a pluggable decoder and trains with a hybrid objective:</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\mathcal{L} = \lambda_{rec}\mathcal{L}_{rec} + \lambda_{kld}\mathcal{L}_{kld} + \lambda_{nll}\mathcal{L}_{nll}\]</div>
+</div>
+<section id="reference">
+<h2>Reference<a class="headerlink" href="#reference" title="Link to this heading">¶</a></h2>
+<p>APC is described in:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://arxiv.org/abs/2502.05554">Autoencoding Probabilistic Circuits (ICLR 2025)</a></p></li>
+</ul>
+</section>
+<section id="status-note">
+<h2>Status Note<a class="headerlink" href="#status-note" title="Link to this heading">¶</a></h2>
+<p>APC inference APIs remain available (encode/decode/sampling/likelihood). Latent-stat extraction and KL-style
+training helpers are currently unsupported.</p>
+</section>
+<section id="main-components">
+<h2>Main Components<a class="headerlink" href="#main-components" title="Link to this heading">¶</a></h2>
+<section id="configuration">
+<h3>Configuration<a class="headerlink" href="#configuration" title="Link to this heading">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="spflow.zoo.apc.config.ApcConfig">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">spflow.zoo.apc.config.</span></span><span class="sig-name descname"><span class="pre">ApcConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">latent_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rec_loss</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'mse'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_bits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_tau</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loss_weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/apc/config.html#ApcConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.apc.config.ApcConfig" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Core APC model configuration.</p>
+<dl class="field-list simple">
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spflow.zoo.apc.config.ApcConfig.latent_dim">
+<span class="sig-name descname"><span class="pre">latent_dim</span></span><a class="headerlink" href="#spflow.zoo.apc.config.ApcConfig.latent_dim" title="Link to this definition">¶</a></dt>
+<dd><p>Dimensionality of the latent variable block <code class="docutils literal notranslate"><span class="pre">Z</span></code>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spflow.zoo.apc.config.ApcConfig.rec_loss">
+<span class="sig-name descname"><span class="pre">rec_loss</span></span><a class="headerlink" href="#spflow.zoo.apc.config.ApcConfig.rec_loss" title="Link to this definition">¶</a></dt>
+<dd><p>Reconstruction criterion used by <code class="xref py py-class docutils literal notranslate"><span class="pre">AutoencodingPC</span></code>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spflow.zoo.apc.config.ApcConfig.n_bits">
+<span class="sig-name descname"><span class="pre">n_bits</span></span><a class="headerlink" href="#spflow.zoo.apc.config.ApcConfig.n_bits" title="Link to this definition">¶</a></dt>
+<dd><p>Bit-depth used by reference-style image reconstruction scaling.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spflow.zoo.apc.config.ApcConfig.sample_tau">
+<span class="sig-name descname"><span class="pre">sample_tau</span></span><a class="headerlink" href="#spflow.zoo.apc.config.ApcConfig.sample_tau" title="Link to this definition">¶</a></dt>
+<dd><p>Temperature for differentiable sampling (SIMPLE/Gumbel style paths).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spflow.zoo.apc.config.ApcConfig.loss_weights">
+<span class="sig-name descname"><span class="pre">loss_weights</span></span><a class="headerlink" href="#spflow.zoo.apc.config.ApcConfig.loss_weights" title="Link to this definition">¶</a></dt>
+<dd><p>Weights for <code class="docutils literal notranslate"><span class="pre">rec</span></code>, <code class="docutils literal notranslate"><span class="pre">kld</span></code>, and <code class="docutils literal notranslate"><span class="pre">nll</span></code> objective terms.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">latent_dim</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#id0" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">loss_weights</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#spflow.zoo.apc.config.ApcLossWeights" title="spflow.zoo.apc.config.ApcLossWeights"><span class="pre">ApcLossWeights</span></a></span><a class="headerlink" href="#id1" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">n_bits</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">8</span></span><a class="headerlink" href="#id2" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">rec_loss</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.14)"><span class="pre">Literal</span></a><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'mse'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'bce'</span></span><span class="p"><span class="pre">]</span></span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'mse'</span></span><a class="headerlink" href="#id3" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id4">
+<span class="sig-name descname"><span class="pre">sample_tau</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1.0</span></span><a class="headerlink" href="#id4" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="spflow.zoo.apc.config.ApcLossWeights">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">spflow.zoo.apc.config.</span></span><span class="sig-name descname"><span class="pre">ApcLossWeights</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rec</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kld</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nll</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/apc/config.html#ApcLossWeights"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.apc.config.ApcLossWeights" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Weights for the APC training objective terms.</p>
+<dl class="field-list simple">
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spflow.zoo.apc.config.ApcLossWeights.rec">
+<span class="sig-name descname"><span class="pre">rec</span></span><a class="headerlink" href="#spflow.zoo.apc.config.ApcLossWeights.rec" title="Link to this definition">¶</a></dt>
+<dd><p>Weight for the reconstruction loss.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spflow.zoo.apc.config.ApcLossWeights.kld">
+<span class="sig-name descname"><span class="pre">kld</span></span><a class="headerlink" href="#spflow.zoo.apc.config.ApcLossWeights.kld" title="Link to this definition">¶</a></dt>
+<dd><p>Weight for the latent KL term.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spflow.zoo.apc.config.ApcLossWeights.nll">
+<span class="sig-name descname"><span class="pre">nll</span></span><a class="headerlink" href="#spflow.zoo.apc.config.ApcLossWeights.nll" title="Link to this definition">¶</a></dt>
+<dd><p>Weight for the joint negative log-likelihood term.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id5">
+<span class="sig-name descname"><span class="pre">kld</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1.0</span></span><a class="headerlink" href="#id5" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id6">
+<span class="sig-name descname"><span class="pre">nll</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1.0</span></span><a class="headerlink" href="#id6" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id7">
+<span class="sig-name descname"><span class="pre">rec</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1.0</span></span><a class="headerlink" href="#id7" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="spflow.zoo.apc.config.ApcTrainConfig">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">spflow.zoo.apc.config.</span></span><span class="sig-name descname"><span class="pre">ApcTrainConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">epochs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">64</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">learning_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight_decay</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grad_clip_norm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/apc/config.html#ApcTrainConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.apc.config.ApcTrainConfig" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Configuration for lightweight APC trainer helpers.</p>
+<dl class="field-list simple">
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spflow.zoo.apc.config.ApcTrainConfig.epochs">
+<span class="sig-name descname"><span class="pre">epochs</span></span><a class="headerlink" href="#spflow.zoo.apc.config.ApcTrainConfig.epochs" title="Link to this definition">¶</a></dt>
+<dd><p>Number of training epochs.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spflow.zoo.apc.config.ApcTrainConfig.batch_size">
+<span class="sig-name descname"><span class="pre">batch_size</span></span><a class="headerlink" href="#spflow.zoo.apc.config.ApcTrainConfig.batch_size" title="Link to this definition">¶</a></dt>
+<dd><p>Batch size used for tensor-backed training/evaluation inputs.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spflow.zoo.apc.config.ApcTrainConfig.learning_rate">
+<span class="sig-name descname"><span class="pre">learning_rate</span></span><a class="headerlink" href="#spflow.zoo.apc.config.ApcTrainConfig.learning_rate" title="Link to this definition">¶</a></dt>
+<dd><p>Optimizer learning rate when an optimizer is not provided.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spflow.zoo.apc.config.ApcTrainConfig.weight_decay">
+<span class="sig-name descname"><span class="pre">weight_decay</span></span><a class="headerlink" href="#spflow.zoo.apc.config.ApcTrainConfig.weight_decay" title="Link to this definition">¶</a></dt>
+<dd><p>Adam weight decay when an optimizer is not provided.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spflow.zoo.apc.config.ApcTrainConfig.grad_clip_norm">
+<span class="sig-name descname"><span class="pre">grad_clip_norm</span></span><a class="headerlink" href="#spflow.zoo.apc.config.ApcTrainConfig.grad_clip_norm" title="Link to this definition">¶</a></dt>
+<dd><p>Optional gradient clipping threshold (L2 norm).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id8">
+<span class="sig-name descname"><span class="pre">batch_size</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">64</span></span><a class="headerlink" href="#id8" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id9">
+<span class="sig-name descname"><span class="pre">epochs</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></span><a class="headerlink" href="#id9" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id10">
+<span class="sig-name descname"><span class="pre">grad_clip_norm</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id10" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id11">
+<span class="sig-name descname"><span class="pre">learning_rate</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.001</span></span><a class="headerlink" href="#id11" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id12">
+<span class="sig-name descname"><span class="pre">weight_decay</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0</span></span><a class="headerlink" href="#id12" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="model">
+<h3>Model<a class="headerlink" href="#model" title="Link to this heading">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="spflow.zoo.apc.model.AutoencodingPC">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">spflow.zoo.apc.model.</span></span><span class="sig-name descname"><span class="pre">AutoencodingPC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">encoder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decoder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/apc/model.html#AutoencodingPC"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.apc.model.AutoencodingPC" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.pytorch.org/docs/stable/generated/torch.nn.Module.html#torch.nn.Module" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a></p>
+<p>APC model combining a tractable encoder and an optional decoder.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">decoder</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code>, decoding is delegated to the encoder’s
+evidence-conditioned <code class="docutils literal notranslate"><span class="pre">decode</span></code> method.</p>
+<dl class="field-list simple">
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.zoo.apc.model.AutoencodingPC.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">encoder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decoder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/apc/model.html#AutoencodingPC.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.apc.model.AutoencodingPC.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Initialize an APC model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>encoder</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">ApcEncoder</span></code></span>) – APC-compatible encoder implementation.</p></li>
+<li><p><strong>decoder</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/generated/torch.nn.Module.html#torch.nn.Module" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional neural decoder mapping <code class="docutils literal notranslate"><span class="pre">z</span> <span class="pre">-&gt;</span> <span class="pre">x</span></code>.</p></li>
+<li><p><strong>config</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#spflow.zoo.apc.config.ApcConfig" title="spflow.zoo.apc.config.ApcConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">ApcConfig</span></code></a></span>) – APC model and loss configuration.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.zoo.apc.model.AutoencodingPC.decode">
+<span class="sig-name descname"><span class="pre">decode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">mpe</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/apc/model.html#AutoencodingPC.decode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.apc.model.AutoencodingPC.decode" title="Link to this definition">¶</a></dt>
+<dd><p>Decode latents into reconstructions/samples in data space.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>z</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Latent samples.</p></li>
+<li><p><strong>mpe</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether to use deterministic MPE routing when using encoder decode.</p></li>
+<li><p><strong>tau</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional sampling temperature override.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Reconstructed/sample <code class="docutils literal notranslate"><span class="pre">x</span></code> tensor.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.zoo.apc.model.AutoencodingPC.encode">
+<span class="sig-name descname"><span class="pre">encode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">mpe</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/apc/model.html#AutoencodingPC.encode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.apc.model.AutoencodingPC.encode" title="Link to this definition">¶</a></dt>
+<dd><p>Encode observed data into latent samples.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Observation tensor.</p></li>
+<li><p><strong>mpe</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether to use deterministic MPE routing.</p></li>
+<li><p><strong>tau</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional sampling temperature override.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Latent samples <code class="docutils literal notranslate"><span class="pre">z</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.zoo.apc.model.AutoencodingPC.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/apc/model.html#AutoencodingPC.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.apc.model.AutoencodingPC.forward" title="Link to this definition">¶</a></dt>
+<dd><p>Alias for <a class="reference internal" href="#spflow.zoo.apc.model.AutoencodingPC.loss_components" title="spflow.zoo.apc.model.AutoencodingPC.loss_components"><code class="xref py py-meth docutils literal notranslate"><span class="pre">loss_components()</span></code></a> to integrate with training loops.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.zoo.apc.model.AutoencodingPC.joint_log_likelihood">
+<span class="sig-name descname"><span class="pre">joint_log_likelihood</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/apc/model.html#AutoencodingPC.joint_log_likelihood"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.apc.model.AutoencodingPC.joint_log_likelihood" title="Link to this definition">¶</a></dt>
+<dd><p>Compute encoder joint log-likelihood <code class="docutils literal notranslate"><span class="pre">log</span> <span class="pre">p(x,</span> <span class="pre">z)</span></code> per sample.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.zoo.apc.model.AutoencodingPC.log_likelihood_x">
+<span class="sig-name descname"><span class="pre">log_likelihood_x</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/apc/model.html#AutoencodingPC.log_likelihood_x"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.apc.model.AutoencodingPC.log_likelihood_x" title="Link to this definition">¶</a></dt>
+<dd><p>Compute encoder marginal log-likelihood <code class="docutils literal notranslate"><span class="pre">log</span> <span class="pre">p(x)</span></code> per sample.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.zoo.apc.model.AutoencodingPC.loss">
+<span class="sig-name descname"><span class="pre">loss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/apc/model.html#AutoencodingPC.loss"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.apc.model.AutoencodingPC.loss" title="Link to this definition">¶</a></dt>
+<dd><p>Return only the weighted total APC loss.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.zoo.apc.model.AutoencodingPC.loss_components">
+<span class="sig-name descname"><span class="pre">loss_components</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/apc/model.html#AutoencodingPC.loss_components"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.apc.model.AutoencodingPC.loss_components" title="Link to this definition">¶</a></dt>
+<dd><p>Compute APC loss components and intermediate tensors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>x</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Observation tensor.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dictionary with scalar terms <code class="docutils literal notranslate"><span class="pre">rec</span></code>, <code class="docutils literal notranslate"><span class="pre">kld</span></code>, <code class="docutils literal notranslate"><span class="pre">nll</span></code>, <code class="docutils literal notranslate"><span class="pre">total</span></code>
+and helpful intermediates <code class="docutils literal notranslate"><span class="pre">z</span></code>, <code class="docutils literal notranslate"><span class="pre">x_rec</span></code>, <code class="docutils literal notranslate"><span class="pre">mu</span></code>, <code class="docutils literal notranslate"><span class="pre">logvar</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.zoo.apc.model.AutoencodingPC.reconstruct">
+<span class="sig-name descname"><span class="pre">reconstruct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">mpe</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/apc/model.html#AutoencodingPC.reconstruct"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.apc.model.AutoencodingPC.reconstruct" title="Link to this definition">¶</a></dt>
+<dd><p>Reconstruct <code class="docutils literal notranslate"><span class="pre">x</span></code> by encoding to <code class="docutils literal notranslate"><span class="pre">z</span></code> and decoding back to data space.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.zoo.apc.model.AutoencodingPC.sample_x">
+<span class="sig-name descname"><span class="pre">sample_x</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_samples</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/apc/model.html#AutoencodingPC.sample_x"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.apc.model.AutoencodingPC.sample_x" title="Link to this definition">¶</a></dt>
+<dd><p>Sample synthetic observations by sampling <code class="docutils literal notranslate"><span class="pre">z</span></code> and decoding.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.zoo.apc.model.AutoencodingPC.sample_z">
+<span class="sig-name descname"><span class="pre">sample_z</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_samples</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/apc/model.html#AutoencodingPC.sample_z"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.apc.model.AutoencodingPC.sample_z" title="Link to this definition">¶</a></dt>
+<dd><p>Sample latents from the encoder prior.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="decoders">
+<h3>Decoders<a class="headerlink" href="#decoders" title="Link to this heading">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="spflow.zoo.apc.decoders.MLPDecoder1D">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">spflow.zoo.apc.decoders.</span></span><span class="sig-name descname"><span class="pre">MLPDecoder1D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">latent_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hidden_dims</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(256,</span> <span class="pre">256)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_activation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'identity'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/apc/decoders.html#MLPDecoder1D"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.apc.decoders.MLPDecoder1D" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.pytorch.org/docs/stable/generated/torch.nn.Module.html#torch.nn.Module" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a></p>
+<p>MLP decoder mapping latent vectors to flat feature vectors.</p>
+<p>The module expects latent input shaped <code class="docutils literal notranslate"><span class="pre">(B,</span> <span class="pre">latent_dim)</span></code> (or reshape-compatible)
+and returns reconstructed vectors shaped <code class="docutils literal notranslate"><span class="pre">(B,</span> <span class="pre">output_dim)</span></code>.</p>
+<dl class="field-list simple">
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.zoo.apc.decoders.MLPDecoder1D.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">latent_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hidden_dims</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(256,</span> <span class="pre">256)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_activation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'identity'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/apc/decoders.html#MLPDecoder1D.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.apc.decoders.MLPDecoder1D.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Initialize an MLP decoder for 1D/tabular reconstructions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>latent_dim</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Size of the latent representation.</p></li>
+<li><p><strong>output_dim</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Number of output reconstruction features.</p></li>
+<li><p><strong>hidden_dims</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/constants.html#Ellipsis" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">...</span></code></a>]</span>) – Width of hidden layers.</p></li>
+<li><p><strong>out_activation</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Literal</span></code></a>[<code class="docutils literal notranslate"><span class="pre">'identity'</span></code>, <code class="docutils literal notranslate"><span class="pre">'tanh'</span></code>, <code class="docutils literal notranslate"><span class="pre">'sigmoid'</span></code>]</span>) – Final output activation.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.zoo.apc.decoders.MLPDecoder1D.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/apc/decoders.html#MLPDecoder1D.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.apc.decoders.MLPDecoder1D.forward" title="Link to this definition">¶</a></dt>
+<dd><p>Decode latent vectors into reconstruction vectors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>z</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Latent tensor of shape <code class="docutils literal notranslate"><span class="pre">(B,</span> <span class="pre">latent_dim)</span></code> (or reshape-compatible).</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tensor of shape <code class="docutils literal notranslate"><span class="pre">(B,</span> <span class="pre">output_dim)</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="spflow.zoo.apc.decoders.ConvDecoder2D">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">spflow.zoo.apc.decoders.</span></span><span class="sig-name descname"><span class="pre">ConvDecoder2D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">latent_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_shape</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_channels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">128</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_upsamples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_activation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'identity'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/apc/decoders.html#ConvDecoder2D"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.apc.decoders.ConvDecoder2D" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.pytorch.org/docs/stable/generated/torch.nn.Module.html#torch.nn.Module" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a></p>
+<p>Convolutional decoder mapping latent vectors to image-shaped outputs.</p>
+<p>The decoder projects <code class="docutils literal notranslate"><span class="pre">z</span></code> to a coarse feature map, upsamples through small
+convolutional blocks, and resizes to the exact configured output image size.</p>
+<dl class="field-list simple">
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.zoo.apc.decoders.ConvDecoder2D.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">latent_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_shape</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_channels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">128</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_upsamples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_activation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'identity'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/apc/decoders.html#ConvDecoder2D.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.apc.decoders.ConvDecoder2D.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Initialize a convolutional image decoder.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>latent_dim</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Size of the latent representation.</p></li>
+<li><p><strong>output_shape</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]</span>) – Target output shape <code class="docutils literal notranslate"><span class="pre">(channels,</span> <span class="pre">height,</span> <span class="pre">width)</span></code>.</p></li>
+<li><p><strong>base_channels</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Initial projected channel count.</p></li>
+<li><p><strong>num_upsamples</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Number of nearest-neighbor upsampling blocks.</p></li>
+<li><p><strong>out_activation</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Literal</span></code></a>[<code class="docutils literal notranslate"><span class="pre">'identity'</span></code>, <code class="docutils literal notranslate"><span class="pre">'tanh'</span></code>, <code class="docutils literal notranslate"><span class="pre">'sigmoid'</span></code>]</span>) – Final output activation.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.zoo.apc.decoders.ConvDecoder2D.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/apc/decoders.html#ConvDecoder2D.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.apc.decoders.ConvDecoder2D.forward" title="Link to this definition">¶</a></dt>
+<dd><p>Decode latent vectors into image-shaped reconstructions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>z</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Latent tensor of shape <code class="docutils literal notranslate"><span class="pre">(B,</span> <span class="pre">latent_dim)</span></code> (or reshape-compatible).</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tensor of shape <code class="docutils literal notranslate"><span class="pre">(B,</span> <span class="pre">C,</span> <span class="pre">H,</span> <span class="pre">W)</span></code> matching <code class="docutils literal notranslate"><span class="pre">output_shape</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="trainer-helpers">
+<h3>Trainer Helpers<a class="headerlink" href="#trainer-helpers" title="Link to this heading">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="spflow.zoo.apc.train.train_apc_step">
+<span class="sig-prename descclassname"><span class="pre">spflow.zoo.apc.train.</span></span><span class="sig-name descname"><span class="pre">train_apc_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimizer</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">grad_clip_norm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/apc/train.html#train_apc_step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.apc.train.train_apc_step" title="Link to this definition">¶</a></dt>
+<dd><p>Run a single APC optimization step.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#spflow.zoo.apc.model.AutoencodingPC" title="spflow.zoo.apc.model.AutoencodingPC"><code class="xref py py-class docutils literal notranslate"><span class="pre">AutoencodingPC</span></code></a></span>) – APC model to optimize.</p></li>
+<li><p><strong>batch</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a></span>) – Input batch (tensor or tuple/list with tensor in index 0).</p></li>
+<li><p><strong>optimizer</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/optim.html#torch.optim.Optimizer" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Optimizer</span></code></a></span>) – Optimizer instance.</p></li>
+<li><p><strong>grad_clip_norm</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional gradient clipping threshold.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Detached tensor metrics produced by <code class="docutils literal notranslate"><span class="pre">model.loss_components</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="spflow.zoo.apc.train.evaluate_apc">
+<span class="sig-prename descclassname"><span class="pre">spflow.zoo.apc.train.</span></span><span class="sig-name descname"><span class="pre">evaluate_apc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">256</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/apc/train.html#evaluate_apc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.apc.train.evaluate_apc" title="Link to this definition">¶</a></dt>
+<dd><p>Evaluate mean APC losses on a dataset/iterator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#spflow.zoo.apc.model.AutoencodingPC" title="spflow.zoo.apc.model.AutoencodingPC"><code class="xref py py-class docutils literal notranslate"><span class="pre">AutoencodingPC</span></code></a></span>) – APC model to evaluate.</p></li>
+<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterable</span></code></a></span>) – Tensor dataset or iterable of batches.</p></li>
+<li><p><strong>batch_size</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Loader batch size when <code class="docutils literal notranslate"><span class="pre">data</span></code> is a tensor.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Mean <code class="docutils literal notranslate"><span class="pre">rec</span></code>, <code class="docutils literal notranslate"><span class="pre">kld</span></code>, <code class="docutils literal notranslate"><span class="pre">nll</span></code>, and <code class="docutils literal notranslate"><span class="pre">total</span></code> metrics.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="spflow.zoo.apc.train.fit_apc">
+<span class="sig-prename descclassname"><span class="pre">spflow.zoo.apc.train.</span></span><span class="sig-name descname"><span class="pre">fit_apc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_data</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimizer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/apc/train.html#fit_apc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.apc.train.fit_apc" title="Link to this definition">¶</a></dt>
+<dd><p>Fit an APC model and return epoch-level metrics.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#spflow.zoo.apc.model.AutoencodingPC" title="spflow.zoo.apc.model.AutoencodingPC"><code class="xref py py-class docutils literal notranslate"><span class="pre">AutoencodingPC</span></code></a></span>) – APC model to train.</p></li>
+<li><p><strong>train_data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterable</span></code></a></span>) – Tensor dataset or iterable of batches.</p></li>
+<li><p><strong>config</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#spflow.zoo.apc.config.ApcTrainConfig" title="spflow.zoo.apc.config.ApcTrainConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">ApcTrainConfig</span></code></a></span>) – Training hyperparameters.</p></li>
+<li><p><strong>optimizer</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/optim.html#torch.optim.Optimizer" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Optimizer</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional optimizer override. Defaults to Adam.</p></li>
+<li><p><strong>val_data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterable</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Optional validation data source.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Per-epoch metric dictionaries including train metrics and, when provided,
+validation metrics.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+<section id="minimal-example-einet-apc">
+<h2>Minimal Example (Einet APC)<a class="headerlink" href="#minimal-example-einet-apc" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.zoo.apc.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">ApcConfig</span><span class="p">,</span> <span class="n">ApcLossWeights</span><span class="p">,</span> <span class="n">ApcTrainConfig</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.zoo.apc.decoders</span><span class="w"> </span><span class="kn">import</span> <span class="n">MLPDecoder1D</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.zoo.apc.encoders.einet_joint_encoder</span><span class="w"> </span><span class="kn">import</span> <span class="n">EinetJointEncoder</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.zoo.apc.model</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoencodingPC</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.zoo.apc.train</span><span class="w"> </span><span class="kn">import</span> <span class="n">fit_apc</span>
+
+<span class="n">encoder</span> <span class="o">=</span> <span class="n">EinetJointEncoder</span><span class="p">(</span>
+    <span class="n">num_x_features</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span>
+    <span class="n">latent_dim</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+    <span class="n">num_sums</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+    <span class="n">num_leaves</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+    <span class="n">depth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+    <span class="n">num_repetitions</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">layer_type</span><span class="o">=</span><span class="s2">&quot;linsum&quot;</span><span class="p">,</span>
+    <span class="n">structure</span><span class="o">=</span><span class="s2">&quot;top-down&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">decoder</span> <span class="o">=</span> <span class="n">MLPDecoder1D</span><span class="p">(</span><span class="n">latent_dim</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">output_dim</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">hidden_dims</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">))</span>
+
+<span class="n">cfg</span> <span class="o">=</span> <span class="n">ApcConfig</span><span class="p">(</span>
+    <span class="n">latent_dim</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+    <span class="n">rec_loss</span><span class="o">=</span><span class="s2">&quot;mse&quot;</span><span class="p">,</span>
+    <span class="n">sample_tau</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">loss_weights</span><span class="o">=</span><span class="n">ApcLossWeights</span><span class="p">(</span><span class="n">rec</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">kld</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">nll</span><span class="o">=</span><span class="mf">1.0</span><span class="p">),</span>
+<span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">AutoencodingPC</span><span class="p">(</span><span class="n">encoder</span><span class="o">=</span><span class="n">encoder</span><span class="p">,</span> <span class="n">decoder</span><span class="o">=</span><span class="n">decoder</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="n">cfg</span><span class="p">)</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">512</span><span class="p">,</span> <span class="mi">32</span><span class="p">)</span>
+<span class="n">history</span> <span class="o">=</span> <span class="n">fit_apc</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="n">ApcTrainConfig</span><span class="p">(</span><span class="n">epochs</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">64</span><span class="p">))</span>
+</pre></div>
+</div>
+</section>
+<section id="conv-pc-apc-note">
+<h2>Conv-PC APC Note<a class="headerlink" href="#conv-pc-apc-note" title="Link to this heading">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">ConvPcJointEncoder</span></code> supports image-shaped inputs and latent fusion at a configurable hierarchy depth. In the current implementation, <code class="docutils literal notranslate"><span class="pre">latent_dim</span></code> must match the feature count at the selected latent fusion depth.</p>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="cms.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Continuous Mixtures (CMs)</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="conv_pc.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Convolutional Probabilistic Circuits (ConvPc)</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2025, SPFlow Contributors
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Autoencoding Probabilistic Circuits (APC)</a><ul>
+<li><a class="reference internal" href="#reference">Reference</a></li>
+<li><a class="reference internal" href="#status-note">Status Note</a></li>
+<li><a class="reference internal" href="#main-components">Main Components</a><ul>
+<li><a class="reference internal" href="#configuration">Configuration</a><ul>
+<li><a class="reference internal" href="#spflow.zoo.apc.config.ApcConfig"><code class="docutils literal notranslate"><span class="pre">ApcConfig</span></code></a><ul>
+<li><a class="reference internal" href="#spflow.zoo.apc.config.ApcConfig.latent_dim"><code class="docutils literal notranslate"><span class="pre">ApcConfig.latent_dim</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.apc.config.ApcConfig.rec_loss"><code class="docutils literal notranslate"><span class="pre">ApcConfig.rec_loss</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.apc.config.ApcConfig.n_bits"><code class="docutils literal notranslate"><span class="pre">ApcConfig.n_bits</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.apc.config.ApcConfig.sample_tau"><code class="docutils literal notranslate"><span class="pre">ApcConfig.sample_tau</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.apc.config.ApcConfig.loss_weights"><code class="docutils literal notranslate"><span class="pre">ApcConfig.loss_weights</span></code></a></li>
+<li><a class="reference internal" href="#id0"><code class="docutils literal notranslate"><span class="pre">ApcConfig.latent_dim</span></code></a></li>
+<li><a class="reference internal" href="#id1"><code class="docutils literal notranslate"><span class="pre">ApcConfig.loss_weights</span></code></a></li>
+<li><a class="reference internal" href="#id2"><code class="docutils literal notranslate"><span class="pre">ApcConfig.n_bits</span></code></a></li>
+<li><a class="reference internal" href="#id3"><code class="docutils literal notranslate"><span class="pre">ApcConfig.rec_loss</span></code></a></li>
+<li><a class="reference internal" href="#id4"><code class="docutils literal notranslate"><span class="pre">ApcConfig.sample_tau</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#spflow.zoo.apc.config.ApcLossWeights"><code class="docutils literal notranslate"><span class="pre">ApcLossWeights</span></code></a><ul>
+<li><a class="reference internal" href="#spflow.zoo.apc.config.ApcLossWeights.rec"><code class="docutils literal notranslate"><span class="pre">ApcLossWeights.rec</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.apc.config.ApcLossWeights.kld"><code class="docutils literal notranslate"><span class="pre">ApcLossWeights.kld</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.apc.config.ApcLossWeights.nll"><code class="docutils literal notranslate"><span class="pre">ApcLossWeights.nll</span></code></a></li>
+<li><a class="reference internal" href="#id5"><code class="docutils literal notranslate"><span class="pre">ApcLossWeights.kld</span></code></a></li>
+<li><a class="reference internal" href="#id6"><code class="docutils literal notranslate"><span class="pre">ApcLossWeights.nll</span></code></a></li>
+<li><a class="reference internal" href="#id7"><code class="docutils literal notranslate"><span class="pre">ApcLossWeights.rec</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#spflow.zoo.apc.config.ApcTrainConfig"><code class="docutils literal notranslate"><span class="pre">ApcTrainConfig</span></code></a><ul>
+<li><a class="reference internal" href="#spflow.zoo.apc.config.ApcTrainConfig.epochs"><code class="docutils literal notranslate"><span class="pre">ApcTrainConfig.epochs</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.apc.config.ApcTrainConfig.batch_size"><code class="docutils literal notranslate"><span class="pre">ApcTrainConfig.batch_size</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.apc.config.ApcTrainConfig.learning_rate"><code class="docutils literal notranslate"><span class="pre">ApcTrainConfig.learning_rate</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.apc.config.ApcTrainConfig.weight_decay"><code class="docutils literal notranslate"><span class="pre">ApcTrainConfig.weight_decay</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.apc.config.ApcTrainConfig.grad_clip_norm"><code class="docutils literal notranslate"><span class="pre">ApcTrainConfig.grad_clip_norm</span></code></a></li>
+<li><a class="reference internal" href="#id8"><code class="docutils literal notranslate"><span class="pre">ApcTrainConfig.batch_size</span></code></a></li>
+<li><a class="reference internal" href="#id9"><code class="docutils literal notranslate"><span class="pre">ApcTrainConfig.epochs</span></code></a></li>
+<li><a class="reference internal" href="#id10"><code class="docutils literal notranslate"><span class="pre">ApcTrainConfig.grad_clip_norm</span></code></a></li>
+<li><a class="reference internal" href="#id11"><code class="docutils literal notranslate"><span class="pre">ApcTrainConfig.learning_rate</span></code></a></li>
+<li><a class="reference internal" href="#id12"><code class="docutils literal notranslate"><span class="pre">ApcTrainConfig.weight_decay</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#model">Model</a><ul>
+<li><a class="reference internal" href="#spflow.zoo.apc.model.AutoencodingPC"><code class="docutils literal notranslate"><span class="pre">AutoencodingPC</span></code></a><ul>
+<li><a class="reference internal" href="#spflow.zoo.apc.model.AutoencodingPC.__init__"><code class="docutils literal notranslate"><span class="pre">AutoencodingPC.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.apc.model.AutoencodingPC.decode"><code class="docutils literal notranslate"><span class="pre">AutoencodingPC.decode()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.apc.model.AutoencodingPC.encode"><code class="docutils literal notranslate"><span class="pre">AutoencodingPC.encode()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.apc.model.AutoencodingPC.forward"><code class="docutils literal notranslate"><span class="pre">AutoencodingPC.forward()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.apc.model.AutoencodingPC.joint_log_likelihood"><code class="docutils literal notranslate"><span class="pre">AutoencodingPC.joint_log_likelihood()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.apc.model.AutoencodingPC.log_likelihood_x"><code class="docutils literal notranslate"><span class="pre">AutoencodingPC.log_likelihood_x()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.apc.model.AutoencodingPC.loss"><code class="docutils literal notranslate"><span class="pre">AutoencodingPC.loss()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.apc.model.AutoencodingPC.loss_components"><code class="docutils literal notranslate"><span class="pre">AutoencodingPC.loss_components()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.apc.model.AutoencodingPC.reconstruct"><code class="docutils literal notranslate"><span class="pre">AutoencodingPC.reconstruct()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.apc.model.AutoencodingPC.sample_x"><code class="docutils literal notranslate"><span class="pre">AutoencodingPC.sample_x()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.apc.model.AutoencodingPC.sample_z"><code class="docutils literal notranslate"><span class="pre">AutoencodingPC.sample_z()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#decoders">Decoders</a><ul>
+<li><a class="reference internal" href="#spflow.zoo.apc.decoders.MLPDecoder1D"><code class="docutils literal notranslate"><span class="pre">MLPDecoder1D</span></code></a><ul>
+<li><a class="reference internal" href="#spflow.zoo.apc.decoders.MLPDecoder1D.__init__"><code class="docutils literal notranslate"><span class="pre">MLPDecoder1D.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.apc.decoders.MLPDecoder1D.forward"><code class="docutils literal notranslate"><span class="pre">MLPDecoder1D.forward()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#spflow.zoo.apc.decoders.ConvDecoder2D"><code class="docutils literal notranslate"><span class="pre">ConvDecoder2D</span></code></a><ul>
+<li><a class="reference internal" href="#spflow.zoo.apc.decoders.ConvDecoder2D.__init__"><code class="docutils literal notranslate"><span class="pre">ConvDecoder2D.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.apc.decoders.ConvDecoder2D.forward"><code class="docutils literal notranslate"><span class="pre">ConvDecoder2D.forward()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#trainer-helpers">Trainer Helpers</a><ul>
+<li><a class="reference internal" href="#spflow.zoo.apc.train.train_apc_step"><code class="docutils literal notranslate"><span class="pre">train_apc_step()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.apc.train.evaluate_apc"><code class="docutils literal notranslate"><span class="pre">evaluate_apc()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.zoo.apc.train.fit_apc"><code class="docutils literal notranslate"><span class="pre">fit_apc()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#minimal-example-einet-apc">Minimal Example (Einet APC)</a></li>
+<li><a class="reference internal" href="#conv-pc-apc-note">Conv-PC APC Note</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/documentation_options.js?v=8d563738"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    </body>
+</html>

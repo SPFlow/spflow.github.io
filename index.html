@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="Getting Started" href="getting_started.html">
 
-    <!-- Generated with Sphinx 8.2.3 and Furo 2025.12.19 -->
+    <!-- Generated with Sphinx 9.0.4 and Furo 2025.12.19 -->
         <title>SPFlow 1.0.0</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
@@ -200,21 +200,38 @@
   <ul>
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="concepts.html">Concepts</a></li>
+</ul>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="zoo/index.html">Paper Zoo</a><input aria-label="Toggle navigation of Paper Zoo" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="zoo/rat_spn.html">Random and Tensorized Sum-Product Networks (RAT-SPN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zoo/einet.html">Einsum Networks (Einet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zoo/hclt.html">Hidden Chow-Liu Trees (HCLT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zoo/conv_pc.html">Convolutional Probabilistic Circuits (ConvPc)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zoo/apc.html">Autoencoding Probabilistic Circuits (APC)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zoo/cms.html">Continuous Mixtures (CMs)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zoo/socs.html">Sum of Compatible Squares (SOCS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zoo/pic.html">Probabilistic Integral Circuits (PICs)</a></li>
+</ul>
+</li>
+</ul>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="guides/user_guide.html">User Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/dev_guide.html">Developer Guide</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="api/index.html">API Documentation</a><input aria-label="Toggle navigation of API Documentation" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l1"><a class="reference internal" href="guides/sklearn.html">Using SPFlow with sklearn</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="api/index.html">API Documentation</a><input aria-label="Toggle navigation of API Documentation" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="api/base_modules.html">Base Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/data.html">Data Structures</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/module_shape.html">Module Shape</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/dsl.html">DSL (Example Construction)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/sums.html">Sum Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/products.html">Product Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/conv.html">Convolutional Modules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/einsum.html">Einsum Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/leaves.html">Leaf Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/operations.html">Operations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/rat_spn.html">RAT-SPN Architecture</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/learning.html">Learning and Training</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/scope.html">Scope Management</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/utilities.html">Utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/measures.html">Measures</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/wrappers.html">Wrapper Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/interfaces.html">Interfaces</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/exceptions.html">Exceptions</a></li>
@@ -268,11 +285,14 @@
 <ul class="simple">
 <li><p><a class="reference internal" href="getting_started.html"><span class="doc">Getting Started</span></a> — Installation and quick start guide</p></li>
 <li><p><a class="reference internal" href="concepts.html"><span class="doc">Concepts</span></a> — Core SPFlow concepts and semantics</p></li>
-<li><p><a class="reference internal" href="guides/user_guide.html"><span class="doc">User Guide</span></a> — Comprehensive tutorials and examples</p></li>
-<li><p><a class="reference internal" href="guides/dev_guide.html"><span class="doc">Developer Guide</span></a> — Contributing and development setup</p></li>
 <li><p><a class="reference internal" href="api/index.html"><span class="doc">API Reference</span></a> — Complete API documentation</p></li>
+<li><p><a class="reference internal" href="zoo/index.html"><span class="doc">Paper Zoo</span></a> — Research implementations and papers (PIC, SOCS, RAT-SPN, etc.)</p></li>
 <li><p><a class="reference internal" href="faq.html"><span class="doc">FAQ</span></a> — Frequently asked questions</p></li>
 </ul>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
 <div class="toctree-wrapper compound">
 </div>
 </section>
@@ -332,7 +352,9 @@
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">SPFlow</a><ul>
-<li><a class="reference internal" href="#quick-navigation">Quick Navigation</a></li>
+<li><a class="reference internal" href="#quick-navigation">Quick Navigation</a><ul>
+</ul>
+</li>
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
 </ul>
 </li>
@@ -346,8 +368,8 @@
     </aside>
   </div>
 </div><script src="_static/documentation_options.js?v=8d563738"></script>
-    <script src="_static/doctools.js?v=9bcbadda"></script>
-    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/scripts/furo.js?v=46bd48cc"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="_static/copybutton.js?v=f281be69"></script>

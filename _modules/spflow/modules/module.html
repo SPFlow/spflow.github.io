@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../genindex.html"><link rel="search" title="Search" href="../../../search.html">
 
-    <!-- Generated with Sphinx 8.2.3 and Furo 2025.12.19 -->
+    <!-- Generated with Sphinx 9.0.4 and Furo 2025.12.19 -->
         <title>spflow.modules.module - SPFlow 1.0.0</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=7bdb33bb" />
@@ -199,21 +199,38 @@
   <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../concepts.html">Concepts</a></li>
+</ul>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../zoo/index.html">Paper Zoo</a><input aria-label="Toggle navigation of Paper Zoo" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../zoo/rat_spn.html">Random and Tensorized Sum-Product Networks (RAT-SPN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../zoo/einet.html">Einsum Networks (Einet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../zoo/hclt.html">Hidden Chow-Liu Trees (HCLT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../zoo/conv_pc.html">Convolutional Probabilistic Circuits (ConvPc)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../zoo/apc.html">Autoencoding Probabilistic Circuits (APC)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../zoo/cms.html">Continuous Mixtures (CMs)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../zoo/socs.html">Sum of Compatible Squares (SOCS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../zoo/pic.html">Probabilistic Integral Circuits (PICs)</a></li>
+</ul>
+</li>
+</ul>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../guides/user_guide.html">User Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../guides/dev_guide.html">Developer Guide</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../api/index.html">API Documentation</a><input aria-label="Toggle navigation of API Documentation" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/sklearn.html">Using SPFlow with sklearn</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../api/index.html">API Documentation</a><input aria-label="Toggle navigation of API Documentation" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../api/base_modules.html">Base Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/data.html">Data Structures</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api/module_shape.html">Module Shape</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/dsl.html">DSL (Example Construction)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api/sums.html">Sum Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api/products.html">Product Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api/conv.html">Convolutional Modules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../api/einsum.html">Einsum Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api/leaves.html">Leaf Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api/operations.html">Operations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../api/rat_spn.html">RAT-SPN Architecture</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api/learning.html">Learning and Training</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api/scope.html">Scope Management</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api/utilities.html">Utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/measures.html">Measures</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api/wrappers.html">Wrapper Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api/interfaces.html">Interfaces</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api/exceptions.html">Exceptions</a></li>
@@ -461,14 +478,12 @@
 
 <div class="viewcode-block" id="Module.sample">
 <a class="viewcode-back" href="../../../api/base_modules.html#spflow.modules.module.Module.sample">[docs]</a>
-    <span class="nd">@abstractmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">sample</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">num_samples</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">data</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">is_mpe</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">cache</span><span class="p">:</span> <span class="n">Cache</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">sampling_ctx</span><span class="p">:</span> <span class="n">SamplingContext</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate samples from the module&#39;s probability distribution.</span>
 
@@ -482,8 +497,6 @@
 <span class="sd">            is_mpe (bool, optional): If True, returns most probable values instead of</span>
 <span class="sd">                random samples. Defaults to False.</span>
 <span class="sd">            cache (Cache | None, optional): Cache for intermediate computations. Defaults to None.</span>
-<span class="sd">            sampling_ctx (SamplingContext | None, optional): Context for routing samples</span>
-<span class="sd">                through the circuit. Defaults to None.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            Tensor: Sampled values of shape (batch_size, num_features).</span>
@@ -491,8 +504,31 @@
 <span class="sd">        Raises:</span>
 <span class="sd">            ValueError: If sampling parameters are incompatible.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">pass</span></div>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prepare_sample_data</span><span class="p">(</span><span class="n">num_samples</span><span class="o">=</span><span class="n">num_samples</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">cache</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">cache</span> <span class="o">=</span> <span class="n">Cache</span><span class="p">()</span>
+        <span class="n">sampling_ctx</span> <span class="o">=</span> <span class="n">SamplingContext</span><span class="p">(</span><span class="n">num_samples</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">device</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="n">is_mpe</span><span class="o">=</span><span class="n">is_mpe</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sample</span><span class="p">(</span>
+            <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
+            <span class="n">sampling_ctx</span><span class="o">=</span><span class="n">sampling_ctx</span><span class="p">,</span>
+            <span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">,</span>
+        <span class="p">)</span></div>
 
+
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_sample</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">data</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span>
+        <span class="n">sampling_ctx</span><span class="p">:</span> <span class="n">SamplingContext</span><span class="p">,</span>
+        <span class="n">cache</span><span class="p">:</span> <span class="n">Cache</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Internal sampling hook used for recursive sampling calls.</span>
+
+<span class="sd">        This method assumes that root-level sampling preparation has already been</span>
+<span class="sd">        handled by ``sample(...)``. Internal module recursion must call</span>
+<span class="sd">        ``_sample(...)``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
 
 <div class="viewcode-block" id="Module.mpe">
 <a class="viewcode-back" href="../../../api/base_modules.html#spflow.modules.module.Module.mpe">[docs]</a>
@@ -501,7 +537,6 @@
         <span class="n">num_samples</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">data</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">cache</span><span class="p">:</span> <span class="n">Cache</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">sampling_ctx</span><span class="p">:</span> <span class="n">SamplingContext</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate most probable explanation from the module&#39;s probability distribution.</span>
 
@@ -514,8 +549,6 @@
 <span class="sd">            data (Tensor | None, optional): Pre-allocated tensor with NaN values indicating</span>
 <span class="sd">                where to sample. If None, creates new tensor. Defaults to None.</span>
 <span class="sd">            cache (Cache | None, optional): Cache for intermediate computations. Defaults to None.</span>
-<span class="sd">            sampling_ctx (SamplingContext | None, optional): Context for routing samples</span>
-<span class="sd">                through the circuit. Defaults to None.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            Tensor: MPE values of shape (batch_size, num_features).</span>
@@ -528,7 +561,6 @@
             <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
             <span class="n">is_mpe</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">,</span>
-            <span class="n">sampling_ctx</span><span class="o">=</span><span class="n">sampling_ctx</span><span class="p">,</span>
         <span class="p">)</span></div>
 
 
@@ -539,7 +571,6 @@
         <span class="n">evidence</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span>
         <span class="n">is_mpe</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">cache</span><span class="p">:</span> <span class="n">Cache</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">sampling_ctx</span><span class="p">:</span> <span class="n">SamplingContext</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Samples from module with evidence.</span>
 
@@ -550,8 +581,6 @@
 <span class="sd">            is_mpe: Boolean value indicating whether to perform maximum a posteriori estimation (MPE).</span>
 <span class="sd">                Defaults to False.</span>
 <span class="sd">            cache: Optional cache dictionary to reuse across calls.</span>
-<span class="sd">            sampling_ctx: Optional sampling context containing the instances (i.e., rows) of</span>
-<span class="sd">                ``data`` to fill with sampled values and the output indices of the node to sample from.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            Tensor containing the sampled values. Each row corresponds to a sample.</span>
@@ -564,7 +593,6 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span>
             <span class="n">data</span><span class="o">=</span><span class="n">evidence</span><span class="p">,</span>
             <span class="n">is_mpe</span><span class="o">=</span><span class="n">is_mpe</span><span class="p">,</span>
-            <span class="n">sampling_ctx</span><span class="o">=</span><span class="n">sampling_ctx</span><span class="p">,</span>
             <span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">,</span>
         <span class="p">)</span></div>
 
@@ -583,71 +611,34 @@
                 <span class="n">ok</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="n">ok</span>
 
-<div class="viewcode-block" id="Module.expectation_maximization">
-<a class="viewcode-back" href="../../../api/base_modules.html#spflow.modules.module.Module.expectation_maximization">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">expectation_maximization</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_expectation_maximization_step</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">data</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span>
         <span class="n">bias_correction</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-        <span class="n">cache</span><span class="p">:</span> <span class="n">Cache</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">cache</span><span class="p">:</span> <span class="n">Cache</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Expectation-maximization step.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Protected EM-step hook used by global EM training loop.</span>
+
+<span class="sd">        Subclasses with learnable parameters should override this method.</span>
+<span class="sd">        For composite modules without learnable parameters, the default behavior</span>
+<span class="sd">        delegates recursively to input modules.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            data: Input data tensor.</span>
 <span class="sd">            bias_correction: Whether to apply bias correction. Defaults to True.</span>
-<span class="sd">            cache: Optional cache dictionary.</span>
+<span class="sd">            cache: Cache dictionary populated by a preceding forward pass.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">cache</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">cache</span> <span class="o">=</span> <span class="n">Cache</span><span class="p">()</span>
-
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__input_is_a_list</span><span class="p">():</span>
             <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">:</span>
-                <span class="n">child</span><span class="o">.</span><span class="n">expectation_maximization</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">,</span> <span class="n">bias_correction</span><span class="o">=</span><span class="n">bias_correction</span><span class="p">)</span>
+                <span class="n">child</span><span class="o">.</span><span class="n">_expectation_maximization_step</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">,</span> <span class="n">bias_correction</span><span class="o">=</span><span class="n">bias_correction</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">_expectation_maximization_step</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">,</span> <span class="n">bias_correction</span><span class="o">=</span><span class="n">bias_correction</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">expectation_maximization</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">,</span> <span class="n">bias_correction</span><span class="o">=</span><span class="n">bias_correction</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="Module.maximum_likelihood_estimation">
-<a class="viewcode-back" href="../../../api/base_modules.html#spflow.modules.module.Module.maximum_likelihood_estimation">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">maximum_likelihood_estimation</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">data</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span>
-        <span class="n">weights</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">bias_correction</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-        <span class="n">nan_strategy</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;ignore&quot;</span><span class="p">,</span>
-        <span class="n">cache</span><span class="p">:</span> <span class="n">Cache</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Update parameters via maximum likelihood estimation.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            data: Input data tensor.</span>
-<span class="sd">            weights: Optional sample weights.</span>
-<span class="sd">            bias_correction: Whether to apply bias correction. Defaults to True.</span>
-<span class="sd">            nan_strategy: Strategy for handling NaN values in data. Defaults to &quot;ignore&quot;.</span>
-<span class="sd">            cache: Optional cache dictionary.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">cache</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">cache</span> <span class="o">=</span> <span class="n">Cache</span><span class="p">()</span>
-
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__input_is_a_list</span><span class="p">():</span>
-            <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">:</span>
-                <span class="n">child</span><span class="o">.</span><span class="n">maximum_likelihood_estimation</span><span class="p">(</span>
-                    <span class="n">data</span><span class="p">,</span>
-                    <span class="n">weights</span><span class="o">=</span><span class="n">weights</span><span class="p">,</span>
-                    <span class="n">bias_correction</span><span class="o">=</span><span class="n">bias_correction</span><span class="p">,</span>
-                    <span class="n">nan_strategy</span><span class="o">=</span><span class="n">nan_strategy</span><span class="p">,</span>
-                    <span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">,</span>
-                <span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">maximum_likelihood_estimation</span><span class="p">(</span>
-                <span class="n">data</span><span class="p">,</span>
-                <span class="n">weights</span><span class="o">=</span><span class="n">weights</span><span class="p">,</span>
-                <span class="n">bias_correction</span><span class="o">=</span><span class="n">bias_correction</span><span class="p">,</span>
-                <span class="n">nan_strategy</span><span class="o">=</span><span class="n">nan_strategy</span><span class="p">,</span>
-                <span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">,</span>
-            <span class="p">)</span></div>
-
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> must override _expectation_maximization_step &quot;</span>
+                <span class="s2">&quot;or provide input modules that implement it.&quot;</span>
+            <span class="p">)</span>
 
 <div class="viewcode-block" id="Module.marginalize">
 <a class="viewcode-back" href="../../../api/base_modules.html#spflow.modules.module.Module.marginalize">[docs]</a>
@@ -764,6 +755,23 @@
         <span class="p">)</span></div>
 
 
+<div class="viewcode-block" id="Module.print_structure_stats">
+<a class="viewcode-back" href="../../../api/base_modules.html#spflow.modules.module.Module.print_structure_stats">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">print_structure_stats</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a readable text overview of this module&#39;s structure statistics.</span>
+
+<span class="sd">        This is intended for quick debugging/logging in experiments and mirrors the</span>
+<span class="sd">        traversal behavior used by ``to_str()`` (skipping internal ``Cat`` and</span>
+<span class="sd">        ``ModuleList`` wrappers).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Multi-line string summary of structure statistics.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.utils.structure_stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_structure_stats</span><span class="p">,</span> <span class="n">structure_stats_to_str</span>
+
+        <span class="k">return</span> <span class="n">structure_stats_to_str</span><span class="p">(</span><span class="n">get_structure_stats</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span></div>
+
+
 <div class="viewcode-block" id="Module.probability">
 <a class="viewcode-back" href="../../../api/base_modules.html#spflow.modules.module.Module.probability">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">probability</span><span class="p">(</span>
@@ -822,8 +830,8 @@
     </aside>
   </div>
 </div><script src="../../../_static/documentation_options.js?v=8d563738"></script>
-    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
-    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/scripts/furo.js?v=46bd48cc"></script>
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../../_static/copybutton.js?v=f281be69"></script>
