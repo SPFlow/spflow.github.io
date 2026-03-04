@@ -207,7 +207,6 @@
 <li class="toctree-l2"><a class="reference internal" href="einet.html">Einsum Networks (Einet)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hclt.html">Hidden Chow-Liu Trees (HCLT)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="conv_pc.html">Convolutional Probabilistic Circuits (ConvPc)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="apc.html">Autoencoding Probabilistic Circuits (APC)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="cms.html">Continuous Mixtures (CMs)</a></li>
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Sum of Compatible Squares (SOCS)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pic.html">Probabilistic Integral Circuits (PICs)</a></li>
@@ -324,7 +323,7 @@ signed representation internally.</p>
 <p>Rather than building an explicit “squared circuit”, SPFlow computes these terms using an exact,
 bottom-up <strong>inner-product dynamic program</strong> implemented in <code class="xref py py-mod docutils literal notranslate"><span class="pre">spflow.utils.inner_product</span></code>.</p>
 <p>The implementation supports exact inner products for common leaves (and can be extended by adding
-new closed-form formulas in <code class="docutils literal notranslate"><span class="pre">spflow/exp/sos/inner_product.py</span></code>). Currently supported include:</p>
+new closed-form formulas in <code class="docutils literal notranslate"><span class="pre">spflow/utils/inner_product_core.py</span></code>). Currently supported include:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">Normal</span></code>, <code class="docutils literal notranslate"><span class="pre">Bernoulli</span></code>, <code class="docutils literal notranslate"><span class="pre">Categorical</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Exponential</span></code>, <code class="docutils literal notranslate"><span class="pre">Laplace</span></code>, <code class="docutils literal notranslate"><span class="pre">LogNormal</span></code></p></li>
@@ -495,7 +494,7 @@ marginalization. Defaults to True.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="spflow.zoo.sos.SOCS.sample">
-<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_mpe</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/sos/socs.html#SOCS.sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.sos.SOCS.sample" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_mpe</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_leaf_params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/sos/socs.html#SOCS.sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.sos.SOCS.sample" title="Link to this definition">¶</a></dt>
 <dd><p>Generate samples from the module’s probability distribution.</p>
 <p>Supports both random sampling and MAP inference (via is_mpe flag).
 Handles conditional sampling through evidence in data tensor.</p>
@@ -508,13 +507,16 @@ where to sample. If None, creates new tensor. Defaults to None.</p></li>
 <li><p><strong>is_mpe</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>optional</em>) – If True, returns most probable values instead of
 random samples. Defaults to False.</p></li>
 <li><p><strong>cache</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span> <span class="pre">|</span> <span class="pre">None</span></code>, <em>optional</em>) – Cache for intermediate computations. Defaults to None.</p></li>
+<li><p><strong>return_leaf_params</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>optional</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, also return leaf
+distribution parameters gathered during traversal.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Sampled values of shape (batch_size, num_features).</p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<code class="xref py py-class docutils literal notranslate"><span class="pre">LeafParamRecord</span></code>]]</span></p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Tensor</p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Sampled values of shape (batch_size, num_features), optionally with
+collected leaf-parameter records.</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.14)"><strong>ValueError</strong></a> – If sampling parameters are incompatible.</p>

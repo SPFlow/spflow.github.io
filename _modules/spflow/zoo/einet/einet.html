@@ -206,7 +206,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../zoo/einet.html">Einsum Networks (Einet)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../zoo/hclt.html">Hidden Chow-Liu Trees (HCLT)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../zoo/conv_pc.html">Convolutional Probabilistic Circuits (ConvPc)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../zoo/apc.html">Autoencoding Probabilistic Circuits (APC)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../zoo/cms.html">Continuous Mixtures (CMs)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../zoo/socs.html">Sum of Compatible Squares (SOCS)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../zoo/pic.html">Probabilistic Integral Circuits (PICs)</a></li>
@@ -297,12 +296,14 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.leaves.leaf</span><span class="w"> </span><span class="kn">import</span> <span class="n">LeafModule</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.module</span><span class="w"> </span><span class="kn">import</span> <span class="n">Module</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.module_shape</span><span class="w"> </span><span class="kn">import</span> <span class="n">ModuleShape</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.ops.split</span><span class="w"> </span><span class="kn">import</span> <span class="n">SplitMode</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.products.product</span><span class="w"> </span><span class="kn">import</span> <span class="n">Product</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.rat.factorize</span><span class="w"> </span><span class="kn">import</span> <span class="n">Factorize</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.sums.repetition_mixing_layer</span><span class="w"> </span><span class="kn">import</span> <span class="n">RepetitionMixingLayer</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.sums.sum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sum</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.utils.cache</span><span class="w"> </span><span class="kn">import</span> <span class="n">Cache</span><span class="p">,</span> <span class="n">cached</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.utils.inference</span><span class="w"> </span><span class="kn">import</span> <span class="n">log_posterior</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.utils.sampling_context</span><span class="w"> </span><span class="kn">import</span> <span class="n">SamplingContext</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.utils.sampling_context</span><span class="w"> </span><span class="kn">import</span> <span class="n">LeafParamRecord</span><span class="p">,</span> <span class="n">SamplingContext</span>
 
 
 <div class="viewcode-block" id="Einet">
@@ -416,6 +417,35 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">LinsumLayer</span>
 
+    <span class="k">def</span><span class="w"> </span><span class="nf">_finalize_root</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">current</span><span class="p">:</span> <span class="n">Module</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">collapse_features_if_needed</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Finalize root stack to a canonical sampling-compatible shape.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">collapse_features_if_needed</span> <span class="ow">and</span> <span class="n">current</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">features</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">current</span> <span class="o">=</span> <span class="n">Product</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">current</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">current</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">channels</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_classes</span><span class="p">:</span>
+            <span class="n">current</span> <span class="o">=</span> <span class="n">Sum</span><span class="p">(</span>
+                <span class="n">inputs</span><span class="o">=</span><span class="n">current</span><span class="p">,</span>
+                <span class="n">out_channels</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_classes</span><span class="p">,</span>
+                <span class="n">num_repetitions</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_repetitions</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_repetitions</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">current</span> <span class="o">=</span> <span class="n">RepetitionMixingLayer</span><span class="p">(</span>
+                <span class="n">inputs</span><span class="o">=</span><span class="n">current</span><span class="p">,</span>
+                <span class="n">out_channels</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_classes</span><span class="p">,</span>
+                <span class="n">num_repetitions</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_repetitions</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_classes</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">current</span> <span class="o">=</span> <span class="n">Sum</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">current</span><span class="p">,</span> <span class="n">out_channels</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_repetitions</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">root_node</span> <span class="o">=</span> <span class="n">current</span>
+
     <span class="k">def</span><span class="w"> </span><span class="nf">_build_structure_top_down</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Build Einet structure from top (root) to bottom (leaves).</span>
 
@@ -484,23 +514,12 @@
                     <span class="n">inputs</span><span class="o">=</span><span class="n">current</span><span class="p">,</span>
                     <span class="n">out_channels</span><span class="o">=</span><span class="n">layer_info</span><span class="p">[</span><span class="s2">&quot;out_channels&quot;</span><span class="p">],</span>
                     <span class="n">num_repetitions</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_repetitions</span><span class="p">,</span>
+                    <span class="n">split_mode</span><span class="o">=</span><span class="n">SplitMode</span><span class="o">.</span><span class="n">interleaved</span><span class="p">(</span><span class="n">num_splits</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
                 <span class="p">)</span>
 
             <span class="n">root</span> <span class="o">=</span> <span class="n">current</span>
 
-        <span class="c1"># Mix repetitions if we have multiple</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_repetitions</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">root</span> <span class="o">=</span> <span class="n">RepetitionMixingLayer</span><span class="p">(</span>
-                <span class="n">inputs</span><span class="o">=</span><span class="n">root</span><span class="p">,</span>
-                <span class="n">out_channels</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_classes</span><span class="p">,</span>
-                <span class="n">num_repetitions</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_repetitions</span><span class="p">,</span>
-            <span class="p">)</span>
-
-        <span class="c1"># Final root sum if multiple classes</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_classes</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">RepetitionMixingLayer</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">root_node</span> <span class="o">=</span> <span class="n">Sum</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">root</span><span class="p">,</span> <span class="n">out_channels</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_repetitions</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">root_node</span> <span class="o">=</span> <span class="n">root</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_finalize_root</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">collapse_features_if_needed</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
         <span class="c1"># Store layers for access</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">factorize</span> <span class="o">=</span> <span class="n">fac_layer</span>
@@ -535,6 +554,7 @@
                 <span class="n">inputs</span><span class="o">=</span><span class="n">current</span><span class="p">,</span>
                 <span class="n">out_channels</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_sums</span><span class="p">,</span>
                 <span class="n">num_repetitions</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_repetitions</span><span class="p">,</span>
+                <span class="n">split_mode</span><span class="o">=</span><span class="n">SplitMode</span><span class="o">.</span><span class="n">interleaved</span><span class="p">(</span><span class="n">num_splits</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
             <span class="p">)</span>
 
         <span class="c1"># Handle depth=0 case</span>
@@ -546,33 +566,7 @@
                 <span class="n">num_repetitions</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_repetitions</span><span class="p">,</span>
             <span class="p">)</span>
 
-        <span class="c1"># Add sum layer to get features down to 1 if needed</span>
-        <span class="k">if</span> <span class="n">current</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">features</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">current</span> <span class="o">=</span> <span class="n">Sum</span><span class="p">(</span>
-                <span class="n">inputs</span><span class="o">=</span><span class="n">current</span><span class="p">,</span>
-                <span class="n">out_channels</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_sums</span><span class="p">,</span>
-                <span class="n">num_repetitions</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_repetitions</span><span class="p">,</span>
-            <span class="p">)</span>
-
-        <span class="c1"># Add final sum layer to convert from num_sums to num_classes</span>
-        <span class="k">if</span> <span class="n">current</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">channels</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_classes</span><span class="p">:</span>
-            <span class="n">current</span> <span class="o">=</span> <span class="n">Sum</span><span class="p">(</span>
-                <span class="n">inputs</span><span class="o">=</span><span class="n">current</span><span class="p">,</span>
-                <span class="n">out_channels</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_classes</span><span class="p">,</span>
-                <span class="n">num_repetitions</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_repetitions</span><span class="p">,</span>
-            <span class="p">)</span>
-
-        <span class="c1"># Mix repetitions if we have multiple</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_repetitions</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">root</span> <span class="o">=</span> <span class="n">RepetitionMixingLayer</span><span class="p">(</span>
-                <span class="n">inputs</span><span class="o">=</span><span class="n">current</span><span class="p">,</span>
-                <span class="n">out_channels</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_classes</span><span class="p">,</span>
-                <span class="n">num_repetitions</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_repetitions</span><span class="p">,</span>
-            <span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">root</span> <span class="o">=</span> <span class="n">current</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">root_node</span> <span class="o">=</span> <span class="n">root</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_finalize_root</span><span class="p">(</span><span class="n">current</span><span class="p">,</span> <span class="n">collapse_features_if_needed</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
         <span class="c1"># Store layers for access</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">factorize</span> <span class="o">=</span> <span class="n">fac_layer</span>
@@ -677,7 +671,8 @@
         <span class="n">data</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">is_mpe</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">cache</span><span class="p">:</span> <span class="n">Cache</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
+        <span class="n">return_leaf_params</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">LeafParamRecord</span><span class="p">]]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate samples from the Einet.</span>
 
 <span class="sd">        Args:</span>
@@ -685,33 +680,33 @@
 <span class="sd">            data: Optional data tensor with NaN values to impute.</span>
 <span class="sd">            is_mpe: Whether to perform MPE (most probable explanation).</span>
 <span class="sd">            cache: Optional cache for intermediate results.</span>
+<span class="sd">            return_leaf_params: Whether to return leaf-parameter records from sampling.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            Sampled tensor.</span>
 
-<span class="sd">        Raises:</span>
-<span class="sd">            NotImplementedError: If structure is &quot;bottom-up&quot; (not yet supported).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># Bottom-up sampling not yet supported due to shape propagation complexity</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">structure</span> <span class="o">==</span> <span class="s2">&quot;bottom-up&quot;</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
-                <span class="s2">&quot;Sampling from bottom-up Einet structure is not yet implemented. &quot;</span>
-                <span class="s2">&quot;Use structure=&#39;top-down&#39; for sampling, or use log_likelihood() which &quot;</span>
-                <span class="s2">&quot;works for both structures.&quot;</span>
-            <span class="p">)</span>
 
         <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prepare_sample_data</span><span class="p">(</span><span class="n">num_samples</span><span class="o">=</span><span class="n">num_samples</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">cache</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">cache</span> <span class="o">=</span> <span class="n">Cache</span><span class="p">()</span>
         <span class="n">batch_size</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
-        <span class="n">sampling_ctx</span> <span class="o">=</span> <span class="n">SamplingContext</span><span class="p">(</span><span class="n">num_samples</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="n">is_mpe</span><span class="o">=</span><span class="n">is_mpe</span><span class="p">)</span>
+        <span class="n">sampling_ctx</span> <span class="o">=</span> <span class="n">SamplingContext</span><span class="p">(</span>
+            <span class="n">num_samples</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span>
+            <span class="n">device</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">device</span><span class="p">,</span>
+            <span class="n">is_mpe</span><span class="o">=</span><span class="n">is_mpe</span><span class="p">,</span>
+            <span class="n">return_leaf_params</span><span class="o">=</span><span class="n">return_leaf_params</span><span class="p">,</span>
+        <span class="p">)</span>
 
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sample</span><span class="p">(</span>
+        <span class="n">samples</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sample</span><span class="p">(</span>
             <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
             <span class="n">sampling_ctx</span><span class="o">=</span><span class="n">sampling_ctx</span><span class="p">,</span>
             <span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">,</span>
-        <span class="p">)</span></div>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">return_leaf_params</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">samples</span><span class="p">,</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">leaf_param_records</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">samples</span></div>
 
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_sample</span><span class="p">(</span>
@@ -734,7 +729,8 @@
 
         <span class="n">batch_size</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
-        <span class="c1"># Handle class sampling for multi-class models</span>
+        <span class="c1"># Root canonicalization guarantees class routing logits at (1, C, 1).</span>
+        <span class="c1"># Handle class sampling for multi-class models.</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_classes</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
             <span class="n">logits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_node</span><span class="o">.</span><span class="n">logits</span>
             <span class="k">if</span> <span class="n">logits</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">4</span> <span class="ow">and</span> <span class="n">logits</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>

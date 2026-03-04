@@ -207,7 +207,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../zoo/einet.html">Einsum Networks (Einet)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../zoo/hclt.html">Hidden Chow-Liu Trees (HCLT)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../zoo/conv_pc.html">Convolutional Probabilistic Circuits (ConvPc)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../zoo/apc.html">Autoencoding Probabilistic Circuits (APC)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../zoo/cms.html">Continuous Mixtures (CMs)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../zoo/socs.html">Sum of Compatible Squares (SOCS)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../zoo/pic.html">Probabilistic Integral Circuits (PICs)</a></li>
@@ -463,6 +462,62 @@ Standard deviation σ is stored in log-space for numerical stability.</p>
 <dt class="sig sig-object py" id="id0">
 <span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">rate</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><span class="pre">Tensor</span></a></span><a class="headerlink" href="#id0" title="Link to this definition">¶</a></dt>
 <dd><p>Rate parameter in natural space (read via exp of log_rate).</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="laplace">
+<h3>Laplace<a class="headerlink" href="#laplace" title="Link to this heading">¶</a></h3>
+<p>Laplace distribution with learnable location and scale parameters.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="spflow.modules.leaves.Laplace">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">spflow.modules.leaves.</span></span><span class="sig-name descname"><span class="pre">Laplace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scope</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_channels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_repetitions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameter_fn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validate_args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/leaves/laplace.html#Laplace"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.leaves.Laplace" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="base_modules.html#spflow.modules.leaves.leaf.LeafModule" title="spflow.modules.leaves.leaf.LeafModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">LeafModule</span></code></a></p>
+<p>Normal (Gaussian) distribution leaf module.</p>
+<p>Parameterized by mean μ and standard deviation σ (stored in log-space).</p>
+<dl class="field-list simple">
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spflow.modules.leaves.Laplace.loc">
+<span class="sig-name descname"><span class="pre">loc</span></span><a class="headerlink" href="#spflow.modules.leaves.Laplace.loc" title="Link to this definition">¶</a></dt>
+<dd><p>Mean parameter.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spflow.modules.leaves.Laplace.std">
+<span class="sig-name descname"><span class="pre">std</span></span><a class="headerlink" href="#spflow.modules.leaves.Laplace.std" title="Link to this definition">¶</a></dt>
+<dd><p>Standard deviation (accessed via property, stored as log_std).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.modules.leaves.Laplace.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scope</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_channels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_repetitions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameter_fn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validate_args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/leaves/laplace.html#Laplace.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.leaves.Laplace.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Initialize Normal distribution.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>scope</strong> – Variable scope (Scope, int, or list[int]).</p></li>
+<li><p><strong>out_channels</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Number of output channels (inferred from params if None).</p></li>
+<li><p><strong>num_repetitions</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Number of repetitions (for 3D event shapes).</p></li>
+<li><p><strong>parameter_fn</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/generated/torch.nn.Module.html#torch.nn.Module" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a></span>) – Optional neural network for parameter generation.</p></li>
+<li><p><strong>loc</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Mean tensor μ.</p></li>
+<li><p><strong>scale</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></span>) – Standard deviation tensor σ &gt; 0.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spflow.modules.leaves.Laplace.params">
+<span class="sig-name descname"><span class="pre">params</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/modules/leaves/laplace.html#Laplace.params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.modules.leaves.Laplace.params" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the parameters of the distribution.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="spflow.modules.leaves.Laplace.scale">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">scale</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><span class="pre">Tensor</span></a></span><a class="headerlink" href="#spflow.modules.leaves.Laplace.scale" title="Link to this definition">¶</a></dt>
+<dd><p>Standard deviation in natural space (read via exp of log_std).</p>
 </dd></dl>
 
 </dd></dl>
@@ -1613,6 +1668,17 @@ and F is the number of features.</p></li>
 <li><a class="reference internal" href="#spflow.modules.leaves.Exponential.__init__"><code class="docutils literal notranslate"><span class="pre">Exponential.__init__()</span></code></a></li>
 <li><a class="reference internal" href="#spflow.modules.leaves.Exponential.params"><code class="docutils literal notranslate"><span class="pre">Exponential.params()</span></code></a></li>
 <li><a class="reference internal" href="#id0"><code class="docutils literal notranslate"><span class="pre">Exponential.rate</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#laplace">Laplace</a><ul>
+<li><a class="reference internal" href="#spflow.modules.leaves.Laplace"><code class="docutils literal notranslate"><span class="pre">Laplace</span></code></a><ul>
+<li><a class="reference internal" href="#spflow.modules.leaves.Laplace.loc"><code class="docutils literal notranslate"><span class="pre">Laplace.loc</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.leaves.Laplace.std"><code class="docutils literal notranslate"><span class="pre">Laplace.std</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.leaves.Laplace.__init__"><code class="docutils literal notranslate"><span class="pre">Laplace.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.leaves.Laplace.params"><code class="docutils literal notranslate"><span class="pre">Laplace.params()</span></code></a></li>
+<li><a class="reference internal" href="#spflow.modules.leaves.Laplace.scale"><code class="docutils literal notranslate"><span class="pre">Laplace.scale</span></code></a></li>
 </ul>
 </li>
 </ul>

@@ -208,7 +208,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../zoo/einet.html">Einsum Networks (Einet)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../zoo/hclt.html">Hidden Chow-Liu Trees (HCLT)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../zoo/conv_pc.html">Convolutional Probabilistic Circuits (ConvPc)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../zoo/apc.html">Autoencoding Probabilistic Circuits (APC)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../zoo/cms.html">Continuous Mixtures (CMs)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../zoo/socs.html">Sum of Compatible Squares (SOCS)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../zoo/pic.html">Probabilistic Integral Circuits (PICs)</a></li>
@@ -446,7 +445,7 @@ Leaf (Normal)
 <h3>Example: NoisyNormal<a class="headerlink" href="#Example:-NoisyNormal" title="Link to this heading">¶</a></h3>
 <p>A Normal distribution that adds noise to log-likelihoods during training. This demonstrates extending a standard distribution with training-time regularization.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
@@ -518,8 +517,8 @@ Leaf (Normal)
 </pre></div>
 </div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Quick test</span>
@@ -541,6 +540,15 @@ Leaf (Normal)
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Eval: outputs identical = </span><span class="si">{</span><span class="n">torch</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">ll1</span><span class="p">,</span><span class="w"> </span><span class="n">ll2</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Training: outputs differ = True
+Eval: outputs identical = True
+</pre></div></div>
 </div>
 <p><strong>Key points:</strong></p>
 <ul class="simple">
@@ -578,7 +586,7 @@ Leaf (Normal)
 <h3>Example: NoisySum<a class="headerlink" href="#Example:-NoisySum" title="Link to this heading">¶</a></h3>
 <p>A sum module that adds Gaussian noise during training.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
@@ -602,8 +610,8 @@ Leaf (Normal)
 <br/></pre></div>
 </div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Test NoisySum</span>
@@ -626,6 +634,15 @@ Leaf (Normal)
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Eval: outputs identical = </span><span class="si">{</span><span class="n">torch</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">ll1</span><span class="p">,</span><span class="w"> </span><span class="n">ll2</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <br/><br/></pre></div>
 </div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Training: outputs differ = True
+Eval: outputs identical = True
+</pre></div></div>
 </div>
 <p><strong>Key points:</strong></p>
 <ul class="simple">
@@ -674,7 +691,7 @@ Leaf (Normal)
 \[\log p(x) = \sum_j \log p_j(x_j) + \epsilon, \quad \epsilon \sim \mathcal{N}(0, \sigma^2)\]</div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.products</span><span class="w"> </span><span class="kn">import</span> <span class="n">Product</span>
@@ -696,8 +713,8 @@ Leaf (Normal)
 <br/></pre></div>
 </div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Test NoisyProduct</span>
@@ -731,6 +748,17 @@ Leaf (Normal)
 <span class="k">assert</span> <span class="n">samples</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Product scope: (0, 1)
+Training: outputs differ = True
+Eval: outputs identical = True
+Samples shape: torch.Size([100, 2])
+</pre></div></div>
 </div>
 <p><strong>Key points:</strong></p>
 <ul class="simple">
@@ -767,7 +795,7 @@ Leaf (Normal)
 <h3>Example: RandomSplit<a class="headerlink" href="#Example:-RandomSplit" title="Link to this heading">¶</a></h3>
 <p>A <code class="docutils literal notranslate"><span class="pre">RandomSplit</span></code> assigns features to groups randomly (fixed at initialization).</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.ops.split</span><span class="w"> </span><span class="kn">import</span> <span class="n">Split</span>
@@ -835,8 +863,8 @@ Leaf (Normal)
 <br/></pre></div>
 </div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Test RandomSplit</span>
@@ -851,6 +879,15 @@ Leaf (Normal)
 <br/><br/></pre></div>
 </div>
 </div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Split 0 shape: torch.Size([5, 5, 2, 1])
+Split 1 shape: torch.Size([5, 1, 2, 1])
+</pre></div></div>
+</div>
 <p><strong>Key points:</strong></p>
 <ul class="simple">
 <li><p>Split modules return a <em>list</em> of tensors (one per split)</p></li>
@@ -862,8 +899,8 @@ Leaf (Normal)
 <section id="6.-Testing-Your-Module">
 <h2>6. Testing Your Module<a class="headerlink" href="#6.-Testing-Your-Module" title="Link to this heading">¶</a></h2>
 <p>SPFlow provides test utilities in <code class="docutils literal notranslate"><span class="pre">tests/utils/</span></code>. Here’s a minimal test pattern:</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">test_noisy_normal_leaf</span><span class="p">():</span>
@@ -891,6 +928,14 @@ Leaf (Normal)
 </pre></div>
 </div>
 </div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+All tests passed!
+</pre></div></div>
+</div>
 <blockquote>
 <div><p><strong>Contributing to SPFlow:</strong> If you want to contribute your module to the SPFlow repository, unit tests are <strong>required</strong>. See <code class="docutils literal notranslate"><span class="pre">tests/</span></code> for examples and use <code class="docutils literal notranslate"><span class="pre">pytest</span></code> with parametrization for thorough coverage.</p>
 </div></blockquote>
@@ -907,13 +952,13 @@ Leaf (Normal)
 </thead>
 <tbody>
 <tr class="row-even"><td><p>Leaf</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">spflow/modules/leaves/normal.py</span></code> (~115 lines)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">spflow/modules/leaves/normal.py</span></code></p></td>
 </tr>
 <tr class="row-odd"><td><p>Sum</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">spflow/modules/sums/sum.py</span></code></p></td>
 </tr>
 <tr class="row-even"><td><p>Product</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">spflow/modules/products/product.py</span></code> (~210 lines)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">spflow/modules/products/product.py</span></code></p></td>
 </tr>
 <tr class="row-odd"><td><p>Split</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">spflow/modules/ops/split.py</span></code></p></td>

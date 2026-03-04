@@ -207,7 +207,6 @@
 <li class="toctree-l2"><a class="reference internal" href="zoo/einet.html">Einsum Networks (Einet)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="zoo/hclt.html">Hidden Chow-Liu Trees (HCLT)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="zoo/conv_pc.html">Convolutional Probabilistic Circuits (ConvPc)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="zoo/apc.html">Autoencoding Probabilistic Circuits (APC)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="zoo/cms.html">Continuous Mixtures (CMs)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="zoo/socs.html">Sum of Compatible Squares (SOCS)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="zoo/pic.html">Probabilistic Integral Circuits (PICs)</a></li>
@@ -309,13 +308,8 @@ For end-to-end tutorials, see the <a class="reference internal" href="guides/use
 <ul class="simple">
 <li><p><strong>Leaves</strong>: Probability distributions at the terminals (Normal, Categorical, Bernoulli, etc.)</p></li>
 <li><p><strong>Products</strong>: Combine independent distributions (Product, OuterProduct, ElementwiseProduct)</p></li>
-<li><dl class="simple">
-<dt><strong>Sums</strong>: Weighted mixtures of distributions (Sum, ElementwiseSum)</dt><dd><ul>
+<li><p><strong>Sums</strong>: Weighted mixtures of distributions (Sum, ElementwiseSum)</p></li>
 <li><p><strong>Specialized architectures</strong>: RAT-SPN, ConvPc for images (see <a class="reference internal" href="zoo/index.html"><span class="doc">Paper Zoo</span></a>)</p></li>
-</ul>
-</dd>
-</dl>
-</li>
 </ul>
 <p>See the <a class="reference internal" href="api/index.html"><span class="doc">API Reference</span></a> for complete documentation.</p>
 </section>
@@ -377,7 +371,7 @@ They usually show up as <code class="docutils literal notranslate"><span class="
 <section id="what-leaf-distributions-are-available">
 <h3>What leaf distributions are available?<a class="headerlink" href="#what-leaf-distributions-are-available" title="Link to this heading">¶</a></h3>
 <p>SPFlow includes many univariate distributions:</p>
-<p><strong>Continuous</strong>: Normal, LogNormal, Exponential, Gamma, Uniform</p>
+<p><strong>Continuous</strong>: Normal, LogNormal, Exponential, Laplace, Gamma, Uniform</p>
 <p><strong>Discrete</strong>: Categorical, Bernoulli, Binomial, Poisson, Geometric, NegativeBinomial, Hypergeometric</p>
 <p>See <a class="reference internal" href="api/leaves.html"><span class="doc">Leaf Modules</span></a> for complete documentation.</p>
 </section>
@@ -407,14 +401,15 @@ They usually show up as <code class="docutils literal notranslate"><span class="
 <section id="does-spflow-have-image-specific-modules">
 <h3>Does SPFlow have image-specific modules?<a class="headerlink" href="#does-spflow-have-image-specific-modules" title="Link to this heading">¶</a></h3>
 <p>Yes! Use the <code class="docutils literal notranslate"><span class="pre">ConvPc</span></code> module for image data with spatial structure:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">spflow.zoo.conv</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConvPc</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.leaves</span><span class="w"> </span><span class="kn">import</span> <span class="n">Binomial</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.zoo.conv</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConvPc</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.leaves</span><span class="w"> </span><span class="kn">import</span> <span class="n">Normal</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.meta</span><span class="w"> </span><span class="kn">import</span> <span class="n">Scope</span>
 
 <span class="c1"># Create leaf layer for 28x28 grayscale images (e.g., MNIST)</span>
 <span class="n">height</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span>
 <span class="n">scope</span> <span class="o">=</span> <span class="n">Scope</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">height</span> <span class="o">*</span> <span class="n">width</span><span class="p">)))</span>
-<span class="n">leaf</span> <span class="o">=</span> <span class="n">Binomial</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="n">scope</span><span class="p">,</span> <span class="n">total_count</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">out_channels</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">num_repetitions</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">leaf</span> <span class="o">=</span> <span class="n">Normal</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="n">scope</span><span class="p">,</span> <span class="n">out_channels</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">num_repetitions</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
 <span class="c1"># Build convolutional PC</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">ConvPc</span><span class="p">(</span>
@@ -424,7 +419,7 @@ They usually show up as <code class="docutils literal notranslate"><span class="
     <span class="n">depth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
     <span class="n">channels</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span>
     <span class="n">kernel_size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-    <span class="n">num_repetitions</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">num_repetitions</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -439,6 +434,7 @@ They usually show up as <code class="docutils literal notranslate"><span class="
 <span class="n">log_ll</span> <span class="o">=</span> <span class="n">wrapped</span><span class="o">.</span><span class="n">log_likelihood</span><span class="p">(</span><span class="n">image_data</span><span class="p">)</span>
 </pre></div>
 </div>
+<p><code class="docutils literal notranslate"><span class="pre">ConvPc</span></code> currently supports <code class="docutils literal notranslate"><span class="pre">num_repetitions</span> <span class="pre">==</span> <span class="pre">1</span></code> only.</p>
 <p>See <a class="reference internal" href="api/conv.html"><span class="doc">Convolutional Modules</span></a>, <a class="reference internal" href="zoo/conv_pc.html"><span class="doc">Convolutional Probabilistic Circuits (ConvPc)</span></a> and <a class="reference internal" href="api/wrappers.html"><span class="doc">Wrapper Modules</span></a> for complete documentation.</p>
 </section>
 </section>
@@ -449,11 +445,14 @@ They usually show up as <code class="docutils literal notranslate"><span class="
 <h3>How do I train a model?<a class="headerlink" href="#how-do-i-train-a-model" title="Link to this heading">¶</a></h3>
 <p>SPFlow provides two main training approaches:</p>
 <p><strong>Gradient Descent</strong>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">spflow.learn</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_gradient_descent</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">torch.utils.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataLoader</span><span class="p">,</span> <span class="n">TensorDataset</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.learn</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_gradient_descent</span>
+
+<span class="n">dataloader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">TensorDataset</span><span class="p">(</span><span class="n">train_data</span><span class="p">),</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 <span class="n">train_gradient_descent</span><span class="p">(</span>
     <span class="n">model</span><span class="p">,</span>
-    <span class="n">train_data</span><span class="p">,</span>
+    <span class="n">dataloader</span><span class="p">,</span>
     <span class="n">epochs</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
     <span class="n">lr</span><span class="o">=</span><span class="mf">0.01</span>
 <span class="p">)</span>
@@ -462,7 +461,7 @@ They usually show up as <code class="docutils literal notranslate"><span class="
 <p><strong>Expectation-Maximization</strong>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">spflow.learn</span><span class="w"> </span><span class="kn">import</span> <span class="n">expectation_maximization</span>
 
-<span class="n">expectation_maximization</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">train_data</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+<span class="n">expectation_maximization</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">train_data</span><span class="p">,</span> <span class="n">max_steps</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
@@ -503,7 +502,7 @@ They usually show up as <code class="docutils literal notranslate"><span class="
 <h3>How do I compute log-likelihood?<a class="headerlink" href="#how-do-i-compute-log-likelihood" title="Link to this heading">¶</a></h3>
 <p>Call the <code class="docutils literal notranslate"><span class="pre">log_likelihood</span></code> method on your model:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">log_likelihood</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">log_likelihood</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-<span class="c1"># Returns tensor of shape [batch_size, ...]</span>
+<span class="c1"># Returns tensor of shape (batch_size, features, channels, repetitions)</span>
 </pre></div>
 </div>
 </section>

@@ -206,7 +206,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../zoo/einet.html">Einsum Networks (Einet)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../zoo/hclt.html">Hidden Chow-Liu Trees (HCLT)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../zoo/conv_pc.html">Convolutional Probabilistic Circuits (ConvPc)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../zoo/apc.html">Autoencoding Probabilistic Circuits (APC)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../zoo/cms.html">Continuous Mixtures (CMs)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../zoo/socs.html">Sum of Compatible Squares (SOCS)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../zoo/pic.html">Probabilistic Integral Circuits (PICs)</a></li>
@@ -292,7 +291,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.sums</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sum</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.sums.repetition_mixing_layer</span><span class="w"> </span><span class="kn">import</span> <span class="n">RepetitionMixingLayer</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.utils.cache</span><span class="w"> </span><span class="kn">import</span> <span class="n">Cache</span><span class="p">,</span> <span class="n">cached</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.utils.sampling_context</span><span class="w"> </span><span class="kn">import</span> <span class="n">SamplingContext</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.utils.sampling_context</span><span class="w"> </span><span class="kn">import</span> <span class="n">LeafParamRecord</span><span class="p">,</span> <span class="n">SamplingContext</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">compute_non_overlapping_kernel_and_padding</span><span class="p">(</span>
@@ -565,7 +564,8 @@
         <span class="n">data</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">is_mpe</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">cache</span><span class="p">:</span> <span class="n">Cache</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+        <span class="n">return_leaf_params</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">LeafParamRecord</span><span class="p">]]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate samples by sampling top-down through layers.</span>
 
 <span class="sd">        Delegates sampling to the root module (RepetitionMixingLayer when</span>
@@ -577,6 +577,7 @@
 <span class="sd">            data: Data tensor with NaN values to fill with samples.</span>
 <span class="sd">            is_mpe: Whether to perform maximum a posteriori estimation.</span>
 <span class="sd">            cache: Optional cache dictionary.</span>
+<span class="sd">            return_leaf_params: Whether to return leaf-parameter records from sampling.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            Tensor: Sampled values of shape (num_samples, num_pixels).</span>
@@ -584,12 +585,20 @@
         <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prepare_sample_data</span><span class="p">(</span><span class="n">num_samples</span><span class="o">=</span><span class="n">num_samples</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">cache</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">cache</span> <span class="o">=</span> <span class="n">Cache</span><span class="p">()</span>
-        <span class="n">sampling_ctx</span> <span class="o">=</span> <span class="n">SamplingContext</span><span class="p">(</span><span class="n">num_samples</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">device</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="n">is_mpe</span><span class="o">=</span><span class="n">is_mpe</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sample</span><span class="p">(</span>
+        <span class="n">sampling_ctx</span> <span class="o">=</span> <span class="n">SamplingContext</span><span class="p">(</span>
+            <span class="n">num_samples</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+            <span class="n">device</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">device</span><span class="p">,</span>
+            <span class="n">is_mpe</span><span class="o">=</span><span class="n">is_mpe</span><span class="p">,</span>
+            <span class="n">return_leaf_params</span><span class="o">=</span><span class="n">return_leaf_params</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">samples</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sample</span><span class="p">(</span>
             <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
             <span class="n">sampling_ctx</span><span class="o">=</span><span class="n">sampling_ctx</span><span class="p">,</span>
             <span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">,</span>
-        <span class="p">)</span></div>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">return_leaf_params</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">samples</span><span class="p">,</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">leaf_param_records</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">samples</span></div>
 
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_sample</span><span class="p">(</span>

@@ -205,7 +205,6 @@
 <li class="toctree-l2"><a class="reference internal" href="zoo/einet.html">Einsum Networks (Einet)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="zoo/hclt.html">Hidden Chow-Liu Trees (HCLT)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="zoo/conv_pc.html">Convolutional Probabilistic Circuits (ConvPc)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="zoo/apc.html">Autoencoding Probabilistic Circuits (APC)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="zoo/cms.html">Continuous Mixtures (CMs)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="zoo/socs.html">Sum of Compatible Squares (SOCS)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="zoo/pic.html">Probabilistic Integral Circuits (PICs)</a></li>
@@ -299,6 +298,8 @@
           <li><a href="api/leaves.html#spflow.modules.leaves.Geometric.__init__">(spflow.modules.leaves.Geometric method)</a>
 </li>
           <li><a href="api/leaves.html#spflow.modules.leaves.Hypergeometric.__init__">(spflow.modules.leaves.Hypergeometric method)</a>
+</li>
+          <li><a href="api/leaves.html#spflow.modules.leaves.Laplace.__init__">(spflow.modules.leaves.Laplace method)</a>
 </li>
           <li><a href="api/base_modules.html#spflow.modules.leaves.leaf.LeafModule.__init__">(spflow.modules.leaves.leaf.LeafModule method)</a>
 </li>
@@ -409,7 +410,7 @@
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="zoo/pic.html#spflow.zoo.pic.FourierFeatures.B">B (spflow.zoo.pic.FourierFeatures attribute)</a>
 </li>
-        <li><a href="zoo/apc.html#id8">batch_size (spflow.zoo.apc.config.ApcTrainConfig attribute)</a>, <a href="zoo/apc.html#spflow.zoo.apc.config.ApcTrainConfig.batch_size">[1]</a>
+        <li><a href="zoo/apc.html#id9">batch_size (spflow.zoo.apc.config.ApcTrainConfig attribute)</a>, <a href="zoo/apc.html#spflow.zoo.apc.config.ApcTrainConfig.batch_size">[1]</a>
 </li>
         <li><a href="api/leaves.html#spflow.modules.leaves.Bernoulli">Bernoulli (class in spflow.modules.leaves)</a>
 </li>
@@ -599,7 +600,7 @@
 </li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="zoo/apc.html#id9">epochs (spflow.zoo.apc.config.ApcTrainConfig attribute)</a>, <a href="zoo/apc.html#spflow.zoo.apc.config.ApcTrainConfig.epochs">[1]</a>
+        <li><a href="zoo/apc.html#id10">epochs (spflow.zoo.apc.config.ApcTrainConfig attribute)</a>, <a href="zoo/apc.html#spflow.zoo.apc.config.ApcTrainConfig.epochs">[1]</a>
 </li>
         <li><a href="zoo/apc.html#spflow.zoo.apc.train.evaluate_apc">evaluate_apc() (in module spflow.zoo.apc.train)</a>
 </li>
@@ -747,7 +748,7 @@
 </li>
         <li><a href="api/operations.html#spflow.modules.ops.split.Split.get_out_shapes">get_out_shapes() (spflow.modules.ops.split.Split method)</a>
 </li>
-        <li><a href="zoo/apc.html#id10">grad_clip_norm (spflow.zoo.apc.config.ApcTrainConfig attribute)</a>, <a href="zoo/apc.html#spflow.zoo.apc.config.ApcTrainConfig.grad_clip_norm">[1]</a>
+        <li><a href="zoo/apc.html#id11">grad_clip_norm (spflow.zoo.apc.config.ApcTrainConfig attribute)</a>, <a href="zoo/apc.html#spflow.zoo.apc.config.ApcTrainConfig.grad_clip_norm">[1]</a>
 </li>
         <li><a href="api/exceptions.html#spflow.exceptions.GraphvizError">GraphvizError</a>
 </li>
@@ -873,7 +874,7 @@
 </li>
         <li><a href="api/conv.html#spflow.modules.conv.ProdConv.kernel_size_w">kernel_size_w (spflow.modules.conv.ProdConv attribute)</a>
 </li>
-        <li><a href="zoo/apc.html#id5">kld (spflow.zoo.apc.config.ApcLossWeights attribute)</a>, <a href="zoo/apc.html#spflow.zoo.apc.config.ApcLossWeights.kld">[1]</a>
+        <li><a href="zoo/apc.html#id6">kld (spflow.zoo.apc.config.ApcLossWeights attribute)</a>, <a href="zoo/apc.html#spflow.zoo.apc.config.ApcLossWeights.kld">[1]</a>
 </li>
     </ul></td>
   </tr></table>
@@ -883,6 +884,8 @@
   <h2>L</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/leaves.html#spflow.modules.leaves.Laplace">Laplace (class in spflow.modules.leaves)</a>
+</li>
         <li><a href="zoo/apc.html#id0">latent_dim (spflow.zoo.apc.config.ApcConfig attribute)</a>, <a href="zoo/apc.html#spflow.zoo.apc.config.ApcConfig.latent_dim">[1]</a>
 </li>
         <li><a href="zoo/pic.html#spflow.zoo.pic.Integral.latent_scope">latent_scope (spflow.zoo.pic.Integral attribute)</a>
@@ -921,14 +924,18 @@
 </li>
         <li><a href="api/learning.html#spflow.learn.learn_spn.learn_spn">learn_spn() (in module spflow.learn.learn_spn)</a>
 </li>
-        <li><a href="zoo/apc.html#id11">learning_rate (spflow.zoo.apc.config.ApcTrainConfig attribute)</a>, <a href="zoo/apc.html#spflow.zoo.apc.config.ApcTrainConfig.learning_rate">[1]</a>
+        <li><a href="zoo/apc.html#id12">learning_rate (spflow.zoo.apc.config.ApcTrainConfig attribute)</a>, <a href="zoo/apc.html#spflow.zoo.apc.config.ApcTrainConfig.learning_rate">[1]</a>
 </li>
         <li><a href="zoo/einet.html#spflow.modules.einsum.LinsumLayer">LinsumLayer (class in spflow.modules.einsum)</a>
 </li>
         <li><a href="api/utilities.html#spflow.utils.model_manager.load_model">load_model() (in module spflow.utils.model_manager)</a>
 </li>
-        <li><a href="api/leaves.html#spflow.modules.leaves.Normal.loc">loc (spflow.modules.leaves.Normal attribute)</a>
+        <li><a href="api/leaves.html#spflow.modules.leaves.Laplace.loc">loc (spflow.modules.leaves.Laplace attribute)</a>
+
+        <ul>
+          <li><a href="api/leaves.html#spflow.modules.leaves.Normal.loc">(spflow.modules.leaves.Normal attribute)</a>
 </li>
+        </ul></li>
         <li><a href="api/conv.html#spflow.modules.conv.ProdConv.log_likelihood">log_likelihood() (spflow.modules.conv.ProdConv method)</a>
 
         <ul>
@@ -1200,8 +1207,6 @@
 </li>
         <li><a href="api/leaves.html#spflow.modules.leaves.Hypergeometric.n">n (spflow.modules.leaves.Hypergeometric attribute)</a>
 </li>
-        <li><a href="zoo/apc.html#id2">n_bits (spflow.zoo.apc.config.ApcConfig attribute)</a>, <a href="zoo/apc.html#spflow.zoo.apc.config.ApcConfig.n_bits">[1]</a>
-</li>
         <li><a href="zoo/pic.html#spflow.zoo.pic.TensorizedQPCConfig.n_chunks">n_chunks (spflow.zoo.pic.TensorizedQPCConfig attribute)</a>
 </li>
         <li><a href="zoo/einet.html#spflow.zoo.einet.Einet.n_out">n_out (spflow.zoo.einet.Einet property)</a>
@@ -1218,9 +1223,11 @@
 </li>
         <li><a href="zoo/pic.html#spflow.zoo.pic.TensorizedQPCConfig.net_dim">net_dim (spflow.zoo.pic.TensorizedQPCConfig attribute)</a>
 </li>
+        <li><a href="zoo/apc.html#id7">nll (spflow.zoo.apc.config.ApcLossWeights attribute)</a>, <a href="zoo/apc.html#spflow.zoo.apc.config.ApcLossWeights.nll">[1]</a>
+</li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="zoo/apc.html#id6">nll (spflow.zoo.apc.config.ApcLossWeights attribute)</a>, <a href="zoo/apc.html#spflow.zoo.apc.config.ApcLossWeights.nll">[1]</a>
+        <li><a href="zoo/apc.html#id2">nll_x_and_z (spflow.zoo.apc.config.ApcConfig attribute)</a>, <a href="zoo/apc.html#spflow.zoo.apc.config.ApcConfig.nll_x_and_z">[1]</a>
 </li>
         <li><a href="api/leaves.html#spflow.modules.leaves.Normal">Normal (class in spflow.modules.leaves)</a>
 </li>
@@ -1304,6 +1311,8 @@
           <li><a href="api/leaves.html#spflow.modules.leaves.Histogram.params">(spflow.modules.leaves.Histogram method)</a>
 </li>
           <li><a href="api/leaves.html#spflow.modules.leaves.Hypergeometric.params">(spflow.modules.leaves.Hypergeometric method)</a>
+</li>
+          <li><a href="api/leaves.html#spflow.modules.leaves.Laplace.params">(spflow.modules.leaves.Laplace method)</a>
 </li>
           <li><a href="api/base_modules.html#spflow.modules.leaves.leaf.LeafModule.params">(spflow.modules.leaves.leaf.LeafModule method)</a>
 </li>
@@ -1404,7 +1413,7 @@
         </ul></li>
         <li><a href="zoo/rat_spn.html#spflow.zoo.rat.RatSPN">RatSPN (class in spflow.zoo.rat)</a>
 </li>
-        <li><a href="zoo/apc.html#id7">rec (spflow.zoo.apc.config.ApcLossWeights attribute)</a>, <a href="zoo/apc.html#spflow.zoo.apc.config.ApcLossWeights.rec">[1]</a>
+        <li><a href="zoo/apc.html#id8">rec (spflow.zoo.apc.config.ApcLossWeights attribute)</a>, <a href="zoo/apc.html#spflow.zoo.apc.config.ApcLossWeights.rec">[1]</a>
 </li>
         <li><a href="zoo/apc.html#id3">rec_loss (spflow.zoo.apc.config.ApcConfig attribute)</a>, <a href="zoo/apc.html#spflow.zoo.apc.config.ApcConfig.rec_loss">[1]</a>
 </li>
@@ -1468,9 +1477,11 @@
 </li>
         <li><a href="api/utilities.html#spflow.utils.model_manager.save_model">save_model() (in module spflow.utils.model_manager)</a>
 </li>
-        <li><a href="api/leaves.html#spflow.modules.leaves.LogNormal.scale">scale (spflow.modules.leaves.LogNormal property)</a>
+        <li><a href="api/leaves.html#spflow.modules.leaves.Laplace.scale">scale (spflow.modules.leaves.Laplace property)</a>
 
         <ul>
+          <li><a href="api/leaves.html#spflow.modules.leaves.LogNormal.scale">(spflow.modules.leaves.LogNormal property)</a>
+</li>
           <li><a href="api/leaves.html#spflow.modules.leaves.Normal.scale">(spflow.modules.leaves.Normal property)</a>
 </li>
           <li><a href="zoo/pic.html#spflow.zoo.pic.FourierFeatures.scale">(spflow.zoo.pic.FourierFeatures attribute)</a>
@@ -1557,9 +1568,11 @@
 </li>
         <li><a href="api/leaves.html#spflow.modules.leaves.Uniform.start">start (spflow.modules.leaves.Uniform attribute)</a>
 </li>
-        <li><a href="api/leaves.html#spflow.modules.leaves.LogNormal.std">std (spflow.modules.leaves.LogNormal attribute)</a>
+        <li><a href="api/leaves.html#spflow.modules.leaves.Laplace.std">std (spflow.modules.leaves.Laplace attribute)</a>
 
         <ul>
+          <li><a href="api/leaves.html#spflow.modules.leaves.LogNormal.std">(spflow.modules.leaves.LogNormal attribute)</a>
+</li>
           <li><a href="api/leaves.html#spflow.modules.leaves.Normal.std">(spflow.modules.leaves.Normal attribute)</a>
 </li>
         </ul></li>
@@ -1597,10 +1610,10 @@
 </li>
         <li><a href="api/data.html#spflow.meta.data.interval_evidence.IntervalEvidence.to">to() (spflow.meta.data.interval_evidence.IntervalEvidence method)</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/wrappers.html#spflow.modules.wrapper.image_wrapper.ImageWrapper.to_image_format">to_image_format() (spflow.modules.wrapper.image_wrapper.ImageWrapper method)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/leaves.html#spflow.modules.leaves.Binomial.total_count">total_count (spflow.modules.leaves.Binomial property)</a>
 
         <ul>
@@ -1610,6 +1623,8 @@
 </li>
         </ul></li>
         <li><a href="zoo/apc.html#spflow.zoo.apc.train.train_apc_step">train_apc_step() (in module spflow.zoo.apc.train)</a>
+</li>
+        <li><a href="zoo/apc.html#id5">train_decode_mpe (spflow.zoo.apc.config.ApcConfig attribute)</a>, <a href="zoo/apc.html#spflow.zoo.apc.config.ApcConfig.train_decode_mpe">[1]</a>
 </li>
         <li><a href="api/learning.html#spflow.learn.gradient_descent.train_gradient_descent">train_gradient_descent() (in module spflow.learn.gradient_descent)</a>
 </li>
@@ -1661,7 +1676,7 @@
 </li>
         <li><a href="api/dsl.html#spflow.dsl.WeightedExpr.weight">weight (spflow.dsl.WeightedExpr attribute)</a>
 </li>
-        <li><a href="zoo/apc.html#id12">weight_decay (spflow.zoo.apc.config.ApcTrainConfig attribute)</a>, <a href="zoo/apc.html#spflow.zoo.apc.config.ApcTrainConfig.weight_decay">[1]</a>
+        <li><a href="zoo/apc.html#id13">weight_decay (spflow.zoo.apc.config.ApcTrainConfig attribute)</a>, <a href="zoo/apc.html#spflow.zoo.apc.config.ApcTrainConfig.weight_decay">[1]</a>
 </li>
         <li><a href="api/measures.html#spflow.measures.weight_of_evidence.weight_of_evidence">weight_of_evidence() (in module spflow.measures.weight_of_evidence)</a>
 </li>

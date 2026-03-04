@@ -206,7 +206,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../zoo/einet.html">Einsum Networks (Einet)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../zoo/hclt.html">Hidden Chow-Liu Trees (HCLT)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../zoo/conv_pc.html">Convolutional Probabilistic Circuits (ConvPc)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../zoo/apc.html">Autoencoding Probabilistic Circuits (APC)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../zoo/cms.html">Continuous Mixtures (CMs)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../zoo/socs.html">Sum of Compatible Squares (SOCS)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../zoo/pic.html">Probabilistic Integral Circuits (PICs)</a></li>
@@ -354,7 +353,8 @@
 <span class="sd">            tau: Optional sampling temperature override.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            Reconstructed/sample ``x`` tensor.</span>
+<span class="sd">            Reconstructed/sample ``x`` tensor. Any output scaling is</span>
+<span class="sd">            caller-managed; this method does not apply range transforms.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">trace_tensor</span><span class="p">(</span><span class="s2">&quot;apc.decode.z_in&quot;</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
         <span class="n">tau_eff</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">sample_tau</span> <span class="k">if</span> <span class="n">tau</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">tau</span>
@@ -363,8 +363,6 @@
             <span class="n">trace_tensor</span><span class="p">(</span><span class="s2">&quot;apc.decode.x_rec&quot;</span><span class="p">,</span> <span class="n">x_rec</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">x_rec</span>
         <span class="n">x_rec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">decoder</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">x_rec</span><span class="o">.</span><span class="n">dim</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
-            <span class="n">x_rec</span> <span class="o">=</span> <span class="p">(</span><span class="n">x_rec</span> <span class="o">+</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">n_bits</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
         <span class="n">trace_tensor</span><span class="p">(</span><span class="s2">&quot;apc.decode.x_rec&quot;</span><span class="p">,</span> <span class="n">x_rec</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">x_rec</span></div>
 
@@ -403,18 +401,11 @@
         <span class="k">return</span> <span class="n">rearrange</span><span class="p">(</span><span class="n">tensor</span><span class="p">,</span> <span class="s2">&quot;b ... -&gt; b (...)&quot;</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_reconstruction_loss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">x_rec</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute reconstruction loss following the reference APC reduction.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute reconstruction loss with feature-sum / batch-mean reduction.</span>
 
-<span class="sd">        For image-like tensors (rank &gt; 2), this applies the same legacy scaling</span>
-<span class="sd">        used in the reference implementation before the reconstruction criterion.</span>
+<span class="sd">        Input preprocessing is intentionally caller-controlled. This method</span>
+<span class="sd">        compares ``x`` and ``x_rec`` directly.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">dim</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
-            <span class="c1"># Preserve the reference APC&#39;s historical scaling behavior exactly.</span>
-            <span class="c1"># NOTE: This uses n_bits**2 - 1 (not 2**n_bits - 1).</span>
-            <span class="n">denom</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">n_bits</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
-            <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">/</span> <span class="n">denom</span> <span class="o">*</span> <span class="mf">2.0</span> <span class="o">-</span> <span class="mf">1.0</span>
-            <span class="n">x_rec</span> <span class="o">=</span> <span class="n">x_rec</span> <span class="o">/</span> <span class="n">denom</span> <span class="o">*</span> <span class="mf">2.0</span> <span class="o">-</span> <span class="mf">1.0</span>
-
         <span class="n">x_flat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_flatten_tensor</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
         <span class="n">x_rec_flat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_flatten_tensor</span><span class="p">(</span><span class="n">x_rec</span><span class="p">)</span>
 
@@ -432,18 +423,26 @@
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">_kld_from_stats</span><span class="p">(</span><span class="n">stats</span><span class="p">:</span> <span class="n">LatentStats</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute mean KL divergence to standard Normal from moment stats.&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">stats</span><span class="o">.</span><span class="n">mu</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="n">stats</span><span class="o">.</span><span class="n">logvar</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute mean KL divergence from exact encoder-provided per-sample KL.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">stats</span><span class="o">.</span><span class="n">kld_per_sample</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="s2">&quot;LatentStats.kld_per_sample must be a Tensor.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">stats</span><span class="o">.</span><span class="n">kld_per_sample</span><span class="o">.</span><span class="n">dim</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Latent stats shape mismatch: mu </span><span class="si">{</span><span class="nb">tuple</span><span class="p">(</span><span class="n">stats</span><span class="o">.</span><span class="n">mu</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span><span class="si">}</span><span class="s2"> vs logvar </span><span class="si">{</span><span class="nb">tuple</span><span class="p">(</span><span class="n">stats</span><span class="o">.</span><span class="n">logvar</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span>
+                <span class="s2">&quot;LatentStats.kld_per_sample must have shape (batch,), &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;got </span><span class="si">{</span><span class="nb">tuple</span><span class="p">(</span><span class="n">stats</span><span class="o">.</span><span class="n">kld_per_sample</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span>
             <span class="p">)</span>
-        <span class="n">reduce_dims</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">stats</span><span class="o">.</span><span class="n">mu</span><span class="o">.</span><span class="n">dim</span><span class="p">()))</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">reduce_dims</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="s2">&quot;Latent stats must include at least one latent dimension.&quot;</span><span class="p">)</span>
-        <span class="n">kld_per_sample</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">stats</span><span class="o">.</span><span class="n">mu</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">stats</span><span class="o">.</span><span class="n">logvar</span><span class="o">.</span><span class="n">exp</span><span class="p">()</span> <span class="o">-</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">stats</span><span class="o">.</span><span class="n">logvar</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span>
-            <span class="n">dim</span><span class="o">=</span><span class="n">reduce_dims</span>
-        <span class="p">)</span>
-        <span class="k">return</span> <span class="n">kld_per_sample</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">stats</span><span class="o">.</span><span class="n">mu</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">stats</span><span class="o">.</span><span class="n">kld_per_sample</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span>
+                <span class="s2">&quot;Latent stats batch mismatch: &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;mu batch </span><span class="si">{</span><span class="n">stats</span><span class="o">.</span><span class="n">mu</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> vs kld_per_sample batch </span><span class="si">{</span><span class="n">stats</span><span class="o">.</span><span class="n">kld_per_sample</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">.&quot;</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">stats</span><span class="o">.</span><span class="n">kld_per_sample</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_float_scalar_zero</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a floating scalar zero on ``x``&#39;s device.&quot;&quot;&quot;</span>
+        <span class="n">dtype</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">dtype</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">is_floating_point</span><span class="p">()</span> <span class="k">else</span> <span class="n">torch</span><span class="o">.</span><span class="n">get_default_dtype</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">((),</span> <span class="n">device</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span>
 
 <div class="viewcode-block" id="AutoencodingPC.loss_components">
 <a class="viewcode-back" href="../../../../zoo/apc.html#spflow.zoo.apc.model.AutoencodingPC.loss_components">[docs]</a>
@@ -457,21 +456,100 @@
 <span class="sd">            Dictionary with scalar terms ``rec``, ``kld``, ``nll``, ``total``</span>
 <span class="sd">            and helpful intermediates ``z``, ``x_rec``, ``mu``, ``logvar``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">del</span> <span class="n">x</span>
-        <span class="k">raise</span> <span class="n">UnsupportedOperationError</span><span class="p">(</span>
-            <span class="s2">&quot;APC KL-style training is unavailable after sample rollback. &quot;</span>
-            <span class="s2">&quot;loss_components() is currently unsupported.&quot;</span>
-        <span class="p">)</span></div>
+        <span class="n">tau_eff</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">sample_tau</span>
+        <span class="n">weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">loss_weights</span>
+
+        <span class="n">need_stats</span> <span class="o">=</span> <span class="p">(</span><span class="n">weights</span><span class="o">.</span><span class="n">kld</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">)</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">train_decode_mpe</span>
+        <span class="n">need_z_samples</span> <span class="o">=</span> <span class="p">(</span><span class="n">weights</span><span class="o">.</span><span class="n">rec</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">weights</span><span class="o">.</span><span class="n">nll</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">)</span>
+
+        <span class="n">stats</span><span class="p">:</span> <span class="n">LatentStats</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">z_samples</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">components</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">if</span> <span class="n">need_stats</span> <span class="ow">or</span> <span class="n">need_z_samples</span><span class="p">:</span>
+            <span class="n">encoded</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoder</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+                <span class="n">x</span><span class="p">,</span>
+                <span class="n">mpe</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="n">tau</span><span class="o">=</span><span class="n">tau_eff</span><span class="p">,</span>
+                <span class="n">return_latent_stats</span><span class="o">=</span><span class="n">need_stats</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">need_stats</span><span class="p">:</span>
+                <span class="k">if</span> <span class="p">(</span>
+                    <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">encoded</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span>
+                    <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">encoded</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span>
+                    <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">encoded</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">LatentStats</span><span class="p">)</span>
+                    <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">encoded</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">Tensor</span><span class="p">)</span>
+                <span class="p">):</span>
+                    <span class="k">raise</span> <span class="n">UnsupportedOperationError</span><span class="p">(</span>
+                        <span class="s2">&quot;Encoder must return (LatentStats, z_samples) when return_latent_stats=True.&quot;</span>
+                    <span class="p">)</span>
+                <span class="n">stats</span> <span class="o">=</span> <span class="n">encoded</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">z_samples</span> <span class="o">=</span> <span class="n">encoded</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">components</span><span class="p">[</span><span class="s2">&quot;mu&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">mu</span>
+                <span class="n">components</span><span class="p">[</span><span class="s2">&quot;logvar&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">logvar</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">encoded</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="n">UnsupportedOperationError</span><span class="p">(</span>
+                        <span class="s2">&quot;Encoder must return latent samples as a Tensor when return_latent_stats=False.&quot;</span>
+                    <span class="p">)</span>
+                <span class="n">z_samples</span> <span class="o">=</span> <span class="n">encoded</span>
+
+        <span class="k">if</span> <span class="n">z_samples</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">components</span><span class="p">[</span><span class="s2">&quot;z&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">z_samples</span>
+
+        <span class="n">rec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_float_scalar_zero</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">weights</span><span class="o">.</span><span class="n">rec</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">z_samples</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Reconstruction loss requested but latent samples were not computed.&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">train_decode_mpe</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">stats</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">UnsupportedOperationError</span><span class="p">(</span>
+                        <span class="s2">&quot;train_decode_mpe=True requires encoder latent stats; &quot;</span>
+                        <span class="s2">&quot;disable train_decode_mpe or use an encoder that supports latent stats.&quot;</span>
+                    <span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">stats</span><span class="o">.</span><span class="n">decode_latent</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="n">UnsupportedOperationError</span><span class="p">(</span>
+                        <span class="s2">&quot;train_decode_mpe=True requires LatentStats.decode_latent to be a Tensor.&quot;</span>
+                    <span class="p">)</span>
+                <span class="n">z_to_decode</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">decode_latent</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">z_to_decode</span> <span class="o">=</span> <span class="n">z_samples</span>
+            <span class="n">x_rec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">z_to_decode</span><span class="p">,</span> <span class="n">mpe</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="n">tau_eff</span><span class="p">)</span>
+            <span class="n">rec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_reconstruction_loss</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x_rec</span><span class="p">)</span>
+            <span class="n">components</span><span class="p">[</span><span class="s2">&quot;x_rec&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">x_rec</span>
+
+        <span class="n">nll</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_float_scalar_zero</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">weights</span><span class="o">.</span><span class="n">nll</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">nll_x_and_z</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">z_samples</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Joint NLL requested but latent samples were not computed.&quot;</span><span class="p">)</span>
+                <span class="n">lls</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">joint_log_likelihood</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">z_samples</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">lls</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_likelihood_x</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+            <span class="n">nll</span> <span class="o">=</span> <span class="o">-</span><span class="n">lls</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="n">kld</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_float_scalar_zero</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">weights</span><span class="o">.</span><span class="n">kld</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">stats</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">UnsupportedOperationError</span><span class="p">(</span>
+                    <span class="s2">&quot;KL loss requires encoder latent stats, but they are unavailable. &quot;</span>
+                    <span class="s2">&quot;Set loss_weights.kld=0 or use an encoder that supports return_latent_stats=True.&quot;</span>
+                <span class="p">)</span>
+            <span class="n">kld</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kld_from_stats</span><span class="p">(</span><span class="n">stats</span><span class="p">)</span>
+
+        <span class="n">total</span> <span class="o">=</span> <span class="n">weights</span><span class="o">.</span><span class="n">rec</span> <span class="o">*</span> <span class="n">rec</span> <span class="o">+</span> <span class="n">weights</span><span class="o">.</span><span class="n">kld</span> <span class="o">*</span> <span class="n">kld</span> <span class="o">+</span> <span class="n">weights</span><span class="o">.</span><span class="n">nll</span> <span class="o">*</span> <span class="n">nll</span>
+        <span class="n">components</span><span class="p">[</span><span class="s2">&quot;rec&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">rec</span>
+        <span class="n">components</span><span class="p">[</span><span class="s2">&quot;kld&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kld</span>
+        <span class="n">components</span><span class="p">[</span><span class="s2">&quot;nll&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">nll</span>
+        <span class="n">components</span><span class="p">[</span><span class="s2">&quot;total&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">total</span>
+        <span class="k">return</span> <span class="n">components</span></div>
 
 
 <div class="viewcode-block" id="AutoencodingPC.loss">
 <a class="viewcode-back" href="../../../../zoo/apc.html#spflow.zoo.apc.model.AutoencodingPC.loss">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">loss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return only the weighted total APC loss.&quot;&quot;&quot;</span>
-        <span class="k">del</span> <span class="n">x</span>
-        <span class="k">raise</span> <span class="n">UnsupportedOperationError</span><span class="p">(</span>
-            <span class="s2">&quot;APC KL-style training is unavailable after sample rollback. loss() is currently unsupported.&quot;</span>
-        <span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss_components</span><span class="p">(</span><span class="n">x</span><span class="p">)[</span><span class="s2">&quot;total&quot;</span><span class="p">]</span></div>
 
 
 <div class="viewcode-block" id="AutoencodingPC.log_likelihood_x">
@@ -491,7 +569,7 @@
 <div class="viewcode-block" id="AutoencodingPC.forward">
 <a class="viewcode-back" href="../../../../zoo/apc.html#spflow.zoo.apc.model.AutoencodingPC.forward">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Alias for :meth:`loss_components` to integrate with training loops.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Alias for :math:`loss_components` to integrate with training loops.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss_components</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
 
 

@@ -206,7 +206,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../zoo/einet.html">Einsum Networks (Einet)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../zoo/hclt.html">Hidden Chow-Liu Trees (HCLT)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../zoo/conv_pc.html">Convolutional Probabilistic Circuits (ConvPc)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../zoo/apc.html">Autoencoding Probabilistic Circuits (APC)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../zoo/cms.html">Continuous Mixtures (CMs)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../zoo/socs.html">Sum of Compatible Squares (SOCS)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../zoo/pic.html">Probabilistic Integral Circuits (PICs)</a></li>
@@ -282,7 +281,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">torch.optim</span><span class="w"> </span><span class="kn">import</span> <span class="n">Adam</span><span class="p">,</span> <span class="n">Optimizer</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">torch.utils.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataLoader</span><span class="p">,</span> <span class="n">TensorDataset</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">InvalidParameterError</span><span class="p">,</span> <span class="n">UnsupportedOperationError</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">InvalidParameterError</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.zoo.apc.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">ApcTrainConfig</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.zoo.apc.model</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoencodingPC</span>
 
@@ -338,10 +337,15 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        Detached tensor metrics produced by ``model.loss_components``.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">del</span> <span class="n">model</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">grad_clip_norm</span>
-    <span class="k">raise</span> <span class="n">UnsupportedOperationError</span><span class="p">(</span>
-        <span class="s2">&quot;APC training helpers are unavailable after sample rollback.&quot;</span>
-    <span class="p">)</span></div>
+    <span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">_extract_batch_tensor</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">_model_device</span><span class="p">(</span><span class="n">model</span><span class="p">))</span>
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">(</span><span class="n">set_to_none</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">metrics</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">loss_components</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;total&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">grad_clip_norm</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">nn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">clip_grad_norm_</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">max_norm</span><span class="o">=</span><span class="n">grad_clip_norm</span><span class="p">)</span>
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+    <span class="k">return</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">value</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">metrics</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">)}</span></div>
 
 
 
@@ -363,10 +367,30 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        Mean ``rec``, ``kld``, ``nll``, and ``total`` metrics.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">del</span> <span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">batch_size</span>
-    <span class="k">raise</span> <span class="n">UnsupportedOperationError</span><span class="p">(</span>
-        <span class="s2">&quot;APC training helpers are unavailable after sample rollback.&quot;</span>
-    <span class="p">)</span></div>
+    <span class="n">loader</span> <span class="o">=</span> <span class="n">_to_loader</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">was_training</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">training</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+
+    <span class="n">totals</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;rec&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s2">&quot;kld&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s2">&quot;nll&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s2">&quot;total&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">}</span>
+    <span class="n">n_samples</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">device</span> <span class="o">=</span> <span class="n">_model_device</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">loader</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">_extract_batch_tensor</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+            <span class="n">metrics</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">loss_components</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+            <span class="n">batch_size_eff</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">n_samples</span> <span class="o">+=</span> <span class="n">batch_size_eff</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">totals</span><span class="p">:</span>
+                <span class="n">totals</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">+=</span> <span class="nb">float</span><span class="p">(</span><span class="n">metrics</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">())</span> <span class="o">*</span> <span class="n">batch_size_eff</span>
+
+    <span class="k">if</span> <span class="n">was_training</span><span class="p">:</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">n_samples</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="s2">&quot;Cannot evaluate APC on empty data.&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">value</span> <span class="o">/</span> <span class="n">n_samples</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">totals</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span></div>
 
 
 
@@ -393,10 +417,49 @@
 <span class="sd">        Per-epoch metric dictionaries including train metrics and, when provided,</span>
 <span class="sd">        validation metrics.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">del</span> <span class="n">model</span><span class="p">,</span> <span class="n">train_data</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">val_data</span>
-    <span class="k">raise</span> <span class="n">UnsupportedOperationError</span><span class="p">(</span>
-        <span class="s2">&quot;APC training helpers are unavailable after sample rollback.&quot;</span>
-    <span class="p">)</span></div>
+    <span class="n">train_loader</span> <span class="o">=</span> <span class="n">_to_loader</span><span class="p">(</span><span class="n">train_data</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">val_loader</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="kc">None</span> <span class="k">if</span> <span class="n">val_data</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">_to_loader</span><span class="p">(</span><span class="n">val_data</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">optimizer</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">optimizer</span> <span class="o">=</span> <span class="n">Adam</span><span class="p">(</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span>
+            <span class="n">lr</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">learning_rate</span><span class="p">,</span>
+            <span class="n">weight_decay</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">weight_decay</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="n">history</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">epochs</span><span class="p">):</span>
+        <span class="n">totals</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;rec&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s2">&quot;kld&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s2">&quot;nll&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s2">&quot;total&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">}</span>
+        <span class="n">n_samples</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">train_loader</span><span class="p">:</span>
+            <span class="n">metrics</span> <span class="o">=</span> <span class="n">train_apc_step</span><span class="p">(</span>
+                <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+                <span class="n">batch</span><span class="o">=</span><span class="n">batch</span><span class="p">,</span>
+                <span class="n">optimizer</span><span class="o">=</span><span class="n">optimizer</span><span class="p">,</span>
+                <span class="n">grad_clip_norm</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">grad_clip_norm</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">_extract_batch_tensor</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+            <span class="n">batch_size_eff</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">n_samples</span> <span class="o">+=</span> <span class="n">batch_size_eff</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">totals</span><span class="p">:</span>
+                <span class="n">totals</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">+=</span> <span class="nb">float</span><span class="p">(</span><span class="n">metrics</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">())</span> <span class="o">*</span> <span class="n">batch_size_eff</span>
+
+        <span class="k">if</span> <span class="n">n_samples</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="s2">&quot;Cannot fit APC on empty training data.&quot;</span><span class="p">)</span>
+
+        <span class="n">row</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;epoch&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">epoch</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)}</span>
+        <span class="n">row</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="sa">f</span><span class="s2">&quot;train_</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">value</span> <span class="o">/</span> <span class="n">n_samples</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">totals</span><span class="o">.</span><span class="n">items</span><span class="p">()})</span>
+
+        <span class="k">if</span> <span class="n">val_loader</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">val_metrics</span> <span class="o">=</span> <span class="n">evaluate_apc</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">val_loader</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">batch_size</span><span class="p">)</span>
+            <span class="n">row</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="sa">f</span><span class="s2">&quot;val_</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">value</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">val_metrics</span><span class="o">.</span><span class="n">items</span><span class="p">()})</span>
+
+        <span class="n">history</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">history</span></div>
 
 </pre></div>
         </article>

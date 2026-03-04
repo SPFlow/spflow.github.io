@@ -207,7 +207,6 @@
 <li class="toctree-l2"><a class="reference internal" href="einet.html">Einsum Networks (Einet)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hclt.html">Hidden Chow-Liu Trees (HCLT)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="conv_pc.html">Convolutional Probabilistic Circuits (ConvPc)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="apc.html">Autoencoding Probabilistic Circuits (APC)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="cms.html">Continuous Mixtures (CMs)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="socs.html">Sum of Compatible Squares (SOCS)</a></li>
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Probabilistic Integral Circuits (PICs)</a></li>
@@ -333,25 +332,42 @@
 <section id="minimal-example">
 <h2>Minimal Example<a class="headerlink" href="#minimal-example" title="Link to this heading">¶</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.meta.region_graph</span><span class="w"> </span><span class="kn">import</span> <span class="n">RegionGraph</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torch</span><span class="w"> </span><span class="kn">import</span> <span class="n">nn</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.meta</span><span class="w"> </span><span class="kn">import</span> <span class="n">Scope</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.meta.region_graph</span><span class="w"> </span><span class="kn">import</span> <span class="n">Region</span><span class="p">,</span> <span class="n">RegionGraph</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.zoo.pic</span><span class="w"> </span><span class="kn">import</span> <span class="n">rg2pic</span><span class="p">,</span> <span class="n">pic2qpc</span><span class="p">,</span> <span class="n">QuadratureRule</span><span class="p">,</span> <span class="n">PICInput</span>
 
 <span class="c1"># 1. Define a simple RegionGraph</span>
-<span class="n">rg</span> <span class="o">=</span> <span class="n">RegionGraph</span><span class="o">.</span><span class="n">from_nested_list</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+<span class="n">root</span> <span class="o">=</span> <span class="n">Region</span><span class="p">(</span><span class="n">Scope</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+<span class="n">left</span> <span class="o">=</span> <span class="n">Region</span><span class="p">(</span><span class="n">Scope</span><span class="p">([</span><span class="mi">0</span><span class="p">]))</span>
+<span class="n">right</span> <span class="o">=</span> <span class="n">Region</span><span class="p">(</span><span class="n">Scope</span><span class="p">([</span><span class="mi">1</span><span class="p">]))</span>
+<span class="n">root</span><span class="o">.</span><span class="n">add_partition</span><span class="p">((</span><span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">))</span>
+<span class="n">rg</span> <span class="o">=</span> <span class="n">RegionGraph</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
 
 <span class="c1"># 2. Define a leaf factory</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">MyInput</span><span class="p">(</span><span class="n">PICInput</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">MyInput</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scope</span><span class="p">,</span> <span class="n">latent_scope</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">scope</span> <span class="o">=</span> <span class="n">scope</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">latent_scope</span> <span class="o">=</span> <span class="n">latent_scope</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">materialize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">quadrature_rule</span><span class="p">):</span>
         <span class="c1"># Return a standard SPFlow module (e.g. Gaussian leaves)</span>
         <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.leaves</span><span class="w"> </span><span class="kn">import</span> <span class="n">Normal</span>
         <span class="n">K</span> <span class="o">=</span> <span class="n">quadrature_rule</span><span class="o">.</span><span class="n">points</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="k">return</span> <span class="n">Normal</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">scope</span><span class="p">,</span> <span class="n">channels</span><span class="o">=</span><span class="n">K</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">latent_scope</span><span class="o">.</span><span class="n">query</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Normal</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">scope</span><span class="p">,</span> <span class="n">out_channels</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Normal</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">scope</span><span class="p">,</span> <span class="n">out_channels</span><span class="o">=</span><span class="n">K</span><span class="p">)</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">ConstantOneFunction</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">z</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">device</span><span class="o">=</span><span class="n">z</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">z</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
 
 <span class="c1"># 3. Build symbolic PIC</span>
-<span class="n">pic</span> <span class="o">=</span> <span class="n">rg2pic</span><span class="p">(</span><span class="n">rg</span><span class="p">,</span> <span class="n">leaf_factory</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">z</span><span class="p">:</span> <span class="n">MyInput</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">z</span><span class="p">))</span>
+<span class="n">pic</span> <span class="o">=</span> <span class="n">rg2pic</span><span class="p">(</span>
+    <span class="n">rg</span><span class="p">,</span>
+    <span class="n">leaf_factory</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">z</span><span class="p">:</span> <span class="n">MyInput</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">z</span><span class="p">),</span>
+    <span class="n">function_factory</span><span class="o">=</span><span class="k">lambda</span> <span class="n">z_dim</span><span class="p">,</span> <span class="n">y_dim</span><span class="p">:</span> <span class="n">ConstantOneFunction</span><span class="p">(),</span>
+<span class="p">)</span>
 
 <span class="c1"># 4. Materialize to QPC</span>
 <span class="n">q_rule</span> <span class="o">=</span> <span class="n">QuadratureRule</span><span class="p">(</span>
@@ -587,7 +603,7 @@ marginalization. Defaults to True.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="spflow.zoo.pic.Integral.sample">
-<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_mpe</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/pic/integral.html#Integral.sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.pic.Integral.sample" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_mpe</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_leaf_params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/pic/integral.html#Integral.sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.pic.Integral.sample" title="Link to this definition">¶</a></dt>
 <dd><p>Generate samples from the module’s probability distribution.</p>
 <p>Supports both random sampling and MAP inference (via is_mpe flag).
 Handles conditional sampling through evidence in data tensor.</p>
@@ -600,13 +616,16 @@ where to sample. If None, creates new tensor. Defaults to None.</p></li>
 <li><p><strong>is_mpe</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>optional</em>) – If True, returns most probable values instead of
 random samples. Defaults to False.</p></li>
 <li><p><strong>cache</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span> <span class="pre">|</span> <span class="pre">None</span></code>, <em>optional</em>) – Cache for intermediate computations. Defaults to None.</p></li>
+<li><p><strong>return_leaf_params</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>optional</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, also return leaf
+distribution parameters gathered during traversal.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Sampled values of shape (batch_size, num_features).</p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<code class="xref py py-class docutils literal notranslate"><span class="pre">LeafParamRecord</span></code>]]</span></p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Tensor</p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Sampled values of shape (batch_size, num_features), optionally with
+collected leaf-parameter records.</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.14)"><strong>ValueError</strong></a> – If sampling parameters are incompatible.</p>
@@ -697,7 +716,7 @@ marginalization. Defaults to True.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="spflow.zoo.pic.PICSum.sample">
-<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_mpe</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/pic/pipeline.html#PICSum.sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.pic.PICSum.sample" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_mpe</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_leaf_params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/pic/pipeline.html#PICSum.sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.pic.PICSum.sample" title="Link to this definition">¶</a></dt>
 <dd><p>Generate samples from the module’s probability distribution.</p>
 <p>Supports both random sampling and MAP inference (via is_mpe flag).
 Handles conditional sampling through evidence in data tensor.</p>
@@ -710,13 +729,16 @@ where to sample. If None, creates new tensor. Defaults to None.</p></li>
 <li><p><strong>is_mpe</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>optional</em>) – If True, returns most probable values instead of
 random samples. Defaults to False.</p></li>
 <li><p><strong>cache</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span> <span class="pre">|</span> <span class="pre">None</span></code>, <em>optional</em>) – Cache for intermediate computations. Defaults to None.</p></li>
+<li><p><strong>return_leaf_params</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>optional</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, also return leaf
+distribution parameters gathered during traversal.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Sampled values of shape (batch_size, num_features).</p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<code class="xref py py-class docutils literal notranslate"><span class="pre">LeafParamRecord</span></code>]]</span></p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Tensor</p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Sampled values of shape (batch_size, num_features), optionally with
+collected leaf-parameter records.</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.14)"><strong>ValueError</strong></a> – If sampling parameters are incompatible.</p>
@@ -807,7 +829,7 @@ marginalization. Defaults to True.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="spflow.zoo.pic.PICProduct.sample">
-<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_mpe</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/pic/pipeline.html#PICProduct.sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.pic.PICProduct.sample" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_mpe</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_leaf_params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/pic/pipeline.html#PICProduct.sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.pic.PICProduct.sample" title="Link to this definition">¶</a></dt>
 <dd><p>Generate samples from the module’s probability distribution.</p>
 <p>Supports both random sampling and MAP inference (via is_mpe flag).
 Handles conditional sampling through evidence in data tensor.</p>
@@ -820,13 +842,16 @@ where to sample. If None, creates new tensor. Defaults to None.</p></li>
 <li><p><strong>is_mpe</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>optional</em>) – If True, returns most probable values instead of
 random samples. Defaults to False.</p></li>
 <li><p><strong>cache</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span> <span class="pre">|</span> <span class="pre">None</span></code>, <em>optional</em>) – Cache for intermediate computations. Defaults to None.</p></li>
+<li><p><strong>return_leaf_params</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>optional</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, also return leaf
+distribution parameters gathered during traversal.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Sampled values of shape (batch_size, num_features).</p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<code class="xref py py-class docutils literal notranslate"><span class="pre">LeafParamRecord</span></code>]]</span></p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Tensor</p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Sampled values of shape (batch_size, num_features), optionally with
+collected leaf-parameter records.</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.14)"><strong>ValueError</strong></a> – If sampling parameters are incompatible.</p>
@@ -1371,7 +1396,7 @@ marginalization. Defaults to True.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="spflow.zoo.pic.TensorizedQPC.sample">
-<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_mpe</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/pic/tensorized/qpc.html#TensorizedQPC.sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.pic.TensorizedQPC.sample" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_mpe</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_leaf_params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spflow/zoo/pic/tensorized/qpc.html#TensorizedQPC.sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spflow.zoo.pic.TensorizedQPC.sample" title="Link to this definition">¶</a></dt>
 <dd><p>Generate samples from the module’s probability distribution.</p>
 <p>Supports both random sampling and MAP inference (via is_mpe flag).
 Handles conditional sampling through evidence in data tensor.</p>
@@ -1384,13 +1409,16 @@ where to sample. If None, creates new tensor. Defaults to None.</p></li>
 <li><p><strong>is_mpe</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>optional</em>) – If True, returns most probable values instead of
 random samples. Defaults to False.</p></li>
 <li><p><strong>cache</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Cache</span> <span class="pre">|</span> <span class="pre">None</span></code>, <em>optional</em>) – Cache for intermediate computations. Defaults to None.</p></li>
+<li><p><strong>return_leaf_params</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <em>optional</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, also return leaf
+distribution parameters gathered during traversal.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Sampled values of shape (batch_size, num_features).</p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<code class="xref py py-class docutils literal notranslate"><span class="pre">LeafParamRecord</span></code>]]</span></p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Tensor</p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Sampled values of shape (batch_size, num_features), optionally with
+collected leaf-parameter records.</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.14)"><strong>ValueError</strong></a> – If sampling parameters are incompatible.</p>

@@ -206,7 +206,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../zoo/einet.html">Einsum Networks (Einet)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../zoo/hclt.html">Hidden Chow-Liu Trees (HCLT)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../zoo/conv_pc.html">Convolutional Probabilistic Circuits (ConvPc)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../zoo/apc.html">Autoencoding Probabilistic Circuits (APC)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../zoo/cms.html">Continuous Mixtures (CMs)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../zoo/socs.html">Sum of Compatible Squares (SOCS)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../zoo/pic.html">Probabilistic Integral Circuits (PICs)</a></li>
@@ -289,7 +288,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.sums.sum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sum</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.utils.cache</span><span class="w"> </span><span class="kn">import</span> <span class="n">Cache</span><span class="p">,</span> <span class="n">cached</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.utils.inner_product</span><span class="w"> </span><span class="kn">import</span> <span class="n">inner_product_matrix</span><span class="p">,</span> <span class="n">log_self_inner_product_scalar</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.utils.sampling_context</span><span class="w"> </span><span class="kn">import</span> <span class="n">SamplingContext</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.utils.sampling_context</span><span class="w"> </span><span class="kn">import</span> <span class="n">LeafParamRecord</span><span class="p">,</span> <span class="n">SamplingContext</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_is_signed_categorical</span><span class="p">(</span><span class="n">module</span><span class="p">:</span> <span class="n">Module</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
@@ -470,7 +469,8 @@
         <span class="n">data</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">is_mpe</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">cache</span><span class="p">:</span> <span class="n">Cache</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+        <span class="n">return_leaf_params</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">LeafParamRecord</span><span class="p">]]:</span>
         <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prepare_sample_data</span><span class="p">(</span><span class="n">num_samples</span><span class="o">=</span><span class="n">num_samples</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">is_mpe</span><span class="p">:</span>
@@ -493,6 +493,7 @@
             <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
             <span class="n">is_mpe</span><span class="o">=</span><span class="n">is_mpe</span><span class="p">,</span>
             <span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">,</span>
+            <span class="n">return_leaf_params</span><span class="o">=</span><span class="n">return_leaf_params</span><span class="p">,</span>
         <span class="p">)</span></div>
 
 
@@ -503,9 +504,7 @@
         <span class="n">cache</span><span class="p">:</span> <span class="n">Cache</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">is_differentiable</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">UnsupportedOperationError</span><span class="p">(</span>
-                <span class="s2">&quot;SOCS.sample() does not support differentiable routing yet.&quot;</span>
-            <span class="p">)</span>
+            <span class="k">raise</span> <span class="n">UnsupportedOperationError</span><span class="p">(</span><span class="s2">&quot;SOCS.sample() does not support differentiable routing yet.&quot;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">is_mpe</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">UnsupportedOperationError</span><span class="p">(</span><span class="s2">&quot;SOCS.mpe() is not supported (use MAP on components if needed).&quot;</span><span class="p">)</span>

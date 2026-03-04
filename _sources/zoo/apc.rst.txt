@@ -1,3 +1,5 @@
+:orphan:
+
 Autoencoding Probabilistic Circuits (APC)
 =========================================
 
@@ -17,8 +19,11 @@ APC is described in:
 Status Note
 -----------
 
-APC inference APIs remain available (encode/decode/sampling/likelihood). Latent-stat extraction and KL-style
-training helpers are currently unsupported.
+APC inference APIs remain available (encode/decode/sampling/likelihood), and the high-level
+``AutoencodingPC.loss_components``/``loss`` objective is available.
+APC encoders provide latent stats via ``encode(..., return_latent_stats=True)`` and ``latent_stats(...)``.
+For Normal latent leaves, stats are extracted from selected leaf parameters (reference-style ``mu/logvar``).
+For other latent leaf families, APC falls back to posterior moment estimation from repeated posterior samples.
 
 Main Components
 ---------------
@@ -65,11 +70,10 @@ Minimal Example (Einet APC)
 .. code-block:: python
 
     import torch
-    from spflow.zoo.apc.config import ApcConfig, ApcLossWeights, ApcTrainConfig
+    from spflow.zoo.apc.config import ApcConfig, ApcLossWeights
     from spflow.zoo.apc.decoders import MLPDecoder1D
     from spflow.zoo.apc.encoders.einet_joint_encoder import EinetJointEncoder
     from spflow.zoo.apc.model import AutoencodingPC
-    from spflow.zoo.apc.train import fit_apc
 
     encoder = EinetJointEncoder(
         num_x_features=32,
@@ -91,10 +95,16 @@ Minimal Example (Einet APC)
     )
     model = AutoencodingPC(encoder=encoder, decoder=decoder, config=cfg)
 
-    data = torch.randn(512, 32)
-    history = fit_apc(model, data, config=ApcTrainConfig(epochs=5, batch_size=64))
+    data = torch.randn(64, 32)
+    z = model.encode(data)
+    recon = model.decode(z)
+    log_px = model.log_likelihood_x(data)
+
+    print(z.shape, recon.shape, log_px.shape)
 
 Conv-PC APC Note
 ----------------
 
-``ConvPcJointEncoder`` supports image-shaped inputs and latent fusion at a configurable hierarchy depth. In the current implementation, ``latent_dim`` must match the feature count at the selected latent fusion depth.
+``ConvPcJointEncoder`` supports image-shaped inputs and latent fusion at a configurable hierarchy depth.
+The Conv-PC APC path now uses the reference architecture only. Latent-width mismatches at the
+fusion depth are handled via latent feature reduction/packing when needed.

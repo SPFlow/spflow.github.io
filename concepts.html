@@ -207,7 +207,6 @@
 <li class="toctree-l2"><a class="reference internal" href="zoo/einet.html">Einsum Networks (Einet)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="zoo/hclt.html">Hidden Chow-Liu Trees (HCLT)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="zoo/conv_pc.html">Convolutional Probabilistic Circuits (ConvPc)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="zoo/apc.html">Autoencoding Probabilistic Circuits (APC)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="zoo/cms.html">Continuous Mixtures (CMs)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="zoo/socs.html">Sum of Compatible Squares (SOCS)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="zoo/pic.html">Probabilistic Integral Circuits (PICs)</a></li>
@@ -279,7 +278,7 @@
           <section id="concepts">
 <h1>Concepts<a class="headerlink" href="#concepts" title="Link to this heading">¶</a></h1>
 <p>This page is a stable, linkable reference for SPFlow concepts (separate from the API reference and notebooks).</p>
-<p>See also <span class="xref std std-doc">SOCS</span> for details on signed circuits and compatibility.</p>
+<p>See also <a class="reference internal" href="zoo/socs.html"><span class="doc">SOCS</span></a> for details on signed circuits and compatibility.</p>
 <section id="shapes-and-dimensions">
 <span id="concepts-shapes-and-dimensions"></span><h2>Shapes and Dimensions<a class="headerlink" href="#shapes-and-dimensions" title="Link to this heading">¶</a></h2>
 <p>SPFlow modules use a consistent internal shape convention: <strong>(features, channels, repetitions)</strong>.
@@ -297,7 +296,7 @@ You will often see this displayed as <code class="docutils literal notranslate">
 <h3>Where shapes appear<a class="headerlink" href="#where-shapes-appear" title="Link to this heading">¶</a></h3>
 <ul class="simple">
 <li><p><strong>Input data</strong>: <code class="docutils literal notranslate"><span class="pre">data</span></code> is shaped <code class="docutils literal notranslate"><span class="pre">(batch,</span> <span class="pre">num_features)</span></code>.</p></li>
-<li><p><strong>Log-likelihood outputs</strong>: <code class="docutils literal notranslate"><span class="pre">log_likelihood</span></code> returns <code class="docutils literal notranslate"><span class="pre">(batch,</span> <span class="pre">out_features,</span> <span class="pre">out_channels)</span></code>.</p></li>
+<li><p><strong>Log-likelihood outputs</strong>: <code class="docutils literal notranslate"><span class="pre">log_likelihood</span></code> returns <code class="docutils literal notranslate"><span class="pre">(batch,</span> <span class="pre">out_features,</span> <span class="pre">out_channels,</span> <span class="pre">repetitions)</span></code>.</p></li>
 <li><p><strong>Module metadata</strong>: <a class="reference internal" href="api/module_shape.html#spflow.modules.module_shape.ModuleShape" title="spflow.modules.module_shape.ModuleShape"><code class="xref py py-class docutils literal notranslate"><span class="pre">spflow.modules.module_shape.ModuleShape</span></code></a> stores <code class="docutils literal notranslate"><span class="pre">(features,</span> <span class="pre">channels,</span> <span class="pre">repetitions)</span></code>.</p></li>
 </ul>
 </section>
@@ -388,9 +387,17 @@ This makes it easy to mix observed and unobserved variables in the same tensor.<
 </section>
 <section id="differentiable-sampling">
 <span id="concepts-differentiable-sampling"></span><h2>Differentiable Sampling<a class="headerlink" href="#differentiable-sampling" title="Link to this heading">¶</a></h2>
-<p>Differentiable sampling support has been removed from SPFlow.</p>
-<p>Use <code class="docutils literal notranslate"><span class="pre">sample</span></code> for stochastic generation and <code class="docutils literal notranslate"><span class="pre">mpe</span></code> for deterministic decoding.
-For APC models, latent-stat extraction and KL-style training helpers are currently unavailable.</p>
+<p>The main public sampling APIs are <code class="docutils literal notranslate"><span class="pre">sample</span></code>, <code class="docutils literal notranslate"><span class="pre">sample_with_evidence</span></code>, and <code class="docutils literal notranslate"><span class="pre">mpe</span></code>.
+All three APIs support <code class="docutils literal notranslate"><span class="pre">return_leaf_params=True</span></code> and then return
+<code class="docutils literal notranslate"><span class="pre">(samples,</span> <span class="pre">leaf_param_records)</span></code>.</p>
+<p>SPFlow also contains differentiable routing/sampling paths for selected modules and leaves, but this is an
+advanced interface and not uniformly supported across all components.
+For APC models specifically, inference APIs (encode/decode/sampling/likelihood) remain available, while
+the model objective APIs (<code class="docutils literal notranslate"><span class="pre">AutoencodingPC.loss_components</span></code> / <code class="docutils literal notranslate"><span class="pre">loss</span></code>) are available.
+Latent stats are available from APC encoders via exact selected latent leaf parameters.
+Exact latent KL/stat extraction is supported for Normal, Bernoulli, Binomial, and Categorical leaves
+against fixed canonical priors; unsupported latent families raise explicit errors (no fallback path).
+APC trainer helper functions in <code class="docutils literal notranslate"><span class="pre">spflow.zoo.apc.train</span></code> are available for lightweight training loops.</p>
 </section>
 <section id="caching-and-dispatch">
 <span id="concepts-caching-and-dispatch"></span><h2>Caching and Dispatch<a class="headerlink" href="#caching-and-dispatch" title="Link to this heading">¶</a></h2>

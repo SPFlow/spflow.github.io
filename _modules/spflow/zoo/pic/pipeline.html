@@ -206,7 +206,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../zoo/einet.html">Einsum Networks (Einet)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../zoo/hclt.html">Hidden Chow-Liu Trees (HCLT)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../zoo/conv_pc.html">Convolutional Probabilistic Circuits (ConvPc)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../zoo/apc.html">Autoencoding Probabilistic Circuits (APC)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../zoo/cms.html">Continuous Mixtures (CMs)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../zoo/socs.html">Sum of Compatible Squares (SOCS)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../zoo/pic.html">Probabilistic Integral Circuits (PICs)</a></li>
@@ -303,7 +302,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.products.elementwise_product</span><span class="w"> </span><span class="kn">import</span> <span class="n">ElementwiseProduct</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.modules.products.outer_product</span><span class="w"> </span><span class="kn">import</span> <span class="n">OuterProduct</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.utils.cache</span><span class="w"> </span><span class="kn">import</span> <span class="n">Cache</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.utils.sampling_context</span><span class="w"> </span><span class="kn">import</span> <span class="n">SamplingContext</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spflow.utils.sampling_context</span><span class="w"> </span><span class="kn">import</span> <span class="n">LeafParamRecord</span><span class="p">,</span> <span class="n">SamplingContext</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.zoo.pic.integral</span><span class="w"> </span><span class="kn">import</span> <span class="n">Integral</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.zoo.pic.weighted_sum</span><span class="w"> </span><span class="kn">import</span> <span class="n">WeightedSum</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spflow.zoo.pic.functional_sharing</span><span class="w"> </span><span class="kn">import</span> <span class="n">FunctionGroup</span>
@@ -403,7 +402,15 @@
 
 <div class="viewcode-block" id="PICSum.sample">
 <a class="viewcode-back" href="../../../../zoo/pic.html#spflow.zoo.pic.PICSum.sample">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_samples</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">is_mpe</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">sample</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">num_samples</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">is_mpe</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">cache</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">return_leaf_params</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">LeafParamRecord</span><span class="p">]]:</span>  <span class="c1"># pragma: no cover</span>
+        <span class="k">del</span> <span class="n">num_samples</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">is_mpe</span><span class="p">,</span> <span class="n">cache</span><span class="p">,</span> <span class="n">return_leaf_params</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;PICSum is symbolic; materialize to QPC with pic2qpc().&quot;</span><span class="p">)</span></div>
 
 
@@ -464,7 +471,15 @@
 
 <div class="viewcode-block" id="PICProduct.sample">
 <a class="viewcode-back" href="../../../../zoo/pic.html#spflow.zoo.pic.PICProduct.sample">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_samples</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">is_mpe</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">sample</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">num_samples</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">is_mpe</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">cache</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">return_leaf_params</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">LeafParamRecord</span><span class="p">]]:</span>  <span class="c1"># pragma: no cover</span>
+        <span class="k">del</span> <span class="n">num_samples</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">is_mpe</span><span class="p">,</span> <span class="n">cache</span><span class="p">,</span> <span class="n">return_leaf_params</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;PICProduct is symbolic; materialize to QPC with pic2qpc().&quot;</span><span class="p">)</span></div>
 
 

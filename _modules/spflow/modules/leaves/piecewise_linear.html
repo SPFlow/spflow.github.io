@@ -206,7 +206,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../zoo/einet.html">Einsum Networks (Einet)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../zoo/hclt.html">Hidden Chow-Liu Trees (HCLT)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../zoo/conv_pc.html">Convolutional Probabilistic Circuits (ConvPc)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../zoo/apc.html">Autoencoding Probabilistic Circuits (APC)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../zoo/cms.html">Continuous Mixtures (CMs)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../zoo/socs.html">Sum of Compatible Squares (SOCS)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../zoo/pic.html">Probabilistic Integral Circuits (PICs)</a></li>
@@ -904,6 +903,11 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            Sampled data tensor.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">return_leaf_params</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">UnsupportedOperationError</span><span class="p">(</span>
+                <span class="s2">&quot;PiecewiseLinear.sample() does not support return_leaf_params=True yet.&quot;</span>
+            <span class="p">)</span>
+
         <span class="k">if</span> <span class="n">sampling_ctx</span><span class="o">.</span><span class="n">is_differentiable</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">UnsupportedOperationError</span><span class="p">(</span>
                 <span class="s2">&quot;PiecewiseLinear.sample() does not support differentiable routing yet.&quot;</span>
