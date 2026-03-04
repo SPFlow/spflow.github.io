@@ -215,7 +215,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../guides/user_guide.html">User Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../guides/dev_guide.html">Developer Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../guides/apc_mnist_guide.html">APC MNIST Guide (Simplified)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../guides/apc_mnist_guide.html">APC MNIST Training Example</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../guides/sklearn.html">Using SPFlow with sklearn</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../../api/index.html">API Documentation</a><input aria-label="Toggle navigation of API Documentation" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/base_modules.html">Base Classes</a></li>
@@ -614,7 +614,6 @@
         <span class="n">sampling_ctx</span><span class="p">:</span> <span class="n">SamplingContext</span><span class="p">,</span>
         <span class="n">cache</span><span class="p">:</span> <span class="n">Cache</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
-
         <span class="c1"># if the model only has one root node, we can directly sample from the mixing layer</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_root_nodes</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
             <span class="n">sample_root</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_node</span><span class="o">.</span><span class="n">inputs</span>

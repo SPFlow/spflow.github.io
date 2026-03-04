@@ -215,7 +215,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../guides/user_guide.html">User Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../guides/dev_guide.html">Developer Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../guides/apc_mnist_guide.html">APC MNIST Guide (Simplified)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../guides/apc_mnist_guide.html">APC MNIST Training Example</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../guides/sklearn.html">Using SPFlow with sklearn</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../../api/index.html">API Documentation</a><input aria-label="Toggle navigation of API Documentation" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/base_modules.html">Base Classes</a></li>
@@ -453,13 +453,18 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">probs</span> <span class="o">=</span> <span class="n">params_dict</span><span class="p">[</span><span class="s2">&quot;probs&quot;</span><span class="p">]</span>  <span class="c1"># Uses property setter</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">_torch_distribution_class_with_differentiable_sampling</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">type</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">distributions</span><span class="o">.</span><span class="n">Distribution</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_torch_distribution_class_with_differentiable_sampling</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">type</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">distributions</span><span class="o">.</span><span class="n">Distribution</span><span class="p">]:</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">differentiable_sampling_method</span> <span class="o">==</span> <span class="n">BinomialDifferentiableSamplingMethod</span><span class="o">.</span><span class="n">NORMAL</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">BinomialWithDifferentiableSamplingNormal</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">differentiable_sampling_method</span> <span class="o">==</span> <span class="n">BinomialDifferentiableSamplingMethod</span><span class="o">.</span><span class="n">SIMPLE</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">BinomialWithDifferentiableSamplingSIMPLE</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported differentiable sampling method: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">differentiable_sampling_method</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Unsupported differentiable sampling method: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">differentiable_sampling_method</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span></div>
+
 
 
 <span class="k">class</span><span class="w"> </span><span class="nc">BinomialWithDifferentiableSamplingNormal</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">distributions</span><span class="o">.</span><span class="n">Binomial</span><span class="p">):</span>
@@ -497,6 +502,7 @@
         <span class="c1"># Straight-through estimator: hard forward value, identity gradient.</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">sample_hard</span> <span class="o">-</span> <span class="n">sample_cont</span><span class="p">)</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span> <span class="o">+</span> <span class="n">sample_cont</span>
 
+
 <span class="k">class</span><span class="w"> </span><span class="nc">BinomialWithDifferentiableSamplingSIMPLE</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">distributions</span><span class="o">.</span><span class="n">Binomial</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Binomial distribution with differentiable rsample via SIMPLE over counts {0..n}.</span>
 
@@ -522,7 +528,9 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;total_count must be &gt;= 0, got max(total_count)=</span><span class="si">{</span><span class="n">max_total</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
 
         <span class="n">k</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">max_total</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span>  <span class="c1"># (K,)</span>
-        <span class="n">value</span> <span class="o">=</span> <span class="n">k</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">max_total</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="o">*</span><span class="p">([</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">batch_shape</span><span class="p">)))</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="n">max_total</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">batch_shape</span><span class="p">)</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">k</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">max_total</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="o">*</span><span class="p">([</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">batch_shape</span><span class="p">)))</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span>
+            <span class="n">max_total</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">batch_shape</span>
+        <span class="p">)</span>
 
         <span class="c1"># Avoid torch.distributions validation failures by computing log-probs</span>
         <span class="c1"># through a base Binomial distribution with validate_args disabled.</span>

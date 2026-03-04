@@ -215,7 +215,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../guides/user_guide.html">User Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../guides/dev_guide.html">Developer Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../guides/apc_mnist_guide.html">APC MNIST Guide (Simplified)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../guides/apc_mnist_guide.html">APC MNIST Training Example</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../guides/sklearn.html">Using SPFlow with sklearn</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../../api/index.html">API Documentation</a><input aria-label="Toggle navigation of API Documentation" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/base_modules.html">Base Classes</a></li>
@@ -502,7 +502,9 @@
 
         <span class="n">k_values</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">global_min</span><span class="p">,</span> <span class="n">global_max</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span>  <span class="c1"># (K,)</span>
         <span class="n">support_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">k_values</span><span class="o">.</span><span class="n">numel</span><span class="p">())</span>
-        <span class="n">value</span> <span class="o">=</span> <span class="n">k_values</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">support_size</span><span class="p">,</span> <span class="o">*</span><span class="p">([</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">event_shape</span><span class="p">)))</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="n">support_size</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">event_shape</span><span class="p">)</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">k_values</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">support_size</span><span class="p">,</span> <span class="o">*</span><span class="p">([</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">event_shape</span><span class="p">)))</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span>
+            <span class="n">support_size</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">event_shape</span>
+        <span class="p">)</span>
 
         <span class="n">base_dist</span> <span class="o">=</span> <span class="n">_HypergeometricDistribution</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">K</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">,</span> <span class="n">validate_args</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
         <span class="n">logits</span> <span class="o">=</span> <span class="n">base_dist</span><span class="o">.</span><span class="n">log_prob</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="n">movedim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># (..., K)</span>
@@ -635,7 +637,9 @@
         <span class="k">return</span> <span class="n">_HypergeometricDistribution</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">_torch_distribution_class_with_differentiable_sampling</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">type</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">distributions</span><span class="o">.</span><span class="n">Distribution</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_torch_distribution_class_with_differentiable_sampling</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">type</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">distributions</span><span class="o">.</span><span class="n">Distribution</span><span class="p">]:</span>
         <span class="k">return</span> <span class="n">_HypergeometricDistributionWithDifferentiableSampling</span>
 
 <div class="viewcode-block" id="Hypergeometric.params">
