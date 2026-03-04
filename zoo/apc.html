@@ -216,6 +216,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../guides/user_guide.html">User Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guides/dev_guide.html">Developer Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/apc_mnist_guide.html">APC MNIST Guide (Simplified)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guides/sklearn.html">Using SPFlow with sklearn</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../api/index.html">API Documentation</a><input aria-label="Toggle navigation of API Documentation" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../api/base_modules.html">Base Classes</a></li>
@@ -284,18 +285,10 @@
 </div>
 <section id="reference">
 <h2>Reference<a class="headerlink" href="#reference" title="Link to this heading">¶</a></h2>
-<p>APC is described in:</p>
+<p>APCs are described in:</p>
 <ul class="simple">
-<li><p><a class="reference external" href="https://arxiv.org/abs/2502.05554">Autoencoding Probabilistic Circuits (ICLR 2025)</a></p></li>
+<li><p><a class="reference external" href="https://openreview.net/pdf?id=h8D75pVKja">Tractable Representation Learning with Probabilistic Circuits (TMLR 2026)</a></p></li>
 </ul>
-</section>
-<section id="status-note">
-<h2>Status Note<a class="headerlink" href="#status-note" title="Link to this heading">¶</a></h2>
-<p>APC inference APIs remain available (encode/decode/sampling/likelihood), and the high-level
-<code class="docutils literal notranslate"><span class="pre">AutoencodingPC.loss_components</span></code>/<code class="docutils literal notranslate"><span class="pre">loss</span></code> objective is available.
-APC encoders provide latent stats via <code class="docutils literal notranslate"><span class="pre">encode(...,</span> <span class="pre">return_latent_stats=True)</span></code> and <code class="docutils literal notranslate"><span class="pre">latent_stats(...)</span></code>.
-For Normal latent leaves, stats are extracted from selected leaf parameters (reference-style <code class="docutils literal notranslate"><span class="pre">mu/logvar</span></code>).
-For other latent leaf families, APC falls back to posterior moment estimation from repeated posterior samples.</p>
 </section>
 <section id="main-components">
 <h2>Main Components<a class="headerlink" href="#main-components" title="Link to this heading">¶</a></h2>
@@ -852,9 +845,7 @@ validation metrics.</p>
 </section>
 <section id="conv-pc-apc-note">
 <h2>Conv-PC APC Note<a class="headerlink" href="#conv-pc-apc-note" title="Link to this heading">¶</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">ConvPcJointEncoder</span></code> supports image-shaped inputs and latent fusion at a configurable hierarchy depth.
-The Conv-PC APC path now uses the reference architecture only. Latent-width mismatches at the
-fusion depth are handled via latent feature reduction/packing when needed.</p>
+<p><code class="docutils literal notranslate"><span class="pre">ConvPcJointEncoder</span></code> supports image-shaped inputs and latent fusion at a configurable hierarchy depth.</p>
 </section>
 </section>
 
@@ -897,7 +888,6 @@ fusion depth are handled via latent feature reduction/packing when needed.</p>
             <ul>
 <li><a class="reference internal" href="#">Autoencoding Probabilistic Circuits (APC)</a><ul>
 <li><a class="reference internal" href="#reference">Reference</a></li>
-<li><a class="reference internal" href="#status-note">Status Note</a></li>
 <li><a class="reference internal" href="#main-components">Main Components</a><ul>
 <li><a class="reference internal" href="#configuration">Configuration</a><ul>
 <li><a class="reference internal" href="#spflow.zoo.apc.config.ApcConfig"><code class="docutils literal notranslate"><span class="pre">ApcConfig</span></code></a><ul>
