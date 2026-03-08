@@ -276,13 +276,24 @@
           <h1>Source code for spflow.modules.einsum.einsum_layer</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;EinsumLayer for efficient sum-product operations in probabilistic circuits.</span>
 
-<span class="sd">Implements the EinsumLayer as described in the Einet paper, combining product</span>
-<span class="sd">and sum operations into a single efficient einsum operation using the</span>
-<span class="sd">LogEinsumExp trick for numerical stability.</span>
+<span class="sd">This layer evaluates weighted sums over pairwise channel products in log space.</span>
+<span class="sd">The numerically stable outer structure still follows the LogEinsumExp trick,</span>
+<span class="sd">but the inner contraction is scheduled to limit memory traffic on large channel</span>
+<span class="sd">grids:</span>
+
+<span class="sd">- normalize routing weights over the flattened ``(left_channel, right_channel)``</span>
+<span class="sd">  axis</span>
+<span class="sd">- keep an eval/no-grad cache of those normalized weights so inference does not</span>
+<span class="sd">  pay for a repeated softmax when parameters are unchanged</span>
+<span class="sd">- use a factored two-stage contraction when the full ``left x right`` pair grid</span>
+<span class="sd">  is large enough that a single einsum becomes memory-bandwidth bound</span>
+
+<span class="sd">The factored contraction is mathematically equivalent to the dense einsum, but</span>
+<span class="sd">it maps better to the backends that power large CPU/GPU workloads and reduces</span>
+<span class="sd">allocator pressure in the wide-channel regimes where ``EinsumLayer`` is hottest.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
-
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
@@ -321,7 +332,9 @@
 <span class="sd">    structure. Takes pairs of adjacent features as left/right children, computes</span>
 <span class="sd">    their cross-product over channels, and sums with learned weights.</span>
 
-<span class="sd">    The LogEinsumExp trick is used for numerical stability in log-space.</span>
+<span class="sd">    The LogEinsumExp trick is used for numerical stability in log-space. For</span>
+<span class="sd">    large channel grids, the weighted channel contraction is factorized into two</span>
+<span class="sd">    smaller contractions to reduce bandwidth pressure without changing outputs.</span>
 
 <span class="sd">    Attributes:</span>
 <span class="sd">        logits (Parameter): Unnormalized log-weights for gradient optimization.</span>
@@ -468,6 +481,7 @@
 
         <span class="c1"># Register logits parameter</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logits</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">weights_shape</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_eval_weight_cache</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
 
         <span class="c1"># Set weights via property (converts to logits)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">weights</span> <span class="o">=</span> <span class="n">weights</span></div>
@@ -505,27 +519,14 @@
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">log_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Log-normalized weights (sum to 1 over input channel pairs).&quot;&quot;&quot;</span>
-        <span class="c1"># Flatten input-channel pair axes before normalization.</span>
-        <span class="n">flat_logits</span> <span class="o">=</span> <span class="n">rearrange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">logits</span><span class="p">,</span> <span class="s2">&quot;f co r i j -&gt; f co r (i j)&quot;</span><span class="p">)</span>
+        <span class="n">flat_logits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">logits</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">start_dim</span><span class="o">=-</span><span class="mi">2</span><span class="p">)</span>
         <span class="n">log_weights</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">functional</span><span class="o">.</span><span class="n">log_softmax</span><span class="p">(</span><span class="n">flat_logits</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">rearrange</span><span class="p">(</span>
-            <span class="n">log_weights</span><span class="p">,</span>
-            <span class="s2">&quot;f co r (i j) -&gt; f co r i j&quot;</span><span class="p">,</span>
-            <span class="n">i</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_left_channels</span><span class="p">,</span>
-            <span class="n">j</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_right_channels</span><span class="p">,</span>
-        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">log_weights</span><span class="o">.</span><span class="n">unflatten</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_left_channels</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_right_channels</span><span class="p">))</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">weights</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Normalized weights (sum to 1 over input channel pairs).&quot;&quot;&quot;</span>
-        <span class="n">flat_logits</span> <span class="o">=</span> <span class="n">rearrange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">logits</span><span class="p">,</span> <span class="s2">&quot;f co r i j -&gt; f co r (i j)&quot;</span><span class="p">)</span>
-        <span class="n">weights</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">functional</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">flat_logits</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">rearrange</span><span class="p">(</span>
-            <span class="n">weights</span><span class="p">,</span>
-            <span class="s2">&quot;f co r (i j) -&gt; f co r i j&quot;</span><span class="p">,</span>
-            <span class="n">i</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_left_channels</span><span class="p">,</span>
-            <span class="n">j</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_right_channels</span><span class="p">,</span>
-        <span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_normalized_weights</span><span class="p">()</span>
 
     <span class="nd">@weights</span><span class="o">.</span><span class="n">setter</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">weights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">values</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -546,6 +547,7 @@
             <span class="n">i</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_left_channels</span><span class="p">,</span>
             <span class="n">j</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_right_channels</span><span class="p">,</span>
         <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_clear_eval_weight_cache</span><span class="p">()</span>
 
     <span class="nd">@log_weights</span><span class="o">.</span><span class="n">setter</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">log_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">values</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -553,6 +555,7 @@
         <span class="k">if</span> <span class="n">values</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">weights_shape</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">ShapeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Log weight shape mismatch: expected </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">weights_shape</span><span class="si">}</span><span class="s2">, got </span><span class="si">{</span><span class="n">values</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logits</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">values</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_clear_eval_weight_cache</span><span class="p">()</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">extra_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">extra_repr</span><span class="p">()</span><span class="si">}</span><span class="s2">, weights=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">weights_shape</span><span class="si">}</span><span class="s2">&quot;</span>
@@ -572,6 +575,90 @@
             <span class="n">left_ll</span> <span class="o">=</span> <span class="n">lls</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
             <span class="n">right_ll</span> <span class="o">=</span> <span class="n">lls</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">left_ll</span><span class="p">,</span> <span class="n">right_ll</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_clear_eval_weight_cache</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Drop the eval/no-grad normalized-weight cache.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_eval_weight_cache</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_normalized_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return normalized routing weights with eval/no-grad caching.</span>
+
+<span class="sd">        Training and gradient-enabled execution always recompute weights so</span>
+<span class="sd">        autograd sees the live parameter graph. Eval/no-grad inference can</span>
+<span class="sd">        safely reuse the normalized tensor until ``self.logits`` changes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">training</span> <span class="ow">or</span> <span class="n">torch</span><span class="o">.</span><span class="n">is_grad_enabled</span><span class="p">():</span>
+            <span class="n">flat_logits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">logits</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">start_dim</span><span class="o">=-</span><span class="mi">2</span><span class="p">)</span>
+            <span class="n">weights</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">functional</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">flat_logits</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">weights</span><span class="o">.</span><span class="n">unflatten</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_left_channels</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_right_channels</span><span class="p">))</span>
+
+        <span class="n">cache_entry</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_eval_weight_cache</span>
+        <span class="n">current_version</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">logits</span><span class="o">.</span><span class="n">_version</span>
+        <span class="k">if</span> <span class="n">cache_entry</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">cached_version</span><span class="p">,</span> <span class="n">cached_weights</span> <span class="o">=</span> <span class="n">cache_entry</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">cached_version</span> <span class="o">==</span> <span class="n">current_version</span>
+                <span class="ow">and</span> <span class="n">cached_weights</span><span class="o">.</span><span class="n">device</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">logits</span><span class="o">.</span><span class="n">device</span>
+                <span class="ow">and</span> <span class="n">cached_weights</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">logits</span><span class="o">.</span><span class="n">dtype</span>
+            <span class="p">):</span>
+                <span class="k">return</span> <span class="n">cached_weights</span>
+
+        <span class="n">flat_logits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">logits</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">start_dim</span><span class="o">=-</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">weights</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">functional</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">flat_logits</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">normalized</span> <span class="o">=</span> <span class="n">weights</span><span class="o">.</span><span class="n">unflatten</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_left_channels</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_right_channels</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_eval_weight_cache</span> <span class="o">=</span> <span class="p">(</span><span class="n">current_version</span><span class="p">,</span> <span class="n">normalized</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">normalized</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_use_factored_probability_contraction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Choose the factored contraction only where it is empirically beneficial.</span>
+
+<span class="sd">        A single dense einsum is fine for small pair grids. Once the</span>
+<span class="sd">        ``left_channels * right_channels`` space gets large, the contraction</span>
+<span class="sd">        becomes dominated by memory movement rather than math. The factored path</span>
+<span class="sd">        helps most when the output channel count is small relative to the input</span>
+<span class="sd">        channel counts, especially on CUDA.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">input_pair_count</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_left_channels</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_right_channels</span>
+        <span class="k">if</span> <span class="n">device</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;cuda&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">input_pair_count</span> <span class="o">&gt;=</span> <span class="mi">128</span>
+        <span class="k">return</span> <span class="n">input_pair_count</span> <span class="o">&gt;=</span> <span class="mi">256</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_shape</span><span class="o">.</span><span class="n">channels</span> <span class="o">&lt;</span> <span class="nb">min</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_left_channels</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_right_channels</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_contract_probabilities</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">left_prob</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">right_prob</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">weights</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Contract channel probabilities using the most appropriate schedule.</span>
+
+<span class="sd">        The factored two-stage contraction is equivalent to the dense</span>
+<span class="sd">        ``ndir,ndjr,dorij-&gt;ndor`` einsum, but it keeps the widest intermediates</span>
+<span class="sd">        out of the hottest execution path for large channel products.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_use_factored_probability_contraction</span><span class="p">(</span><span class="n">left_prob</span><span class="o">.</span><span class="n">device</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ndir,ndjr,dorij-&gt;ndor&quot;</span><span class="p">,</span> <span class="n">left_prob</span><span class="p">,</span> <span class="n">right_prob</span><span class="p">,</span> <span class="n">weights</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_left_channels</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_right_channels</span><span class="p">:</span>
+            <span class="n">tmp</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ndir,dorij-&gt;ndjor&quot;</span><span class="p">,</span> <span class="n">left_prob</span><span class="p">,</span> <span class="n">weights</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ndjr,ndjor-&gt;ndor&quot;</span><span class="p">,</span> <span class="n">right_prob</span><span class="p">,</span> <span class="n">tmp</span><span class="p">)</span>
+
+        <span class="n">tmp</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ndjr,dorij-&gt;ndior&quot;</span><span class="p">,</span> <span class="n">right_prob</span><span class="p">,</span> <span class="n">weights</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ndir,ndior-&gt;ndor&quot;</span><span class="p">,</span> <span class="n">left_prob</span><span class="p">,</span> <span class="n">tmp</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_log_likelihood_from_inputs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">left_ll</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">right_ll</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute log-likelihoods from child log-likelihood tensors.</span>
+
+<span class="sd">        The computation stays numerically stable by subtracting per-input channel</span>
+<span class="sd">        maxima before exponentiation. The weighted contraction then operates on</span>
+<span class="sd">        positive-space probabilities using the bandwidth-aware schedule selected</span>
+<span class="sd">        above, and the removed maxima are added back after ``log``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">left_max</span> <span class="o">=</span> <span class="n">left_ll</span><span class="o">.</span><span class="n">amax</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">left_prob</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">left_ll</span> <span class="o">-</span> <span class="n">left_max</span><span class="p">)</span>
+
+        <span class="n">right_max</span> <span class="o">=</span> <span class="n">right_ll</span><span class="o">.</span><span class="n">amax</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">right_prob</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">right_ll</span> <span class="o">-</span> <span class="n">right_max</span><span class="p">)</span>
+
+        <span class="n">weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_normalized_weights</span><span class="p">()</span>
+        <span class="n">prob</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_contract_probabilities</span><span class="p">(</span><span class="n">left_prob</span><span class="p">,</span> <span class="n">right_prob</span><span class="p">,</span> <span class="n">weights</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">prob</span><span class="p">)</span> <span class="o">+</span> <span class="n">left_max</span> <span class="o">+</span> <span class="n">right_max</span>
 
 <div class="viewcode-block" id="EinsumLayer.log_likelihood">
 <a class="viewcode-back" href="../../../../zoo/einet.html#spflow.modules.einsum.EinsumLayer.log_likelihood">[docs]</a>
@@ -593,28 +680,7 @@
         <span class="c1"># Get child log-likelihoods</span>
         <span class="n">left_ll</span><span class="p">,</span> <span class="n">right_ll</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_left_right_ll</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">cache</span><span class="p">)</span>
 
-        <span class="c1"># Dimensions: N=batch, D=features, C=channels, R=reps</span>
-        <span class="n">N</span><span class="p">,</span> <span class="n">D</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">R</span> <span class="o">=</span> <span class="n">left_ll</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
-
-        <span class="c1"># LogEinsumExp trick for numerical stability</span>
-        <span class="c1"># Compute max for normalization</span>
-        <span class="n">left_max</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">left_ll</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># (N, D, 1, R)</span>
-        <span class="n">left_prob</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">left_ll</span> <span class="o">-</span> <span class="n">left_max</span><span class="p">)</span>  <span class="c1"># (N, D, C, R)</span>
-
-        <span class="n">right_max</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">right_ll</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># (N, D, 1, R)</span>
-        <span class="n">right_prob</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">right_ll</span> <span class="o">-</span> <span class="n">right_max</span><span class="p">)</span>  <span class="c1"># (N, D, C, R)</span>
-
-        <span class="c1"># Get normalized weights</span>
-        <span class="n">weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">weights</span>  <span class="c1"># (D, O, R, I, J)</span>
-
-        <span class="c1"># Einsum: product over channels, weighted sum</span>
-        <span class="c1"># n=batch, d=features, i=left_channels, j=right_channels, o=out_channels, r=reps</span>
-        <span class="n">prob</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ndir,ndjr,dorij-&gt;ndor&quot;</span><span class="p">,</span> <span class="n">left_prob</span><span class="p">,</span> <span class="n">right_prob</span><span class="p">,</span> <span class="n">weights</span><span class="p">)</span>
-
-        <span class="c1"># Re-add the log maxes</span>
-        <span class="n">log_prob</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">prob</span><span class="p">)</span> <span class="o">+</span> <span class="n">left_max</span> <span class="o">+</span> <span class="n">right_max</span>
-
-        <span class="k">return</span> <span class="n">log_prob</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_log_likelihood_from_inputs</span><span class="p">(</span><span class="n">left_ll</span><span class="p">,</span> <span class="n">right_ll</span><span class="p">)</span></div>
 
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_sample</span><span class="p">(</span>

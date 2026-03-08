@@ -568,7 +568,9 @@ Defaults to “top-down”.</p></li>
 <p>Implements sum(product(x)) using einsum for circuits with arbitrary tree
 structure. Takes pairs of adjacent features as left/right children, computes
 their cross-product over channels, and sums with learned weights.</p>
-<p>The LogEinsumExp trick is used for numerical stability in log-space.</p>
+<p>The LogEinsumExp trick is used for numerical stability in log-space. For
+large channel grids, the weighted channel contraction is factorized into two
+smaller contractions to reduce bandwidth pressure without changing outputs.</p>
 <dl class="field-list simple">
 </dl>
 <dl class="py attribute">
